@@ -3,6 +3,7 @@ package com.mandovi.Service;
 import com.mandovi.Entity.MGA;
 import com.mandovi.Repository.MGARepository;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,7 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,7 +65,27 @@ public class MGAServiceImpl implements MGAService {
 
                 MGA mga = new MGA();
 
-                mga.setMgaDate(row.getCell(0).getDateCellValue());
+                //Converting Date to LocalDate to store in DB
+                Cell cell = row.getCell(0);
+                LocalDate localDate = null;
+
+                if (cell != null) {
+                    if (cell.getCellType() == CellType.NUMERIC) {
+                        // Numeric cell (date)
+                        Date date = cell.getDateCellValue();
+                        localDate = date.toInstant()
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate();
+                    } else if (cell.getCellType() == CellType.STRING) {
+                        // String cell (like "2025-09-19")
+                        String dateStr = cell.getStringCellValue();
+                        localDate = LocalDate.parse(dateStr); // Use DateTimeFormatter if custom format
+                    }
+                }
+
+                mga.setMgaDate(localDate);
+
+//                mga.setMgaDate((LocalDate) row.getCell(0).getDateCellValue());
                 mga.setDealerCode(row.getCell(1).getStringCellValue());
                 mga.setForCode(row.getCell(2).getStringCellValue());
                 mga.setOutletCode(row.getCell(3).getStringCellValue());
@@ -125,11 +150,12 @@ public class MGAServiceImpl implements MGAService {
 
                 //Updating month based on mga_date
                 if (row.getCell(0)!= null){
-                    SimpleDateFormat sdf = new SimpleDateFormat("MMM");
-                    mga.setMonth(sdf.format(mga.getMgaDate()));
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");
+                    mga.setMonth(formatter.format(mga.getMgaDate()));
                 }else {
                     mga.setMonth("UNKNOWN");
                 }
+
                 String location = mga.getLocation().trim().toUpperCase();
                 if (arenaChannel.contains(location)) {
                     mga.setChannel("ARENA");

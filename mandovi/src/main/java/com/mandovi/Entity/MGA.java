@@ -2,6 +2,7 @@ package com.mandovi.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -12,7 +13,7 @@ public class MGA {
     @Column(name = "")
     private Integer mgaSINo;
     @Column(name = "mga_date")
-    private Date mgaDate;
+    private LocalDate mgaDate;
     @Column(name = "dealer_code")
     private String dealerCode;
     @Column(name = "for_code")
@@ -49,7 +50,7 @@ public class MGA {
     public MGA() {
     }
 
-    public MGA(Integer mgaSINo, Date mgaDate, String dealerCode, String forCode, String outletCode, String dealerForOutletCode, String city, String location, String dealerName, String serviceAdvisor, Double consumption, Integer loadd, Double mgaLoad, String branch, String month, String channel, String qtrWise, String halfYear) {
+    public MGA(Integer mgaSINo, LocalDate mgaDate, String dealerCode, String forCode, String outletCode, String dealerForOutletCode, String city, String location, String dealerName, String serviceAdvisor, Double consumption, Integer loadd, Double mgaLoad, String branch, String month, String channel, String qtrWise, String halfYear) {
         this.mgaSINo = mgaSINo;
         this.mgaDate = mgaDate;
         this.dealerCode = dealerCode;
@@ -78,11 +79,11 @@ public class MGA {
         this.mgaSINo = mgaSINo;
     }
 
-    public Date getMgaDate() {
+    public LocalDate getMgaDate() {
         return mgaDate;
     }
 
-    public void setMgaDate(Date mgaDate) {
+    public void setMgaDate(LocalDate mgaDate) {
         this.mgaDate = mgaDate;
     }
 
