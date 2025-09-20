@@ -2,6 +2,7 @@ package com.mandovi.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -18,8 +19,8 @@ public class PMSParts {
     @Column(name = "location_code")
     private String locationCode;
 
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "pms_date")
+    private LocalDate pmsDate;
 
     @Column(name = "part_group")
     private String partGroup;
@@ -51,11 +52,11 @@ public class PMSParts {
     public PMSParts() {
     }
 
-    public PMSParts(Integer pms_partsSINo, String parent, String locationCode, Date date, String partGroup, Integer required, Integer changed, Double pms, String branch, String city, String month, String qtrWise, String halfYear) {
+    public PMSParts(Integer pms_partsSINo, String parent, String locationCode, LocalDate pmsDate, String partGroup, Integer required, Integer changed, Double pms, String branch, String city, String month, String qtrWise, String halfYear) {
         this.pms_partsSINo = pms_partsSINo;
         this.parent = parent;
         this.locationCode = locationCode;
-        this.date = date;
+        this.pmsDate = pmsDate;
         this.partGroup = partGroup;
         this.required = required;
         this.changed = changed;
@@ -91,12 +92,12 @@ public class PMSParts {
         this.locationCode = locationCode;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDate getPmsDate() {
+        return pmsDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setPmsDate(LocalDate pmsDate) {
+        this.pmsDate = pmsDate;
     }
 
     public String getPartGroup() {
@@ -177,7 +178,7 @@ public class PMSParts {
                 "pms_partsSINo=" + pms_partsSINo +
                 ", parent='" + parent + '\'' +
                 ", locationCode='" + locationCode + '\'' +
-                ", date=" + date +
+                ", pmsDate=" + pmsDate +
                 ", partGroup='" + partGroup + '\'' +
                 ", required=" + required +
                 ", changed=" + changed +

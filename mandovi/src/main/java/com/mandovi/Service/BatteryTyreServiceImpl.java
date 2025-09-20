@@ -18,6 +18,10 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
         this.batteryTyreRepository = batteryTyreRepository;
     }
 
+    private Double round2Decimal(Double value){
+        return Math.round(value*100.0)/100.0;
+    }
+
     @Override
     public void saveBatteryTyreDataFromExcel(MultipartFile file) throws IOException {
         try {
@@ -43,8 +47,8 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
                 batteryTyre.setOilType(row.getCell(4).getStringCellValue());
 
                 batteryTyre.setSum_of_net_retail_qty((int)   row.getCell(5).getNumericCellValue());
-                batteryTyre.setSum_of_net_retail_ddl(row.getCell(6).getNumericCellValue());
-                batteryTyre.setSum_of_net_retail_selling(row.getCell(7).getNumericCellValue());
+                batteryTyre.setSum_of_net_retail_ddl(round2Decimal(row.getCell(6).getNumericCellValue()));
+                batteryTyre.setSum_of_net_retail_selling(round2Decimal(row.getCell(7).getNumericCellValue()));
 
                 //Updating the column period from Concating columns Month & Year
                 batteryTyre.setPeriod(batteryTyre.getMonth()+"-"+batteryTyre.getYear());

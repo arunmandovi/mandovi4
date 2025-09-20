@@ -9,6 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -17,6 +20,10 @@ public class PMSPartsServiceImpl implements PMSPartsService {
 
     public PMSPartsServiceImpl(PMSPartsRepository pmsPartsRepository) {
         this.pmsPartsRepository = pmsPartsRepository;
+    }
+
+    private Double round2Decimal(Double value){
+        return Math.round(value*100.0)/100.;
     }
 
     @Override
@@ -46,7 +53,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
 
                 pmsParts.setParent(row.getCell(0).getStringCellValue());
                 pmsParts.setLocationCode(row.getCell(1).getStringCellValue());
-                pmsParts.setDate(row.getCell(2).getDateCellValue());
+                pmsParts.setPmsDate(row.getCell(2).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                 pmsParts.setPartGroup(row.getCell(3).getStringCellValue());
                 pmsParts.setRequired((int)row.getCell(4).getNumericCellValue());
                 pmsParts.setChanged((int)row.getCell(5).getNumericCellValue());
@@ -54,7 +61,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                 //Updating Double data type pms value from Intger required & changed column's values
                 Double required = Double.valueOf(pmsParts.getRequired());
                 Double changed = Double.valueOf(pmsParts.getChanged());
-                pmsParts.setPms(changed/required*100);
+                pmsParts.setPms(round2Decimal(changed/required*100));
 
                 //Updating branch column using values from column location code
                 String locationCode = pmsParts.getLocationCode();
@@ -120,8 +127,8 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                 }
 
                 //Updating month column using the value stored in date column
-                Date date = pmsParts.getDate();
-                SimpleDateFormat sdf = new SimpleDateFormat("MMM"); //getting full month name
+                LocalDate date = pmsParts.getPmsDate();
+                DateTimeFormatter sdf = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH); //getting full month name
                 String month =  sdf.format(date);
                 pmsParts.setMonth(month);
 

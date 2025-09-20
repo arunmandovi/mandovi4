@@ -50,8 +50,8 @@ public class RevenueServiceImpl implements RevenueService {
                 revenue.setSr_labour_last_year(round2Decimal(row.getCell(6).getNumericCellValue()));
                 revenue.setSr_labour_current_year(round2Decimal(row.getCell(7).getNumericCellValue()));
                 revenue.setBr_labour_last_year(round2Decimal(row.getCell(9).getNumericCellValue()));
-                revenue.setBr_labour_current_year(row.getCell(10).getNumericCellValue());
-                revenue.setSr_and_br_labour_last_year(row.getCell(12).getNumericCellValue());
+                revenue.setBr_labour_current_year(round2Decimal(row.getCell(10).getNumericCellValue()));
+                revenue.setSr_and_br_labour_last_year(round2Decimal(row.getCell(12).getNumericCellValue()));
                 revenue.setSr_and_br_labour_current_year(round2Decimal(row.getCell(13).getNumericCellValue()));
                 revenue.setSr_spares_last_year(round2Decimal(row.getCell(15).getNumericCellValue()));
                 revenue.setSr_spares_current_year(round2Decimal(row.getCell(16).getNumericCellValue()));

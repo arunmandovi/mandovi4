@@ -18,6 +18,10 @@ public class TatServiceImpl implements TatService {
         this.tatRepository = tatRepository;
     }
 
+    private Double round2Decimal(Double value){
+        return Math.round(value*100.0)/100.0;
+    }
+
     @Override
     public void saveLoadDataFromExcel(MultipartFile file) throws IOException {
         try {
@@ -40,7 +44,7 @@ public class TatServiceImpl implements TatService {
                 String year = String.valueOf(num_year);
                 tat.setYear(year);
                 tat.setLink_service_type(row.getCell(4).getStringCellValue());
-                tat.setAverage_of_open_to_close(row.getCell(5).getNumericCellValue());
+                tat.setAverage_of_open_to_close(round2Decimal(row.getCell(5).getNumericCellValue()));
 
                 //Updating the column period by concating the columns month & year and "-" in between
                 String period = tat.getMonth()+"-"+tat.getYear();

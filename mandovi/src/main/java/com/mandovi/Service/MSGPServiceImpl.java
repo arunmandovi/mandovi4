@@ -18,6 +18,10 @@ public class MSGPServiceImpl implements MSGPService {
         this.msGPRepository = msGPRepository;
     }
 
+    private Double round2Decimal(Double value){
+        return Math.round(value*100.0)/100.0;
+    }
+
     @Override
     public void saveMSGPFromExcel(MultipartFile file) {
         try {
@@ -37,10 +41,10 @@ public class MSGPServiceImpl implements MSGPService {
                 msgp.setYear(row.getCell(2).getStringCellValue());
                 msgp.setMonth(row.getCell(3).getStringCellValue());
                 msgp.setService_description(row.getCell(4).getStringCellValue());
-                msgp.setNet_retail_ddl(row.getCell(5).getNumericCellValue());
+                msgp.setNet_retail_ddl(round2Decimal(row.getCell(5).getNumericCellValue()));
 
                 //Updating sum_of_net_retail_ddl column by dividing net reatail_ddl_column's value by 100000
-                msgp.setSum_of_net_retail_ddl(msgp.getNet_retail_ddl()/100000);
+                msgp.setSum_of_net_retail_ddl(round2Decimal(msgp.getNet_retail_ddl()/100000));
 
                 //Updating branch column by checking the value from column loaction_code
                 if (msgp.getLocation_code() != null){
