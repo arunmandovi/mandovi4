@@ -20,7 +20,7 @@ public class BR_ConversionController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadBR_ConversionExcel(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("❌ Please upload a valid Excel file.");
+            return ResponseEntity.badRequest().body("❌ Please upload a valid BR Conversion Excel file.");
         }
         try {
             br_conversionService.saveBR_ConversionDataFromExcel(file);

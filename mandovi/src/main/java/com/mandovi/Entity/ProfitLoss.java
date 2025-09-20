@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "profit_loss")
-public class Profit_Loss {
+public class ProfitLoss {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "profit_lossSINo")
@@ -14,10 +14,10 @@ public class Profit_Loss {
     @Column(name = "branch")
     private String branch;
 
-    public Profit_Loss() {
+    public ProfitLoss() {
     }
 
-    public Profit_Loss(Integer profit_lossSIno, String city, String branch) {
+    public ProfitLoss(Integer profit_lossSIno, String city, String branch) {
         this.profit_lossSIno = profit_lossSIno;
         this.city = city;
         this.branch = branch;
