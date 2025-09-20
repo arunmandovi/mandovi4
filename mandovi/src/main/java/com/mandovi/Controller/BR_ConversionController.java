@@ -1,12 +1,12 @@
 package com.mandovi.Controller;
 
+import com.mandovi.Entity.BR_Conversion;
 import com.mandovi.Service.BR_ConversionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/br_conversion")
@@ -28,5 +28,10 @@ public class BR_ConversionController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body("❌ Error: "+e.getMessage());
         }
+    }
+
+    @GetMapping("/getallbr_conversion")
+    public List<BR_Conversion> getAllBR_Conversion(){
+        return br_conversionService.getAllBR_Conversion();
     }
 }

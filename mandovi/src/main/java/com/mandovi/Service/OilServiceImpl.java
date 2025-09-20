@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class OilServiceImpl implements OilService {
@@ -71,6 +72,11 @@ public class OilServiceImpl implements OilService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Oil> getAllOil() {
+        return oilRepository.findAll();
     }
 }
 

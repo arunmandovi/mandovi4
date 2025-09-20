@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.Entity.ProfitLoss;
 import com.mandovi.Repository.ProfitLossRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,13 @@ public class ProfitLossServiceImpl implements ProfitLossService {
         }
     }
 
+    @Override
+    public List<Map<String, Object>> getAllProfit_Loss() {
+        String sql = "SELECT * FROM "+TABLE_NAME;
+        return jdbcTemplate.queryForList(sql);
+    }
+
+
     private void upsertRow(String city, String branch, Map<String, Object> dataMap) {
         dataMap.put("city",city);
         dataMap.put("branch",branch);
@@ -107,7 +115,7 @@ public class ProfitLossServiceImpl implements ProfitLossService {
         if (cell == null) return null;
         switch (cell.getCellType()){
             case STRING : return cell.getStringCellValue().trim();
-            case NUMERIC: return  Math.round(cell.getNumericCellValue()*100.0)/100.0;
+            case NUMERIC: return  cell.getNumericCellValue();
             default: return null;
         }
     }

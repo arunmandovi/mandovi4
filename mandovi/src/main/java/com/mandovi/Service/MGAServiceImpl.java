@@ -14,10 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class MGAServiceImpl implements MGAService {
@@ -180,4 +177,11 @@ public class MGAServiceImpl implements MGAService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<MGA> getAllMGA() {
+        return mgaRepository.findAll();
+    }
+
+
 }

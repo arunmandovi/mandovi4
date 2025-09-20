@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -145,5 +146,10 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public List<MSGPProfit> getAllMSGP_Profit() {
+        return msgpProfitRepository.findAll();
     }
 }

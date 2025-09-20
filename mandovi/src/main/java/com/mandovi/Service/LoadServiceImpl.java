@@ -3,6 +3,7 @@ package com.mandovi.Service;
 import com.mandovi.Entity.Load;
 import com.mandovi.Repository.LoadRepository;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,17 +13,16 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class LoadServiceImpl implements LoadService {
 
     private final LoadRepository loadRepository;
 
-    public LoadServiceImpl(LoadRepository loadRepository) {
+    JdbcTemplate jdbcTemplate;
+
+ ;   public LoadServiceImpl(LoadRepository loadRepository) {
         this.loadRepository = loadRepository;
     }
 
@@ -202,4 +202,10 @@ public class LoadServiceImpl implements LoadService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<Load> getAllLoadData() {
+        return  loadRepository.findAll();
+    }
+
 }

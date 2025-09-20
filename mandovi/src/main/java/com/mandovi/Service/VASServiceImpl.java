@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class VASServiceImpl implements VASService {
@@ -59,5 +60,10 @@ public class VASServiceImpl implements VASService {
         } catch (Exception e) {
             throw new RuntimeException("Error in VASServiceImpl"+e);
         }
+    }
+
+    @Override
+    public List<VAS> getAllVas() {
+        return vasRepository.findAll();
     }
 }

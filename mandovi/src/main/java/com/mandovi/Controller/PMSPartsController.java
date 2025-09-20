@@ -1,15 +1,15 @@
 package com.mandovi.Controller;
 
+import com.mandovi.Entity.PMSParts;
 import com.mandovi.Service.PMSPartsService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/pmsparts")
+@RequestMapping("/api/pms_parts")
 public class PMSPartsController {
     private final PMSPartsService pmsPartsService;
 
@@ -28,5 +28,10 @@ public class PMSPartsController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body("❌ Error: "+e.getMessage());
         }
+    }
+
+    @GetMapping("/getallpms_parts")
+    public List<PMSParts> getAllPMS_Parts(){
+        return pmsPartsService.getAllPMS_Parts();
     }
 }

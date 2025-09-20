@@ -1,12 +1,14 @@
 package com.mandovi.Controller;
 
+import com.mandovi.Entity.Load;
 import com.mandovi.Service.LoadService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/load")
@@ -14,6 +16,7 @@ public class LoadController {
     private final LoadService loadService;
 
     public LoadController(LoadService loadService) { this.loadService = loadService; }
+
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadLoadExcel(@RequestParam("file") MultipartFile file) {
@@ -27,4 +30,10 @@ public class LoadController {
             return ResponseEntity.internalServerError().body("❌ Error: "+e.getMessage());
         }
     }
+
+    @GetMapping("/getallload")
+    public List<Load> getAllLoadData(){
+        return loadService.getAllLoadData();
+    }
+
 }

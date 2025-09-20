@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class ReferenceServiceImpl implements ReferenceService {
@@ -76,5 +77,10 @@ public class ReferenceServiceImpl implements ReferenceService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public List<Reference> getAllReference() {
+        return referenceRepository.findAll();
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class BatteryTyreServiceImpl implements BatteryTyreService{
@@ -65,5 +66,10 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public List<BatteryTyre> getAllBattery_Tyre() {
+        return batteryTyreRepository.findAll();
     }
 }

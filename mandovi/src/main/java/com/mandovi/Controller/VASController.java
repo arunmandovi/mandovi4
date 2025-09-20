@@ -1,11 +1,15 @@
 package com.mandovi.Controller;
 
+import com.mandovi.Entity.VAS;
 import com.mandovi.Service.VASService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/vas")
@@ -28,5 +32,10 @@ public class VASController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("❌ Error: "+e.getMessage());
         }
+    }
+
+    @GetMapping("/getallvas")
+    public List<VAS> getAllVas(){
+        return vASService.getAllVas();
     }
 }

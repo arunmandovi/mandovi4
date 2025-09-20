@@ -1,12 +1,12 @@
 package com.mandovi.Controller;
 
+import com.mandovi.Entity.Reference;
 import com.mandovi.Service.ReferenceService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/reference")
@@ -28,5 +28,10 @@ public class ReferenceController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body("❌ Error: "+e.getMessage());
         }
+    }
+
+    @GetMapping("/getallreference")
+    public List<Reference> getAllReference(){
+        return referenceService.getAllReference();
     }
 }

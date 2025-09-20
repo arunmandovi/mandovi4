@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class TatServiceImpl implements TatService {
@@ -60,5 +61,10 @@ public class TatServiceImpl implements TatService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public List<Tat> getAllTat() {
+        return tatRepository.findAll();
     }
 }

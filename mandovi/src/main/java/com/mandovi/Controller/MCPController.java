@@ -1,13 +1,13 @@
 package com.mandovi.Controller;
 
 
+import com.mandovi.Entity.MCP;
 import com.mandovi.Service.MCPService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/mcp")
@@ -28,5 +28,10 @@ public class MCPController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("❌ Error: "+e.getMessage());
         }
+    }
+
+    @GetMapping("getallmcp")
+    public List<MCP> getAllMCP(){
+        return mcpService.getAllMCP();
     }
 }

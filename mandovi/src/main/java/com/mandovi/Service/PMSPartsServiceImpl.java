@@ -9,10 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PMSPartsServiceImpl implements PMSPartsService {
@@ -141,5 +138,10 @@ public class PMSPartsServiceImpl implements PMSPartsService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<PMSParts> getAllPMS_Parts() {
+        return pmsPartsRepository.findAll();
     }
 }

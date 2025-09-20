@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class RevenueServiceImpl implements RevenueService {
@@ -84,5 +85,10 @@ public class RevenueServiceImpl implements RevenueService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Revenue> getAllRevenue() {
+        return revenueRepository.findAll();
     }
 }

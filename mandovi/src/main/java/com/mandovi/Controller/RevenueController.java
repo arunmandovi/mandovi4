@@ -3,11 +3,10 @@ package com.mandovi.Controller;
 import com.mandovi.Entity.Revenue;
 import com.mandovi.Service.RevenueService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/revenue")
@@ -28,5 +27,10 @@ public class RevenueController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("❌ Error: "+e.getMessage());
         }
+    }
+
+    @GetMapping("/getallrevenue")
+    public List<Revenue> getAllRevenue(){
+        return revenueService.getAllRevenue();
     }
 }

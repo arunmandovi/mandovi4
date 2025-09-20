@@ -1,15 +1,15 @@
 package com.mandovi.Controller;
 
+import com.mandovi.Entity.MSGPProfit;
 import com.mandovi.Service.MSGPProfitService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/msgpprofit")
+@RequestMapping("/api/msgp_profit")
 public class MSGPProfitController {
     private final MSGPProfitService msgpProfitService;
 
@@ -27,5 +27,10 @@ public class MSGPProfitController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body("❌ Error: "+e.getMessage());
         }
+    }
+
+    @GetMapping("/getallmsgp_profit")
+    public List<MSGPProfit> getALLMSGP_Profit(){
+        return msgpProfitService.getAllMSGP_Profit();
     }
 }

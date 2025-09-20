@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class SparesServiceImpl implements SparesService{
@@ -96,5 +97,10 @@ public class SparesServiceImpl implements SparesService{
         }catch (IOException e){
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Spares> getAllSpares() {
+        return sparesRepository.findAll();
     }
 }

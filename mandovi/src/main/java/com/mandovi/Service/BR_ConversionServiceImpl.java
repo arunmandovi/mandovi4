@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class BR_ConversionServiceImpl implements BR_ConversionService{
@@ -64,5 +65,10 @@ public class BR_ConversionServiceImpl implements BR_ConversionService{
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public List<BR_Conversion> getAllBR_Conversion() {
+        return br_conversionRepository.findAll();
     }
 }

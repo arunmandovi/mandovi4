@@ -1,9 +1,13 @@
 package com.mandovi.Controller;
 
+import com.mandovi.Entity.ProfitLoss;
 import com.mandovi.Service.ProfitLossService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/profit_loss")
@@ -24,5 +28,10 @@ public class ProfitLossController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("❌ Error: "+e.getMessage());
         }
+    }
+
+    @GetMapping("/getallprofit_loss")
+    public List<Map<String, Object>> getALLProfit_Loss(){
+        return profitLossService.getAllProfit_Loss();
     }
 }

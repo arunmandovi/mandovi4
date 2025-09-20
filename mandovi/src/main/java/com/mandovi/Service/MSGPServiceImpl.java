@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class MSGPServiceImpl implements MSGPService {
@@ -116,5 +117,10 @@ public class MSGPServiceImpl implements MSGPService {
         }catch (IOException e){
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<MSGP> getAllMSGP() {
+        return msGPRepository.findAll();
     }
 }
