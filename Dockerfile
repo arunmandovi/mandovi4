@@ -1,6 +1,6 @@
 # ====== Build Stage ======
 # Use Maven with Java 21 to build the project
-FROM maven:3.9.3-eclipse-temurin-21 AS build
+FROM maven:3.9.3-openjdk-21 AS build
 WORKDIR /app
 
 # Copy only pom.xml first to cache dependencies
