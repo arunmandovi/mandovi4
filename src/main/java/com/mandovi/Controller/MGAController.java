@@ -1,0 +1,37 @@
+package com.mandovi.Controller;
+
+import com.mandovi.Entity.MGA;
+import com.mandovi.Service.MGAService;
+import jdk.dynalink.linker.LinkerServices;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/mga")
+public class MGAController {
+    private final MGAService mgaService;
+
+    public MGAController(MGAService mgaService) {
+        this.mgaService = mgaService;
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadMGAExcel(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("❌ Please upload a valid Excel file.");
+        }try {
+            mgaService.saveMGAFromExcel(file);
+            return ResponseEntity.ok().body("MGA File has been uploaded successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("❌ Error: "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/getallmga")
+    public List<MGA> getAllMGA(){
+        return mgaService.getAllMGA();
+    }
+}
