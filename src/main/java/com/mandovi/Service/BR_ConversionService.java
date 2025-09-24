@@ -10,4 +10,6 @@ public interface BR_ConversionService {
     void saveBR_ConversionDataFromExcel(MultipartFile file) throws IOException;
 
     public List<BR_Conversion> getAllBR_Conversion();
+
+    public List<BR_Conversion> getBR_ConversionByMonthYear(String month, String year);
 }

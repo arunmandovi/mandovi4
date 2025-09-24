@@ -126,4 +126,10 @@ public class LabourServiceImpl implements LabourService {
     public List<Labour> getAllLabour() {
         return labourRepository.findAll();
     }
+
+    @Override
+    public List<Labour> getLabourByMonthYear(String month, String year) {
+        String formattedMonth = month.substring(0, 1).toUpperCase()+ month.substring(1).toLowerCase();
+        return labourRepository.getLabourByMonthYear(formattedMonth, year);
+    }
 }

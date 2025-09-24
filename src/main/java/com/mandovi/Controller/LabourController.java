@@ -34,4 +34,13 @@ public class LabourController {
     public List<Labour> getAllLabour(){
         return labourService.getAllLabour();
     }
+
+    @GetMapping("/getlabour/{month}/{year}")
+    public ResponseEntity<List<Labour>> getLabourByMonthYear(@PathVariable String month, @PathVariable String year){
+        List<Labour> labourRecords = labourService.getLabourByMonthYear(month, year);
+        if (labourRecords.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(labourRecords);
+    }
 }

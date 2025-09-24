@@ -9,4 +9,6 @@ public interface LabourService {
     void saveLabourFromExcel(MultipartFile file);
 
     public List<Labour> getAllLabour();
+
+    public List<Labour> getLabourByMonthYear(String month, String year);
 }

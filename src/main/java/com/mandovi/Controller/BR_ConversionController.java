@@ -34,4 +34,13 @@ public class BR_ConversionController {
     public List<BR_Conversion> getAllBR_Conversion(){
         return br_conversionService.getAllBR_Conversion();
     }
+
+    @GetMapping("/getbr_conversion/{month}/{year}")
+    public ResponseEntity<List<BR_Conversion>> getBR_ConversionByMonthYear(@PathVariable String month, @PathVariable String year){
+        List<BR_Conversion> brConversionRecords = br_conversionService.getBR_ConversionByMonthYear(month, year);
+        if (brConversionRecords.isEmpty()){
+            ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(brConversionRecords);
+    }
 }

@@ -10,4 +10,6 @@ public interface BatteryTyreService {
     void saveBatteryTyreDataFromExcel(MultipartFile file) throws IOException;
 
     public List<BatteryTyre> getAllBattery_Tyre();
+
+    public List<BatteryTyre> getBattery_TyreByMonthYear(String month, String year);
 }

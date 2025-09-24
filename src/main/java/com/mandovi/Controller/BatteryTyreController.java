@@ -35,4 +35,13 @@ public class BatteryTyreController {
         return batteryTyreService.getAllBattery_Tyre();
     }
 
+    @GetMapping("/getbattery_tyre/{month}/{year}")
+    public ResponseEntity<List<BatteryTyre>> getBatteryTyreByMonthYear(@PathVariable String month, @PathVariable String year){
+        List<BatteryTyre> batteryTyreRecords = batteryTyreService.getBattery_TyreByMonthYear(month, year);
+        if (batteryTyreRecords.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(batteryTyreRecords);
+    }
+
 }

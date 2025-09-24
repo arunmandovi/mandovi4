@@ -34,17 +34,32 @@ public class BR_ConversionServiceImpl implements BR_ConversionService{
                 br_conversion.setCity(row.getCell(0).getStringCellValue());
                 br_conversion.setBranch(row.getCell(1).getStringCellValue());
                 br_conversion.setMonth(row.getCell(2).getStringCellValue());
-                br_conversion.setChannel(row.getCell(3).getStringCellValue());
-                br_conversion.setLabour_amt(row.getCell(4).getNumericCellValue());
-                br_conversion.setPart_amount(row.getCell(5).getNumericCellValue());
-                br_conversion.setBill_amount(row.getCell(6).getNumericCellValue());
+
+                //Checking the year column has string value ot numeric value
+                switch (row.getCell(3).getCellType()){
+                    case NUMERIC :
+                        int num_year = (int)row.getCell(3).getNumericCellValue();
+                        br_conversion.setYear(String.valueOf(num_year));
+                        break;
+                    case STRING:
+                        br_conversion.setYear(row.getCell(3).getStringCellValue());
+                        break;
+                    default:
+                        br_conversion.setYear("");
+                        break;
+                }
+
+                br_conversion.setChannel(row.getCell(4).getStringCellValue());
+                br_conversion.setLabour_amt(row.getCell(5).getNumericCellValue());
+                br_conversion.setPart_amount(row.getCell(6).getNumericCellValue());
+                br_conversion.setBill_amount(row.getCell(7).getNumericCellValue());
 
                 //Checking if the columns no,br_conversion and grand_total having empty cell then it'll update 0 otherwise update the exact values
-                String novalue =  dataFormatter.formatCellValue(row.getCell(7));
+                String novalue =  dataFormatter.formatCellValue(row.getCell(8));
                 br_conversion.setNo(novalue.isEmpty() ? 0 : Integer.parseInt(novalue));
-                String br_conversionvalue = dataFormatter.formatCellValue(row.getCell(8));
+                String br_conversionvalue = dataFormatter.formatCellValue(row.getCell(9));
                 br_conversion.setBr_conversion(br_conversionvalue.isEmpty() ? 0 : Integer.parseInt(br_conversionvalue));
-                String grand_totalvalue = dataFormatter.formatCellValue(row.getCell(9));
+                String grand_totalvalue = dataFormatter.formatCellValue(row.getCell(10));
                 br_conversion.setGrand_total(grand_totalvalue.isEmpty() ? 0 : Integer.parseInt(grand_totalvalue));
 
 
@@ -70,5 +85,11 @@ public class BR_ConversionServiceImpl implements BR_ConversionService{
     @Override
     public List<BR_Conversion> getAllBR_Conversion() {
         return br_conversionRepository.findAll();
+    }
+
+    @Override
+    public List<BR_Conversion> getBR_ConversionByMonthYear(String month, String year) {
+        String formattedMonth = month.substring(0, 1).toUpperCase() +month.substring(1).toLowerCase();
+        return br_conversionRepository.getBR_ConversionByMonthYear(formattedMonth, year);
     }
 }

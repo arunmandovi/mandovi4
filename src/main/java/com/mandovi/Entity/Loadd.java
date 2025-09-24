@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "`load`")
-public class Load {
+@Table(name = "loadd")
+public class Loadd {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loadSINo")
@@ -54,10 +54,10 @@ public class Load {
     @Column(name = "half_year")
     private String halfYear;
 
-    public Load() {
+    public Loadd() {
     }
 
-    public Load(Integer loadSINo, String location, String serviceTypeCode, String year, String month, String modelChannel, Integer serviceLoad, LocalDate jcBillDate, String channel, String city, String branch, String financial_year, String loadType, String qtrWise, String halfYear) {
+    public Loadd(Integer loadSINo, String location, String serviceTypeCode, String year, String month, String modelChannel, Integer serviceLoad, LocalDate jcBillDate, String channel, String city, String branch, String financial_year, String loadType, String qtrWise, String halfYear) {
         this.loadSINo = loadSINo;
         this.location = location;
         this.serviceTypeCode = serviceTypeCode;
