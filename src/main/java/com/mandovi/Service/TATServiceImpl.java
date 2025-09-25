@@ -1,7 +1,7 @@
 package com.mandovi.Service;
 
-import com.mandovi.Entity.Tat;
-import com.mandovi.Repository.TatRepository;
+import com.mandovi.Entity.TAT;
+import com.mandovi.Repository.TATRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,10 +11,10 @@ import java.io.InputStream;
 import java.util.List;
 
 @Service
-public class TatServiceImpl implements TatService {
-    private final TatRepository tatRepository;
+public class TATServiceImpl implements TATService {
+    private final TATRepository tatRepository;
 
-    public TatServiceImpl(TatRepository tatRepository) {
+    public TATServiceImpl(TATRepository tatRepository) {
         this.tatRepository = tatRepository;
     }
 
@@ -34,7 +34,7 @@ public class TatServiceImpl implements TatService {
                 Row row = sheet.getRow(i);
                 if (row == null)continue;
 
-                Tat tat = new Tat();
+                TAT tat = new TAT();
 
                 tat.setCity(row.getCell(0).getStringCellValue());
                 tat.setBranch(row.getCell(1).getStringCellValue());
@@ -68,13 +68,14 @@ public class TatServiceImpl implements TatService {
     }
 
     @Override
-    public List<Tat> getAllTat() {
+    public List<TAT> getAllTat() {
         return tatRepository.findAll();
     }
 
     @Override
-    public List<Tat> getTATByMonthYear(String month, String year) {
-        String foramttedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
-        return tatRepository.getTATByMonthYear(foramttedMonth, year);
+    public List<TAT> getTATByMonthYear(String month, String year) {
+        String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
+        return tatRepository.getTATByMonthYear(formattedMonth, year);
     }
+
 }

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tat")
-public class Tat {
+public class TAT {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tatSINo")
@@ -38,10 +38,10 @@ public class Tat {
     @Column(name = "half_year")
     private String half_year;
 
-    public Tat() {
+    public TAT() {
     }
 
-    public Tat(Integer tatSINo, String city, String branch, String month, String year, String link_service_type, Double average_of_open_to_close, String period, String qtr_wise, String half_year) {
+    public TAT(Integer tatSINo, String city, String branch, String month, String year, String link_service_type, Double average_of_open_to_close, String period, String qtr_wise, String half_year) {
         this.tatSINo = tatSINo;
         this.city = city;
         this.branch = branch;

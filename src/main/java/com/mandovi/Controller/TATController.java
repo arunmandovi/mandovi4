@@ -1,7 +1,7 @@
 package com.mandovi.Controller;
 
-import com.mandovi.Entity.Tat;
-import com.mandovi.Service.TatService;
+import com.mandovi.Entity.TAT;
+import com.mandovi.Service.TATService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,10 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tat")
-public class TatController {
-    private final TatService tatService;
+public class TATController {
+    private final TATService tatService;
 
-    public TatController(TatService tatService) {
+    public TATController(TATService tatService) {
         this.tatService = tatService;
     }
 
@@ -31,16 +31,16 @@ public class TatController {
     }
 
     @GetMapping("/getalltat")
-    public List<Tat> getAllTat(){
+    public List<TAT> getAllTat(){
         return tatService.getAllTat();
     }
 
     @GetMapping("/gettat/{month}/{year}")
-    public ResponseEntity<List<Tat>> getTATByMonthYear (@PathVariable String month, @PathVariable String year){
-        List<Tat> tatRecords = tatService.getTatByMonthYear(month, year);
-        if (tatRecords.isEmpty()) {
+    public ResponseEntity<List<TAT>> getTATByMonthYear (@PathVariable String month, @PathVariable String year){
+        List<TAT> TATRecords = tatService.getTATByMonthYear(month, year);
+        if (TATRecords.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(tatRecords);
+        return ResponseEntity.ok(TATRecords);
     }
 }
