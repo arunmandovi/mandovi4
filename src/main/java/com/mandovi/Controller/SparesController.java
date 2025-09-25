@@ -34,4 +34,13 @@ public class SparesController {
     public List<Spares> getAllSpares(){
         return sparesService.getAllSpares();
     }
+
+    @GetMapping("/getspares/{month}/{year}")
+    public ResponseEntity<List<Spares>> getSparesByMonthYear(@PathVariable String month, @PathVariable String year){
+        List<Spares> sparesRecords = sparesService.getSparesByMonthYear(month, year);
+        if (sparesRecords.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(sparesRecords);
+    }
 }

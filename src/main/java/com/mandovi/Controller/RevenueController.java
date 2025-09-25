@@ -33,4 +33,13 @@ public class RevenueController {
     public List<Revenue> getAllRevenue(){
         return revenueService.getAllRevenue();
     }
+
+    @GetMapping("/getrevenue/{month}/{year}")
+    public ResponseEntity<List<Revenue>> getRevenueByMonthYear (@PathVariable String month, @PathVariable String year){
+        List<Revenue> revenueRecords = revenueService.getRevenueByMonthYear(month,year);
+        if (revenueRecords.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(revenueRecords);
+    }
 }

@@ -9,4 +9,6 @@ public interface RevenueService {
     void saveRevenueFromExcel(MultipartFile file);
 
     public List<Revenue> getAllRevenue();
+
+    public List<Revenue> getRevenueByMonthYear (String month, String year);
 }

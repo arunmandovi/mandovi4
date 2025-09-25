@@ -66,4 +66,10 @@ public class VASServiceImpl implements VASService {
     public List<VAS> getAllVas() {
         return vasRepository.findAll();
     }
+
+    @Override
+    public List<VAS> getVASByMonthYear(String month, String year) {
+        String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
+        return vasRepository.getVASByMonthYear(formattedMonth, year);
+    }
 }

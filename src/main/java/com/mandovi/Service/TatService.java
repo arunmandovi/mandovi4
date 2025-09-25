@@ -10,4 +10,6 @@ public interface TatService {
     void saveLoadDataFromExcel(MultipartFile file) throws IOException;
 
     public List<Tat> getAllTat();
+
+    public List<Tat> getTATByMonthYear( String month, String year);
 }

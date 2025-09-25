@@ -9,4 +9,6 @@ public interface VASService {
     void saveVASFromExcel(MultipartFile file);
 
     public List<VAS> getAllVas();
+
+    public List<VAS> getVASByMonthYear (String month, String year);
 }

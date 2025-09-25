@@ -3,10 +3,7 @@ package com.mandovi.Controller;
 import com.mandovi.Entity.VAS;
 import com.mandovi.Service.VASService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -37,5 +34,14 @@ public class VASController {
     @GetMapping("/getallvas")
     public List<VAS> getAllVas(){
         return vASService.getAllVas();
+    }
+
+    @GetMapping("/getvas/{month}/{year}")
+    public ResponseEntity<List<VAS>> getVASByMonthYear (@PathVariable String month, @PathVariable String year){
+        List<VAS> vasRecords = vASService.getVASByMonthYear(month, year);
+        if (vasRecords.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(vasRecords);
     }
 }

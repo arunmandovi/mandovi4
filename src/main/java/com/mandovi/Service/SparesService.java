@@ -10,4 +10,6 @@ public interface SparesService{
     void saveSparesDataFromExcel(MultipartFile file)  throws IOException;
 
     public List<Spares> getAllSpares();
+
+    public List<Spares> getSparesByMonthYear(String month, String year);
 }

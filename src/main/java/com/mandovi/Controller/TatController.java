@@ -34,4 +34,13 @@ public class TatController {
     public List<Tat> getAllTat(){
         return tatService.getAllTat();
     }
+
+    @GetMapping("/gettat/{month}/{year}")
+    public ResponseEntity<List<Tat>> getTATByMonthYear (@PathVariable String month, @PathVariable String year){
+        List<Tat> tatRecords = tatService.getTatByMonthYear(month, year);
+        if (tatRecords.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(tatRecords);
+    }
 }
