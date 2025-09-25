@@ -11,6 +11,6 @@ import java.util.List;
 public interface TATRepository extends JpaRepository<TAT,Integer> {
 
     @Transactional
-    @Query("SELECT t FROM Tat t WHERE t.month = :month AND t.year = :year")
+    @Query("SELECT t FROM TAT t WHERE t.month = :month AND t.year = :year")
     public List<TAT> getTATByMonthYear (@Param("month") String month, @Param("year") String year);
 }
