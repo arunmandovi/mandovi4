@@ -9,4 +9,6 @@ public interface MSGPService {
     void saveMSGPFromExcel(MultipartFile file);
 
     public List<MSGP> getAllMSGP();
+
+    public List<MSGP> getMSGPByMonthYear(String month, String year);
 }

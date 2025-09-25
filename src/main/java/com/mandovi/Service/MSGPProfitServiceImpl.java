@@ -152,4 +152,10 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
     public List<MSGPProfit> getAllMSGP_Profit() {
         return msgpProfitRepository.findAll();
     }
+
+    @Override
+    public List<MSGPProfit> getMSGPProfitByMonthYear(String month, String year) {
+        String formatteMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
+        return msgpProfitRepository.getMSGPProfitByMonthYear(formatteMonth, year);
+    }
 }

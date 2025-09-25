@@ -151,4 +151,9 @@ public class PMSPartsServiceImpl implements PMSPartsService {
     public List<PMSParts> getAllPMS_Parts() {
         return pmsPartsRepository.findAll();
     }
+
+    @Override
+    public List<PMSParts> getPMSPartsByPMSDate(LocalDate pmsDate) {
+        return pmsPartsRepository.getPMSPartsByPMSDate(pmsDate);
+    }
 }

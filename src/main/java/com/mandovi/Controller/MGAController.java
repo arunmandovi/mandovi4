@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,5 +34,14 @@ public class MGAController {
     @GetMapping("/getallmga")
     public List<MGA> getAllMGA(){
         return mgaService.getAllMGA();
+    }
+
+    @GetMapping("/getmga/{mgaDate}")
+    public ResponseEntity<List<MGA>> getMGAByMGADate (@PathVariable LocalDate mgaDate){
+        List<MGA> mgaRecords = mgaService.getMGAByMGADate(mgaDate);
+        if (mgaRecords.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(mgaRecords);
     }
 }

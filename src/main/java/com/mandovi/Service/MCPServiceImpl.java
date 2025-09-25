@@ -62,9 +62,13 @@ public class MCPServiceImpl implements MCPService {
                 mcp.setMonth(row.getCell(3).getStringCellValue());
 
                 //Updating value for year column from Integer cell
-                int num_year = (int) row.getCell(4).getNumericCellValue();
-                String year = String.valueOf(num_year);
-                mcp.setYear(year);
+                switch (row.getCell(4).getCellType()){
+                    case NUMERIC : int num_year = (int) row.getCell(4).getNumericCellValue();
+                    mcp.setYear(String.valueOf(num_year));
+                    break;
+                    case STRING: mcp.setYear(row.getCell(4).getStringCellValue());
+                    default: mcp.setYear("");
+                }
 
                 mcp.setMcpQuantity((int) row.getCell(5).getNumericCellValue());
                 mcp.setAmountCollected(row.getCell(6).getNumericCellValue());
@@ -138,5 +142,11 @@ public class MCPServiceImpl implements MCPService {
     @Override
     public List<MCP> getAllMCP() {
         return mcpRepository.findAll();
+    }
+
+    @Override
+    public List<MCP> getMCPByMonthYear(String month, String year) {
+        String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
+        return mcpRepository.getMCPByMonthYear(formattedMonth, year);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,5 +34,14 @@ public class PMSPartsController {
     @GetMapping("/getallpms_parts")
     public List<PMSParts> getAllPMS_Parts(){
         return pmsPartsService.getAllPMS_Parts();
+    }
+
+    @GetMapping("/getpms_parts/{pmsDate}")
+    public ResponseEntity<List<PMSParts>> getPMSPartsByPMSDate(@PathVariable LocalDate pmsDate){
+        List<PMSParts> pmsPartsRecords = pmsPartsService.getPMSPartsByPMSDate(pmsDate);
+        if (pmsPartsRecords.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(pmsPartsRecords);
     }
 }

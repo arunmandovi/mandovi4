@@ -3,8 +3,8 @@ package com.mandovi.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "`reference`")
-public class Reference {
+@Table(name = "referencee")
+public class Referencee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "referenceSINO")
@@ -31,8 +31,8 @@ public class Reference {
     @Column(name = "channel")
     private String channel;
 
-    @Column(name = "reference")
-    private Integer reference;
+    @Column(name = "referencee")
+    private Integer referencee;
 
     @Column(name = "enquiry")
     private Integer enquiry;
@@ -52,10 +52,10 @@ public class Reference {
     @Column(name = "half_year")
     private String half_year;
 
-    public Reference() {
+    public Referencee() {
     }
 
-    public Reference(Integer referenceSINO, String city, String branch, String group_designation, String month, String year, String period, String channel, Integer reference, Integer enquiry, Integer booking, Integer invoice, String financial_year, String qtr_wise, String half_year) {
+    public Referencee(Integer referenceSINO, String city, String branch, String group_designation, String month, String year, String period, String channel, Integer referencee, Integer enquiry, Integer booking, Integer invoice, String financial_year, String qtr_wise, String half_year) {
         this.referenceSINO = referenceSINO;
         this.city = city;
         this.branch = branch;
@@ -64,7 +64,7 @@ public class Reference {
         this.year = year;
         this.period = period;
         this.channel = channel;
-        this.reference = reference;
+        this.referencee = referencee;
         this.enquiry = enquiry;
         this.booking = booking;
         this.invoice = invoice;
@@ -137,12 +137,12 @@ public class Reference {
         this.channel = channel;
     }
 
-    public Integer getReference() {
-        return reference;
+    public Integer getReferencee() {
+        return referencee;
     }
 
-    public void setReference(Integer reference) {
-        this.reference = reference;
+    public void setReferencee(Integer referencee) {
+        this.referencee = referencee;
     }
 
     public Integer getEnquiry() {
@@ -204,7 +204,7 @@ public class Reference {
                 ", year='" + year + '\'' +
                 ", period='" + period + '\'' +
                 ", channel='" + channel + '\'' +
-                ", reference=" + reference +
+                ", referencee=" + referencee +
                 ", enquiry=" + enquiry +
                 ", booking=" + booking +
                 ", invoice=" + invoice +

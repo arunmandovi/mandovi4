@@ -9,4 +9,6 @@ public interface OilService {
     void saveOilFromExcel(MultipartFile file);
 
     public List<Oil> getAllOil();
+
+    public List<Oil> getOilByMonthYear(String month, String year);
 }

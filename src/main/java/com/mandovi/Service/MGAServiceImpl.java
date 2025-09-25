@@ -183,5 +183,10 @@ public class MGAServiceImpl implements MGAService {
         return mgaRepository.findAll();
     }
 
+    @Override
+    public List<MGA> getMGAByMGADate(LocalDate mgaDate) {
+        return mgaRepository.getMGAByMGADate(mgaDate);
+    }
+
 
 }

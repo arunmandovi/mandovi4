@@ -10,4 +10,6 @@ public interface MSGPProfitService {
     void saveMSGPProfitFromExcel(MultipartFile file) ;
 
     public List<MSGPProfit> getAllMSGP_Profit();
+
+    public List<MSGPProfit> getMSGPProfitByMonthYear(String month, String year);
 }

@@ -34,4 +34,13 @@ public class MSGPController {
     public List<MSGP> getALLMSGP(){
         return msgpService.getAllMSGP();
     }
+
+    @GetMapping("/getmsgp/{month}/{year}")
+    public ResponseEntity<List<MSGP>> getMSGPByMonthYear(@PathVariable String month, @PathVariable String year){
+        List<MSGP> msgpRecords = msgpService.getMSGPByMonthYear(month, year);
+        if (msgpRecords.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(msgpRecords);
+    }
 }

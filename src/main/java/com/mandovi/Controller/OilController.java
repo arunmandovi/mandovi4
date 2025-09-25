@@ -34,4 +34,13 @@ public class OilController {
     public List<Oil> getAllOil(){
         return oilService.getAllOil();
     }
+
+    @GetMapping("/getoil/{month}/{year}")
+    public ResponseEntity<List<Oil>> getOilByMonthYear(@PathVariable String month, @PathVariable String year){
+        List<Oil> oilRecords = oilService.getOilByMonthYear(month, year);
+        if (oilRecords.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(oilRecords);
+    }
 }

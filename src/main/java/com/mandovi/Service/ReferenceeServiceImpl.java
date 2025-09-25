@@ -1,7 +1,7 @@
 package com.mandovi.Service;
 
-import com.mandovi.Entity.Reference;
-import com.mandovi.Repository.ReferenceRepository;
+import com.mandovi.Entity.Referencee;
+import com.mandovi.Repository.ReferenceeRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,10 +11,10 @@ import java.io.InputStream;
 import java.util.List;
 
 @Service
-public class ReferenceServiceImpl implements ReferenceService {
-    private final ReferenceRepository referenceRepository;
-    public ReferenceServiceImpl(ReferenceRepository referenceRepository) {
-        this.referenceRepository = referenceRepository;
+public class ReferenceeServiceImpl implements ReferenceeService {
+    private final ReferenceeRepository referenceeRepository;
+    public ReferenceeServiceImpl(ReferenceeRepository referenceeRepository) {
+        this.referenceeRepository = referenceeRepository;
     }
     @Override
     public void saveReferenceFromExcel(MultipartFile file) {
@@ -29,7 +29,7 @@ public class ReferenceServiceImpl implements ReferenceService {
                     Row row = sheet.getRow(i);
                     if(row == null)continue;
 
-                    Reference reference = new Reference();
+                    Referencee reference = new Referencee();
 
                     reference.setCity(row.getCell(0).getStringCellValue());
                     reference.setBranch(row.getCell(1).getStringCellValue());
@@ -43,7 +43,7 @@ public class ReferenceServiceImpl implements ReferenceService {
                     reference.setChannel(row.getCell(5).getStringCellValue());
 
 
-                    reference.setReference(row.getCell(6) == null ? 0 : (int) row.getCell(6).getNumericCellValue());
+                    reference.setReferencee(row.getCell(6) == null ? 0 : (int) row.getCell(6).getNumericCellValue());
                     reference.setEnquiry(row.getCell(7) == null ? 0 : (int) row.getCell(7).getNumericCellValue());
                     reference.setBooking(row.getCell(8) == null ? 0 : (int) row.getCell(8).getNumericCellValue());
                     reference.setInvoice(row.getCell(9) == null ? 0 : (int) row.getCell(9).getNumericCellValue());
@@ -69,7 +69,7 @@ public class ReferenceServiceImpl implements ReferenceService {
                         case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" -> { reference.setQtr_wise("Qtr3"); reference.setHalf_year("H2"); }
                         case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" -> { reference.setQtr_wise("Qtr4"); reference.setHalf_year("H2"); }
                     }
-                    referenceRepository.save(reference);
+                    referenceeRepository.save(reference);
                 }
 
             }
@@ -80,7 +80,13 @@ public class ReferenceServiceImpl implements ReferenceService {
     }
 
     @Override
-    public List<Reference> getAllReference() {
-        return referenceRepository.findAll();
+    public List<Referencee> getAllReference() {
+        return referenceeRepository.findAll();
+    }
+
+    @Override
+    public List<Referencee> getReferenceeByMonthYear(String month, String year) {
+        String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
+        return referenceeRepository.getReferenceeByMonthYear(formattedMonth, year);
     }
 }

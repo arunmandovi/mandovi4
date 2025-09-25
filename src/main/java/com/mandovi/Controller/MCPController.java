@@ -30,8 +30,17 @@ public class MCPController {
         }
     }
 
-    @GetMapping("getallmcp")
+    @GetMapping("/getallmcp")
     public List<MCP> getAllMCP(){
         return mcpService.getAllMCP();
+    }
+
+    @GetMapping("/getmcp/{month}/{year}")
+    public ResponseEntity<List<MCP>> getMCPByMonthYear(@PathVariable String month, @PathVariable String year){
+        List<MCP> mcpRecords = mcpService.getMCPByMonthYear(month, year);
+        if (mcpRecords.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(mcpRecords);
     }
 }

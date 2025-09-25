@@ -33,4 +33,13 @@ public class MSGPProfitController {
     public List<MSGPProfit> getALLMSGP_Profit(){
         return msgpProfitService.getAllMSGP_Profit();
     }
+
+    @GetMapping("/getmsgp_profit/{month}/{year}")
+    public ResponseEntity<List<MSGPProfit>> getMSGPProfitByMonthYear(@PathVariable String month, @PathVariable String year){
+        List<MSGPProfit> msgpProfitRecords = msgpProfitService.getMSGPProfitByMonthYear(month, year);
+        if (msgpProfitRecords.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(msgpProfitRecords);
+    }
 }

@@ -9,4 +9,6 @@ public interface MCPService {
     void saveMCPGFromExcel(MultipartFile file);
 
     public List<MCP> getAllMCP();
+
+    List<MCP> getMCPByMonthYear(String month, String year);
 }
