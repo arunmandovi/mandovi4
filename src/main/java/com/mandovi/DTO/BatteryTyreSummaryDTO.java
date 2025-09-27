@@ -8,17 +8,21 @@ public class BatteryTyreSummaryDTO {
     private  Long totalQty;
     private  Double totalDDL;
     private  Double totalSelling;
+    private Double profit;
+    private Double percentageProfit;
 
     public BatteryTyreSummaryDTO() {
     }
 
-    public BatteryTyreSummaryDTO(String city, String branch, String oilType, Long totalQty, Double totalDDL, Double totalSelling) {
+    public BatteryTyreSummaryDTO(String city, String branch, String oilType, Long totalQty, Double totalDDL, Double totalSelling, Double profit, Double percentageProfit) {
         this.city = city;
         this.branch = branch;
         this.oilType = oilType;
         this.totalQty = totalQty;
         this.totalDDL = totalDDL;
         this.totalSelling = totalSelling;
+        this.profit = profit;
+        this.percentageProfit = percentageProfit;
     }
 
     public String getCity() {
@@ -69,6 +73,22 @@ public class BatteryTyreSummaryDTO {
         this.totalSelling = totalSelling;
     }
 
+    public Double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(Double profit) {
+        this.profit = profit;
+    }
+
+    public Double getPercentageProfit() {
+        return percentageProfit;
+    }
+
+    public void setPercentageProfit(Double percentageProfit) {
+        this.percentageProfit = percentageProfit;
+    }
+
     @Override
     public String toString() {
         return "BatteryTyreSummaryDTO{" +
@@ -78,6 +98,8 @@ public class BatteryTyreSummaryDTO {
                 ", totalQty=" + totalQty +
                 ", totalDDL=" + totalDDL +
                 ", totalSelling=" + totalSelling +
+                ", profit=" + profit +
+                ", percentageProfit=" + percentageProfit +
                 '}';
     }
 }

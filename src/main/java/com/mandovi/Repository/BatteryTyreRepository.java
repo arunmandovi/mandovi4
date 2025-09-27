@@ -21,7 +21,10 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             "b.city, null, 'BATTERY', " +
             "SUM(b.sum_of_net_retail_qty), " +
             "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling)) " +
+            "SUM(b.sum_of_net_retail_selling), " +
+            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
+            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
+            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
             "FROM BatteryTyre b " +
             "WHERE b.oilType = 'BATTERY'" +
             "AND (:month IS NULL OR b.month = :month) " +
@@ -34,7 +37,10 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             "null, b.branch, 'BATTERY', " +
             "SUM(b.sum_of_net_retail_qty), " +
             "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling)) " +
+            "SUM(b.sum_of_net_retail_selling), " +
+            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
+            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
+            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
             "FROM BatteryTyre b " +
             "WHERE b.oilType = 'BATTERY'" +
             "AND (:month IS NULL OR b.month = :month) " +
@@ -47,7 +53,10 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             "b.city, b.branch, 'BATTERY', " +
             "SUM(b.sum_of_net_retail_qty), " +
             "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling)) " +
+            "SUM(b.sum_of_net_retail_selling), " +
+            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
+            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
+            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
             "FROM BatteryTyre b " +
             "WHERE b.oilType = 'BATTERY'" +
             "AND (:month IS NULL OR b.month = :month) " +
@@ -60,7 +69,10 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             "b.city, null, 'TYRE', " +
             "SUM(b.sum_of_net_retail_qty), " +
             "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling)) " +
+            "SUM(b.sum_of_net_retail_selling), " +
+            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
+            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
+            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
             "FROM BatteryTyre b " +
             "WHERE b.oilType = 'TYRE'" +
             "AND (:month IS NULL OR b.month = :month) " +
@@ -73,7 +85,10 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             "null, b.branch, 'TYRE', " +
             "SUM(b.sum_of_net_retail_qty), " +
             "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling)) " +
+            "SUM(b.sum_of_net_retail_selling), " +
+            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
+            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
+            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
             "FROM BatteryTyre b " +
             "WHERE b.oilType = 'TYRE'" +
             "AND (:month IS NULL OR b.month = :month) " +
@@ -86,7 +101,10 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             "b.city, b.branch, 'TYRE', " +
             "SUM(b.sum_of_net_retail_qty), " +
             "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling)) " +
+            "SUM(b.sum_of_net_retail_selling), " +
+            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
+            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
+            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
             "FROM BatteryTyre b " +
             "WHERE b.oilType = 'TYRE'" +
             "AND (:month IS NULL OR b.month = :month) " +
