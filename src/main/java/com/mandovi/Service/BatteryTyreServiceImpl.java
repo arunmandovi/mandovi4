@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.BatteryTyreSummaryDTO;
 import com.mandovi.Entity.BatteryTyre;
 import com.mandovi.Repository.BatteryTyreRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -41,9 +42,11 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
                 batteryTyre.setMonth(row.getCell(2).getStringCellValue());
 
                 //Converting Integer cell's year into String
-                int year =(int)  row.getCell(3).getNumericCellValue();
-                String yearStr = String.valueOf(year);
-                batteryTyre.setYear(yearStr);
+                switch (row.getCell(3).getCellType()){
+                    case NUMERIC -> batteryTyre.setYear(String.valueOf((int) row.getCell(3).getNumericCellValue()));
+                    case STRING -> batteryTyre.setYear(row.getCell(3).getStringCellValue());
+                    default -> batteryTyre.setYear("UNKNOWN");
+                }
                 batteryTyre.setOilType(row.getCell(4).getStringCellValue());
 
                 batteryTyre.setSum_of_net_retail_qty((int)   row.getCell(5).getNumericCellValue());
@@ -83,4 +86,31 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
         String formattedMonth = month.substring(0, 1).toUpperCase() + month.substring(1).toLowerCase();
         return batteryTyreRepository.getBatteryTyreByMonthYear(formattedMonth, year);
     }
+
+    @Override
+    public List<BatteryTyreSummaryDTO> getBatterySummary(String groupBy, String month, String year) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy parameter is required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return batteryTyreRepository.getBatterySummaryByCity(month, year);
+            case "branch" : return batteryTyreRepository.getBatterySummaryByBranch(month, year);
+            case "city_branch" : return batteryTyreRepository.getBatterySummaryByCityAndBranch(month, year);
+            default:throw new IllegalArgumentException("Illegal groupBy Argument Value");
+        }
+    }
+
+    @Override
+    public List<BatteryTyreSummaryDTO> getTyreSummary(String groupBy, String month, String year) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy parameter is required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return batteryTyreRepository.getTyreSummaryByCity(month, year);
+            case "branch" : return batteryTyreRepository.getTyreSummaryByBranch(month, year);
+            case "city_branch" : return batteryTyreRepository.getTyreSummaryByCityAndBranch(month, year);
+            default:throw new IllegalArgumentException("Illegal groupBy Argument Value");
+        }
+    }
+
 }

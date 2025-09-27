@@ -43,26 +43,24 @@ public class EmployeeServiceImpl implements EmployeeService{
         newEmp.setEmployeeId(emp.getEmployeeId());
         newEmp.setDesignation(emp.getDesignation());
         newEmp.setEmployeePassword(emp.getEmployeePassword());
-        newEmp.setEmployeeStatus("APPROVED");
         return employeeRepository.save(newEmp);
     }
 
     @Override
     public Employee loginEmployee(String employeeId, String employeePassword) {
-        Optional<Employee> employeeOptional = employeeRepository.findByEmployeeId(employeeId);
+        Employee employeeOptional = employeeRepository.getEmployeeByEmployeeId(employeeId);
         if (employeeId == null || employeeId.trim().isEmpty()) {
             throw new RuntimeException("EmployeeId is required ");
         }
-        if (employeeOptional.isEmpty()){
+        if (employeeOptional.getEmployeeId() == null || employeeOptional.getEmployeeId().trim().isEmpty()){
             throw new RuntimeException("Employee does not exist with Employee ID : "+employeeId);
         }
-        Employee employee = employeeOptional.get();
-        if (!employee.getEmployeePassword().equals(employeePassword)){
+        if (!employeeOptional.getEmployeePassword().equals(employeePassword)){
             throw new RuntimeException("Invalid Password");
         }
-        if (!"APPROVED".equalsIgnoreCase(employee.getEmployeeStatus())){
-            throw new RuntimeException("Admin has not Approved Your Account");
+        if(employeeOptional.getEmployeeStatus() == Employee.Status.PENDING){
+            throw new RuntimeException("Admin has not approved");
         }
-        return employee;
+        return employeeOptional;
     }
 }

@@ -1,6 +1,8 @@
 package com.mandovi.Entity;
 
+import ch.qos.logback.core.status.Status;
 import jakarta.persistence.*;
+import jdk.jshell.Snippet;
 
 @Entity
 @Table(name = "employee")
@@ -23,18 +25,23 @@ public class Employee {
     private String employeePassword;
 
     @Column(name = "employee_status")
-    private String employeeStatus;
+    @Enumerated(EnumType.STRING)
+    private Status employeeStatus = Status.APPROVED;
+
+    public enum Status{
+        APPROVED,PENDING
+    }
 
     public Employee() {
     }
 
-    public Employee(Integer employeeSINo, String employeeName, String employeeId, String designation, String employeePassword, String employeeStatus) {
+    public Employee(Integer employeeSINo, String employeeName, String employeeId, String designation, String employeePassword) {
         this.employeeSINo = employeeSINo;
         this.employeeName = employeeName;
         this.employeeId = employeeId;
         this.designation = designation;
         this.employeePassword = employeePassword;
-        this.employeeStatus = employeeStatus;
+        this.employeeStatus = employeeStatus.APPROVED;
 
     }
 
@@ -78,11 +85,11 @@ public class Employee {
         this.employeePassword = employeePassword;
     }
 
-    public String getEmployeeStatus() {
+    public Status getEmployeeStatus() {
         return employeeStatus;
     }
 
-    public void setEmployeeStatus(String employeeStatus) {
+    public void setEmployeeStatus(Status employeeStatus) {
         this.employeeStatus = employeeStatus;
     }
 

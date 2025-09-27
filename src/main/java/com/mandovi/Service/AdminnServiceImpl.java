@@ -3,6 +3,7 @@ package com.mandovi.Service;
 import com.mandovi.Entity.Adminn;
 import com.mandovi.Entity.Employee;
 import com.mandovi.Repository.AdminnRepository;
+import com.mandovi.Repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.Optional;
 @Service
 public class AdminnServiceImpl implements AdminnService {
     private final AdminnRepository adminnRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public AdminnServiceImpl(AdminnRepository adminnRepository) {
+    public AdminnServiceImpl(AdminnRepository adminnRepository, EmployeeRepository employeeRepository) {
         this.adminnRepository = adminnRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -58,10 +61,24 @@ public class AdminnServiceImpl implements AdminnService {
         return newAdminn;
     }
 
-//    @Override
-//    public List<Employee> getAllEmployee() {
-//        return List.of();
-//    }
+    @Override
+    public List<Employee> getAllEmployee() {
+        return adminnRepository.getAllEmployee();
+    }
+
+    @Override
+    public Employee approveEmployee(String employeeId) {
+        Employee employee = employeeRepository.getEmployeeByEmployeeId(employeeId);
+        employee.setEmployeeStatus(Employee.Status.APPROVED);
+        return employeeRepository.save(employee);
+    }
+
+    @Override
+    public Employee disableEmployee(String employeeId) {
+        Employee employee = employeeRepository.getEmployeeByEmployeeId(employeeId);
+        employee.setEmployeeStatus(Employee.Status.PENDING);
+        return employeeRepository.save(employee);
+    }
 
 
 }
