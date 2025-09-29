@@ -13,9 +13,15 @@ public interface AdminnService {
 
     public List<Employee> getAllEmployee ();
 
-    public Employee approveEmployee(String employeeId);
+    public List<Adminn> getAllAdminn();
 
-    public Employee disableEmployee(String employeeId);
+    public String enableAdminn(String adminnId);
+
+    public String disableAdminn(String adminnId);
+
+    public String enableEmployee(String employeeId);
+
+    public String disableEmployee(String employeeId);
 
 }
 

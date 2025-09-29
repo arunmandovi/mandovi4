@@ -48,23 +48,36 @@ public class AdminnController {
         return ResponseEntity.ok(employeeRecords);
     }
 
-    @PutMapping("/approve_employee/{employeeId}")
-    public ResponseEntity<?> approveEmployee(@PathVariable String employeeId){
-        try {
-            Employee employee = adminnService.approveEmployee(employeeId);
-            return ResponseEntity.ok("Employee "+employee.getEmployeeName()+" Approved Successfully");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error :"+e.getMessage());
-        }
+    @GetMapping("/getalladminn")
+    public ResponseEntity<List<Adminn>> getAllAdminn(){
+            List<Adminn> adminnRecords = adminnService.getAllAdminn();
+            if (adminnRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(adminnRecords);
     }
 
-    @PutMapping("/disable_emplyee/{employeeId}")
-    public ResponseEntity<?> disableEmployee(@PathVariable String employeeId){
-        try {
-            Employee employee = adminnService.disableEmployee(employeeId);
-            return ResponseEntity.ok("Employee "+employee.getEmployeeName()+" Disabled Successfuly");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error : "+e.getMessage());
-        }
+    @PutMapping("/enable_adminn/{adminnId}")
+    public ResponseEntity<String> enableAdmin(@PathVariable String adminnId){
+            String response = adminnService.enableAdminn(adminnId);
+            return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/disable_adminn/{adminnId}")
+    public ResponseEntity<String> disableAdmin(@PathVariable String adminnId){
+        String response = adminnService.disableAdminn(adminnId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/enable_employee/{employeeId}")
+    public ResponseEntity<String> enableEmployee(@PathVariable String employeeId){
+        String response = adminnService.enableEmployee(employeeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/disable_employee/{employeeId}")
+    public ResponseEntity<String> disableEmployee(@PathVariable String employeeId){
+        String response = adminnService.disableEmployee(employeeId);
+        return ResponseEntity.ok(response);
     }
 }

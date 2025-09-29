@@ -48,19 +48,21 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee loginEmployee(String employeeId, String employeePassword) {
-        Employee employeeOptional = employeeRepository.getEmployeeByEmployeeId(employeeId);
         if (employeeId == null || employeeId.trim().isEmpty()) {
             throw new RuntimeException("EmployeeId is required ");
         }
-        if (employeeOptional.getEmployeeId() == null || employeeOptional.getEmployeeId().trim().isEmpty()){
+        Optional<Employee> employeeOptional = employeeRepository.findByEmployeeId(employeeId);
+        if (employeeOptional.isEmpty()){
             throw new RuntimeException("Employee does not exist with Employee ID : "+employeeId);
         }
-        if (!employeeOptional.getEmployeePassword().equals(employeePassword)){
+
+        Employee employee = employeeOptional.get();
+        if (!employee.getEmployeePassword().equals(employeePassword)){
             throw new RuntimeException("Invalid Password");
         }
-        if(employeeOptional.getEmployeeStatus() == Employee.Status.PENDING){
+        if(employee.getEmployeeStatus() == Employee.Status.PENDING){
             throw new RuntimeException("Admin has not approved");
         }
-        return employeeOptional;
+        return employee;
     }
 }

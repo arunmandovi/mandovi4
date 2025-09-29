@@ -41,7 +41,7 @@ public class Employee {
         this.employeeId = employeeId;
         this.designation = designation;
         this.employeePassword = employeePassword;
-        this.employeeStatus = employeeStatus.APPROVED;
+        this.employeeStatus = Status.APPROVED;
 
     }
 
