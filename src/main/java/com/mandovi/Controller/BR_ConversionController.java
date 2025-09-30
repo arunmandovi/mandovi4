@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.BR_ConversionSummaryDTO;
 import com.mandovi.Entity.BR_Conversion;
 import com.mandovi.Service.BR_ConversionService;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,25 @@ public class BR_ConversionController {
             ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(brConversionRecords);
+    }
+
+    @GetMapping("/br_conversion_arena")
+    public ResponseEntity<List<BR_ConversionSummaryDTO>> getBR_ConversionArenaSummary(
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String year,
+            @RequestParam(required = false) String qtr_wise,
+            @RequestParam (required = false) String half_year){
+        try {
+            List<BR_ConversionSummaryDTO> listBR_ConversionArena = br_conversionService.getBR_ConversionArenaSummary(groupBy, month, year, qtr_wise, half_year);
+            if (listBR_ConversionArena.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listBR_ConversionArena);
+        }catch (IllegalArgumentException e){
+            return  ResponseEntity.badRequest().body(null);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.BR_ConversionSummaryDTO;
 import com.mandovi.Entity.BR_Conversion;
 import com.mandovi.Repository.BR_ConversionRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -91,5 +92,19 @@ public class BR_ConversionServiceImpl implements BR_ConversionService{
     public List<BR_Conversion> getBR_ConversionByMonthYear(String month, String year) {
         String formattedMonth = month.substring(0, 1).toUpperCase() +month.substring(1).toLowerCase();
         return br_conversionRepository.getBR_ConversionByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<BR_ConversionSummaryDTO> getBR_ConversionArenaSummary(String groupBy, String month, String year, String qtr_wise, String half_year) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter Is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return br_conversionRepository.getBR_ConversionSummaryByCity(month, year, qtr_wise,half_year);
+            case "branch" : return br_conversionRepository.getBR_ConversionSummaryByBranch(month, year, qtr_wise, half_year);
+            case "city_branch" : return br_conversionRepository.getBR_ConversionSummaryByCityAndBranch(month, year, qtr_wise, half_year);
+            default: throw new IllegalArgumentException("Illegal groupBy Argument Value");
+        }
+
     }
 }
