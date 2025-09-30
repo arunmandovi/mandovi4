@@ -100,11 +100,24 @@ public class BR_ConversionServiceImpl implements BR_ConversionService{
             throw new IllegalArgumentException("groupBy Parameter Is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return br_conversionRepository.getBR_ConversionSummaryByCity(month, year, qtr_wise,half_year);
-            case "branch" : return br_conversionRepository.getBR_ConversionSummaryByBranch(month, year, qtr_wise, half_year);
-            case "city_branch" : return br_conversionRepository.getBR_ConversionSummaryByCityAndBranch(month, year, qtr_wise, half_year);
+            case "city" : return br_conversionRepository.getBR_ConversionArenaSummaryByCity(month, year, qtr_wise,half_year);
+            case "branch" : return br_conversionRepository.getBR_ConversionArenaSummaryByBranch(month, year, qtr_wise, half_year);
+            case "city_branch" : return br_conversionRepository.getBR_ConversionArenaSummaryByCityAndBranch(month, year, qtr_wise, half_year);
             default: throw new IllegalArgumentException("Illegal groupBy Argument Value");
         }
 
+    }
+
+    @Override
+    public List<BR_ConversionSummaryDTO> getBr_ConversionNexaSummary(String groupBy, String month, String year, String qtr_wise, String half_year) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return br_conversionRepository.getBR_ConversionNexaSummaryByCity(month, year, qtr_wise, half_year);
+            case "branch" : return br_conversionRepository.getBR_ConversionNexaSummaryByBranch(month, year, qtr_wise, half_year);
+            case "city_branch" : return br_conversionRepository.getBR_ConversionNexaSummaryByCityAndBranch(month, year, qtr_wise, half_year);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 }

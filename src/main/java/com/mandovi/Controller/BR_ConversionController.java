@@ -64,4 +64,24 @@ public class BR_ConversionController {
             return ResponseEntity.internalServerError().body(null);
         }
     }
+
+    @GetMapping("br_conversion_nexa")
+    public ResponseEntity<List<BR_ConversionSummaryDTO>> getBR_ConversionNexaSummary(
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String year,
+            @RequestParam (required = false) String qtr_wise,
+            @RequestParam(required = false) String half_year ){
+        try {
+            List<BR_ConversionSummaryDTO> listBR_ConversionNexa = br_conversionService.getBr_ConversionNexaSummary(groupBy, month, year, qtr_wise, half_year);
+            if (listBR_ConversionNexa.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listBR_ConversionNexa);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(null);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
 }

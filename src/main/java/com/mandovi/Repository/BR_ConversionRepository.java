@@ -25,10 +25,7 @@ public interface BR_ConversionRepository extends JpaRepository<BR_Conversion, In
             "'ARENA', " +
             "SUM(b.no), " +
             "SUM(b.br_conversion), " +
-            "CASE WHEN SUM(b.no) = 0 THEN 0 ELSE (SUM(b.br_conversion) * 1.0 / SUM(b.no)) END, " +
-            "SUM(b.labour_amt), " +
-            "SUM(b.part_amount), " +
-            "(SUM(b.labour_amt) + SUM(b.part_amount)) " +
+            "CASE WHEN SUM(b.no) = 0 THEN 0 ELSE (SUM(b.br_conversion) * 100.0 / SUM(b.no)) END " +
             ") " +
             "FROM BR_Conversion b " +
             "WHERE b.channel = 'ARENA' " +
@@ -37,7 +34,7 @@ public interface BR_ConversionRepository extends JpaRepository<BR_Conversion, In
             "AND (:qtr_wise IS NULL OR b.qtr_wise = :qtr_wise) " +
             "AND (:half_year IS NULL OR b.half_year = :half_year) " +
             "GROUP BY b.city")
-    List<BR_ConversionSummaryDTO> getBR_ConversionSummaryByCity(
+    List<BR_ConversionSummaryDTO> getBR_ConversionArenaSummaryByCity(
             @Param("month") String month,
             @Param("year") String year,
             @Param("qtr_wise") String qtrWise,
@@ -52,10 +49,7 @@ public interface BR_ConversionRepository extends JpaRepository<BR_Conversion, In
             "'ARENA', " +
             "SUM(b.no), " +
             "SUM(b.br_conversion), " +
-            "CASE WHEN SUM(b.no) = 0 THEN 0 ELSE (SUM(b.br_conversion) * 1.0 / SUM(b.no)) END, " +
-            "SUM(b.labour_amt), " +
-            "SUM(b.part_amount), " +
-            "(SUM(b.labour_amt) + SUM(b.part_amount)) " +
+            "CASE WHEN SUM(b.no) = 0 THEN 0 ELSE (SUM(b.br_conversion) * 100.0 / SUM(b.no)) END " +
             ") " +
             "FROM BR_Conversion b " +
             "WHERE b.channel = 'ARENA' " +
@@ -64,7 +58,7 @@ public interface BR_ConversionRepository extends JpaRepository<BR_Conversion, In
             "AND (:qtr_wise IS NULL OR b.qtr_wise = :qtr_wise) " +
             "AND (:half_year IS NULL OR b.half_year = :half_year) " +
             "GROUP BY b.branch")
-    List<BR_ConversionSummaryDTO> getBR_ConversionSummaryByBranch(
+    List<BR_ConversionSummaryDTO> getBR_ConversionArenaSummaryByBranch(
             @Param("month") String month,
             @Param("year") String year,
             @Param("qtr_wise") String qtrWise,
@@ -79,10 +73,7 @@ public interface BR_ConversionRepository extends JpaRepository<BR_Conversion, In
             "'ARENA', " +
             "SUM(b.no), " +
             "SUM(b.br_conversion), " +
-            "CASE WHEN SUM(b.no) = 0 THEN 0 ELSE (SUM(b.br_conversion) * 1.0 / SUM(b.no)) END, " +
-            "SUM(b.labour_amt), " +
-            "SUM(b.part_amount), " +
-            "(SUM(b.labour_amt) + SUM(b.part_amount)) " +
+            "CASE WHEN SUM(b.no) = 0 THEN 0 ELSE (SUM(b.br_conversion) * 100.0 / SUM(b.no)) END " +
             ") " +
             "FROM BR_Conversion b " +
             "WHERE b.channel = 'ARENA' " +
@@ -91,7 +82,79 @@ public interface BR_ConversionRepository extends JpaRepository<BR_Conversion, In
             "AND (:qtr_wise IS NULL OR b.qtr_wise = :qtr_wise) " +
             "AND (:half_year IS NULL OR b.half_year = :half_year) " +
             "GROUP BY b.city, b.branch")
-    List<BR_ConversionSummaryDTO> getBR_ConversionSummaryByCityAndBranch(
+    List<BR_ConversionSummaryDTO> getBR_ConversionArenaSummaryByCityAndBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtr_wise") String qtrWise,
+            @Param("half_year") String halfYear);
+
+    //Group by city for Nexa
+    @Query("SELECT new com.mandovi.DTO.BR_ConversionSummaryDTO( " +
+            "b.city, " +
+            "null, " +
+            ":qtr_wise, " +
+            ":half_year, " +
+            "'NEXA', " +
+            "SUM(b.no), " +
+            "SUM(b.br_conversion), " +
+            "CASE WHEN SUM(b.no) = 0 THEN 0 ELSE (SUM(b.br_conversion) * 100.0 / SUM(b.no)) END " +
+            ") " +
+            "FROM BR_Conversion b " +
+            "WHERE b.channel = 'NEXA' " +
+            "AND (:month IS NULL OR b.month = :month) " +
+            "AND (:year IS NULL OR b.year = :year) " +
+            "AND (:qtr_wise IS NULL OR b.qtr_wise = :qtr_wise) " +
+            "AND (:half_year IS NULL OR b.half_year = :half_year) " +
+            "GROUP BY b.city")
+    List<BR_ConversionSummaryDTO> getBR_ConversionNexaSummaryByCity(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtr_wise") String qtrWise,
+            @Param("half_year") String halfYear);
+
+    //Group by branch for Arena
+    @Query("SELECT new com.mandovi.DTO.BR_ConversionSummaryDTO( " +
+            "null, " +
+            "b.branch, " +
+            ":qtr_wise, " +
+            ":half_year, " +
+            "'NEXA', " +
+            "SUM(b.no), " +
+            "SUM(b.br_conversion), " +
+            "CASE WHEN SUM(b.no) = 0 THEN 0 ELSE (SUM(b.br_conversion) * 100.0 / SUM(b.no)) END " +
+            ") " +
+            "FROM BR_Conversion b " +
+            "WHERE b.channel = 'NEXA' " +
+            "AND (:month IS NULL OR b.month = :month) " +
+            "AND (:year IS NULL OR b.year = :year) " +
+            "AND (:qtr_wise IS NULL OR b.qtr_wise = :qtr_wise) " +
+            "AND (:half_year IS NULL OR b.half_year = :half_year) " +
+            "GROUP BY b.branch")
+    List<BR_ConversionSummaryDTO> getBR_ConversionNexaSummaryByBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtr_wise") String qtrWise,
+            @Param("half_year") String halfYear);
+
+    //Group by city_branch for Arena
+    @Query("SELECT new com.mandovi.DTO.BR_ConversionSummaryDTO( " +
+            "b.city, " +
+            "b.branch, " +
+            ":qtr_wise, " +
+            ":half_year, " +
+            "'NEXA', " +
+            "SUM(b.no), " +
+            "SUM(b.br_conversion), " +
+            "CASE WHEN SUM(b.no) = 0 THEN 0 ELSE (SUM(b.br_conversion) * 100.0 / SUM(b.no)) END " +
+            ") " +
+            "FROM BR_Conversion b " +
+            "WHERE b.channel = 'NEXA' " +
+            "AND (:month IS NULL OR b.month = :month) " +
+            "AND (:year IS NULL OR b.year = :year) " +
+            "AND (:qtr_wise IS NULL OR b.qtr_wise = :qtr_wise) " +
+            "AND (:half_year IS NULL OR b.half_year = :half_year) " +
+            "GROUP BY b.city, b.branch")
+    List<BR_ConversionSummaryDTO> getBR_ConversionNexaSummaryByCityAndBranch(
             @Param("month") String month,
             @Param("year") String year,
             @Param("qtr_wise") String qtrWise,

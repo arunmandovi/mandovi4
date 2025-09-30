@@ -15,4 +15,6 @@ public interface BR_ConversionService {
     public List<BR_Conversion> getBR_ConversionByMonthYear(String month, String year);
 
     public List<BR_ConversionSummaryDTO> getBR_ConversionArenaSummary (String groupBy, String month, String year, String qtr_wise, String half_year);
+
+    public List<BR_ConversionSummaryDTO> getBr_ConversionNexaSummary (String groupBy, String month, String year, String qtr_wise, String half_year);
 }

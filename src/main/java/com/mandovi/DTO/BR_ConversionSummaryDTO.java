@@ -9,14 +9,11 @@ public class BR_ConversionSummaryDTO {
     private Long fs_pms_load;
     private Long br_conversion;
     private Double percentageBR_conversion;
-    private Double labour_amt;
-    private Double part_amt;
-    private Double total_amt;
 
     public BR_ConversionSummaryDTO() {
     }
 
-    public BR_ConversionSummaryDTO(String city, String branch, String qtr_wise, String half_year, String channel, Long fs_pms_load, Long br_conversion, Double percentageBR_conversion, Double labour_amt, Double part_amt, Double total_amt) {
+    public BR_ConversionSummaryDTO(String city, String branch, String qtr_wise, String half_year, String channel, Long fs_pms_load, Long br_conversion, Double percentageBR_conversion) {
         this.city = city;
         this.branch = branch;
         this.qtr_wise = qtr_wise;
@@ -25,9 +22,6 @@ public class BR_ConversionSummaryDTO {
         this.fs_pms_load = fs_pms_load;
         this.br_conversion = br_conversion;
         this.percentageBR_conversion = percentageBR_conversion;
-        this.labour_amt = labour_amt;
-        this.part_amt = part_amt;
-        this.total_amt = total_amt;
     }
 
     public String getCity() {
@@ -94,30 +88,6 @@ public class BR_ConversionSummaryDTO {
         this.percentageBR_conversion = percentageBR_conversion;
     }
 
-    public Double getLabour_amt() {
-        return labour_amt;
-    }
-
-    public void setLabour_amt(Double labour_amt) {
-        this.labour_amt = labour_amt;
-    }
-
-    public Double getPart_amt() {
-        return part_amt;
-    }
-
-    public void setPart_amt(Double part_amt) {
-        this.part_amt = part_amt;
-    }
-
-    public Double getTotal_amt() {
-        return total_amt;
-    }
-
-    public void setTotal_amt(Double total_amt) {
-        this.total_amt = total_amt;
-    }
-
     @Override
     public String toString() {
         return "BR_ConversionSummaryDTO{" +
@@ -129,9 +99,6 @@ public class BR_ConversionSummaryDTO {
                 ", fs_pms_load=" + fs_pms_load +
                 ", br_conversion=" + br_conversion +
                 ", percentageBR_conversion=" + percentageBR_conversion +
-                ", labour_amt=" + labour_amt +
-                ", part_amt=" + part_amt +
-                ", total_amt=" + total_amt +
                 '}';
     }
 }
