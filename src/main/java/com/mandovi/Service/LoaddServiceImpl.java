@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.LoaddSummaryDTO;
 import com.mandovi.Entity.Loadd;
 import com.mandovi.Repository.LoaddRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -182,6 +183,10 @@ public class LoaddServiceImpl implements LoaddService {
                     case "ACC","BDW","CDS","CVMS","REFF","TV1","TV2","TV3","WASH","WMOS","FR4","PMSTV","TRN","FR","RJ","IFC" -> loadd.setLoadType("OTHERS");
                     case "FR1","FR2","FR3" -> loadd.setLoadType("FREE SERVICE");
                     case "SC","CCP" -> loadd.setLoadType("NO");
+                    case "BANDP" -> loadd.setLoadType("BODYSHOP");
+                    case "RR" -> loadd.setLoadType("RR");
+                    case "PMS" -> loadd.setLoadType("PMS");
+                    default -> loadd.setLoadType("UNKNOWN");
                 }
 
 
@@ -189,10 +194,10 @@ public class LoaddServiceImpl implements LoaddService {
                 // Auto update qtrWise and halfYear based on months
                 String month =  loadd.getMonth().trim().toUpperCase();
                 switch (month) {
-                    case "APR", "MAY", "JUN" ->{ loadd.setQtrWise("Q1"); loadd.setHalfYear("H1");}
-                    case "JUL", "AUG", "SEP" ->{ loadd.setQtrWise("Q2"); loadd.setHalfYear("H1");}
-                    case "OCT", "NOV", "DEC" ->{ loadd.setQtrWise("Q3"); loadd.setHalfYear("H2");}
-                    case "JAN", "FEB", "MAR" ->{ loadd.setQtrWise("Q4"); loadd.setHalfYear("H2");}
+                    case "APR", "MAY", "JUN" ->{ loadd.setQtrWise("Qtr1"); loadd.setHalfYear("H1");}
+                    case "JUL", "AUG", "SEP" ->{ loadd.setQtrWise("Qtr2"); loadd.setHalfYear("H1");}
+                    case "OCT", "NOV", "DEC" ->{ loadd.setQtrWise("Qtr3"); loadd.setHalfYear("H2");}
+                    case "JAN", "FEB", "MAR" ->{ loadd.setQtrWise("Qtr4"); loadd.setHalfYear("H2");}
                 }
 
                 loaddRepository.save(loadd);
@@ -212,6 +217,58 @@ public class LoaddServiceImpl implements LoaddService {
     public List<Loadd> getLoadByMonthYear(String month, String year) {
         String formattedMonth = month.substring(0, 1).toUpperCase()+month.substring(1).toLowerCase();
         return loaddRepository.getLoadByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<LoaddSummaryDTO> getLoaddServiceSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw  new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return loaddRepository.getLoaddServiceSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return  loaddRepository.getLoaddServiceSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return loaddRepository.getLoaddServiceSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<LoaddSummaryDTO> getLoaddBodyShopSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return loaddRepository.getLoaddBodyShopSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return loaddRepository.getLoaddBodyShopSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return loaddRepository.getLoaddBodyShopSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<LoaddSummaryDTO> getLoaddFreeServiceSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return loaddRepository.getLoaddFreeServiceSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return loaddRepository.getLoaddFreeServiceSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return loaddRepository.getLoaddFreeServiceSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<LoaddSummaryDTO> getLoaddPMSSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return loaddRepository.getLoaddPMSSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return loaddRepository.getLoaddPMSSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return loaddRepository.getLoaddPMSSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invaild");
+        }
     }
 
 }
