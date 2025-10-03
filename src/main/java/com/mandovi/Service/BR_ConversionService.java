@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.BR_ConversionRevenueSummaryDTO;
 import com.mandovi.DTO.BR_ConversionSummaryDTO;
 import com.mandovi.Entity.BR_Conversion;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,5 +17,9 @@ public interface BR_ConversionService {
 
     public List<BR_ConversionSummaryDTO> getBR_ConversionArenaSummary (String groupBy, String month, String year, String qtr_wise, String half_year);
 
-    public List<BR_ConversionSummaryDTO> getBr_ConversionNexaSummary (String groupBy, String month, String year, String qtr_wise, String half_year);
+    public List<BR_ConversionSummaryDTO> getBR_ConversionNexaSummary (String groupBy, String month, String year, String qtr_wise, String half_year);
+
+    public List<BR_ConversionRevenueSummaryDTO> getBR_ConversionRevenueArenaSummary(String groupBy, String month, String year, String qtr_wise, String half_year);
+
+    public List<BR_ConversionRevenueSummaryDTO> getBR_ConversionRevenueNexaSummary(String groupBy, String month, String year, String qtr_wise, String half_year);
 }

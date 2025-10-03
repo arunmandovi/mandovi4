@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.BR_ConversionRevenueSummaryDTO;
 import com.mandovi.DTO.BR_ConversionSummaryDTO;
 import com.mandovi.Entity.BR_Conversion;
 import com.mandovi.Repository.BR_ConversionRepository;
@@ -109,7 +110,7 @@ public class BR_ConversionServiceImpl implements BR_ConversionService{
     }
 
     @Override
-    public List<BR_ConversionSummaryDTO> getBr_ConversionNexaSummary(String groupBy, String month, String year, String qtr_wise, String half_year) {
+    public List<BR_ConversionSummaryDTO> getBR_ConversionNexaSummary(String groupBy, String month, String year, String qtr_wise, String half_year) {
         if (groupBy == null || groupBy.isEmpty()){
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
@@ -120,4 +121,31 @@ public class BR_ConversionServiceImpl implements BR_ConversionService{
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }
+
+    @Override
+    public List<BR_ConversionRevenueSummaryDTO> getBR_ConversionRevenueArenaSummary(String groupBy, String month, String year, String qtr_wise, String half_year) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Requires");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return br_conversionRepository.getBR_ConversionRevenueArenaSummaryByCity(month, year, qtr_wise, year);
+            case "branch" : return br_conversionRepository.getBR_ConversionRevenueArenaSummaryByBranch(month, year, qtr_wise, half_year);
+            case "city_branch" : return br_conversionRepository.getBR_ConversionRevenueArenaSummaryByCityAndBranch(month,year,qtr_wise,half_year);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<BR_ConversionRevenueSummaryDTO> getBR_ConversionRevenueNexaSummary(String groupBy, String month, String year, String qtr_wise, String half_year) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return br_conversionRepository.getBR_ConversionRevenueNexaSummaryByCity(month, year, qtr_wise, half_year);
+            case "branch" : return br_conversionRepository.getBR_ConversionRevenueNexaSummaryByBranch(month, year, qtr_wise, half_year);
+            case "city_branch" : return br_conversionRepository.getBR_ConversionRevenueNexaSummaryByCityAndBranch(month, year, qtr_wise, half_year);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
 }

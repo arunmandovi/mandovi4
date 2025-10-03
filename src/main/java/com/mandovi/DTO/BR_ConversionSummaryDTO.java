@@ -3,9 +3,6 @@ package com.mandovi.DTO;
 public class BR_ConversionSummaryDTO {
     private String city;
     private String branch;
-    private String qtr_wise;
-    private String half_year;
-    private String  channel;
     private Long fs_pms_load;
     private Long br_conversion;
     private Double percentageBR_conversion;
@@ -13,12 +10,9 @@ public class BR_ConversionSummaryDTO {
     public BR_ConversionSummaryDTO() {
     }
 
-    public BR_ConversionSummaryDTO(String city, String branch, String qtr_wise, String half_year, String channel, Long fs_pms_load, Long br_conversion, Double percentageBR_conversion) {
+    public BR_ConversionSummaryDTO(String city, String branch, Long fs_pms_load, Long br_conversion, Double percentageBR_conversion) {
         this.city = city;
         this.branch = branch;
-        this.qtr_wise = qtr_wise;
-        this.half_year = half_year;
-        this.channel = channel;
         this.fs_pms_load = fs_pms_load;
         this.br_conversion = br_conversion;
         this.percentageBR_conversion = percentageBR_conversion;
@@ -38,30 +32,6 @@ public class BR_ConversionSummaryDTO {
 
     public void setBranch(String branch) {
         this.branch = branch;
-    }
-
-    public String getQtr_wise() {
-        return qtr_wise;
-    }
-
-    public void setQtr_wise(String qtr_wise) {
-        this.qtr_wise = qtr_wise;
-    }
-
-    public String getHalf_year() {
-        return half_year;
-    }
-
-    public void setHalf_year(String half_year) {
-        this.half_year = half_year;
-    }
-
-    public String getChannel() {
-        return channel;
-    }
-
-    public void setChannel(String channel) {
-        this.channel = channel;
     }
 
     public Long getFs_pms_load() {
@@ -93,9 +63,6 @@ public class BR_ConversionSummaryDTO {
         return "BR_ConversionSummaryDTO{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
-                ", qtr_wise='" + qtr_wise + '\'' +
-                ", half_year='" + half_year + '\'' +
-                ", channel='" + channel + '\'' +
                 ", fs_pms_load=" + fs_pms_load +
                 ", br_conversion=" + br_conversion +
                 ", percentageBR_conversion=" + percentageBR_conversion +
