@@ -25,4 +25,12 @@ public interface LoaddService {
 
     List<LoaddSummaryDTO> getLoaddPMSSummary (String groupBy, String month, String year, String qtrWise, String halfYear);
 
+    List<LoaddSummaryDTO> getLoaddFPRSummary (String groupBy, String month, String year, String qtrWise, String halfYear);
+
+    List<LoaddSummaryDTO> getLoaddRunningRepairSummary (String groupBy, String month, String year, String qtrWise, String halfYear);
+
+    List<LoaddSummaryDTO> getLoaddOthersSummary (String groupBy, String month, String year, String qtrWise, String halfYear);
+
+    List<LoaddSummaryDTO> getLoaddBSAndFPRSummary (String groupBy, String month, String year, String qtrWise, String halfYear);
+
 }

@@ -291,4 +291,286 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
             @Param("year") String year,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
+
+    //FPR Group by city
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "l.city, " +
+            "null, " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE l.loadType IN ('FREE SERVICE', 'PMS', 'RR') " +
+            "AND (:month IS NULL OR l.month = :month) " +
+            "AND (:year IS NULL OR l.year = :year) " +
+            "AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.city")
+    List<LoaddSummaryDTO> getLoaddFPRSummaryByCity(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //FPR Group By Branch
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "null, " +
+            "l.branch, " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE l.loadType IN ('FREE SERVICE', 'PMS', 'RR') " +
+            "AND (:month IS NULL OR l.month = :month) " +
+            "AND (:year IS NULL OR l.year = :year) " +
+            "AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.branch")
+    List<LoaddSummaryDTO> getLoaddFPRSummaryByBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //FPR Group by city and Branch
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "l.city, " +
+            "l.branch, " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE l.loadType IN ('FREE SERVICE', 'PMS', 'RR') " +
+            "AND (:month IS NULL OR l.month = :month) " +
+            "AND (:year IS NULL OR l.year = :year) " +
+            "AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.city, l.branch")
+    List<LoaddSummaryDTO> getLoaddFPRSummaryByCityAndBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //Running Repair Group by city
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "l.city, " +
+            "null, " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE l.loadType = 'RR' " +
+            "AND (:month IS NULL OR l.month = :month) " +
+            "AND (:year IS NULL OR l.year = :year) " +
+            "AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.city")
+    List<LoaddSummaryDTO> getLoaddRunningRepairSummaryByCity(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //Running Repair Group By Branch
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "null, " +
+            "l.branch, " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE l.loadType = 'RR' " +
+            "AND (:month IS NULL OR l.month = :month) " +
+            "AND (:year IS NULL OR l.year = :year) " +
+            "AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.branch")
+    List<LoaddSummaryDTO> getLoaddRunningRepairSummaryByBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //Running Repair Group by city and Branch
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "l.city, " +
+            "l.branch, " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE l.loadType = 'RR' " +
+            "AND (:month IS NULL OR l.month = :month) " +
+            "AND (:year IS NULL OR l.year = :year) " +
+            "AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.city, l.branch")
+    List<LoaddSummaryDTO> getLoaddRunningRepairSummaryByCityAndBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //OTHERS Group by city
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "l.city, " +
+            "null, " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE l.loadType = 'OTHERS' " +
+            "AND (:month IS NULL OR l.month = :month) " +
+            "AND (:year IS NULL OR l.year = :year) " +
+            "AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.city")
+    List<LoaddSummaryDTO> getLoaddOthersSummaryByCity(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //OTHERS Group By Branch
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "null, " +
+            "l.branch, " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE l.loadType = 'OTHERS' " +
+            "AND (:month IS NULL OR l.month = :month) " +
+            "AND (:year IS NULL OR l.year = :year) " +
+            "AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.branch")
+    List<LoaddSummaryDTO> getLoaddOthersSummaryByBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //OTHERS Group by city and Branch
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "l.city, " +
+            "l.branch, " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE l.loadType = 'OTHERS' " +
+            "AND (:month IS NULL OR l.month = :month) " +
+            "AND (:year IS NULL OR l.year = :year) " +
+            "AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.city, l.branch")
+    List<LoaddSummaryDTO> getLoaddOthersSummaryByCityAndBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //BS Loadd on FPS Loadd by city
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "l.city, " +
+            "null, " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "(((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0)) - " +
+            " ((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0))) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE (:month IS NULL OR l.month = :month) " +
+            "  AND (:year IS NULL OR l.year = :year) " +
+            "  AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "  AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.city")
+    List<LoaddSummaryDTO> getLoaddBSAndFPRSummaryByCity(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //BS Loadd on FPS Loadd by branch
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "null, " +
+            "l.branch, " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "(((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0)) - " +
+            " ((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0))) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE (:month IS NULL OR l.month = :month) " +
+            "  AND (:year IS NULL OR l.year = :year) " +
+            "  AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "  AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.branch")
+    List<LoaddSummaryDTO> getLoaddBSAndFPRSummaryByBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
+
+    //BS Loadd on FPS Loadd by city and branch
+    @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
+            "l.city, " +
+            "l.branch, " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "(((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0)) - " +
+            " ((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0))) " +
+            ") " +
+            "FROM Loadd l " +
+            "WHERE (:month IS NULL OR l.month = :month) " +
+            "  AND (:year IS NULL OR l.year = :year) " +
+            "  AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise) " +
+            "  AND (:halfYear IS NULL OR l.halfYear = :halfYear) " +
+            "GROUP BY l.city, l.branch")
+    List<LoaddSummaryDTO> getLoaddBSAndFPRSummaryByCityAndBranch(
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("qtrWise") String qtrWise,
+            @Param("halfYear") String halfYear);
 }

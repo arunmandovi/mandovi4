@@ -126,4 +126,84 @@ public class LoaddController {
         }
     }
 
+    @GetMapping("/loadd_fpr")
+    public ResponseEntity<List<LoaddSummaryDTO>> getLoaddFPRSummary(
+            @RequestParam String groupBy,
+            @RequestParam(required = false) String month,
+            @RequestParam (required = false) String year,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<LoaddSummaryDTO> listLoaddFPRSummary = loaddService.getLoaddFPRSummary(groupBy, month, year, qtrWise, halfYear);
+            if (listLoaddFPRSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listLoaddFPRSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(null);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    @GetMapping("/loadd_running_repair")
+    public ResponseEntity<List<LoaddSummaryDTO>> getLoaddRunningRepairSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String year,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<LoaddSummaryDTO> listLoaddRunningRepairSummary = loaddService.getLoaddRunningRepairSummary(groupBy, month, year, qtrWise, halfYear);
+            if (listLoaddRunningRepairSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listLoaddRunningRepairSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(null);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    @GetMapping("/loadd_others")
+    public ResponseEntity<List<LoaddSummaryDTO>> getLoaddOthersSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String year,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<LoaddSummaryDTO> listLoaddOthersSummary = loaddService.getLoaddOthersSummary(groupBy, month, year, qtrWise, halfYear);
+            if (listLoaddOthersSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listLoaddOthersSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(null);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    @GetMapping("/loadd_bs_fpr")
+    public ResponseEntity<List<LoaddSummaryDTO>> getLoaddBSAndFPRSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String year,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<LoaddSummaryDTO> listLoaddBSAndFPRSummary = loaddService.getLoaddBSAndFPRSummary(groupBy, month, year, qtrWise, halfYear);
+            if (listLoaddBSAndFPRSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listLoaddBSAndFPRSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(null);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
 }
