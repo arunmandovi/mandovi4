@@ -170,7 +170,7 @@ public class LoaddServiceImpl implements LoaddService {
                     } else { // Jan to Mar
                         financialYear = (year - 1) + "-" + year;
                     }
-                    loadd.setFinancial_year(financialYear);
+                    loadd.setFinancialYear(financialYear);
 
                 } catch (Exception e) {
                     System.out.println("Invalid year/month for financial year in row " + i);

@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.LabourSummaryDTO;
 import com.mandovi.Entity.Labour;
 import com.mandovi.Repository.LabourRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -109,10 +110,10 @@ public class LabourServiceImpl implements LabourService {
                 }
                 String month = labour.getMonth();
                 switch (month) {
-                    case "Apr", "May", "Jun", "APR", "MAY", "JUN" ->{ labour.setQtrWise("Q1"); labour.setHalfYear("H1");}
-                    case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" ->{ labour.setQtrWise("Q2"); labour.setHalfYear("H1");}
-                    case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" ->{ labour.setQtrWise("Q3"); labour.setHalfYear("H2");}
-                    case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" ->{ labour.setQtrWise("Q4"); labour.setHalfYear("H2");}
+                    case "Apr", "May", "Jun", "APR", "MAY", "JUN" ->{ labour.setQtrWise("Qtr1"); labour.setHalfYear("H1");}
+                    case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" ->{ labour.setQtrWise("Qtr2"); labour.setHalfYear("H1");}
+                    case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" ->{ labour.setQtrWise("Qtr3"); labour.setHalfYear("H2");}
+                    case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" ->{ labour.setQtrWise("Qtr4"); labour.setHalfYear("H2");}
                 }
 
                 labourRepository.save(labour);
@@ -131,5 +132,109 @@ public class LabourServiceImpl implements LabourService {
     public List<Labour> getLabourByMonthYear(String month, String year) {
         String formattedMonth = month.substring(0, 1).toUpperCase()+ month.substring(1).toLowerCase();
         return labourRepository.getLabourByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<LabourSummaryDTO> getLabourServiceSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return labourRepository.getLabourServiceSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return labourRepository.getLabourServiceSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return labourRepository.getLabourServiceSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is invalid");
+        }
+    }
+
+    @Override
+    public List<LabourSummaryDTO> getLabourBodyShopSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return labourRepository.getLabourBodyShopSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return labourRepository.getLabourBodyShopSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return labourRepository.getLabourBodyShopSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<LabourSummaryDTO> getLabourSrBrSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city": return labourRepository.getLabourSrBrSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch": return labourRepository.getLabourSrBrSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch": return labourRepository.getLabourSrBrSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<LabourSummaryDTO> getLabourFreeServiceSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw  new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city": return labourRepository.getLabourFreeServiceSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch": return labourRepository.getLabourFreeServiceSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return labourRepository.getLabourFreeServiceSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<LabourSummaryDTO> getLabourPMSSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return labourRepository.getLabourPMSSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return labourRepository.getLabourPMSSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return labourRepository.getLabourPMSSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<LabourSummaryDTO> getLabourFPRSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return labourRepository.getLabourFPRSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return labourRepository.getLabourFPRSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return labourRepository.getLabourFPRSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<LabourSummaryDTO> getLabourRunningRepairSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return labourRepository.getLabourRunningRepairSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return labourRepository.getLabourRunningRepairSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return labourRepository.getLabourRunningRepairSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default: throw  new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<LabourSummaryDTO> getLabourOthersSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return labourRepository.getLabourOthersSummaryByCity(month, year, qtrWise, halfYear);
+            case "branch" : return labourRepository.getLabourOthersSummaryByBranch(month, year, qtrWise, halfYear);
+            case "city_branch" : return labourRepository.getLabourOthersSummaryByCityAndBranch(month, year, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 }

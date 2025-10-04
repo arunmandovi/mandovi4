@@ -20,11 +20,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "null, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType IN ('OTHERS','FREE SERVICE', 'PMS', 'RR') " +
@@ -43,11 +43,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "null, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType IN ('OTHERS','FREE SERVICE', 'PMS', 'RR') " +
@@ -66,11 +66,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType IN ('OTHERS','FREE SERVICE', 'PMS', 'RR') " +
@@ -89,11 +89,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "null, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'BODYSHOP' " +
@@ -112,11 +112,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "null, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'BODYSHOP' " +
@@ -135,11 +135,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'BODYSHOP' " +
@@ -158,11 +158,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "null, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'FREE SERVICE' " +
@@ -181,11 +181,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "null, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'FREE SERVICE' " +
@@ -204,11 +204,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'FREE SERVICE' " +
@@ -227,11 +227,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "null, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'PMS' " +
@@ -250,11 +250,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "null, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'PMS' " +
@@ -273,11 +273,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'PMS' " +
@@ -296,11 +296,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "null, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType IN ('FREE SERVICE', 'PMS', 'RR') " +
@@ -319,11 +319,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "null, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType IN ('FREE SERVICE', 'PMS', 'RR') " +
@@ -342,11 +342,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType IN ('FREE SERVICE', 'PMS', 'RR') " +
@@ -365,11 +365,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "null, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'RR' " +
@@ -388,11 +388,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "null, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'RR' " +
@@ -411,11 +411,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'RR' " +
@@ -434,11 +434,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "null, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'OTHERS' " +
@@ -457,11 +457,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "null, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'OTHERS' " +
@@ -480,11 +480,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "l.branch, " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
-            "SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
-            "((SUM(CASE WHEN l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
-            "SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
-            "NULLIF(SUM(CASE WHEN l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), " +
+            "SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ), " +
+            "((SUM(CASE WHEN l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END ) - " +
+            "SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ))*100.00) / " +
+            "NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END ), 0) " +
             ") " +
             "FROM Loadd l " +
             "WHERE l.loadType = 'OTHERS' " +
@@ -503,14 +503,14 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "null, " +
-            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
-            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
-            "(((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0)) - " +
-            " ((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0))) " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "(((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0)) - " +
+            " ((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0))) " +
             ") " +
             "FROM Loadd l " +
             "WHERE (:month IS NULL OR l.month = :month) " +
@@ -528,14 +528,14 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "null, " +
             "l.branch, " +
-            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
-            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
-            "(((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0)) - " +
-            " ((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0))) " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "(((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0)) - " +
+            " ((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0))) " +
             ") " +
             "FROM Loadd l " +
             "WHERE (:month IS NULL OR l.month = :month) " +
@@ -553,14 +553,14 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     @Query("SELECT new com.mandovi.DTO.LoaddSummaryDTO( " +
             "l.city, " +
             "l.branch, " +
-            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
-            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
-            "(((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0)) - " +
-            " ((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
-            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financial_year = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0))) " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "CAST((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0) AS long), " +
+            "(((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2025-2026' THEN l.serviceLoad ELSE 0 END), 0)) - " +
+            " ((SUM(CASE WHEN l.loadType = 'BODYSHOP' AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END) * 100.0) / " +
+            "     NULLIF(SUM(CASE WHEN l.loadType IN ('FREE SERVICE', 'PMS', 'RR') AND l.financialYear = '2024-2025' THEN l.serviceLoad ELSE 0 END), 0))) " +
             ") " +
             "FROM Loadd l " +
             "WHERE (:month IS NULL OR l.month = :month) " +

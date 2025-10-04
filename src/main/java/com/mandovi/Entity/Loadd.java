@@ -43,7 +43,7 @@ public class Loadd {
     private String branch;
 
     @Column(name = "financial_year")
-    private String financial_year;
+    private String financialYear;
 
     @Column(name = "load_type")
     private String loadType;
@@ -57,7 +57,7 @@ public class Loadd {
     public Loadd() {
     }
 
-    public Loadd(Integer loadSINo, String location, String serviceTypeCode, String year, String month, String modelChannel, Integer serviceLoad, LocalDate jcBillDate, String channel, String city, String branch, String financial_year, String loadType, String qtrWise, String halfYear) {
+    public Loadd(Integer loadSINo, String location, String serviceTypeCode, String year, String month, String modelChannel, Integer serviceLoad, LocalDate jcBillDate, String channel, String city, String branch, String financialYear, String loadType, String qtrWise, String halfYear) {
         this.loadSINo = loadSINo;
         this.location = location;
         this.serviceTypeCode = serviceTypeCode;
@@ -69,7 +69,7 @@ public class Loadd {
         this.channel = channel;
         this.city = city;
         this.branch = branch;
-        this.financial_year = financial_year;
+        this.financialYear = financialYear;
         this.loadType = loadType;
         this.qtrWise = qtrWise;
         this.halfYear = halfYear;
@@ -163,12 +163,12 @@ public class Loadd {
         this.branch = branch;
     }
 
-    public String getFinancial_year() {
-        return financial_year;
+    public String getFinancialYear() {
+        return financialYear;
     }
 
-    public void setFinancial_year(String financial_year) {
-        this.financial_year = financial_year;
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
     }
 
     public String getLoadType() {
@@ -209,7 +209,7 @@ public class Loadd {
                 ", channel='" + channel + '\'' +
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
-                ", financial_year='" + financial_year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", loadType='" + loadType + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +
                 ", halfYear='" + halfYear + '\'' +
