@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.MCPSummaryDTO;
 import com.mandovi.Entity.MCP;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,4 +12,6 @@ public interface MCPService {
     public List<MCP> getAllMCP();
 
     List<MCP> getMCPByMonthYear(String month, String year);
+
+    public List<MCPSummaryDTO> getMCPSummary (String groupBy, String month, String qtrWise, String halfYear);
 }

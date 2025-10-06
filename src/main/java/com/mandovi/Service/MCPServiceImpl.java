@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.MCPSummaryDTO;
 import com.mandovi.Entity.MCP;
 import com.mandovi.Repository.MCPRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -125,10 +126,10 @@ public class MCPServiceImpl implements MCPService {
                 //Updating the qtr_wise & half_year column based on month
                 String month = mcp.getMonth().trim().toUpperCase();
                 switch (month) {
-                    case "APR", "MAY", "JUN" ->{ mcp.setQtrWise("Q1"); mcp.setHalfYear("H1");}
-                    case "JUL", "AUG", "SEP" ->{ mcp.setQtrWise("Q2"); mcp.setHalfYear("H1");}
-                    case "OCT", "NOV", "DEC" ->{ mcp.setQtrWise("Q3"); mcp.setHalfYear("H2");}
-                    case "JAN", "FEB", "MAR" ->{ mcp.setQtrWise("Q4"); mcp.setHalfYear("H2");}
+                    case "APR", "MAY", "JUN" ->{ mcp.setQtrWise("Qtr1"); mcp.setHalfYear("H1");}
+                    case "JUL", "AUG", "SEP" ->{ mcp.setQtrWise("Qtr2"); mcp.setHalfYear("H1");}
+                    case "OCT", "NOV", "DEC" ->{ mcp.setQtrWise("Qtr3"); mcp.setHalfYear("H2");}
+                    case "JAN", "FEB", "MAR" ->{ mcp.setQtrWise("Qtr4"); mcp.setHalfYear("H2");}
                 }
                 mcpRepository.save(mcp);
 
@@ -148,5 +149,18 @@ public class MCPServiceImpl implements MCPService {
     public List<MCP> getMCPByMonthYear(String month, String year) {
         String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
         return mcpRepository.getMCPByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<MCPSummaryDTO> getMCPSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return mcpRepository.getMCPSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return mcpRepository.getMCPSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return mcpRepository.getMCPSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is  Invalid");
+        }
     }
 }

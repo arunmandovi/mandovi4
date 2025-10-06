@@ -1,6 +1,7 @@
 package com.mandovi.Controller;
 
 
+import com.mandovi.DTO.MCPSummaryDTO;
 import com.mandovi.Entity.MCP;
 import com.mandovi.Service.MCPService;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,24 @@ public class MCPController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(mcpRecords);
+    }
+
+    @GetMapping("/mcp_summary")
+    public ResponseEntity<List<MCPSummaryDTO>> getMCPSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<MCPSummaryDTO> listMCPSummary = mcpService.getMCPSummary(groupBy, month, qtrWise, halfYear);
+            if (listMCPSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listMCPSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(null);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 }
