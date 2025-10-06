@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.MGASummaryDTO;
 import com.mandovi.Entity.MGA;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,4 +13,6 @@ public interface MGAService {
     public List<MGA> getAllMGA();
 
     public List<MGA> getMGAByMGADate(LocalDate mgaDate);
+
+    public List<MGASummaryDTO> getMGASummary (String groupBy, String month, String qtrWise, String halfYear);
 }

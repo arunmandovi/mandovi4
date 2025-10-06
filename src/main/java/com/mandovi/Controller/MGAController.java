@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.MGASummaryDTO;
 import com.mandovi.Entity.MGA;
 import com.mandovi.Service.MGAService;
 import jdk.dynalink.linker.LinkerServices;
@@ -43,5 +44,24 @@ public class MGAController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(mgaRecords);
+    }
+
+    @GetMapping("mga_summary")
+    public ResponseEntity<List<MGASummaryDTO>> getMGASummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<MGASummaryDTO> listMGASummary = mgaService.getMGASummary(groupBy, month, qtrWise, halfYear);
+            if (listMGASummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listMGASummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(null);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 }

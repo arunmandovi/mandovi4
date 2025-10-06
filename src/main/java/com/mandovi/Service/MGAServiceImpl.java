@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.MGASummaryDTO;
 import com.mandovi.Entity.MGA;
 import com.mandovi.Repository.MGARepository;
 import org.apache.poi.ss.usermodel.*;
@@ -92,7 +93,12 @@ public class MGAServiceImpl implements MGAService {
                 mga.setDealerName(row.getCell(7).getStringCellValue());
                 mga.setServiceAdvisor(row.getCell(8).getStringCellValue());
                 mga.setConsumption(round2Decimal(row.getCell(9).getNumericCellValue()));
-                mga.setLoadd((int)row.getCell(10).getNumericCellValue());
+
+                //Getting only Numeric Value
+                switch (row.getCell(10).getCellType()){
+                    case NUMERIC -> mga.setLoadd((int)row.getCell(10).getNumericCellValue());
+                    default -> mga.setLoadd(0);
+                }
                 mga.setMgaLoad(round2Decimal(row.getCell(11).getNumericCellValue()));
 
                 //Updating branch based on location
@@ -164,10 +170,10 @@ public class MGAServiceImpl implements MGAService {
 
                 //Updating qtr_wise & half_year based on month\
                 switch (mga.getMonth().trim().toUpperCase()){
-                    case "APR", "MAY", "JUN" ->{ mga.setQtrWise("Q1"); mga.setHalfYear("H1");}
-                    case "JUL", "AUG", "SEP" ->{ mga.setQtrWise("Q2"); mga.setHalfYear("H1");}
-                    case "OCT", "NOV", "DEC" ->{ mga.setQtrWise("Q3"); mga.setHalfYear("H2");}
-                    case "JAN", "FEB", "MAR" ->{ mga.setQtrWise("Q4"); mga.setHalfYear("H2");}
+                    case "APR", "MAY", "JUN" ->{ mga.setQtrWise("Qtr1"); mga.setHalfYear("H1");}
+                    case "JUL", "AUG", "SEP" ->{ mga.setQtrWise("Qtr2"); mga.setHalfYear("H1");}
+                    case "OCT", "NOV", "DEC" ->{ mga.setQtrWise("Qtr3"); mga.setHalfYear("H2");}
+                    case "JAN", "FEB", "MAR" ->{ mga.setQtrWise("Qtr4"); mga.setHalfYear("H2");}
                 }
 
                 mgaRepository.save(mga);
@@ -186,6 +192,19 @@ public class MGAServiceImpl implements MGAService {
     @Override
     public List<MGA> getMGAByMGADate(LocalDate mgaDate) {
         return mgaRepository.getMGAByMGADate(mgaDate);
+    }
+
+    @Override
+    public List<MGASummaryDTO> getMGASummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return mgaRepository.getMGASummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return mgaRepository.getMGASummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return mgaRepository.getMGASummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 
 
