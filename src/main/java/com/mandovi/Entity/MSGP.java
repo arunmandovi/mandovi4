@@ -14,7 +14,7 @@ public class MSGP {
     private String city;
 
     @Column(name = "location_code")
-    private String location_code;
+    private String locationCode;
 
     @Column(name = "year")
     private String year;
@@ -23,13 +23,13 @@ public class MSGP {
     private String month;
 
     @Column(name = "service_description")
-    private String service_description;
+    private String serviceDescription;
 
     @Column(name = "net_retail_ddl")
-    private Double net_retail_ddl;
+    private Double netRetailDDL;
 
     @Column(name = "sum_of_net_retail_ddl")
-    private Double sum_of_net_retail_ddl;
+    private Double sumOfNetRetailDDL;
 
     @Column(name = "branch")
     private String branch;
@@ -37,32 +37,36 @@ public class MSGP {
     @Column(name = "period")
     private String period;
 
+    @Column(name = "load_type")
+    private String loadType;
+
     @Column(name = "qtr_wise")
-    private String qtr_wise;
+    private String qtrWise;
 
     @Column(name = "half_year")
-    private String half_year;
+    private String halfYear;
 
     @Column(name = "financial_year")
-    private String financial_year;
+    private String financialYear;
 
     public MSGP() {
     }
 
-    public MSGP(Integer msgpSINo, String city, String location_code, String year, String month, String service_description, Double net_retail_ddl, Double sum_of_net_retail_ddl, String branch, String period, String qtr_wise, String half_year, String financial_year) {
+    public MSGP(Integer msgpSINo, String city, String locationCode, String year, String month, String serviceDescription, Double netRetailDDL, Double sumOfNetRetailDDL, String branch, String period, String loadType, String qtrWise, String halfYear, String financialYear) {
         this.msgpSINo = msgpSINo;
         this.city = city;
-        this.location_code = location_code;
+        this.locationCode = locationCode;
         this.year = year;
         this.month = month;
-        this.service_description = service_description;
-        this.net_retail_ddl = net_retail_ddl;
-        this.sum_of_net_retail_ddl = sum_of_net_retail_ddl;
+        this.serviceDescription = serviceDescription;
+        this.netRetailDDL = netRetailDDL;
+        this.sumOfNetRetailDDL = sumOfNetRetailDDL;
         this.branch = branch;
         this.period = period;
-        this.qtr_wise = qtr_wise;
-        this.half_year = half_year;
-        this.financial_year = financial_year;
+        this.loadType = loadType;
+        this.qtrWise = qtrWise;
+        this.halfYear = halfYear;
+        this.financialYear = financialYear;
     }
 
     public Integer getMsgpSINo() {
@@ -81,13 +85,21 @@ public class MSGP {
         this.city = city;
     }
 
-    public String getLocation_code() {
-        return location_code;
-    }
+    public String getLocationCode() { return locationCode; }
 
-    public void setLocation_code(String location_code) {
-        this.location_code = location_code;
-    }
+    public void setLocationCode(String locationCode) { this.locationCode = locationCode; }
+
+    public String getServiceDescription() { return serviceDescription; }
+
+    public void setServiceDescription(String serviceDescription) { this.serviceDescription = serviceDescription; }
+
+    public Double getNetRetailDDL() { return netRetailDDL; }
+
+    public void setNetRetailDDL(Double netRetailDDL) { this.netRetailDDL = netRetailDDL; }
+
+    public Double getSumOfNetRetailDDL() { return sumOfNetRetailDDL; }
+
+    public void setSumOfNetRetailDDL(Double sumOfNetRetailDDL) { this.sumOfNetRetailDDL = sumOfNetRetailDDL; }
 
     public String getYear() {
         return year;
@@ -103,30 +115,6 @@ public class MSGP {
 
     public void setMonth(String month) {
         this.month = month;
-    }
-
-    public String getService_description() {
-        return service_description;
-    }
-
-    public void setService_description(String service_description) {
-        this.service_description = service_description;
-    }
-
-    public Double getNet_retail_ddl() {
-        return net_retail_ddl;
-    }
-
-    public void setNet_retail_ddl(Double net_retail_ddl) {
-        this.net_retail_ddl = net_retail_ddl;
-    }
-
-    public Double getSum_of_net_retail_ddl() {
-        return sum_of_net_retail_ddl;
-    }
-
-    public void setSum_of_net_retail_ddl(Double sum_of_net_retail_ddl) {
-        this.sum_of_net_retail_ddl = sum_of_net_retail_ddl;
     }
 
     public String getBranch() {
@@ -145,46 +133,39 @@ public class MSGP {
         this.period = period;
     }
 
-    public String getQtr_wise() {
-        return qtr_wise;
-    }
+    public String getLoadType() { return loadType; }
 
-    public void setQtr_wise(String qtr_wise) {
-        this.qtr_wise = qtr_wise;
-    }
+    public void setLoadType(String loadType) { this.loadType = loadType; }
 
-    public String getHalf_year() {
-        return half_year;
-    }
+    public String getQtrWise() { return qtrWise; }
 
-    public void setHalf_year(String half_year) {
-        this.half_year = half_year;
-    }
+    public void setQtrWise(String qtrWise) { this.qtrWise = qtrWise; }
 
-    public String getFinancial_year() {
-        return financial_year;
-    }
+    public String getHalfYear() { return halfYear; }
 
-    public void setFinancial_year(String financial_year) {
-        this.financial_year = financial_year;
-    }
+    public void setHalfYear(String halfYear) { this.halfYear = halfYear; }
+
+    public String getFinancialYear() { return financialYear; }
+
+    public void setFinancialYear(String financialYear) { this.financialYear = financialYear; }
 
     @Override
     public String toString() {
         return "MSGP{" +
                 "msgpSINo=" + msgpSINo +
                 ", city='" + city + '\'' +
-                ", location_code='" + location_code + '\'' +
+                ", locationCode='" + locationCode + '\'' +
                 ", year='" + year + '\'' +
                 ", month='" + month + '\'' +
-                ", service_description='" + service_description + '\'' +
-                ", net_retail_ddl=" + net_retail_ddl +
-                ", sum_of_net_retail_ddl=" + sum_of_net_retail_ddl +
+                ", serviceDescription='" + serviceDescription + '\'' +
+                ", netRetailDDL=" + netRetailDDL +
+                ", sumOfNetRetail_DDL=" + sumOfNetRetailDDL +
                 ", branch='" + branch + '\'' +
                 ", period='" + period + '\'' +
-                ", qtr_wise='" + qtr_wise + '\'' +
-                ", half_year='" + half_year + '\'' +
-                ", financial_year='" + financial_year + '\'' +
+                ", loadType=" + loadType + '\'' +
+                ", qtrWise='" + qtrWise + '\'' +
+                ", halfYear='" + halfYear + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 '}';
     }
 }

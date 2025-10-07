@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.MSGPSummaryDTO;
 import com.mandovi.Entity.MSGP;
 import com.mandovi.Repository.MSGPRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -12,10 +13,10 @@ import java.util.List;
 
 @Service
 public class MSGPServiceImpl implements MSGPService {
-    private final MSGPRepository msGPRepository;
+    private final MSGPRepository msgpRepository;
 
-    public MSGPServiceImpl(MSGPRepository msGPRepository) {
-        this.msGPRepository = msGPRepository;
+    public MSGPServiceImpl(MSGPRepository msgpRepository) {
+        this.msgpRepository = msgpRepository;
     }
 
     private Double round2Decimal(Double value){
@@ -37,18 +38,18 @@ public class MSGPServiceImpl implements MSGPService {
                 MSGP msgp = new MSGP();
 
                 msgp.setCity(row.getCell(0).getStringCellValue());
-                msgp.setLocation_code(row.getCell(1).getStringCellValue());
+                msgp.setLocationCode(row.getCell(1).getStringCellValue());
                 msgp.setYear(row.getCell(2).getStringCellValue());
                 msgp.setMonth(row.getCell(3).getStringCellValue());
-                msgp.setService_description(row.getCell(4).getStringCellValue());
-                msgp.setNet_retail_ddl(round2Decimal(row.getCell(5).getNumericCellValue()));
+                msgp.setServiceDescription(row.getCell(4).getStringCellValue());
+                msgp.setNetRetailDDL(round2Decimal(row.getCell(5).getNumericCellValue()));
 
                 //Updating sum_of_net_retail_ddl column by dividing net reatail_ddl_column's value by 100000
-                msgp.setSum_of_net_retail_ddl(round2Decimal(msgp.getNet_retail_ddl()/100000));
+                msgp.setSumOfNetRetailDDL(round2Decimal(msgp.getNetRetailDDL()/100000));
 
                 //Updating branch column by checking the value from column loaction_code
-                if (msgp.getLocation_code() != null){
-                    switch (msgp.getLocation_code().trim().toUpperCase()){
+                if (msgp.getLocationCode() != null){
+                    switch (msgp.getLocationCode().trim().toUpperCase()){
                         case "BMR": msgp.setBranch("Balmatta"); break;
                         case "BTL": msgp.setBranch("Bantwal"); break;
                         case "VLA": msgp.setBranch("Vittla"); break;
@@ -100,23 +101,32 @@ public class MSGPServiceImpl implements MSGPService {
                 //Updating the column period by concating columns month & year
                 msgp.setPeriod(msgp.getMonth()+"-"+msgp.getYear());
 
+                //Updating the column loadType by checking column serviceDescription
+                switch (msgp.getServiceDescription().trim().toUpperCase()){
+                    case "1ST FREE SERVICE", "2ND FREE SERVICE", "3RD FREE SERVICE" -> msgp.setLoadType("FREE SERVICE");
+                    case "PAID SERVICE" -> msgp.setLoadType("PMS");
+                    case "RUNNING REPAIR" -> msgp.setLoadType("RR");
+                    case "BODY  REPAIR" -> msgp.setLoadType("BODYSHOP");
+                    default -> msgp.setLoadType("OTHERS");
+                }
+
                 //Updating qtr_wise & half_year columns by checking month column's values
                 String month = msgp.getMonth();
                 switch (month){
-                    case "Apr", "May", "Jun", "APR", "MAY", "JUN" ->{ msgp.setQtr_wise("Q1"); msgp.setHalf_year("H1");}
-                    case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" ->{ msgp.setQtr_wise("Q2"); msgp.setHalf_year("H1");}
-                    case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" ->{ msgp.setQtr_wise("Q3"); msgp.setHalf_year("H2");}
-                    case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" ->{ msgp.setQtr_wise("Q4"); msgp.setHalf_year("H2");}
+                    case "Apr", "May", "Jun", "APR", "MAY", "JUN" ->{ msgp.setQtrWise("Qtr1"); msgp.setHalfYear("H1");}
+                    case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" ->{ msgp.setQtrWise("Qtr2"); msgp.setHalfYear("H1");}
+                    case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" ->{ msgp.setQtrWise("Qtr3"); msgp.setHalfYear("H2");}
+                    case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" ->{ msgp.setQtrWise("Qtr4"); msgp.setHalfYear("H2");}
                 }
 
                 //Updating the financial_year column by checking the values from month & year
                 int year = Integer.parseInt(msgp.getYear());
                 switch (month.trim().toUpperCase()){
                     case "APR", "MAY", "JUN", "JUL", "AUG",
-                         "SEP", "OCT", "NOV", "DEC" -> msgp.setFinancial_year(year+"-"+(year+1));
-                    case "JAN", "FEB", "MAR" -> msgp.setFinancial_year((year-1)+"-"+year);
+                         "SEP", "OCT", "NOV", "DEC" -> msgp.setFinancialYear(year+"-"+(year+1));
+                    case "JAN", "FEB", "MAR" -> msgp.setFinancialYear((year-1)+"-"+year);
                 }
-                msGPRepository.save(msgp);
+                msgpRepository.save(msgp);
             }
         }catch (IOException e){
             throw new RuntimeException(e);
@@ -125,12 +135,103 @@ public class MSGPServiceImpl implements MSGPService {
 
     @Override
     public List<MSGP> getAllMSGP() {
-        return msGPRepository.findAll();
+        return msgpRepository.findAll();
     }
 
     @Override
     public List<MSGP> getMSGPByMonthYear(String month, String year) {
         String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
-        return msGPRepository.getMSGPByMonthYear(formattedMonth, year);
+        return msgpRepository.getMSGPByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<MSGPSummaryDTO> getMSGPServiceBodyShopSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return msgpRepository.getMSGPServiceBodyShopSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return msgpRepository.getMSGPServiceBodyShopSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return msgpRepository.getMSGPServiceBodyShopSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<MSGPSummaryDTO> getMSGPServiceSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return msgpRepository.getMSGPServiceSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return msgpRepository.getMSGPServiceSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return msgpRepository.getMSGPServiceSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<MSGPSummaryDTO> getMSGPBodyShopSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return msgpRepository.getMSGPBodyShopSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return msgpRepository.getMSGPBodyShopSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return msgpRepository.getMSGPBodysShopSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<MSGPSummaryDTO> getMSGPFreeServiceSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return msgpRepository.getMSGPFreeServiceSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return msgpRepository.getMSGPFreeServiceSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return msgpRepository.getMSGPFreeServiceSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<MSGPSummaryDTO> getMSGPPMSSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return msgpRepository.getMSGPPMSSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return msgpRepository.getMSGPPMSSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return msgpRepository.getMSGPPMSSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<MSGPSummaryDTO> getMSGPRunningRepairSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return msgpRepository.getMSGPRunningRepairSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return msgpRepository.getMSGPRunningRepairSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return msgpRepository.getMSGPRunningRepairSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<MSGPSummaryDTO> getMSGPOthersSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return msgpRepository.getMSGPOthersSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return msgpRepository.getMSGPOthersSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return msgpRepository.getMSGPOthersSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 }
