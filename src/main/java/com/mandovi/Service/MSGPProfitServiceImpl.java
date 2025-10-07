@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.MSGPProfitSummaryDTO;
 import com.mandovi.Entity.MSGPProfit;
 import com.mandovi.Repository.MSGPProfitRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -48,26 +49,26 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
 
                 MSGPProfit msgpProfit = new MSGPProfit();
 
-                msgpProfit.setService_description(row.getCell(0).getStringCellValue());
-                msgpProfit.setLocation_code(row.getCell(1).getStringCellValue());
+                msgpProfit.setServiceDescription(row.getCell(0).getStringCellValue());
+                msgpProfit.setLocationCode(row.getCell(1).getStringCellValue());
                 msgpProfit.setMonth(row.getCell(2).getStringCellValue());
 
                 //Convert Numeric Cell's year column's value to String
                 int num_year = (int) row.getCell(3).getNumericCellValue();
                 String year = String.valueOf(num_year);
                 msgpProfit.setYear(year);
-                msgpProfit.setNet_retail_ddl(round2Decimal(row.getCell(4).getNumericCellValue()));
-                msgpProfit.setNet_retail_selling(round2Decimal(row.getCell(5).getNumericCellValue()));
+                msgpProfit.setNetRetailDDL(round2Decimal(row.getCell(4).getNumericCellValue()));
+                msgpProfit.setNetRetailSelling(round2Decimal(row.getCell(5).getNumericCellValue()));
 
                 //Updating Sum of net retails value by dividing the net retails values from 100000
-                msgpProfit.setSum_of_net_retail_ddl(round2Decimal(msgpProfit.getNet_retail_ddl()/100000));
-                msgpProfit.setSum_of_net_retail_selling(round2Decimal(msgpProfit.getNet_retail_selling()/100000));
+                msgpProfit.setSumOfNetRetailDDL(round2Decimal(msgpProfit.getNetRetailDDL()/100000));
+                msgpProfit.setSumOfNetRetailSelling(round2Decimal(msgpProfit.getNetRetailSelling()/100000));
 
                 //Updating date column by as the first day of respective month mentioned in month column
                 msgpProfit.setDate("1-"+msgpProfit.getMonth());
 
                 //Updating city column by checking location code
-                String location_code = msgpProfit.getLocation_code();
+                String location_code = msgpProfit.getLocationCode();
                 if (bangaloreBranches.contains(location_code)) {
                     msgpProfit.setCity("Bangalore");
                 } else if (mysoreBranches.contains(location_code)) {
@@ -132,10 +133,10 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
                 //Updating qtr_wise & half_year column based on month
                 String month = msgpProfit.getMonth().trim().toUpperCase();
                 switch (month) {
-                    case "APR", "MAY", "JUN" ->{ msgpProfit.setQtr_wise("Q1"); msgpProfit.setHalf_year("H1");}
-                    case "JUL", "AUG", "SEP" ->{ msgpProfit.setQtr_wise("Q2"); msgpProfit.setHalf_year("H1");}
-                    case "OCT", "NOV", "DEC" ->{ msgpProfit.setQtr_wise("Q3"); msgpProfit.setHalf_year("H2");}
-                    case "JAN", "FEB", "MAR" ->{ msgpProfit.setQtr_wise("Q4"); msgpProfit.setHalf_year("H2");}
+                    case "APR", "MAY", "JUN" ->{ msgpProfit.setQtrWise("Qtr1"); msgpProfit.setHalfYear("H1");}
+                    case "JUL", "AUG", "SEP" ->{ msgpProfit.setQtrWise("Qtr2"); msgpProfit.setHalfYear("H1");}
+                    case "OCT", "NOV", "DEC" ->{ msgpProfit.setQtrWise("Qtr3"); msgpProfit.setHalfYear("H2");}
+                    case "JAN", "FEB", "MAR" ->{ msgpProfit.setQtrWise("Qtr4"); msgpProfit.setHalfYear("H2");}
                 }
 
                 msgpProfitRepository.save(msgpProfit);
@@ -157,5 +158,18 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
     public List<MSGPProfit> getMSGPProfitByMonthYear(String month, String year) {
         String formatteMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
         return msgpProfitRepository.getMSGPProfitByMonthYear(formatteMonth, year);
+    }
+
+    @Override
+    public List<MSGPProfitSummaryDTO> getMSGPProfitSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return msgpProfitRepository.getMSGPProfitSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return msgpProfitRepository.getMSGPProfitSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return msgpProfitRepository.getMSGPProfitSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 }

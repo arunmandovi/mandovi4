@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.MSGPProfitSummaryDTO;
 import com.mandovi.Entity.MSGPProfit;
 import com.mandovi.Service.MSGPProfitService;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +42,24 @@ public class MSGPProfitController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(msgpProfitRecords);
+    }
+
+    @GetMapping("/msgp_profit_summary")
+    public ResponseEntity<List<MSGPProfitSummaryDTO>> getMSGPProfitSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<MSGPProfitSummaryDTO> listMSGPProfitSummary = msgpProfitService.getMSGPProfitSummary(groupBy, month, qtrWise, halfYear);
+            if (listMSGPProfitSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listMSGPProfitSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(null);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 }
