@@ -133,10 +133,10 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                 pmsParts.setMonth(month);
 
                 switch (month) {
-                    case "Apr", "May", "Jun", "APR", "MAY", "JUN" ->{ pmsParts.setQtrWise("Q1"); pmsParts.setHalfYear("H1");}
-                    case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" ->{ pmsParts.setQtrWise("Q2"); pmsParts.setHalfYear("H1");}
-                    case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" ->{ pmsParts.setQtrWise("Q3"); pmsParts.setHalfYear("H2");}
-                    case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" ->{ pmsParts.setQtrWise("Q4"); pmsParts.setHalfYear("H2");}
+                    case "Apr", "May", "Jun", "APR", "MAY", "JUN" ->{ pmsParts.setQtrWise("Qtr1"); pmsParts.setHalfYear("H1");}
+                    case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" ->{ pmsParts.setQtrWise("Qtr2"); pmsParts.setHalfYear("H1");}
+                    case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" ->{ pmsParts.setQtrWise("Qtr3"); pmsParts.setHalfYear("H2");}
+                    case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" ->{ pmsParts.setQtrWise("Qtr4"); pmsParts.setHalfYear("H2");}
 
                 }
                 pmsPartsRepository.save(pmsParts);

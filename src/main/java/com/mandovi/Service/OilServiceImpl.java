@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.OilSummaryDTO;
 import com.mandovi.Entity.Oil;
 import com.mandovi.Repository.LabourRepository;
 import com.mandovi.Repository.OilRepository;
@@ -61,10 +62,10 @@ public class OilServiceImpl implements OilService {
                 //Updating qtr_wise & half_year based on month
                 String month = oil.getMonth().trim().toUpperCase();
                 switch (month) {
-                    case "APR", "MAY", "JUN" ->{ oil.setQtrWise("Q1"); oil.setHalfYear("H1");}
-                    case "JUL", "AUG", "SEP" ->{ oil.setQtrWise("Q2"); oil.setHalfYear("H1");}
-                    case "OCT", "NOV", "DEC" ->{ oil.setQtrWise("Q3"); oil.setHalfYear("H2");}
-                    case "JAN", "FEB", "MAR" ->{ oil.setQtrWise("Q4"); oil.setHalfYear("H2");}
+                    case "APR", "MAY", "JUN" ->{ oil.setQtrWise("Qtr1"); oil.setHalfYear("H1");}
+                    case "JUL", "AUG", "SEP" ->{ oil.setQtrWise("Qtr2"); oil.setHalfYear("H1");}
+                    case "OCT", "NOV", "DEC" ->{ oil.setQtrWise("Qtr3"); oil.setHalfYear("H2");}
+                    case "JAN", "FEB", "MAR" ->{ oil.setQtrWise("Qtr4"); oil.setHalfYear("H2");}
                 }
                 oilRepository.save(oil);
                 oilRepository.flush();
@@ -83,6 +84,45 @@ public class OilServiceImpl implements OilService {
     public List<Oil> getOilByMonthYear(String month, String year) {
         String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
         return oilRepository.getOilByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<OilSummaryDTO> getOilQtySummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return oilRepository.getOilQtySummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return oilRepository.getOilQtySummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return oilRepository.getOilQtySummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<OilSummaryDTO> getOilPercentageQtySummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return oilRepository.getOilPercentageQtySummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return oilRepository.getOilPercentageQtySummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return oilRepository.getOilPercentageQtySummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
+    }
+
+    @Override
+    public List<OilSummaryDTO> getOilProfitSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return oilRepository.getOilProfitSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return oilRepository.getOilProfitSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return oilRepository.getOilProfitSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 }
 
