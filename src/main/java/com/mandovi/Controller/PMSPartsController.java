@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.PMSPartsSummaryDTO;
 import com.mandovi.Entity.PMSParts;
 import com.mandovi.Service.PMSPartsService;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +44,22 @@ public class PMSPartsController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(pmsPartsRecords);
+    }
+
+    @GetMapping("/pms_parts_summary")
+    public ResponseEntity<List<PMSPartsSummaryDTO>> getPMSPartsSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<PMSPartsSummaryDTO> listPMSPartsSummary = pmsPartsService.getPMSPartsSummary(groupBy, month, qtrWise, halfYear);
+            if (listPMSPartsSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listPMSPartsSummary);
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 }

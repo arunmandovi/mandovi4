@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.PMSPartsSummaryDTO;
 import com.mandovi.Entity.PMSParts;
 import com.mandovi.Repository.PMSPartsRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -155,5 +156,18 @@ public class PMSPartsServiceImpl implements PMSPartsService {
     @Override
     public List<PMSParts> getPMSPartsByPMSDate(LocalDate pmsDate) {
         return pmsPartsRepository.getPMSPartsByPMSDate(pmsDate);
+    }
+
+    @Override
+    public List<PMSPartsSummaryDTO> getPMSPartsSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return pmsPartsRepository.getPMSPartsSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return pmsPartsRepository.getPMSPartsSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return pmsPartsRepository.getPMSPartsSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy parameter is Invalid");
+        }
     }
 }

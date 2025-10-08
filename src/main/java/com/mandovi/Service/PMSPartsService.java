@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.PMSPartsSummaryDTO;
 import com.mandovi.Entity.PMSParts;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,4 +13,6 @@ public interface PMSPartsService {
     public List<PMSParts> getAllPMS_Parts();
 
     public List<PMSParts> getPMSPartsByPMSDate(LocalDate pmsDate);
+
+    public List<PMSPartsSummaryDTO> getPMSPartsSummary (String groupBy, String month, String qtrWise, String halfYear);
 }
