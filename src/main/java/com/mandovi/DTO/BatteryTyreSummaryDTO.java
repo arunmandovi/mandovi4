@@ -4,7 +4,6 @@ public class BatteryTyreSummaryDTO {
 
     private String city;
     private String branch;
-    private String oilType;
     private  Long totalQty;
     private  Double totalDDL;
     private  Double totalSelling;
@@ -14,10 +13,9 @@ public class BatteryTyreSummaryDTO {
     public BatteryTyreSummaryDTO() {
     }
 
-    public BatteryTyreSummaryDTO(String city, String branch, String oilType, Long totalQty, Double totalDDL, Double totalSelling, Double profit, Double percentageProfit) {
+    public BatteryTyreSummaryDTO(String city, String branch, Long totalQty, Double totalDDL, Double totalSelling, Double profit, Double percentageProfit) {
         this.city = city;
         this.branch = branch;
-        this.oilType = oilType;
         this.totalQty = totalQty;
         this.totalDDL = totalDDL;
         this.totalSelling = totalSelling;
@@ -39,14 +37,6 @@ public class BatteryTyreSummaryDTO {
 
     public void setBranch(String branch) {
         this.branch = branch;
-    }
-
-    public String getOilType() {
-        return oilType;
-    }
-
-    public void setOilType(String oilType) {
-        this.oilType = oilType;
     }
 
     public Long getTotalQty() {
@@ -94,7 +84,6 @@ public class BatteryTyreSummaryDTO {
         return "BatteryTyreSummaryDTO{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
-                ", oilType='" + oilType + '\'' +
                 ", totalQty=" + totalQty +
                 ", totalDDL=" + totalDDL +
                 ", totalSelling=" + totalSelling +

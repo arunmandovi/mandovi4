@@ -16,99 +16,111 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
     List<BatteryTyre> getBatteryTyreByMonthYear(@Param("month") String month, @Param("year") String year);
 
     //Group by city for Battery
-    @Query("SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(" +
-            "b.city, null, 'BATTERY', " +
-            "SUM(b.sum_of_net_retail_qty), " +
-            "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling), " +
-            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
-            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
-            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
-            "FROM BatteryTyre b " +
-            "WHERE b.oilType = 'BATTERY'" +
-            " AND (:month IS NULL OR b.month = :month) " +
-            " AND (:year IS NULL OR b.year = :year) " +
-            "GROUP BY b.city")
+    @Query("""
+            SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(
+            b.city, null,
+            SUM(b.sum_of_net_retail_qty),
+            SUM(b.sum_of_net_retail_ddl),
+            SUM(b.sum_of_net_retail_selling),
+            SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl),
+            CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0
+            ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)
+            FROM BatteryTyre b
+            WHERE b.oilType = 'BATTERY'
+             AND (:month IS NULL OR b.month = :month)
+             AND (:year IS NULL OR b.year = :year)
+            GROUP BY b.city
+            """)
     List<BatteryTyreSummaryDTO> getBatterySummaryByCity(@Param("month") String month, @Param("year") String year);
 
     //Group by branch for Battery
-    @Query("SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(" +
-            "null, b.branch, 'BATTERY', " +
-            "SUM(b.sum_of_net_retail_qty), " +
-            "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling), " +
-            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
-            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
-            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
-            "FROM BatteryTyre b " +
-            "WHERE b.oilType = 'BATTERY'" +
-            " AND (:month IS NULL OR b.month = :month) " +
-            " AND (:year IS NULL OR b.year = :year) " +
-            "GROUP BY b.branch")
+    @Query("""
+            SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(
+            null, b.branch,
+            SUM(b.sum_of_net_retail_qty),
+            SUM(b.sum_of_net_retail_ddl),
+            SUM(b.sum_of_net_retail_selling),
+            SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl),
+            CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0
+            ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)
+            FROM BatteryTyre b
+            WHERE b.oilType = 'BATTERY'
+             AND (:month IS NULL OR b.month = :month)
+             AND (:year IS NULL OR b.year = :year)
+            GROUP BY b.branch
+            """)
     List<BatteryTyreSummaryDTO> getBatterySummaryByBranch(@Param("month") String month, @Param("year") String year);
 
     //Group by city+branch for Battery
-    @Query("SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(" +
-            "b.city, b.branch, 'BATTERY', " +
-            "SUM(b.sum_of_net_retail_qty), " +
-            "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling), " +
-            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
-            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
-            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
-            "FROM BatteryTyre b " +
-            "WHERE b.oilType = 'BATTERY'" +
-            " AND (:month IS NULL OR b.month = :month) " +
-            " AND (:year IS NULL OR b.year = :year) " +
-            "GROUP BY b.city, b.branch")
+    @Query("""
+            SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(
+            b.city, b.branch,
+            SUM(b.sum_of_net_retail_qty),
+            SUM(b.sum_of_net_retail_ddl),
+            SUM(b.sum_of_net_retail_selling),
+            SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl),
+            CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0
+            ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)
+            FROM BatteryTyre b
+            WHERE b.oilType = 'BATTERY'
+             AND (:month IS NULL OR b.month = :month)
+             AND (:year IS NULL OR b.year = :year)
+            GROUP BY b.city, b.branch
+            """)
     List<BatteryTyreSummaryDTO> getBatterySummaryByCityAndBranch(@Param("month") String month, @Param("year") String year);
 
     //Group by city for Tyre
-    @Query("SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(" +
-            "b.city, null, 'TYRE', " +
-            "SUM(b.sum_of_net_retail_qty), " +
-            "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling), " +
-            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
-            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
-            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
-            "FROM BatteryTyre b " +
-            "WHERE b.oilType = 'TYRE'" +
-            " AND (:month IS NULL OR b.month = :month) " +
-            " AND (:year IS NULL OR b.year = :year) " +
-            "GROUP BY b.city")
+    @Query("""
+            SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(
+            b.city, null,
+            SUM(b.sum_of_net_retail_qty),
+            SUM(b.sum_of_net_retail_ddl),
+            SUM(b.sum_of_net_retail_selling),
+            SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl),
+            CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0
+            ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)
+            FROM BatteryTyre b
+            WHERE b.oilType = 'TYRE'
+             AND (:month IS NULL OR b.month = :month)
+             AND (:year IS NULL OR b.year = :year)
+            GROUP BY b.city
+            """)
     List<BatteryTyreSummaryDTO> getTyreSummaryByCity(@Param("month") String month, @Param("year") String year);
 
     //Group by branch for Tyre
-    @Query("SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(" +
-            "null, b.branch, 'TYRE', " +
-            "SUM(b.sum_of_net_retail_qty), " +
-            "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling), " +
-            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
-            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
-            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
-            "FROM BatteryTyre b " +
-            "WHERE b.oilType = 'TYRE'" +
-            " AND (:month IS NULL OR b.month = :month) " +
-            " AND (:year IS NULL OR b.year = :year) " +
-            "GROUP BY b.branch")
+    @Query("""
+            SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(
+            null, b.branch,
+            SUM(b.sum_of_net_retail_qty),
+            SUM(b.sum_of_net_retail_ddl),
+            SUM(b.sum_of_net_retail_selling),
+            SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl),
+            CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0
+            ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)
+            FROM BatteryTyre b
+            WHERE b.oilType = 'TYRE'
+             AND (:month IS NULL OR b.month = :month)
+             AND (:year IS NULL OR b.year = :year)
+            GROUP BY b.branch
+            """)
     List<BatteryTyreSummaryDTO> getTyreSummaryByBranch(@Param("month") String month, @Param("year") String year);
 
     //Group by city+branch for Tyre
-    @Query("SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(" +
-            "b.city, b.branch, 'TYRE', " +
-            "SUM(b.sum_of_net_retail_qty), " +
-            "SUM(b.sum_of_net_retail_ddl), " +
-            "SUM(b.sum_of_net_retail_selling), " +
-            "SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl), " +
-            "CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0 " +
-            "ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)" +
-            "FROM BatteryTyre b " +
-            "WHERE b.oilType = 'TYRE'" +
-            "AND (:month IS NULL OR b.month = :month) " +
-            "AND (:year IS NULL OR b.year = :year) " +
-            "GROUP BY b.city, b.branch")
+    @Query("""
+            SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(
+            b.city, b.branch,
+            SUM(b.sum_of_net_retail_qty),
+            SUM(b.sum_of_net_retail_ddl),
+            SUM(b.sum_of_net_retail_selling),
+            SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl),
+            CASE WHEN SUM(b.sum_of_net_retail_ddl) = 0 THEN 0
+            ELSE (SUM(b.sum_of_net_retail_selling) - SUM(b.sum_of_net_retail_ddl)) / SUM(b.sum_of_net_retail_ddl) * 100 END)
+            FROM BatteryTyre b
+            WHERE b.oilType = 'TYRE'
+            AND (:month IS NULL OR b.month = :month)
+            AND (:year IS NULL OR b.year = :year)
+            GROUP BY b.city, b.branch
+            """)
     List<BatteryTyreSummaryDTO> getTyreSummaryByCityAndBranch(@Param("month") String month, @Param("year") String year);
 
 }
