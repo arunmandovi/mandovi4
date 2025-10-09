@@ -1,6 +1,5 @@
 package com.mandovi.Repository;
 
-import com.mandovi.DTO.BR_ConversionRevenueSummaryDTO;
 import com.mandovi.DTO.LoaddSummaryDTO;
 import com.mandovi.Entity.Loadd;
 import jakarta.transaction.Transactional;
