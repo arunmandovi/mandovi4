@@ -27,39 +27,39 @@ public class BatteryTyre {
     private String oilType;
 
     @Column(name = "sum_of_net_retail_qty")
-    private int sum_of_net_retail_qty;
+    private int sumOfNetRetailQTY;
 
     @Column(name = "sum_of_net_retail_ddl")
-    private Double sum_of_net_retail_ddl;
+    private Double sumOfNetRetailDDL;
 
     @Column(name = "sum_of_net_retail_selling")
-    private Double sum_of_net_retail_selling;
+    private Double sumOfNetRetailSelling;
 
     @Column(name = "period")
     private String period;
 
     @Column(name = "qtr_wise")
-    private String qtr_wise;
+    private String qtrWise;
 
     @Column(name = "half_year")
-    private String half_year;
+    private String halfYear;
 
     public BatteryTyre() {
     }
 
-    public BatteryTyre(Integer batteryTyreSINo, String city, String branch, String month, String year, String oilType, int sum_of_net_retail_qty, Double sum_of_net_retail_ddl, Double sum_of_net_retail_selling, String period, String qtr_wise, String half_year) {
+    public BatteryTyre(Integer batteryTyreSINo, String city, String branch, String month, String year, String oilType, int sumOfNetRetailQTY, Double sumOfNetRetailDDL, Double sumOfNetRetailSelling, String period, String qtrWise, String halfYear) {
         this.batteryTyreSINo = batteryTyreSINo;
         this.city = city;
         this.branch = branch;
         this.month = month;
         this.year = year;
         this.oilType = oilType;
-        this.sum_of_net_retail_qty = sum_of_net_retail_qty;
-        this.sum_of_net_retail_ddl = sum_of_net_retail_ddl;
-        this.sum_of_net_retail_selling = sum_of_net_retail_selling;
+        this.sumOfNetRetailQTY = sumOfNetRetailQTY;
+        this.sumOfNetRetailDDL = sumOfNetRetailDDL;
+        this.sumOfNetRetailSelling = sumOfNetRetailSelling;
         this.period = period;
-        this.qtr_wise = qtr_wise;
-        this.half_year = half_year;
+        this.qtrWise = qtrWise;
+        this.halfYear = halfYear;
     }
 
     public Integer getBatteryTyreSINo() {
@@ -110,28 +110,28 @@ public class BatteryTyre {
         this.oilType = oilType;
     }
 
-    public int getSum_of_net_retail_qty() {
-        return sum_of_net_retail_qty;
+    public int getSumOfNetRetailQTY() {
+        return sumOfNetRetailQTY;
     }
 
-    public void setSum_of_net_retail_qty(int sum_of_net_retail_qty) {
-        this.sum_of_net_retail_qty = sum_of_net_retail_qty;
+    public void setSumOfNetRetailQTY(int sumOfNetRetailQTY) {
+        this.sumOfNetRetailQTY = sumOfNetRetailQTY;
     }
 
-    public Double getSum_of_net_retail_ddl() {
-        return sum_of_net_retail_ddl;
+    public Double getSumOfNetRetailDDL() {
+        return sumOfNetRetailDDL;
     }
 
-    public void setSum_of_net_retail_ddl(Double sum_of_net_retail_ddl) {
-        this.sum_of_net_retail_ddl = sum_of_net_retail_ddl;
+    public void setSumOfNetRetailDDL(Double sumOfNetRetailDDL) {
+        this.sumOfNetRetailDDL = sumOfNetRetailDDL;
     }
 
-    public Double getSum_of_net_retail_selling() {
-        return sum_of_net_retail_selling;
+    public Double getSumOfNetRetailSelling() {
+        return sumOfNetRetailSelling;
     }
 
-    public void setSum_of_net_retail_selling(Double sum_of_net_retail_selling) {
-        this.sum_of_net_retail_selling = sum_of_net_retail_selling;
+    public void setSumOfNetRetailSelling(Double sumOfNetRetailSelling) {
+        this.sumOfNetRetailSelling = sumOfNetRetailSelling;
     }
 
     public String getPeriod() {
@@ -142,20 +142,20 @@ public class BatteryTyre {
         this.period = period;
     }
 
-    public String getQtr_wise() {
-        return qtr_wise;
+    public String getQtrWise() {
+        return qtrWise;
     }
 
-    public void setQtr_wise(String qtr_wise) {
-        this.qtr_wise = qtr_wise;
+    public void setQtrWise(String qtrWise) {
+        this.qtrWise = qtrWise;
     }
 
-    public String getHalf_year() {
-        return half_year;
+    public String getHalfYear() {
+        return halfYear;
     }
 
-    public void setHalf_year(String half_year) {
-        this.half_year = half_year;
+    public void setHalfYear(String halfYear) {
+        this.halfYear = halfYear;
     }
 
     @Override
@@ -167,12 +167,12 @@ public class BatteryTyre {
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
                 ", oilType='" + oilType + '\'' +
-                ", sum_of_net_retail_qty=" + sum_of_net_retail_qty +
-                ", sum_of_net_retail_ddl=" + sum_of_net_retail_ddl +
-                ", sum_of_net_retail_selling=" + sum_of_net_retail_selling +
+                ", sumOfNetRetailQTY=" + sumOfNetRetailQTY +
+                ", sumOfNetRetailDDL=" + sumOfNetRetailDDL +
+                ", sumOfNetRetailSelling=" + sumOfNetRetailSelling +
                 ", period='" + period + '\'' +
-                ", qtr_wise='" + qtr_wise + '\'' +
-                ", half_year='" + half_year + '\'' +
+                ", qtrWise='" + qtrWise + '\'' +
+                ", halfYear='" + halfYear + '\'' +
                 '}';
     }
 }

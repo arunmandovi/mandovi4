@@ -4,23 +4,37 @@ public class BatteryTyreSummaryDTO {
 
     private String city;
     private String branch;
-    private  Long totalQty;
-    private  Double totalDDL;
-    private  Double totalSelling;
-    private Double profit;
-    private Double percentageProfit;
+    private  Long batteryQty;
+    private  Double batteryNetRetailDDL;
+    private  Double batteryNetRetailSelling;
+    private Double batteryProfit;
+    private Double batteryPercentageProfit;
+    private Long tyreQty;
+    private Double tyreNetRetailDDL;
+    private Double tyreNetRetailSelling;
+    private Double tyreProfit;
+    private Double tyrePercentageProfit;
+    private Double batteryTyreProfit;
+    private Double batteryTyrePercentageProfit;
 
     public BatteryTyreSummaryDTO() {
     }
 
-    public BatteryTyreSummaryDTO(String city, String branch, Long totalQty, Double totalDDL, Double totalSelling, Double profit, Double percentageProfit) {
+    public BatteryTyreSummaryDTO(String city, String branch, Long batteryQty, Double batteryNetRetailDDL, Double batteryNetRetailSelling, Double batteryProfit, Double batteryPercentageProfit, Long tyreQty, Double tyreNetRetailDDL, Double tyreNetRetailSelling, Double tyreProfit, Double tyrePercentageProfit, Double batteryTyreProfit, Double batteryTyrePercentageProfit) {
         this.city = city;
         this.branch = branch;
-        this.totalQty = totalQty;
-        this.totalDDL = totalDDL;
-        this.totalSelling = totalSelling;
-        this.profit = profit;
-        this.percentageProfit = percentageProfit;
+        this.batteryQty = batteryQty;
+        this.batteryNetRetailDDL = batteryNetRetailDDL;
+        this.batteryNetRetailSelling = batteryNetRetailSelling;
+        this.batteryProfit = batteryProfit;
+        this.batteryPercentageProfit = batteryPercentageProfit;
+        this.tyreQty = tyreQty;
+        this.tyreNetRetailDDL = tyreNetRetailDDL;
+        this.tyreNetRetailSelling = tyreNetRetailSelling;
+        this.tyreProfit = tyreProfit;
+        this.tyrePercentageProfit = tyrePercentageProfit;
+        this.batteryTyreProfit = batteryTyreProfit;
+        this.batteryTyrePercentageProfit = batteryTyrePercentageProfit;
     }
 
     public String getCity() {
@@ -39,44 +53,100 @@ public class BatteryTyreSummaryDTO {
         this.branch = branch;
     }
 
-    public Long getTotalQty() {
-        return totalQty;
+    public Long getBatteryQty() {
+        return batteryQty;
     }
 
-    public void setTotalQty(Long totalQty) {
-        this.totalQty = totalQty;
+    public void setBatteryQty(Long batteryQty) {
+        this.batteryQty = batteryQty;
     }
 
-    public Double getTotalDDL() {
-        return totalDDL;
+    public Double getBatteryNetRetailDDL() {
+        return batteryNetRetailDDL;
     }
 
-    public void setTotalDDL(Double totalDDL) {
-        this.totalDDL = totalDDL;
+    public void setBatteryNetRetailDDL(Double batteryNetRetailDDL) {
+        this.batteryNetRetailDDL = batteryNetRetailDDL;
     }
 
-    public Double getTotalSelling() {
-        return totalSelling;
+    public Double getBatteryNetRetailSelling() {
+        return batteryNetRetailSelling;
     }
 
-    public void setTotalSelling(Double totalSelling) {
-        this.totalSelling = totalSelling;
+    public void setBatteryNetRetailSelling(Double batteryNetRetailSelling) {
+        this.batteryNetRetailSelling = batteryNetRetailSelling;
     }
 
-    public Double getProfit() {
-        return profit;
+    public Double getBatteryProfit() {
+        return batteryProfit;
     }
 
-    public void setProfit(Double profit) {
-        this.profit = profit;
+    public void setBatteryProfit(Double batteryProfit) {
+        this.batteryProfit = batteryProfit;
     }
 
-    public Double getPercentageProfit() {
-        return percentageProfit;
+    public Double getBatteryPercentageProfit() {
+        return batteryPercentageProfit;
     }
 
-    public void setPercentageProfit(Double percentageProfit) {
-        this.percentageProfit = percentageProfit;
+    public void setBatteryPercentageProfit(Double batteryPercentageProfit) {
+        this.batteryPercentageProfit = batteryPercentageProfit;
+    }
+
+    public Long getTyreQty() {
+        return tyreQty;
+    }
+
+    public void setTyreQty(Long tyreQty) {
+        this.tyreQty = tyreQty;
+    }
+
+    public Double getTyreNetRetailDDL() {
+        return tyreNetRetailDDL;
+    }
+
+    public void setTyreNetRetailDDL(Double tyreNetRetailDDL) {
+        this.tyreNetRetailDDL = tyreNetRetailDDL;
+    }
+
+    public Double getTyreNetRetailSelling() {
+        return tyreNetRetailSelling;
+    }
+
+    public void setTyreNetRetailSelling(Double tyreNetRetailSelling) {
+        this.tyreNetRetailSelling = tyreNetRetailSelling;
+    }
+
+    public Double getTyreProfit() {
+        return tyreProfit;
+    }
+
+    public void setTyreProfit(Double tyreProfit) {
+        this.tyreProfit = tyreProfit;
+    }
+
+    public Double getTyrePercentageProfit() {
+        return tyrePercentageProfit;
+    }
+
+    public void setTyrePercentageProfit(Double tyrePercentageProfit) {
+        this.tyrePercentageProfit = tyrePercentageProfit;
+    }
+
+    public Double getBatteryTyreProfit() {
+        return batteryTyreProfit;
+    }
+
+    public void setBatteryTyreProfit(Double batteryTyreProfit) {
+        this.batteryTyreProfit = batteryTyreProfit;
+    }
+
+    public Double getBatteryTyrePercentageProfit() {
+        return batteryTyrePercentageProfit;
+    }
+
+    public void setBatteryTyrePercentageProfit(Double batteryTyrePercentageProfit) {
+        this.batteryTyrePercentageProfit = batteryTyrePercentageProfit;
     }
 
     @Override
@@ -84,11 +154,18 @@ public class BatteryTyreSummaryDTO {
         return "BatteryTyreSummaryDTO{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
-                ", totalQty=" + totalQty +
-                ", totalDDL=" + totalDDL +
-                ", totalSelling=" + totalSelling +
-                ", profit=" + profit +
-                ", percentageProfit=" + percentageProfit +
+                ", batteryQty=" + batteryQty +
+                ", batteryNetRetailDDL=" + batteryNetRetailDDL +
+                ", batteryNetRetailSelling=" + batteryNetRetailSelling +
+                ", batteryProfit=" + batteryProfit +
+                ", batteryPercentageProfit=" + batteryPercentageProfit +
+                ", tyreQty=" + tyreQty +
+                ", tyreNetRetailDDL=" + tyreNetRetailDDL +
+                ", tyreNetRetailSelling=" + tyreNetRetailSelling +
+                ", tyreProfit=" + tyreProfit +
+                ", tyrePercentageProfit=" + tyrePercentageProfit +
+                ", batteryTyreProfit=" + batteryTyreProfit +
+                ", batteryTyrePercentageProfit=" + batteryTyrePercentageProfit +
                 '}';
     }
 }

@@ -46,13 +46,14 @@ public class BatteryTyreController {
     }
 
 
-    @GetMapping("/battery_summary")
+    @GetMapping("/battery_tyre_summary")
     public ResponseEntity<List<BatteryTyreSummaryDTO>> getBatterySummary(
             @RequestParam String groupBy,
             @RequestParam (required = false) String month,
-            @RequestParam(required = false) String year ){
+            @RequestParam(required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
         try {
-            List<BatteryTyreSummaryDTO> listBattery = batteryTyreService.getBatterySummary(groupBy, month, year);
+            List<BatteryTyreSummaryDTO> listBattery = batteryTyreService.getBatteryTyreSummary(groupBy, month, qtrWise, halfYear);
             if (listBattery.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -64,22 +65,5 @@ public class BatteryTyreController {
         }
     }
 
-    @GetMapping("/tyre_summary")
-    public ResponseEntity<List<BatteryTyreSummaryDTO>> getTyreSummary(
-            @RequestParam String groupBy,
-            @RequestParam (required = false) String month,
-            @RequestParam (required = false) String year ){
-        try {
-            List<BatteryTyreSummaryDTO> listTyre = batteryTyreService.getTyreSummary(groupBy, month, year);
-            if (listTyre.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(listTyre);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(null);
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(null);
-        }
-    }
 
 }

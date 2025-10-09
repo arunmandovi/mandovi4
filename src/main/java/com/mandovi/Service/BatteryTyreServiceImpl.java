@@ -49,9 +49,9 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
                 }
                 batteryTyre.setOilType(row.getCell(4).getStringCellValue());
 
-                batteryTyre.setSum_of_net_retail_qty((int)   row.getCell(5).getNumericCellValue());
-                batteryTyre.setSum_of_net_retail_ddl(round2Decimal(row.getCell(6).getNumericCellValue()));
-                batteryTyre.setSum_of_net_retail_selling(round2Decimal(row.getCell(7).getNumericCellValue()));
+                batteryTyre.setSumOfNetRetailQTY((int)   row.getCell(5).getNumericCellValue());
+                batteryTyre.setSumOfNetRetailDDL(round2Decimal(row.getCell(6).getNumericCellValue()));
+                batteryTyre.setSumOfNetRetailSelling(round2Decimal(row.getCell(7).getNumericCellValue()));
 
                 //Updating the column period from Concating columns Month & Year
                 batteryTyre.setPeriod(batteryTyre.getMonth()+"-"+batteryTyre.getYear());
@@ -60,10 +60,10 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
                 //Updating the column Qtr_Wise & half-Year by comparing the values from month column
                 String month = batteryTyre.getMonth();
                 switch (month){
-                    case "Apr", "May", "Jun" -> { batteryTyre.setQtr_wise("Qtr1"); batteryTyre.setHalf_year("H1"); }
-                    case "Jul", "Aug", "Sep" -> { batteryTyre.setQtr_wise("Qtr2"); batteryTyre.setHalf_year("H1"); }
-                    case "Oct", "Nov", "Dec" -> { batteryTyre.setQtr_wise("Qtr3"); batteryTyre.setHalf_year("H2"); }
-                    case "Jan", "Feb", "Mar" -> { batteryTyre.setQtr_wise("Qtr4"); batteryTyre.setHalf_year("H2"); }
+                    case "Apr", "May", "Jun" -> { batteryTyre.setQtrWise("Qtr1"); batteryTyre.setHalfYear("H1"); }
+                    case "Jul", "Aug", "Sep" -> { batteryTyre.setQtrWise("Qtr2"); batteryTyre.setHalfYear("H1"); }
+                    case "Oct", "Nov", "Dec" -> { batteryTyre.setQtrWise("Qtr3"); batteryTyre.setHalfYear("H2"); }
+                    case "Jan", "Feb", "Mar" -> { batteryTyre.setQtrWise("Qtr4"); batteryTyre.setHalfYear("H2"); }
                 }
 
                 batteryTyreRepository.save(batteryTyre);
@@ -88,28 +88,15 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
     }
 
     @Override
-    public List<BatteryTyreSummaryDTO> getBatterySummary(String groupBy, String month, String year) {
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary(String groupBy, String month, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy parameter is required");
+            throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return batteryTyreRepository.getBatterySummaryByCity(month, year);
-            case "branch" : return batteryTyreRepository.getBatterySummaryByBranch(month, year);
-            case "city_branch" : return batteryTyreRepository.getBatterySummaryByCityAndBranch(month, year);
-            default:throw new IllegalArgumentException("Illegal groupBy Argument Value");
-        }
-    }
-
-    @Override
-    public List<BatteryTyreSummaryDTO> getTyreSummary(String groupBy, String month, String year) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy parameter is required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return batteryTyreRepository.getTyreSummaryByCity(month, year);
-            case "branch" : return batteryTyreRepository.getTyreSummaryByBranch(month, year);
-            case "city_branch" : return batteryTyreRepository.getTyreSummaryByCityAndBranch(month, year);
-            default:throw new IllegalArgumentException("Illegal groupBy Argument Value");
+            case "city" : return batteryTyreRepository.getBatteryTyreSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return batteryTyreRepository.getBatteryTyreSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return batteryTyreRepository.getBatteryTyreSummaryByCityAnaBranch(month, qtrWise, halfYear);
+            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }
 
