@@ -1,7 +1,6 @@
 package com.mandovi.Repository;
 
 import com.mandovi.DTO.LabourSummaryDTO;
-import com.mandovi.DTO.LoaddSummaryDTO;
 import com.mandovi.Entity.Labour;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

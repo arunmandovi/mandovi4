@@ -220,107 +220,16 @@ public class LoaddServiceImpl implements LoaddService {
     }
 
     @Override
-    public List<LoaddSummaryDTO> getLoaddServiceSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw  new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return loaddRepository.getLoaddServiceSummaryByCity(month, year, qtrWise, halfYear);
-            case "branch" : return  loaddRepository.getLoaddServiceSummaryByBranch(month, year, qtrWise, halfYear);
-            case "city_branch" : return loaddRepository.getLoaddServiceSummaryByCityAndBranch(month, year, qtrWise, halfYear);
-            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<LoaddSummaryDTO> getLoaddBodyShopSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()){
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return loaddRepository.getLoaddBodyShopSummaryByCity(month, year, qtrWise, halfYear);
-            case "branch" : return loaddRepository.getLoaddBodyShopSummaryByBranch(month, year, qtrWise, halfYear);
-            case "city_branch" : return loaddRepository.getLoaddBodyShopSummaryByCityAndBranch(month, year, qtrWise, halfYear);
-            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<LoaddSummaryDTO> getLoaddFreeServiceSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return loaddRepository.getLoaddFreeServiceSummaryByCity(month, year, qtrWise, halfYear);
-            case "branch" : return loaddRepository.getLoaddFreeServiceSummaryByBranch(month, year, qtrWise, halfYear);
-            case "city_branch" : return loaddRepository.getLoaddFreeServiceSummaryByCityAndBranch(month, year, qtrWise, halfYear);
-            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<LoaddSummaryDTO> getLoaddPMSSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()){
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return loaddRepository.getLoaddPMSSummaryByCity(month, year, qtrWise, halfYear);
-            case "branch" : return loaddRepository.getLoaddPMSSummaryByBranch(month, year, qtrWise, halfYear);
-            case "city_branch" : return loaddRepository.getLoaddPMSSummaryByCityAndBranch(month, year, qtrWise, halfYear);
-            default:throw new IllegalArgumentException("groupBy Parameter is Invaild");
-        }
-    }
-
-    @Override
-    public List<LoaddSummaryDTO> getLoaddFPRSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()){
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return loaddRepository.getLoaddFPRSummaryByCity(month, year, qtrWise, halfYear);
-            case "branch" : return loaddRepository.getLoaddFPRSummaryByBranch(month, year, qtrWise, halfYear);
-            case "city_branch" : return loaddRepository.getLoaddFPRSummaryByCityAndBranch(month, year, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<LoaddSummaryDTO> getLoaddRunningRepairSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return loaddRepository.getLoaddRunningRepairSummaryByCity(month, year, qtrWise, halfYear);
-            case "branch" : return loaddRepository.getLoaddRunningRepairSummaryByBranch(month, year, qtrWise, halfYear);
-            case "city_branch" : return loaddRepository.getLoaddRunningRepairSummaryByCityAndBranch(month, year, qtrWise, halfYear);
-            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<LoaddSummaryDTO> getLoaddOthersSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return loaddRepository.getLoaddOthersSummaryByCity(month, year, qtrWise, halfYear);
-            case "branch" : return loaddRepository.getLoaddOthersSummaryByBranch(month, year, qtrWise, halfYear);
-            case "city_branch" : return loaddRepository.getLoaddOthersSummaryByCityAndBranch(month, year, qtrWise, halfYear);
-            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<LoaddSummaryDTO> getLoaddBSAndFPRSummary(String groupBy, String month, String year, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return loaddRepository.getLoaddBSAndFPRSummaryByCity(month, year, qtrWise, halfYear);
-            case "branch" : return loaddRepository.getLoaddBSAndFPRSummaryByBranch(month, year, qtrWise, halfYear);
-            case "city_branch" : return loaddRepository.getLoaddBSAndFPRSummaryByCityAndBranch(month, year, qtrWise, halfYear);
-            default:throw new IllegalArgumentException("groupBy Parametr is Invalid");
-        }
+    public List<LoaddSummaryDTO> getLoaddSummary(String groupBy, String month, String qtrWise, String halfYear) {
+     if (groupBy == null || groupBy.isEmpty()){
+         throw new IllegalArgumentException("groupBy Parameter is Required");
+     }
+     switch (groupBy.toLowerCase()) {
+         case "city" : return loaddRepository.getLoaddSummaryByCity(month, qtrWise, halfYear);
+         case "branch" : return loaddRepository.getLoaddSummaryByBranch(month, qtrWise, halfYear);
+         case "city_branch" : return  loaddRepository.getLoaddSummaryByCityAndBranch(month, qtrWise, halfYear);
+         default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+     }
     }
 
 }

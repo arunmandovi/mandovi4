@@ -197,14 +197,14 @@ public class Loadd {
 
     @Override
     public String toString() {
-        return "Load{" +
+        return "Loadd{" +
                 "loadSINo=" + loadSINo +
                 ", location='" + location + '\'' +
                 ", serviceTypeCode='" + serviceTypeCode + '\'' +
                 ", year='" + year + '\'' +
                 ", month='" + month + '\'' +
                 ", modelChannel='" + modelChannel + '\'' +
-                ", serviceLoad='" + serviceLoad + '\'' +
+                ", serviceLoad=" + serviceLoad +
                 ", jcBillDate=" + jcBillDate +
                 ", channel='" + channel + '\'' +
                 ", city='" + city + '\'' +
