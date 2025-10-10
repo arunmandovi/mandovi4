@@ -145,92 +145,14 @@ public class MSGPServiceImpl implements MSGPService {
     }
 
     @Override
-    public List<MSGPSummaryDTO> getMSGPServiceBodyShopSummary(String groupBy, String month, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return msgpRepository.getMSGPServiceBodyShopSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return msgpRepository.getMSGPServiceBodyShopSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return msgpRepository.getMSGPServiceBodyShopSummaryByCityAndBranch(month, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<MSGPSummaryDTO> getMSGPServiceSummary(String groupBy, String month, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return msgpRepository.getMSGPServiceSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return msgpRepository.getMSGPServiceSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return msgpRepository.getMSGPServiceSummaryByCityAndBranch(month, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<MSGPSummaryDTO> getMSGPBodyShopSummary(String groupBy, String month, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return msgpRepository.getMSGPBodyShopSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return msgpRepository.getMSGPBodyShopSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return msgpRepository.getMSGPBodysShopSummaryByCityAndBranch(month, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<MSGPSummaryDTO> getMSGPFreeServiceSummary(String groupBy, String month, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return msgpRepository.getMSGPFreeServiceSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return msgpRepository.getMSGPFreeServiceSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return msgpRepository.getMSGPFreeServiceSummaryByCityAndBranch(month, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<MSGPSummaryDTO> getMSGPPMSSummary(String groupBy, String month, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return msgpRepository.getMSGPPMSSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return msgpRepository.getMSGPPMSSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return msgpRepository.getMSGPPMSSummaryByCityAndBranch(month, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<MSGPSummaryDTO> getMSGPRunningRepairSummary(String groupBy, String month, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return msgpRepository.getMSGPRunningRepairSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return msgpRepository.getMSGPRunningRepairSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return msgpRepository.getMSGPRunningRepairSummaryByCityAndBranch(month, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<MSGPSummaryDTO> getMSGPOthersSummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<MSGPSummaryDTO> getMSGPSummary(String groupBy, String month, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()){
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return msgpRepository.getMSGPOthersSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return msgpRepository.getMSGPOthersSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return msgpRepository.getMSGPOthersSummaryByCityAndBranch(month, qtrWise, halfYear);
+            case "city" : return msgpRepository.getMSGPSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return msgpRepository.getMSGPSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return msgpRepository.getMSGPSummaryByCityAndBranch(month, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }
