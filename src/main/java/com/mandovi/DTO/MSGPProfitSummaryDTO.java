@@ -3,21 +3,37 @@ package com.mandovi.DTO;
 public class MSGPProfitSummaryDTO {
     private String city;
     private String branch;
-    private Double netRetailDDL;
-    private Double netRetailSelling;
-    private Double profit;
-    private Double percentageProfit;
+    private Double netRetailDDLServiceBodyShop;
+    private Double netRetailSellingServiceBodyShop;
+    private Double profitServiceBodyShop;
+    private Double percentageProfitServiceBodyShop;
+    private Double netRetailDDLService;
+    private Double netRetailSellingService;
+    private Double profitService;
+    private Double percentageProfitService;
+    private Double netRetailDDLBodyShop;
+    private Double netRetailSellingBodyShop;
+    private Double profitBodyShop;
+    private Double percentageProfitBodyShop;
 
     public MSGPProfitSummaryDTO() {
     }
 
-    public MSGPProfitSummaryDTO(String city, String branch, Double netRetailDDL, Double netRetailSelling, Double profit, Double percentageProfit) {
+    public MSGPProfitSummaryDTO(String city, String branch, Double netRetailDDLServiceBodyShop, Double netRetailSellingServiceBodyShop, Double profitServiceBodyShop, Double percentageProfitServiceBodyShop, Double netRetailDDLService, Double netRetailSellingService, Double profitService, Double percentageProfitService, Double netRetailDDLBodyShop, Double netRetailSellingBodyShop, Double profitBodyShop, Double percentageProfitBodyShop) {
         this.city = city;
         this.branch = branch;
-        this.netRetailDDL = netRetailDDL;
-        this.netRetailSelling = netRetailSelling;
-        this.profit = profit;
-        this.percentageProfit = percentageProfit;
+        this.netRetailDDLServiceBodyShop = netRetailDDLServiceBodyShop;
+        this.netRetailSellingServiceBodyShop = netRetailSellingServiceBodyShop;
+        this.profitServiceBodyShop = profitServiceBodyShop;
+        this.percentageProfitServiceBodyShop = percentageProfitServiceBodyShop;
+        this.netRetailDDLService = netRetailDDLService;
+        this.netRetailSellingService = netRetailSellingService;
+        this.profitService = profitService;
+        this.percentageProfitService = percentageProfitService;
+        this.netRetailDDLBodyShop = netRetailDDLBodyShop;
+        this.netRetailSellingBodyShop = netRetailSellingBodyShop;
+        this.profitBodyShop = profitBodyShop;
+        this.percentageProfitBodyShop = percentageProfitBodyShop;
     }
 
     public String getCity() {
@@ -36,36 +52,100 @@ public class MSGPProfitSummaryDTO {
         this.branch = branch;
     }
 
-    public Double getNetRetailDDL() {
-        return netRetailDDL;
+    public Double getNetRetailDDLServiceBodyShop() {
+        return netRetailDDLServiceBodyShop;
     }
 
-    public void setNetRetailDDL(Double netRetailDDL) {
-        this.netRetailDDL = netRetailDDL;
+    public void setNetRetailDDLServiceBodyShop(Double netRetailDDLServiceBodyShop) {
+        this.netRetailDDLServiceBodyShop = netRetailDDLServiceBodyShop;
     }
 
-    public Double getNetRetailSelling() {
-        return netRetailSelling;
+    public Double getNetRetailSellingServiceBodyShop() {
+        return netRetailSellingServiceBodyShop;
     }
 
-    public void setNetRetailSelling(Double netRetailSelling) {
-        this.netRetailSelling = netRetailSelling;
+    public void setNetRetailSellingServiceBodyShop(Double netRetailSellingServiceBodyShop) {
+        this.netRetailSellingServiceBodyShop = netRetailSellingServiceBodyShop;
     }
 
-    public Double getProfit() {
-        return profit;
+    public Double getProfitServiceBodyShop() {
+        return profitServiceBodyShop;
     }
 
-    public void setProfit(Double profit) {
-        this.profit = profit;
+    public void setProfitServiceBodyShop(Double profitServiceBodyShop) {
+        this.profitServiceBodyShop = profitServiceBodyShop;
     }
 
-    public Double getPercentageProfit() {
-        return percentageProfit;
+    public Double getPercentageProfitServiceBodyShop() {
+        return percentageProfitServiceBodyShop;
     }
 
-    public void setPercentageProfit(Double percentageProfit) {
-        this.percentageProfit = percentageProfit;
+    public void setPercentageProfitServiceBodyShop(Double percentageProfitServiceBodyShop) {
+        this.percentageProfitServiceBodyShop = percentageProfitServiceBodyShop;
+    }
+
+    public Double getNetRetailDDLService() {
+        return netRetailDDLService;
+    }
+
+    public void setNetRetailDDLService(Double netRetailDDLService) {
+        this.netRetailDDLService = netRetailDDLService;
+    }
+
+    public Double getNetRetailSellingService() {
+        return netRetailSellingService;
+    }
+
+    public void setNetRetailSellingService(Double netRetailSellingService) {
+        this.netRetailSellingService = netRetailSellingService;
+    }
+
+    public Double getProfitService() {
+        return profitService;
+    }
+
+    public void setProfitService(Double profitService) {
+        this.profitService = profitService;
+    }
+
+    public Double getPercentageProfitService() {
+        return percentageProfitService;
+    }
+
+    public void setPercentageProfitService(Double percentageProfitService) {
+        this.percentageProfitService = percentageProfitService;
+    }
+
+    public Double getNetRetailDDLBodyShop() {
+        return netRetailDDLBodyShop;
+    }
+
+    public void setNetRetailDDLBodyShop(Double netRetailDDLBodyShop) {
+        this.netRetailDDLBodyShop = netRetailDDLBodyShop;
+    }
+
+    public Double getNetRetailSellingBodyShop() {
+        return netRetailSellingBodyShop;
+    }
+
+    public void setNetRetailSellingBodyShop(Double netRetailSellingBodyShop) {
+        this.netRetailSellingBodyShop = netRetailSellingBodyShop;
+    }
+
+    public Double getProfitBodyShop() {
+        return profitBodyShop;
+    }
+
+    public void setProfitBodyShop(Double profitBodyShop) {
+        this.profitBodyShop = profitBodyShop;
+    }
+
+    public Double getPercentageProfitBodyShop() {
+        return percentageProfitBodyShop;
+    }
+
+    public void setPercentageProfitBodyShop(Double percentageProfitBodyShop) {
+        this.percentageProfitBodyShop = percentageProfitBodyShop;
     }
 
     @Override
@@ -73,10 +153,18 @@ public class MSGPProfitSummaryDTO {
         return "MSGPProfitSummaryDTO{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
-                ", netRetailDDL=" + netRetailDDL +
-                ", netRetailSelling=" + netRetailSelling +
-                ", profit=" + profit +
-                ", percentageProfit=" + percentageProfit +
+                ", netRetailDDLServiceBodyShop=" + netRetailDDLServiceBodyShop +
+                ", netRetailSellingServiceBodyShop=" + netRetailSellingServiceBodyShop +
+                ", profitServiceBodyShop=" + profitServiceBodyShop +
+                ", percentageProfitServiceBodyShop=" + percentageProfitServiceBodyShop +
+                ", netRetailDDLService=" + netRetailDDLService +
+                ", netRetailSellingService=" + netRetailSellingService +
+                ", profitService=" + profitService +
+                ", percentageProfitService=" + percentageProfitService +
+                ", netRetailDDLBodyShop=" + netRetailDDLBodyShop +
+                ", netRetailSellingBodyShop=" + netRetailSellingBodyShop +
+                ", profitBodyShop=" + profitBodyShop +
+                ", percentageProfitBodyShop=" + percentageProfitBodyShop +
                 '}';
     }
 }

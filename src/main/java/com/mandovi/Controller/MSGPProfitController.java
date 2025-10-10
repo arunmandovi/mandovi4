@@ -45,7 +45,7 @@ public class MSGPProfitController {
     }
 
     @GetMapping("/msgp_profit_summary")
-    public ResponseEntity<List<MSGPProfitSummaryDTO>> getMSGPProfitSummary (
+    public ResponseEntity<?> getMSGPProfitSummary (
             @RequestParam String groupBy,
             @RequestParam (required = false) String month,
             @RequestParam (required = false) String qtrWise,
@@ -57,9 +57,9 @@ public class MSGPProfitController {
             }
             return ResponseEntity.ok(listMSGPProfitSummary);
         }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body(null);
+            return ResponseEntity.internalServerError().body("Internal Server Error :"+e.getMessage());
         }
     }
 }

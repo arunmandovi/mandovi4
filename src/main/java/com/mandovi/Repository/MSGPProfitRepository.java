@@ -24,7 +24,22 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
             SUM(m.sumOfNetRetailDDL),
             SUM(m.sumOfNetRetailSelling),
             SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL),
-            ((SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL)) / (SUM(m.sumOfNetRetailDDL))) * 100.00
+            (SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL)) * 100.00 /
+            NULLIF(SUM(m.sumOfNetRetailDDL), 0),
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
+            NULLIF(SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END), 0),
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
+            NULLIF(SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END), 0)
         )
         FROM MSGPProfit m
         WHERE (:month IS NULL OR m.month = :month)
@@ -41,12 +56,27 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
     //Group by branch
     @Query("""
         SELECT new com.mandovi.DTO.MSGPProfitSummaryDTO(
-            null,
+            MAX(m.city),
             m.branch,
             SUM(m.sumOfNetRetailDDL),
             SUM(m.sumOfNetRetailSelling),
             SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL),
-            ((SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL)) / (SUM(m.sumOfNetRetailDDL))) * 100.00
+            (SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL)) * 100.00 /
+            NULLIF(SUM(m.sumOfNetRetailDDL), 0),
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
+            NULLIF(SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END), 0),
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
+            NULLIF(SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END), 0)
         )
         FROM MSGPProfit m
         WHERE (:month IS NULL OR m.month = :month)
@@ -68,7 +98,22 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
             SUM(m.sumOfNetRetailDDL),
             SUM(m.sumOfNetRetailSelling),
             SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL),
-            ((SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL)) / (SUM(m.sumOfNetRetailDDL))) * 100.00
+            (SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL)) * 100.00 /
+            NULLIF(SUM(m.sumOfNetRetailDDL), 0),
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
+            NULLIF(SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END), 0),
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END),
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
+            NULLIF(SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END), 0)
         )
         FROM MSGPProfit m
         WHERE (:month IS NULL OR m.month = :month)
