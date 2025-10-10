@@ -87,42 +87,17 @@ public class OilServiceImpl implements OilService {
     }
 
     @Override
-    public List<OilSummaryDTO> getOilQtySummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<OilSummaryDTO> getOilSummary(String groupBy, String month, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()) {
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return oilRepository.getOilQtySummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return oilRepository.getOilQtySummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return oilRepository.getOilQtySummaryByCityAndBranch(month, qtrWise, halfYear);
+            case "city" : return oilRepository.getOilSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return oilRepository.getOilSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return oilRepository.getOilSummaryByCityAndBranch(month, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }
 
-    @Override
-    public List<OilSummaryDTO> getOilPercentageQtySummary(String groupBy, String month, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return oilRepository.getOilPercentageQtySummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return oilRepository.getOilPercentageQtySummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return oilRepository.getOilPercentageQtySummaryByCityAndBranch(month, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
-
-    @Override
-    public List<OilSummaryDTO> getOilProfitSummary(String groupBy, String month, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return oilRepository.getOilProfitSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return oilRepository.getOilProfitSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return oilRepository.getOilProfitSummaryByCityAndBranch(month, qtrWise, halfYear);
-            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
-    }
 }
 

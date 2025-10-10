@@ -45,60 +45,23 @@ public class OilController {
         return ResponseEntity.ok(oilRecords);
     }
 
-    @GetMapping("/oil_qty")
-    public ResponseEntity<List<OilSummaryDTO>> getOilQtySummary (
+    @GetMapping("/oil_summary")
+    public ResponseEntity<?> getOilSummary (
             @RequestParam String groupBy,
             @RequestParam (required = false) String month,
             @RequestParam (required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<OilSummaryDTO> listOilQtySummary = oilService.getOilQtySummary(groupBy, month, qtrWise, halfYear);
+            List<OilSummaryDTO> listOilQtySummary = oilService.getOilSummary(groupBy, month, qtrWise, halfYear);
             if (listOilQtySummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listOilQtySummary);
         }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("ERROR : "+ e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body(null);
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : 0"+e.getMessage());
         }
     }
 
-    @GetMapping("/oil_percentage_qty")
-    public ResponseEntity<List<OilSummaryDTO>> getOilPercentageQtySummary (
-            @RequestParam String groupBy,
-            @RequestParam (required = false) String month,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
-        try {
-            List<OilSummaryDTO> listOilPercentageQtySummary = oilService.getOilPercentageQtySummary(groupBy, month, qtrWise, halfYear);
-            if (listOilPercentageQtySummary.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(listOilPercentageQtySummary);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(null);
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(null);
-        }
-    }
-
-    @GetMapping("/oil_profit")
-    public ResponseEntity<List<OilSummaryDTO>> getOilProfitSummary (
-            @RequestParam String groupBy,
-            @RequestParam (required = false) String month,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
-        try {
-            List<OilSummaryDTO> listOilProfitSummary = oilService.getOilProfitSummary(groupBy, month, qtrWise, halfYear);
-            if (listOilProfitSummary.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(listOilProfitSummary);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(null);
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(null);
-        }
-    }
 }
