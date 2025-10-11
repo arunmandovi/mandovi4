@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.RevenueSummaryDTO;
 import com.mandovi.Entity.Revenue;
 import com.mandovi.Repository.RevenueRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -19,6 +20,14 @@ public class RevenueServiceImpl implements RevenueService {
     }
     private Double round2Decimal(Double value) {
         return Math.round(value * 100.0) / 100.0;
+    }
+    private Double getNumericCellValue (Row row, int index){
+        if (row == null || row.getCell(index) == null )return  0.0;
+        try {
+            return row.getCell(index).getNumericCellValue();
+        }catch (Exception e){
+            return 0.0;
+        }
     }
 
     @Override
@@ -47,36 +56,36 @@ public class RevenueServiceImpl implements RevenueService {
                 revenue.setBranch(row.getCell(5).getStringCellValue());
 
 
-                revenue.setSr_labour_last_year(round2Decimal(row.getCell(6).getNumericCellValue()));
-                revenue.setSr_labour_current_year(round2Decimal(row.getCell(7).getNumericCellValue()));
-                revenue.setBr_labour_last_year(round2Decimal(row.getCell(9).getNumericCellValue()));
-                revenue.setBr_labour_current_year(round2Decimal(row.getCell(10).getNumericCellValue()));
-                revenue.setSr_and_br_labour_last_year(round2Decimal(row.getCell(12).getNumericCellValue()));
-                revenue.setSr_and_br_labour_current_year(round2Decimal(row.getCell(13).getNumericCellValue()));
-                revenue.setSr_spares_last_year(round2Decimal(row.getCell(15).getNumericCellValue()));
-                revenue.setSr_spares_current_year(round2Decimal(row.getCell(16).getNumericCellValue()));
-                revenue.setBr_spares_last_year(round2Decimal(row.getCell(18).getNumericCellValue()));
-                revenue.setBr_spares_current_year(round2Decimal(row.getCell(19).getNumericCellValue()));
-                revenue.setSr_and_br_spares_last_year(round2Decimal(row.getCell(21).getNumericCellValue()));
-                revenue.setSr_and_br_spares_current_year(round2Decimal(row.getCell(22).getNumericCellValue()));
-                revenue.setSr_and_br_total_last_year(round2Decimal(row.getCell(24).getNumericCellValue()));
-                revenue.setSr_and_br_total_current_year(round2Decimal(row.getCell(25).getNumericCellValue()));
+                revenue.setSrLabourLastYear(round2Decimal(getNumericCellValue(row, 6)));
+                revenue.setSrLabourCurrentYear(round2Decimal(getNumericCellValue(row, 7)));
+                revenue.setBrLabourLastYear(round2Decimal(getNumericCellValue(row, 9)));
+                revenue.setBrLabourCurrentYear(round2Decimal(getNumericCellValue(row,10)));
+                revenue.setSrAndBrLabourLastYear(round2Decimal(getNumericCellValue(row, 12)));
+                revenue.setSrAndBrLabourCurrentYear(round2Decimal(getNumericCellValue(row, 13)));
+                revenue.setSrSparesLastYear(round2Decimal(getNumericCellValue(row, 15)));
+                revenue.setSrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 16)));
+                revenue.setBrSparesLastYear(round2Decimal(getNumericCellValue(row, 18)));
+                revenue.setBrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 19)));
+                revenue.setSrAndBrSparesLastYear(round2Decimal(getNumericCellValue(row, 21)));
+                revenue.setSrAndBrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 22)));
+                revenue.setSrAndBrTotalLastYear(round2Decimal(getNumericCellValue(row, 24)));
+                revenue.setSrAndBrTotalCurrentYear(round2Decimal(getNumericCellValue(row, 25)));
 
                 //Updating ALlGrowth columns by calculating the values from last & current year columns
-                revenue.setSr_labour_growth(round2Decimal((revenue.getSr_labour_current_year()-revenue.getSr_labour_last_year())/revenue.getSr_labour_last_year()));
-                revenue.setBr_labour_growth(round2Decimal((revenue.getBr_labour_current_year()-revenue.getBr_labour_last_year())/revenue.getBr_labour_last_year()));
-                revenue.setSr_and_br_labour_growth(round2Decimal((revenue.getSr_and_br_labour_current_year()-revenue.getSr_and_br_labour_last_year())/revenue.getSr_and_br_labour_last_year()));
-                revenue.setSr_spares_growth(round2Decimal((revenue.getSr_spares_current_year()-revenue.getSr_spares_last_year())/revenue.getSr_spares_last_year()));
-                revenue.setBr_spares_growth(round2Decimal((revenue.getBr_spares_current_year()-revenue.getBr_spares_last_year())/revenue.getBr_spares_last_year()));
-                revenue.setSr_and_br_spares_growth(round2Decimal((revenue.getSr_and_br_spares_current_year()-revenue.getSr_and_br_spares_last_year())/revenue.getSr_and_br_spares_last_year()));
-                revenue.setSr_and_br_total_growth(round2Decimal((revenue.getSr_and_br_total_current_year()-revenue.getSr_and_br_total_last_year())/revenue.getSr_and_br_total_last_year()));
+                revenue.setSrLabourGrowth(round2Decimal((revenue.getSrLabourCurrentYear()-revenue.getSrLabourLastYear())/revenue.getSrLabourLastYear()));
+                revenue.setBrLabourGrowth(round2Decimal((revenue.getBrLabourCurrentYear()-revenue.getBrLabourLastYear())/revenue.getBrLabourLastYear()));
+                revenue.setSrAndBrLabourGrowth(round2Decimal((revenue.getSrAndBrLabourCurrentYear()-revenue.getSrAndBrLabourLastYear())/revenue.getSrAndBrLabourLastYear()));
+                revenue.setSrSparesGrowth(round2Decimal((revenue.getSrSparesCurrentYear()-revenue.getSrSparesLastYear())/revenue.getSrSparesLastYear()));
+                revenue.setBrSparesGrowth(round2Decimal((revenue.getBrSparesCurrentYear()-revenue.getBrSparesLastYear())/revenue.getBrSparesLastYear()));
+                revenue.setSrAndBrSparesGrowth(round2Decimal((revenue.getSrAndBrSparesCurrentYear()-revenue.getSrAndBrSparesLastYear())/revenue.getSrAndBrSparesLastYear()));
+                revenue.setSrAndBrTotalGrowth(round2Decimal((revenue.getSrAndBrTotalCurrentYear()-revenue.getSrAndBrTotalLastYear())/revenue.getSrAndBrTotalLastYear()));
 
                 //Updating qtr_wise & half_year column by checking month
                 switch (revenue.getMonth().trim().toUpperCase()){
-                    case "APR", "MAY", "JUN" -> { revenue.setQtr_wise("Qtr1"); revenue.setHalf_year("H1"); }
-                    case "JUL", "AUG", "SEP" -> { revenue.setQtr_wise("Qtr2"); revenue.setHalf_year("H1"); }
-                    case "OCT", "NOV", "DEC" -> { revenue.setQtr_wise("Qtr3"); revenue.setHalf_year("H2"); }
-                    case "JAN", "FEB", "MAR" -> { revenue.setQtr_wise("Qtr4"); revenue.setHalf_year("H2"); }
+                    case "APR", "MAY", "JUN" -> { revenue.setQtrWise("Qtr1"); revenue.setHalfYear("H1"); }
+                    case "JUL", "AUG", "SEP" -> { revenue.setQtrWise("Qtr2"); revenue.setHalfYear("H1"); }
+                    case "OCT", "NOV", "DEC" -> { revenue.setQtrWise("Qtr3"); revenue.setHalfYear("H2"); }
+                    case "JAN", "FEB", "MAR" -> { revenue.setQtrWise("Qtr4"); revenue.setHalfYear("H2"); }
                 }
 
 
@@ -96,5 +105,18 @@ public class RevenueServiceImpl implements RevenueService {
     public List<Revenue> getRevenueByMonthYear(String month, String year) {
         String formattedMonth = month.trim().toUpperCase();
         return revenueRepository.getRevenueByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<RevenueSummaryDTO> getRevenueSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return revenueRepository.getRevenueSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return revenueRepository.getRevenueSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return revenueRepository.getRevenueSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 }

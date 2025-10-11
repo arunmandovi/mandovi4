@@ -29,78 +29,78 @@ public class Revenue {
     private Integer branchSINo;
 
     @Column(name = "sr_labour_last_year")
-    private Double  sr_labour_last_year;
+    private Double  srLabourLastYear;
 
     @Column(name = "sr_labour_current_year")
-    private Double  sr_labour_current_year;
+    private Double  srLabourCurrentYear;
 
     @Column(name = "sr_labour_growth")
-    private Double  sr_labour_growth;
+    private Double  srLabourGrowth;
 
     @Column(name = "br_labour_last_year")
-    private Double br_labour_last_year;
+    private Double brLabourLastYear;
 
     @Column(name = "br_labour_current_year")
-    private Double br_labour_current_year;
+    private Double brLabourCurrentYear;
 
     @Column(name = "br_labour_growth")
-    private Double br_labour_growth;
+    private Double brLabourGrowth;
 
     @Column(name = "sr_and_br_labour_last_year")
-    private Double sr_and_br_labour_last_year;
+    private Double srAndBrLabourLastYear;
 
     @Column(name = "sr_and_br_labour_current_year")
-    private Double sr_and_br_labour_current_year;
+    private Double srAndBrLabourCurrentYear;
 
     @Column(name = "sr_and_br_labour_growth")
-    private Double sr_and_br_labour_growth;
+    private Double srAndBrLabourGrowth;
 
     @Column(name = "sr_spares_last_year")
-    private Double sr_spares_last_year;
+    private Double srSparesLastYear;
 
     @Column(name = "sr_spares_current_year")
-    private Double sr_spares_current_year;
+    private Double srSparesCurrentYear;
 
     @Column(name = "sr_spares_growth")
-    private Double sr_spares_growth;
+    private Double srSparesGrowth;
 
     @Column(name = "br_spares_last_year")
-    private Double br_spares_last_year;
+    private Double brSparesLastYear;
 
     @Column(name = "br_spares_current_year")
-    private Double br_spares_current_year;
+    private Double brSparesCurrentYear;
 
     @Column(name = "br_spares_growth")
-    private Double br_spares_growth;
+    private Double brSparesGrowth;
 
     @Column(name = "sr_and_br_spares_last_year")
-    private Double sr_and_br_spares_last_year;
+    private Double srAndBrSparesLastYear;
 
     @Column(name = "sr_and_br_spares_current_year")
-    private Double sr_and_br_spares_current_year;
+    private Double srAndBrSparesCurrentYear;
 
     @Column(name = "sr_and_br_spares_growth")
-    private Double sr_and_br_spares_growth;
+    private Double srAndBrSparesGrowth;
 
     @Column(name = "sr_and_br_total_last_year")
-    private Double sr_and_br_total_last_year;
+    private Double srAndBrTotalLastYear;
 
     @Column(name = "sr_and_br_total_current_year")
-    private Double sr_and_br_total_current_year;
+    private Double srAndBrTotalCurrentYear;
 
     @Column(name = "sr_and_br_total_growth")
-    private Double sr_and_br_total_growth;
+    private Double srAndBrTotalGrowth;
 
     @Column(name = "qtr_wise")
-    private String qtr_wise;
+    private String qtrWise;
 
     @Column(name = "half_year")
-    private String half_year;
+    private String halfYear;
 
     public Revenue() {
     }
 
-    public Revenue(int revenueSINo, String city, String month, String year, String period, String branch, Integer branchSINo, Double sr_labour_last_year, Double sr_labour_current_year, Double sr_labour_growth, Double br_labour_last_year, Double br_labour_current_year, Double br_labour_growth, Double sr_and_br_labour_last_year, Double sr_and_br_labour_current_year, Double sr_and_br_labour_growth, Double sr_spares_last_year, Double sr_spares_current_year, Double sr_spares_growth, Double br_spares_last_year, Double br_spares_current_year, Double br_spares_growth, Double sr_and_br_spares_last_year, Double sr_and_br_spares_current_year, Double sr_and_br_spares_growth, Double sr_and_br_total_last_year, Double sr_and_br_total_current_year, Double sr_and_br_total_growth, String qtr_wise, String half_year) {
+    public Revenue(int revenueSINo, String city, String month, String year, String period, String branch, Integer branchSINo, Double srLabourLastYear, Double srLabourCurrentYear, Double srLabourGrowth, Double brLabourLastYear, Double brLabourCurrentYear, Double brLabourGrowth, Double srAndBrLabourLastYear, Double srAndBrLabourCurrentYear, Double srAndBrLabourGrowth, Double srSparesLastYear, Double srSparesCurrentYear, Double srSparesGrowth, Double brSparesLastYear, Double brSparesCurrentYear, Double brSparesGrowth, Double srAndBrSparesLastYear, Double srAndBrSparesCurrentYear, Double srAndBrSparesGrowth, Double srAndBrTotalLastYear, Double srAndBrTotalCurrentYear, Double srAndBrTotalGrowth, String qtrWise, String halfYear) {
         this.revenueSINo = revenueSINo;
         this.city = city;
         this.month = month;
@@ -108,29 +108,29 @@ public class Revenue {
         this.period = period;
         this.branch = branch;
         this.branchSINo = branchSINo;
-        this.sr_labour_last_year = sr_labour_last_year;
-        this.sr_labour_current_year = sr_labour_current_year;
-        this.sr_labour_growth = sr_labour_growth;
-        this.br_labour_last_year = br_labour_last_year;
-        this.br_labour_current_year = br_labour_current_year;
-        this.br_labour_growth = br_labour_growth;
-        this.sr_and_br_labour_last_year = sr_and_br_labour_last_year;
-        this.sr_and_br_labour_current_year = sr_and_br_labour_current_year;
-        this.sr_and_br_labour_growth = sr_and_br_labour_growth;
-        this.sr_spares_last_year = sr_spares_last_year;
-        this.sr_spares_current_year = sr_spares_current_year;
-        this.sr_spares_growth = sr_spares_growth;
-        this.br_spares_last_year = br_spares_last_year;
-        this.br_spares_current_year = br_spares_current_year;
-        this.br_spares_growth = br_spares_growth;
-        this.sr_and_br_spares_last_year = sr_and_br_spares_last_year;
-        this.sr_and_br_spares_current_year = sr_and_br_spares_current_year;
-        this.sr_and_br_spares_growth = sr_and_br_spares_growth;
-        this.sr_and_br_total_last_year = sr_and_br_total_last_year;
-        this.sr_and_br_total_current_year = sr_and_br_total_current_year;
-        this.sr_and_br_total_growth = sr_and_br_total_growth;
-        this.qtr_wise = qtr_wise;
-        this.half_year = half_year;
+        this.srLabourLastYear = srLabourLastYear;
+        this.srLabourCurrentYear = srLabourCurrentYear;
+        this.srLabourGrowth = srLabourGrowth;
+        this.brLabourLastYear = brLabourLastYear;
+        this.brLabourCurrentYear = brLabourCurrentYear;
+        this.brLabourGrowth = brLabourGrowth;
+        this.srAndBrLabourLastYear = srAndBrLabourLastYear;
+        this.srAndBrLabourCurrentYear = srAndBrLabourCurrentYear;
+        this.srAndBrLabourGrowth = srAndBrLabourGrowth;
+        this.srSparesLastYear = srSparesLastYear;
+        this.srSparesCurrentYear = srSparesCurrentYear;
+        this.srSparesGrowth = srSparesGrowth;
+        this.brSparesLastYear = brSparesLastYear;
+        this.brSparesCurrentYear = brSparesCurrentYear;
+        this.brSparesGrowth = brSparesGrowth;
+        this.srAndBrSparesLastYear = srAndBrSparesLastYear;
+        this.srAndBrSparesCurrentYear = srAndBrSparesCurrentYear;
+        this.srAndBrSparesGrowth = srAndBrSparesGrowth;
+        this.srAndBrTotalLastYear = srAndBrTotalLastYear;
+        this.srAndBrTotalCurrentYear = srAndBrTotalCurrentYear;
+        this.srAndBrTotalGrowth = srAndBrTotalGrowth;
+        this.qtrWise = qtrWise;
+        this.halfYear = halfYear;
     }
 
     public int getRevenueSINo() {
@@ -189,188 +189,188 @@ public class Revenue {
         this.branchSINo = branchSINo;
     }
 
-    public Double getSr_labour_last_year() {
-        return sr_labour_last_year;
+    public Double getSrLabourLastYear() {
+        return srLabourLastYear;
     }
 
-    public void setSr_labour_last_year(Double sr_labour_last_year) {
-        this.sr_labour_last_year = sr_labour_last_year;
+    public void setSrLabourLastYear(Double srLabourLastYear) {
+        this.srLabourLastYear = srLabourLastYear;
     }
 
-    public Double getSr_labour_current_year() {
-        return sr_labour_current_year;
+    public Double getSrLabourCurrentYear() {
+        return srLabourCurrentYear;
     }
 
-    public void setSr_labour_current_year(Double sr_labour_current_year) {
-        this.sr_labour_current_year = sr_labour_current_year;
+    public void setSrLabourCurrentYear(Double srLabourCurrentYear) {
+        this.srLabourCurrentYear = srLabourCurrentYear;
     }
 
-    public Double getSr_labour_growth() {
-        return sr_labour_growth;
+    public Double getSrLabourGrowth() {
+        return srLabourGrowth;
     }
 
-    public void setSr_labour_growth(Double sr_labour_growth) {
-        this.sr_labour_growth = sr_labour_growth;
+    public void setSrLabourGrowth(Double srLabourGrowth) {
+        this.srLabourGrowth = srLabourGrowth;
     }
 
-    public Double getBr_labour_last_year() {
-        return br_labour_last_year;
+    public Double getBrLabourLastYear() {
+        return brLabourLastYear;
     }
 
-    public void setBr_labour_last_year(Double br_labour_last_year) {
-        this.br_labour_last_year = br_labour_last_year;
+    public void setBrLabourLastYear(Double brLabourLastYear) {
+        this.brLabourLastYear = brLabourLastYear;
     }
 
-    public Double getBr_labour_current_year() {
-        return br_labour_current_year;
+    public Double getBrLabourCurrentYear() {
+        return brLabourCurrentYear;
     }
 
-    public void setBr_labour_current_year(Double br_labour_current_year) {
-        this.br_labour_current_year = br_labour_current_year;
+    public void setBrLabourCurrentYear(Double brLabourCurrentYear) {
+        this.brLabourCurrentYear = brLabourCurrentYear;
     }
 
-    public Double getBr_labour_growth() {
-        return br_labour_growth;
+    public Double getBrLabourGrowth() {
+        return brLabourGrowth;
     }
 
-    public void setBr_labour_growth(Double br_labour_growth) {
-        this.br_labour_growth = br_labour_growth;
+    public void setBrLabourGrowth(Double brLabourGrowth) {
+        this.brLabourGrowth = brLabourGrowth;
     }
 
-    public Double getSr_and_br_labour_last_year() {
-        return sr_and_br_labour_last_year;
+    public Double getSrAndBrLabourLastYear() {
+        return srAndBrLabourLastYear;
     }
 
-    public void setSr_and_br_labour_last_year(Double sr_and_br_labour_last_year) {
-        this.sr_and_br_labour_last_year = sr_and_br_labour_last_year;
+    public void setSrAndBrLabourLastYear(Double srAndBrLabourLastYear) {
+        this.srAndBrLabourLastYear = srAndBrLabourLastYear;
     }
 
-    public Double getSr_and_br_labour_current_year() {
-        return sr_and_br_labour_current_year;
+    public Double getSrAndBrLabourCurrentYear() {
+        return srAndBrLabourCurrentYear;
     }
 
-    public void setSr_and_br_labour_current_year(Double sr_and_br_labour_current_year) {
-        this.sr_and_br_labour_current_year = sr_and_br_labour_current_year;
+    public void setSrAndBrLabourCurrentYear(Double srAndBrLabourCurrentYear) {
+        this.srAndBrLabourCurrentYear = srAndBrLabourCurrentYear;
     }
 
-    public Double getSr_and_br_labour_growth() {
-        return sr_and_br_labour_growth;
+    public Double getSrAndBrLabourGrowth() {
+        return srAndBrLabourGrowth;
     }
 
-    public void setSr_and_br_labour_growth(Double sr_and_br_labour_growth) {
-        this.sr_and_br_labour_growth = sr_and_br_labour_growth;
+    public void setSrAndBrLabourGrowth(Double srAndBrLabourGrowth) {
+        this.srAndBrLabourGrowth = srAndBrLabourGrowth;
     }
 
-    public Double getSr_spares_last_year() {
-        return sr_spares_last_year;
+    public Double getSrSparesLastYear() {
+        return srSparesLastYear;
     }
 
-    public void setSr_spares_last_year(Double sr_spares_last_year) {
-        this.sr_spares_last_year = sr_spares_last_year;
+    public void setSrSparesLastYear(Double srSparesLastYear) {
+        this.srSparesLastYear = srSparesLastYear;
     }
 
-    public Double getSr_spares_current_year() {
-        return sr_spares_current_year;
+    public Double getSrSparesCurrentYear() {
+        return srSparesCurrentYear;
     }
 
-    public void setSr_spares_current_year(Double sr_spares_current_year) {
-        this.sr_spares_current_year = sr_spares_current_year;
+    public void setSrSparesCurrentYear(Double srSparesCurrentYear) {
+        this.srSparesCurrentYear = srSparesCurrentYear;
     }
 
-    public Double getSr_spares_growth() {
-        return sr_spares_growth;
+    public Double getSrSparesGrowth() {
+        return srSparesGrowth;
     }
 
-    public void setSr_spares_growth(Double sr_spares_growth) {
-        this.sr_spares_growth = sr_spares_growth;
+    public void setSrSparesGrowth(Double srSparesGrowth) {
+        this.srSparesGrowth = srSparesGrowth;
     }
 
-    public Double getBr_spares_last_year() {
-        return br_spares_last_year;
+    public Double getBrSparesLastYear() {
+        return brSparesLastYear;
     }
 
-    public void setBr_spares_last_year(Double br_spares_last_year) {
-        this.br_spares_last_year = br_spares_last_year;
+    public void setBrSparesLastYear(Double brSparesLastYear) {
+        this.brSparesLastYear = brSparesLastYear;
     }
 
-    public Double getBr_spares_current_year() {
-        return br_spares_current_year;
+    public Double getBrSparesCurrentYear() {
+        return brSparesCurrentYear;
     }
 
-    public void setBr_spares_current_year(Double br_spares_current_year) {
-        this.br_spares_current_year = br_spares_current_year;
+    public void setBrSparesCurrentYear(Double brSparesCurrentYear) {
+        this.brSparesCurrentYear = brSparesCurrentYear;
     }
 
-    public Double getBr_spares_growth() {
-        return br_spares_growth;
+    public Double getBrSparesGrowth() {
+        return brSparesGrowth;
     }
 
-    public void setBr_spares_growth(Double br_spares_growth) {
-        this.br_spares_growth = br_spares_growth;
+    public void setBrSparesGrowth(Double brSparesGrowth) {
+        this.brSparesGrowth = brSparesGrowth;
     }
 
-    public Double getSr_and_br_spares_last_year() {
-        return sr_and_br_spares_last_year;
+    public Double getSrAndBrSparesLastYear() {
+        return srAndBrSparesLastYear;
     }
 
-    public void setSr_and_br_spares_last_year(Double sr_and_br_spares_last_year) {
-        this.sr_and_br_spares_last_year = sr_and_br_spares_last_year;
+    public void setSrAndBrSparesLastYear(Double srAndBrSparesLastYear) {
+        this.srAndBrSparesLastYear = srAndBrSparesLastYear;
     }
 
-    public Double getSr_and_br_spares_current_year() {
-        return sr_and_br_spares_current_year;
+    public Double getSrAndBrSparesCurrentYear() {
+        return srAndBrSparesCurrentYear;
     }
 
-    public void setSr_and_br_spares_current_year(Double sr_and_br_spares_current_year) {
-        this.sr_and_br_spares_current_year = sr_and_br_spares_current_year;
+    public void setSrAndBrSparesCurrentYear(Double srAndBrSparesCurrentYear) {
+        this.srAndBrSparesCurrentYear = srAndBrSparesCurrentYear;
     }
 
-    public Double getSr_and_br_spares_growth() {
-        return sr_and_br_spares_growth;
+    public Double getSrAndBrSparesGrowth() {
+        return srAndBrSparesGrowth;
     }
 
-    public void setSr_and_br_spares_growth(Double sr_and_br_spares_growth) {
-        this.sr_and_br_spares_growth = sr_and_br_spares_growth;
+    public void setSrAndBrSparesGrowth(Double srAndBrSparesGrowth) {
+        this.srAndBrSparesGrowth = srAndBrSparesGrowth;
     }
 
-    public Double getSr_and_br_total_last_year() {
-        return sr_and_br_total_last_year;
+    public Double getSrAndBrTotalLastYear() {
+        return srAndBrTotalLastYear;
     }
 
-    public void setSr_and_br_total_last_year(Double sr_and_br_total_last_year) {
-        this.sr_and_br_total_last_year = sr_and_br_total_last_year;
+    public void setSrAndBrTotalLastYear(Double srAndBrTotalLastYear) {
+        this.srAndBrTotalLastYear = srAndBrTotalLastYear;
     }
 
-    public Double getSr_and_br_total_current_year() {
-        return sr_and_br_total_current_year;
+    public Double getSrAndBrTotalCurrentYear() {
+        return srAndBrTotalCurrentYear;
     }
 
-    public void setSr_and_br_total_current_year(Double sr_and_br_total_current_year) {
-        this.sr_and_br_total_current_year = sr_and_br_total_current_year;
+    public void setSrAndBrTotalCurrentYear(Double srAndBrTotalCurrentYear) {
+        this.srAndBrTotalCurrentYear = srAndBrTotalCurrentYear;
     }
 
-    public Double getSr_and_br_total_growth() {
-        return sr_and_br_total_growth;
+    public Double getSrAndBrTotalGrowth() {
+        return srAndBrTotalGrowth;
     }
 
-    public void setSr_and_br_total_growth(Double sr_and_br_total_growth) {
-        this.sr_and_br_total_growth = sr_and_br_total_growth;
+    public void setSrAndBrTotalGrowth(Double srAndBrTotalGrowth) {
+        this.srAndBrTotalGrowth = srAndBrTotalGrowth;
     }
 
-    public String getQtr_wise() {
-        return qtr_wise;
+    public String getQtrWise() {
+        return qtrWise;
     }
 
-    public void setQtr_wise(String qtr_wise) {
-        this.qtr_wise = qtr_wise;
+    public void setQtrWise(String qtrWise) {
+        this.qtrWise = qtrWise;
     }
 
-    public String getHalf_year() {
-        return half_year;
+    public String getHalfYear() {
+        return halfYear;
     }
 
-    public void setHalf_year(String half_year) {
-        this.half_year = half_year;
+    public void setHalfYear(String halfYear) {
+        this.halfYear = halfYear;
     }
 
     @Override
@@ -382,30 +382,30 @@ public class Revenue {
                 ", year='" + year + '\'' +
                 ", period='" + period + '\'' +
                 ", branch='" + branch + '\'' +
-                ", branchSINo='" + branchSINo + '\'' +
-                ", sr_labour_last_year=" + sr_labour_last_year +
-                ", sr_labour_current_year=" + sr_labour_current_year +
-                ", sr_labour_growth=" + sr_labour_growth +
-                ", br_labour_last_year=" + br_labour_last_year +
-                ", br_labour_current_year=" + br_labour_current_year +
-                ", br_labour_growth=" + br_labour_growth +
-                ", sr_and_br_labour_last_year=" + sr_and_br_labour_last_year +
-                ", sr_and_br_labour_current_year=" + sr_and_br_labour_current_year +
-                ", sr_and_br_labour_growth=" + sr_and_br_labour_growth +
-                ", sr_spares_last_year=" + sr_spares_last_year +
-                ", sr_spares_current_year=" + sr_spares_current_year +
-                ", sr_spares_growth=" + sr_spares_growth +
-                ", br_spares_last_year=" + br_spares_last_year +
-                ", br_spares_current_year=" + br_spares_current_year +
-                ", br_spares_growth=" + br_spares_growth +
-                ", sr_and_br_spares_last_year=" + sr_and_br_spares_last_year +
-                ", sr_and_br_spares_current_year=" + sr_and_br_spares_current_year +
-                ", sr_and_br_spares_growth=" + sr_and_br_spares_growth +
-                ", sr_and_br_total_last_year=" + sr_and_br_total_last_year +
-                ", sr_and_br_total_current_year=" + sr_and_br_total_current_year +
-                ", sr_and_br_total_growth=" + sr_and_br_total_growth +
-                ", qtr_wise='" + qtr_wise + '\'' +
-                ", half_year='" + half_year + '\'' +
+                ", branchSINo=" + branchSINo +
+                ", srLabourLastYear=" + srLabourLastYear +
+                ", srLabourCurrentYear=" + srLabourCurrentYear +
+                ", srLabourGrowth=" + srLabourGrowth +
+                ", brLabourLastYear=" + brLabourLastYear +
+                ", brLabourCurrentYear=" + brLabourCurrentYear +
+                ", brLabourGrowth=" + brLabourGrowth +
+                ", srAndBrLabourLastYear=" + srAndBrLabourLastYear +
+                ", srAndBrLabourCurrentYear=" + srAndBrLabourCurrentYear +
+                ", srAndBrLabourGrowth=" + srAndBrLabourGrowth +
+                ", srSparesLastYear=" + srSparesLastYear +
+                ", srSparesCurrentYear=" + srSparesCurrentYear +
+                ", srSparesGrowth=" + srSparesGrowth +
+                ", brSparesLastYear=" + brSparesLastYear +
+                ", brSparesCurrentYear=" + brSparesCurrentYear +
+                ", brSparesGrowth=" + brSparesGrowth +
+                ", srAndBrSparesLastYear=" + srAndBrSparesLastYear +
+                ", srAndBrSparesCurrentYear=" + srAndBrSparesCurrentYear +
+                ", srAndBrSparesGrowth=" + srAndBrSparesGrowth +
+                ", srAndBrTotalLastYear=" + srAndBrTotalLastYear +
+                ", srAndBrTotalCurrentYear=" + srAndBrTotalCurrentYear +
+                ", srAndBrTotalGrowth=" + srAndBrTotalGrowth +
+                ", qtrWise='" + qtrWise + '\'' +
+                ", halfYear='" + halfYear + '\'' +
                 '}';
     }
 }

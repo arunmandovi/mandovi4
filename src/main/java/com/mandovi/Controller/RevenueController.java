@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.RevenueSummaryDTO;
 import com.mandovi.Entity.Revenue;
 import com.mandovi.Service.RevenueService;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +42,24 @@ public class RevenueController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(revenueRecords);
+    }
+
+    @GetMapping("/revenue_summary")
+    public ResponseEntity<?> getRevenueSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<RevenueSummaryDTO> listRevenueSummary = revenueService.getRevenueSummary(groupBy, month, qtrWise, halfYear);
+            if (listRevenueSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listRevenueSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
     }
 }
