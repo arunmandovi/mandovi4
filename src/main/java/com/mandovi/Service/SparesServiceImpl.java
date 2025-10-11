@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.SparesSummaryDTO;
 import com.mandovi.Entity.Spares;
 import com.mandovi.Repository.SparesRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -18,8 +19,15 @@ public class SparesServiceImpl implements SparesService{
         this.sparesRepository = sparesRepository;
     }
 
-    private Double round2Decimal(Double value){
-        return Math.round(value*100.0)/100.0;
+    private Double round2Decimal(Double value){ return Math.round(value*100.0)/100.0; }
+
+    private Double getNumericCellValue (Row row, int index){
+        if (row == null || row.getCell(index) == null) return 0.0;
+        try {
+            return row.getCell(index).getNumericCellValue();
+        }catch (Exception e){
+            return 0.0;
+        }
     }
 
     @Override
@@ -48,52 +56,52 @@ public class SparesServiceImpl implements SparesService{
                 spares.setPeriod(spares.getMonth()+"-"+spares.getYear());
 
                 spares.setBranch(row.getCell(4).getStringCellValue());
-                spares.setSr_spares_last_year(round2Decimal(row.getCell(5).getNumericCellValue()));
-                spares.setSr_spares_current_year(round2Decimal(row.getCell(6).getNumericCellValue()));
+                spares.setSrSparesLastYear(round2Decimal(getNumericCellValue(row,5)));
+                spares.setSrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 6)));
 
                 //Updating GROWTH columns by calculating the values from last year & current year
-                spares.setSr_spares_growth(round2Decimal((spares.getSr_spares_current_year()- spares.getSr_spares_last_year())/spares.getSr_spares_last_year()));
+                spares.setSrSparesGrowth(round2Decimal((spares.getSrSparesCurrentYear()- spares.getSrSparesLastYear())/spares.getSrSparesLastYear()));
 
-                spares.setBr_spares_last_year(round2Decimal(row.getCell(8).getNumericCellValue()));
-                spares.setBr_spares_current_year(round2Decimal(row.getCell(9).getNumericCellValue()));
+                spares.setBrSparesLastYear(round2Decimal(getNumericCellValue(row, 8)));
+                spares.setBrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 9)));
 
                 //Updating GROWTH columns by calculating the values from last year & current year
-                spares.setBr_spares_growth(round2Decimal((spares.getBr_spares_current_year()-spares.getBr_spares_last_year())/spares.getBr_spares_last_year()));
+                spares.setBrSparesGrowth(round2Decimal((spares.getBrSparesCurrentYear()-spares.getBrSparesLastYear())/spares.getBrSparesLastYear()));
 
                 //Adding srbr columns by adding sr & btr columns for respective years
-                spares.setSrbr_spares_last_year(round2Decimal(spares.getSr_spares_last_year()+spares.getBr_spares_last_year()));
-                spares.setSrbr_spares_current_year(round2Decimal(spares.getSr_spares_current_year()+spares.getBr_spares_current_year()));
+                spares.setSrBrSparesLastYear(round2Decimal(spares.getSrSparesLastYear()+spares.getBrSparesLastYear()));
+                spares.setSrBrSparesCurrentYear(round2Decimal(spares.getSrSparesCurrentYear()+spares.getBrSparesCurrentYear()));
 
                 //Updating GROWTH columns by calculating the values from last year & current year
-                spares.setSrbr_spares_growth(round2Decimal((spares.getSrbr_spares_current_year()-spares.getSrbr_spares_last_year())/spares.getSrbr_spares_last_year()));
+                spares.setSrBrSparesGrowth(round2Decimal((spares.getSrBrSparesCurrentYear()-spares.getSrBrSparesLastYear())/spares.getSrBrSparesLastYear()));
 
-                spares.setBattery_last_year(round2Decimal(row.getCell(14).getNumericCellValue()));
-                spares.setBattery_current_year(round2Decimal(row.getCell(15).getNumericCellValue()));
+                spares.setBatteryLastYear(round2Decimal(getNumericCellValue(row, 14)));
+                spares.setBatteryCurrentYear(round2Decimal(getNumericCellValue(row, 15)));
 
                 //Updating Battery growth after checking that the last yeat column has any 0 value
-                if (spares.getBattery_last_year() == 0){
-                    spares.setBattery_growth(100.0);
+                if (spares.getBatteryLastYear() == 0){
+                    spares.setBatteryGrowth(100.0);
                 }else {
-                    spares.setBattery_growth((spares.getBattery_current_year()-spares.getBattery_last_year())/spares.getBattery_last_year());
+                    spares.setBatteryGrowth((spares.getBatteryCurrentYear()-spares.getBatteryLastYear())/spares.getBatteryLastYear());
                 }
-                spares.setTyre_last_year(round2Decimal(row.getCell(17).getNumericCellValue()));
-                spares.setTyre_current_year(round2Decimal(row.getCell(18).getNumericCellValue()));
+                spares.setTyreLastYear(round2Decimal(getNumericCellValue(row, 17)));
+                spares.setTyreCurrentYear(round2Decimal(getNumericCellValue(row, 18)));
 
                 //Updating Tyre growth after checking that the last yeat column has any 0 value
-                if (spares.getTyre_last_year() == 0){
-                    spares.setTyre_growth(100.0);
+                if (spares.getTyreLastYear() == 0){
+                    spares.setTyreGrowth(100.0);
                 }else {
-                    spares.setTyre_growth(round2Decimal((spares.getTyre_current_year()-spares.getTyre_last_year())/spares.getTyre_last_year()));
+                    spares.setTyreGrowth(round2Decimal((spares.getTyreCurrentYear()-spares.getTyreLastYear())/spares.getTyreLastYear()));
                 }
 
 
                 //Updating the column Qtr_Wise & Half-Year by comparing the values from colum Month
                 String month = spares.getMonth();
                 switch (month){
-                    case "Apr", "May", "Jun", "APR", "MAY", "JUN" -> { spares.setQtr_wise("Qtr1"); spares.setHalf_year("H1"); }
-                    case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" -> { spares.setQtr_wise("Qtr2"); spares.setHalf_year("H1"); }
-                    case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" -> { spares.setQtr_wise("Qtr3"); spares.setHalf_year("H2"); }
-                    case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" -> { spares.setQtr_wise("Qtr4"); spares.setHalf_year("H2"); }
+                    case "Apr", "May", "Jun", "APR", "MAY", "JUN" -> { spares.setQtrWise("Qtr1"); spares.setHalfYear("H1"); }
+                    case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" -> { spares.setQtrWise("Qtr2"); spares.setHalfYear("H1"); }
+                    case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" -> { spares.setQtrWise("Qtr3"); spares.setHalfYear("H2"); }
+                    case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" -> { spares.setQtrWise("Qtr4"); spares.setHalfYear("H2"); }
                 }
 
                 sparesRepository.save(spares);
@@ -112,5 +120,18 @@ public class SparesServiceImpl implements SparesService{
     public List<Spares> getSparesByMonthYear(String month, String year) {
         String formattedMonth = month.trim().toUpperCase();
         return sparesRepository.getSparedByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<SparesSummaryDTO> getSparesSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return sparesRepository.getSparesSummaryDTOByCity(month, qtrWise, halfYear);
+            case "branch" : return sparesRepository.getSparesSummaryDTOByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return sparesRepository.getSparesSummaryDTOByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 }

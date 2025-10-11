@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.SparesSummaryDTO;
 import com.mandovi.Entity.Spares;
 import com.mandovi.Service.SparesService;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,24 @@ public class SparesController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(sparesRecords);
+    }
+
+    @GetMapping("/spares_summary")
+    public ResponseEntity<?> getSparesSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<SparesSummaryDTO> listSparesSummary = sparesService.getSparesSummary(groupBy, month, qtrWise, halfYear);
+            if (listSparesSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listSparesSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Internal Sever ERROR : "+e.getMessage());
+        }
     }
 }
