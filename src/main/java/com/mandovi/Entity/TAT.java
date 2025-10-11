@@ -24,34 +24,34 @@ public class TAT {
     private String year;
 
     @Column(name = "link_service_type")
-    private String link_service_type;
+    private String linkServiceType;
 
     @Column(name = "average_of_open_to_close")
-    private Double  average_of_open_to_close;
+    private Double  averageOfOpenToClose;
 
     @Column(name = "period")
     private String period;
 
     @Column(name = "qtr_wise")
-    private String qtr_wise;
+    private String qtrWise;
 
     @Column(name = "half_year")
-    private String half_year;
+    private String halfYear;
 
     public TAT() {
     }
 
-    public TAT(Integer tatSINo, String city, String branch, String month, String year, String link_service_type, Double average_of_open_to_close, String period, String qtr_wise, String half_year) {
+    public TAT(Integer tatSINo, String city, String branch, String month, String year, String linkServiceType, Double averageOfOpenToClose, String period, String qtrWise, String halfYear) {
         this.tatSINo = tatSINo;
         this.city = city;
         this.branch = branch;
         this.month = month;
         this.year = year;
-        this.link_service_type = link_service_type;
-        this.average_of_open_to_close = average_of_open_to_close;
+        this.linkServiceType = linkServiceType;
+        this.averageOfOpenToClose = averageOfOpenToClose;
         this.period = period;
-        this.qtr_wise = qtr_wise;
-        this.half_year = half_year;
+        this.qtrWise = qtrWise;
+        this.halfYear = halfYear;
     }
 
     public Integer getTatSINo() {
@@ -94,20 +94,20 @@ public class TAT {
         this.year = year;
     }
 
-    public String getLink_service_type() {
-        return link_service_type;
+    public String getLinkServiceType() {
+        return linkServiceType;
     }
 
-    public void setLink_service_type(String link_service_type) {
-        this.link_service_type = link_service_type;
+    public void setLinkServiceType(String linkServiceType) {
+        this.linkServiceType = linkServiceType;
     }
 
-    public Double getAverage_of_open_to_close() {
-        return average_of_open_to_close;
+    public Double getAverageOfOpenToClose() {
+        return averageOfOpenToClose;
     }
 
-    public void setAverage_of_open_to_close(Double average_of_open_to_close) {
-        this.average_of_open_to_close = average_of_open_to_close;
+    public void setAverageOfOpenToClose(Double averageOfOpenToClose) {
+        this.averageOfOpenToClose = averageOfOpenToClose;
     }
 
     public String getPeriod() {
@@ -118,35 +118,35 @@ public class TAT {
         this.period = period;
     }
 
-    public String getQtr_wise() {
-        return qtr_wise;
+    public String getQtrWise() {
+        return qtrWise;
     }
 
-    public void setQtr_wise(String qtr_wise) {
-        this.qtr_wise = qtr_wise;
+    public void setQtrWise(String qtrWise) {
+        this.qtrWise = qtrWise;
     }
 
-    public String getHalf_year() {
-        return half_year;
+    public String getHalfYear() {
+        return halfYear;
     }
 
-    public void setHalf_year(String half_year) {
-        this.half_year = half_year;
+    public void setHalfYear(String halfYear) {
+        this.halfYear = halfYear;
     }
 
     @Override
     public String toString() {
-        return "Tat{" +
+        return "TAT{" +
                 "tatSINo=" + tatSINo +
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
-                ", link_service_type='" + link_service_type + '\'' +
-                ", average_of_open_to_close=" + average_of_open_to_close +
+                ", linkServiceType='" + linkServiceType + '\'' +
+                ", averageOfOpenToClose=" + averageOfOpenToClose +
                 ", period='" + period + '\'' +
-                ", qtr_wise='" + qtr_wise + '\'' +
-                ", half_year='" + half_year + '\'' +
+                ", qtrWise='" + qtrWise + '\'' +
+                ", halfYear='" + halfYear + '\'' +
                 '}';
     }
 }

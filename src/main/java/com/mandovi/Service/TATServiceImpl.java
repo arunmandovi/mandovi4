@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.TATSummaryDTO;
 import com.mandovi.Entity.TAT;
 import com.mandovi.Repository.TATRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -43,8 +44,8 @@ public class TATServiceImpl implements TATService {
                 int num_year = (int) row.getCell(3).getNumericCellValue();
                 String year = String.valueOf(num_year);
                 tat.setYear(year);
-                tat.setLink_service_type(row.getCell(4).getStringCellValue());
-                tat.setAverage_of_open_to_close(round2Decimal(row.getCell(5).getNumericCellValue()));
+                tat.setLinkServiceType(row.getCell(4).getStringCellValue());
+                tat.setAverageOfOpenToClose(round2Decimal(row.getCell(5).getNumericCellValue()));
 
                 //Updating the column period by concating the columns month & year and "-" in between
                 String period = tat.getMonth()+"-"+tat.getYear();
@@ -53,10 +54,10 @@ public class TATServiceImpl implements TATService {
                 //Updating the column Qtr_Wise & Half-Year by comparing the values from colum Month
                 String month = tat.getMonth().trim().toUpperCase();
                 switch (month) {
-                    case "APR", "MAY", "JUN" -> { tat.setQtr_wise("Qtr1"); tat.setHalf_year("H1"); }
-                    case "JUL", "AUG", "SEP" -> { tat.setQtr_wise("Qtr2"); tat.setHalf_year("H1"); }
-                    case "OCT", "NOV", "DEC" -> { tat.setQtr_wise("Qtr3"); tat.setHalf_year("H2"); }
-                    case "JAN", "FEB", "MAR" -> { tat.setQtr_wise("Qtr4"); tat.setHalf_year("H2"); }
+                    case "APR", "MAY", "JUN" -> { tat.setQtrWise("Qtr1"); tat.setHalfYear("H1"); }
+                    case "JUL", "AUG", "SEP" -> { tat.setQtrWise("Qtr2"); tat.setHalfYear("H1"); }
+                    case "OCT", "NOV", "DEC" -> { tat.setQtrWise("Qtr3"); tat.setHalfYear("H2"); }
+                    case "JAN", "FEB", "MAR" -> { tat.setQtrWise("Qtr4"); tat.setHalfYear("H2"); }
                 }
                 tatRepository.save(tat);
 
@@ -76,6 +77,19 @@ public class TATServiceImpl implements TATService {
     public List<TAT> getTATByMonthYear(String month, String year) {
         String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
         return tatRepository.getTATByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<TATSummaryDTO> getTATSummary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()){
+            throw new IllegalArgumentException("groupBy Parameter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return tatRepository.getTATSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return tatRepository.getTATSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return tatRepository.getTATSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 
 }

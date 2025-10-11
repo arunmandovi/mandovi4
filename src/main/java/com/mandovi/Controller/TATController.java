@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.TATSummaryDTO;
 import com.mandovi.Entity.TAT;
 import com.mandovi.Service.TATService;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,24 @@ public class TATController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(TATRecords);
+    }
+
+    @GetMapping("/tat_summary")
+    public ResponseEntity<?> getTATSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<TATSummaryDTO> listTATSummary = tatService.getTATSummary(groupBy, month, qtrWise, halfYear);
+            if (listTATSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listTATSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Internal Sever ERROR : "+e.getMessage());
+        }
     }
 }

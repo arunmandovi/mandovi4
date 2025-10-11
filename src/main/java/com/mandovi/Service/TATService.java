@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.TATSummaryDTO;
 import com.mandovi.Entity.TAT;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,4 +13,6 @@ public interface TATService {
     public List<TAT> getAllTat();
 
     public List<TAT> getTATByMonthYear(String month, String year);
+
+    public List<TATSummaryDTO> getTATSummary (String groupBy, String month, String qtrWise, String halfYear);
 }
