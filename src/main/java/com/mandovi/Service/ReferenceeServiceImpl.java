@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.ReferenceeSummaryDTO;
 import com.mandovi.Entity.Referencee;
 import com.mandovi.Repository.ReferenceeRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -33,7 +34,7 @@ public class ReferenceeServiceImpl implements ReferenceeService {
 
                     reference.setCity(row.getCell(0).getStringCellValue());
                     reference.setBranch(row.getCell(1).getStringCellValue());
-                    reference.setGroup_designation(row.getCell(2).getStringCellValue());
+                    reference.setGroupDesignation(row.getCell(2).getStringCellValue());
                     reference.setYear(row.getCell(3).getStringCellValue());
                     reference.setMonth(row.getCell(4).getStringCellValue());
 
@@ -54,9 +55,9 @@ public class ReferenceeServiceImpl implements ReferenceeService {
                     int year = Integer.parseInt(reference.getYear().trim());
                     switch (month){
                         case "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-                             "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" ->{ reference.setFinancial_year(year+"-"+(year+1)); }
+                             "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" ->{ reference.setFinancialYear(year+"-"+(year+1)); }
                         case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR"->{
-                            reference.setFinancial_year((year-1)+"-"+year);
+                            reference.setFinancialYear((year-1)+"-"+year);
                         }
 
 
@@ -64,10 +65,10 @@ public class ReferenceeServiceImpl implements ReferenceeService {
                     //Updating the column Qtr_Wise & Half-year column by checking Column month
                     String monthh = reference.getMonth();
                     switch (monthh){
-                        case "Apr", "May", "Jun", "APR", "MAY", "JUN" -> { reference.setQtr_wise("Qtr1"); reference.setHalf_year("H1"); }
-                        case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" -> { reference.setQtr_wise("Qtr2"); reference.setHalf_year("H1"); }
-                        case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" -> { reference.setQtr_wise("Qtr3"); reference.setHalf_year("H2"); }
-                        case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" -> { reference.setQtr_wise("Qtr4"); reference.setHalf_year("H2"); }
+                        case "Apr", "May", "Jun", "APR", "MAY", "JUN" -> { reference.setQtrWise("Qtr1"); reference.setHalfYear("H1"); }
+                        case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" -> { reference.setQtrWise("Qtr2"); reference.setHalfYear("H1"); }
+                        case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" -> { reference.setQtrWise("Qtr3"); reference.setHalfYear("H2"); }
+                        case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" -> { reference.setQtrWise("Qtr4"); reference.setHalfYear("H2"); }
                     }
                     referenceeRepository.save(reference);
                 }
@@ -88,5 +89,18 @@ public class ReferenceeServiceImpl implements ReferenceeService {
     public List<Referencee> getReferenceeByMonthYear(String month, String year) {
         String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
         return referenceeRepository.getReferenceeByMonthYear(formattedMonth, year);
+    }
+
+    @Override
+    public List<ReferenceeSummaryDTO> getReferenceeSUmmary(String groupBy, String month, String qtrWise, String halfYear) {
+        if (groupBy == null || groupBy.isEmpty()) {
+            throw new IllegalArgumentException("groupBy Paramter is Required");
+        }
+        switch (groupBy.toLowerCase()){
+            case "city" : return referenceeRepository.getReferenceeSummaryByCity(month, qtrWise, halfYear);
+            case "branch" : return referenceeRepository.getReferenceeSummaryByBranch(month, qtrWise, halfYear);
+            case "city_branch" : return referenceeRepository.getReferenceeSummaryByCityAndBranch(month, qtrWise, halfYear);
+            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
+        }
     }
 }

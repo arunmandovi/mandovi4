@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.ReferenceeSummaryDTO;
 import com.mandovi.Entity.Referencee;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,4 +12,6 @@ public interface ReferenceeService {
     public List<Referencee> getAllReference();
 
     public List<Referencee> getReferenceeByMonthYear(String month, String year);
+
+    public List<ReferenceeSummaryDTO> getReferenceeSUmmary (String groupBy, String month, String qtrWise, String halfYear);
 }

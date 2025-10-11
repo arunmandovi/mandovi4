@@ -17,7 +17,7 @@ public class Referencee {
     private String branch;
 
     @Column(name = "group_designation")
-    private String group_designation;
+    private String groupDesignation;
 
     @Column(name = "month")
     private String month;
@@ -44,22 +44,22 @@ public class Referencee {
     private Integer invoice;
 
     @Column(name = "financial_year")
-    private String financial_year;
+    private String financialYear;
 
     @Column(name = "qtr_wise")
-    private String qtr_wise;
+    private String qtrWise;
 
     @Column(name = "half_year")
-    private String half_year;
+    private String halfYear;
 
     public Referencee() {
     }
 
-    public Referencee(Integer referenceSINO, String city, String branch, String group_designation, String month, String year, String period, String channel, Integer referencee, Integer enquiry, Integer booking, Integer invoice, String financial_year, String qtr_wise, String half_year) {
+    public Referencee(Integer referenceSINO, String city, String branch, String groupDesignation, String month, String year, String period, String channel, Integer referencee, Integer enquiry, Integer booking, Integer invoice, String financialYear, String qtrWise, String halfYear) {
         this.referenceSINO = referenceSINO;
         this.city = city;
         this.branch = branch;
-        this.group_designation = group_designation;
+        this.groupDesignation = groupDesignation;
         this.month = month;
         this.year = year;
         this.period = period;
@@ -68,9 +68,9 @@ public class Referencee {
         this.enquiry = enquiry;
         this.booking = booking;
         this.invoice = invoice;
-        this.financial_year = financial_year;
-        this.qtr_wise = qtr_wise;
-        this.half_year = half_year;
+        this.financialYear = financialYear;
+        this.qtrWise = qtrWise;
+        this.halfYear = halfYear;
     }
 
     public Integer getReferenceSINO() {
@@ -97,12 +97,12 @@ public class Referencee {
         this.branch = branch;
     }
 
-    public String getGroup_designation() {
-        return group_designation;
+    public String getGroupDesignation() {
+        return groupDesignation;
     }
 
-    public void setGroup_designation(String group_designation) {
-        this.group_designation = group_designation;
+    public void setGroupDesignation(String groupDesignation) {
+        this.groupDesignation = groupDesignation;
     }
 
     public String getMonth() {
@@ -169,37 +169,37 @@ public class Referencee {
         this.invoice = invoice;
     }
 
-    public String getFinancial_year() {
-        return financial_year;
+    public String getFinancialYear() {
+        return financialYear;
     }
 
-    public void setFinancial_year(String financial_year) {
-        this.financial_year = financial_year;
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
     }
 
-    public String getQtr_wise() {
-        return qtr_wise;
+    public String getQtrWise() {
+        return qtrWise;
     }
 
-    public void setQtr_wise(String qtr_wise) {
-        this.qtr_wise = qtr_wise;
+    public void setQtrWise(String qtrWise) {
+        this.qtrWise = qtrWise;
     }
 
-    public String getHalf_year() {
-        return half_year;
+    public String getHalfYear() {
+        return halfYear;
     }
 
-    public void setHalf_year(String half_year) {
-        this.half_year = half_year;
+    public void setHalfYear(String halfYear) {
+        this.halfYear = halfYear;
     }
 
     @Override
     public String toString() {
-        return "Reference{" +
+        return "Referencee{" +
                 "referenceSINO=" + referenceSINO +
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
-                ", group_designation='" + group_designation + '\'' +
+                ", groupDesignation='" + groupDesignation + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
                 ", period='" + period + '\'' +
@@ -208,9 +208,9 @@ public class Referencee {
                 ", enquiry=" + enquiry +
                 ", booking=" + booking +
                 ", invoice=" + invoice +
-                ", financial_year='" + financial_year + '\'' +
-                ", qtr_wise='" + qtr_wise + '\'' +
-                ", half_year='" + half_year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
+                ", qtrWise='" + qtrWise + '\'' +
+                ", halfYear='" + halfYear + '\'' +
                 '}';
     }
 }

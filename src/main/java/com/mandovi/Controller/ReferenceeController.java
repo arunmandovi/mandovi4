@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.ReferenceeSummaryDTO;
 import com.mandovi.Entity.Referencee;
 import com.mandovi.Service.ReferenceeService;
 import org.springframework.http.ResponseEntity;
@@ -43,4 +44,24 @@ public class ReferenceeController {
         }
         return ResponseEntity.ok(referencesRecords);
     }
+
+    @GetMapping("/referencee_summary")
+    public ResponseEntity<?> getReferenceeSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month,
+            @RequestParam (required = false) String qtrWise,
+            @RequestParam (required = false) String halfYear ){
+        try {
+            List<ReferenceeSummaryDTO> listReferenceeSummary = referenceeService.getReferenceeSUmmary(groupBy, month, qtrWise, halfYear);
+            if (listReferenceeSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listReferenceeSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
+    }
+
 }
