@@ -2,6 +2,7 @@ package com.mandovi.Controller;
 
 import com.mandovi.Entity.VAS;
 import com.mandovi.Service.VASService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,5 +44,22 @@ public class VASController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(vasRecords);
+    }
+
+    @GetMapping("/vas_summary")
+    private ResponseEntity<?> getVasSummary (
+            @RequestParam String groupBy,
+            @RequestParam (required = false) String month ){
+        try {
+            List<Object[]> listVASSummary = vASService.getVASSummary(groupBy, month);
+            if (listVASSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listVASSummary);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
     }
 }

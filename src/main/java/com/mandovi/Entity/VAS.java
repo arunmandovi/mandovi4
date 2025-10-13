@@ -15,6 +15,8 @@ public class VAS {
     private String branch;
     @Column(name = "labour_type")
     private String labourType;
+    @Column(name = "vas")
+    private String vas;
     @Column(name = "month")
     private String month;
     @Column(name = "year")
@@ -27,11 +29,12 @@ public class VAS {
     public VAS() {
     }
 
-    public VAS(Integer vasSINo, String city, String branch, String labourType, String month, String year, Integer jobCardNo, Double basicAmt) {
+    public VAS(Integer vasSINo, String city, String branch, String labourType, String vas, String month, String year, Integer jobCardNo, Double basicAmt) {
         this.vasSINo = vasSINo;
         this.city = city;
         this.branch = branch;
         this.labourType = labourType;
+        this.vas =vas;
         this.month = month;
         this.year = year;
         this.jobCardNo = jobCardNo;
@@ -69,6 +72,10 @@ public class VAS {
     public void setLabourType(String labourType) {
         this.labourType = labourType;
     }
+
+    public String getVas() { return vas; }
+
+    public void setVas(String vas) { this.vas = vas; }
 
     public String getMonth() {
         return month;
@@ -109,6 +116,7 @@ public class VAS {
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
                 ", labourType='" + labourType + '\'' +
+                ", vas='" + vas + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
                 ", jobCardNo=" + jobCardNo +
