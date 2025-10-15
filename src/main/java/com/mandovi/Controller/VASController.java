@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.VASSummaryDTO;
 import com.mandovi.Entity.VAS;
 import com.mandovi.Service.VASService;
 import org.springframework.data.repository.query.Param;
@@ -47,7 +48,7 @@ public class VASController {
     }
 
     @GetMapping("/vas_summary")
-    private ResponseEntity<?> getVasSummary (
+    public ResponseEntity<?> getVasSummary (
             @RequestParam String groupBy,
             @RequestParam (required = false) String month ){
         try {

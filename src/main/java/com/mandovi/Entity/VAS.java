@@ -5,41 +5,53 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "vas")
 public class VAS {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vasSINo")
     private Integer vasSINo;
+
     @Column(name = "city")
     private String city;
+
     @Column(name = "branch")
     private String branch;
+
     @Column(name = "labour_type")
     private String labourType;
+
     @Column(name = "vas")
     private String vas;
+
     @Column(name = "month")
     private String month;
+
     @Column(name = "year")
     private String year;
+
     @Column(name = "job_card_no")
     private Integer jobCardNo;
+
     @Column(name = "basic_amt")
     private Double basicAmt;
 
     public VAS() {
     }
 
-    public VAS(Integer vasSINo, String city, String branch, String labourType, String vas, String month, String year, Integer jobCardNo, Double basicAmt) {
+    public VAS(Integer vasSINo, String city, String branch, String labourType, String vas,
+               String month, String year, Integer jobCardNo, Double basicAmt) {
         this.vasSINo = vasSINo;
         this.city = city;
         this.branch = branch;
         this.labourType = labourType;
-        this.vas =vas;
+        this.vas = vas;
         this.month = month;
         this.year = year;
         this.jobCardNo = jobCardNo;
         this.basicAmt = basicAmt;
     }
+
+    // Getters and setters
 
     public Integer getVasSINo() {
         return vasSINo;
@@ -73,9 +85,13 @@ public class VAS {
         this.labourType = labourType;
     }
 
-    public String getVas() { return vas; }
+    public String getVas() {
+        return vas;
+    }
 
-    public void setVas(String vas) { this.vas = vas; }
+    public void setVas(String vas) {
+        this.vas = vas;
+    }
 
     public String getMonth() {
         return month;
