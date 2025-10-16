@@ -13,5 +13,7 @@ public interface VASService {
 
     public List<VAS> getVASByMonthYear (String month, String year);
 
-    public List<Object[]> getVASSummary (String groupBy, String month);
+    public List<VASSummaryDTO> getVAS (String groupBy, String month);
+
+
 }

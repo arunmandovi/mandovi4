@@ -20,6 +20,9 @@ public class VAS {
     @Column(name = "labour_type")
     private String labourType;
 
+    @Column(name = "wheels")
+    private Integer wheels;
+
     @Column(name = "vas")
     private String vas;
 
@@ -38,20 +41,18 @@ public class VAS {
     public VAS() {
     }
 
-    public VAS(Integer vasSINo, String city, String branch, String labourType, String vas,
-               String month, String year, Integer jobCardNo, Double basicAmt) {
+    public VAS(Integer vasSINo, String city, String branch, String labourType, Integer wheels, String vas, String month, String year, Integer jobCardNo, Double basicAmt) {
         this.vasSINo = vasSINo;
         this.city = city;
         this.branch = branch;
         this.labourType = labourType;
+        this.wheels = wheels;
         this.vas = vas;
         this.month = month;
         this.year = year;
         this.jobCardNo = jobCardNo;
         this.basicAmt = basicAmt;
     }
-
-    // Getters and setters
 
     public Integer getVasSINo() {
         return vasSINo;
@@ -83,6 +84,14 @@ public class VAS {
 
     public void setLabourType(String labourType) {
         this.labourType = labourType;
+    }
+
+    public Integer getWheels() {
+        return wheels;
+    }
+
+    public void setWheels(Integer wheels) {
+        this.wheels = wheels;
     }
 
     public String getVas() {
@@ -132,6 +141,7 @@ public class VAS {
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
                 ", labourType='" + labourType + '\'' +
+                ", wheels=" + wheels +
                 ", vas='" + vas + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +

@@ -3,87 +3,51 @@ package com.mandovi.DTO;
 public class VASSummaryDTO {
     private String city;
     private String branch;
-    private Double pmsLoadDiagnosticCharges;
-    private Double noOfVehiclesDiagnosticCharges;
-    private Double labourEarningDiagnosticCharges;
-    private Double percentageOfDiagnosticPMSLoad;
-    private Double thirdFRSAndPMLLoadWheelAlignment;
-    private Double noOfVehiclesWheelAlignment;
-    private Double earningWheelAlignment;
-    private Double percentageAgeWheelAlignment;
-    private Double thirdFRSAndPMSLoadWheelBalancing;
-    private Double noOfVehiclesWheelBalancing;
-    private Double earningWheelBalancing;
-    private Double percentageAgeWheelBalancing;
-    private Double FPRAndBDRLoadExteriorCleaning;
-    private Double noOfVehiclesExteriorCleaning;
-    private Double amountExteriorCleaning;
-    private Double percentageAgeExteriorCleaning;
-    private Double noOfVehiclesInteriorCleaning;
-    private Double amountInteriorCleaning;
-    private Double percentageAgeInteriorCleaning;
-    private Double noOfVehiclesUnderBodyCoating;
-    private Double amountUnderBodyCoating;
-    private Double percentageAgeUnderBodyCoating;
-    private Double noOfVehiclesTopBodyCoating;
-    private Double amountTopBodyCoating;
-    private Double percentageAgeTopBodyCoating;
-    private Double noOfVehiclesRatMesh;
-    private Double amountRatMesh;
-    private Double percentageAgeRatMesh;
-    private Double noOfVehiclesACEvaporator;
-    private Double amountACEvaporator;
-    private Double percentageACEvaporator;
-    private Double noOfVehiclesACVent;
-    private Double amountACVent;
-    private Double percentageAgeACVent;
-    private Double noOfVehiclesPlasticRestorer;
-    private Double amountPlasticRestorer;
-    private Double percentageAgePlasticRestorer;
+    private Double diagnosticChargesPMSLoad;
+    private Long diagnosticChargesNoOfVehicles;
+    private Double diagnosticChargesLabourEarning;
+    private Double diagnosticChargesPercentagePMSLoad;
+    private Double wheelAlignmentThirdFRSAndPMSLoad;
+    private Long wheelAlignmentNoOfVehicles;
+    private Double wheelAlignmentEarning;
+    private Double wheelAlignmentPercentageAge;
+    private Double wheelBalancingThirdFRSAndPMSLoad;
+    private Long wheelBalancingNoOfVehicles;
+    private Double wheelBalancingEarning;
+    private Double wheelBalancingPercentageAge;
+    private Double exteriorCleaningFPRAndBodyShopLoad;
+    private Long exteriorCleaningNoOfVehicles;
+    private Double exteriorCleaningAmount;
+    private Double exteriorCleaningPercentageAge;
+    private Long interiorCleaningNoOfVehicles;
+    private Double interiorCleaningAmount;
+    private Double interiorCleaningPercentageAge;
 
     public VASSummaryDTO() {
     }
 
-    public VASSummaryDTO(String city, String branch, Double pmsLoadDiagnosticCharges, Double noOfVehiclesDiagnosticCharges, Double labourEarningDiagnosticCharges, Double percentageOfDiagnosticPMSLoad, Double thirdFRSAndPMLLoadWheelAlignment, Double noOfVehiclesWheelAlignment, Double earningWheelAlignment, Double percentageAgeWheelAlignment, Double thirdFRSAndPMSLoadWheelBalancing, Double noOfVehiclesWheelBalancing, Double earningWheelBalancing, Double percentageAgeWheelBalancing, Double FPRAndBDRLoadExteriorCleaning, Double noOfVehiclesExteriorCleaning, Double amountExteriorCleaning, Double percentageAgeExteriorCleaning, Double noOfVehiclesInteriorCleaning, Double amountInteriorCleaning, Double percentageAgeInteriorCleaning, Double noOfVehiclesUnderBodyCoating, Double amountUnderBodyCoating, Double percentageAgeUnderBodyCoating, Double noOfVehiclesTopBodyCoating, Double amountTopBodyCoating, Double percentageAgeTopBodyCoating, Double noOfVehiclesRatMesh, Double amountRatMesh, Double percentageAgeRatMesh, Double noOfVehiclesACEvaporator, Double amountACEvaporator, Double percentageACEvaporator, Double noOfVehiclesACVent, Double amountACVent, Double percentageAgeACVent, Double noOfVehiclesPlasticRestorer, Double amountPlasticRestorer, Double percentageAgePlasticRestorer) {
+    public VASSummaryDTO(String city, String branch, Double diagnosticChargesPMSLoad, Long diagnosticChargesNoOfVehicles, Double diagnosticChargesLabourEarning, Double diagnosticChargesPercentagePMSLoad, Double wheelAlignmentThirdFRSAndPMSLoad, Long wheelAlignmentNoOfVehicles, Double wheelAlignmentEarning, Double wheelAlignmentPercentageAge, Double wheelBalancingThirdFRSAndPMSLoad, Long wheelBalancingNoOfVehicles, Double wheelBalancingEarning, Double wheelBalancingPercentageAge, Double exteriorCleaningFPRAndBodyShopLoad, Long exteriorCleaningNoOfVehicles, Double exteriorCleaningAmount, Double exteriorCleaningPercentageAge, Long interiorCleaningNoOfVehicles, Double interiorCleaningAmount, Double interiorCleaningPercentageAge) {
         this.city = city;
         this.branch = branch;
-        this.pmsLoadDiagnosticCharges = pmsLoadDiagnosticCharges;
-        this.noOfVehiclesDiagnosticCharges = noOfVehiclesDiagnosticCharges;
-        this.labourEarningDiagnosticCharges = labourEarningDiagnosticCharges;
-        this.percentageOfDiagnosticPMSLoad = percentageOfDiagnosticPMSLoad;
-        this.thirdFRSAndPMLLoadWheelAlignment = thirdFRSAndPMLLoadWheelAlignment;
-        this.noOfVehiclesWheelAlignment = noOfVehiclesWheelAlignment;
-        this.earningWheelAlignment = earningWheelAlignment;
-        this.percentageAgeWheelAlignment = percentageAgeWheelAlignment;
-        this.thirdFRSAndPMSLoadWheelBalancing = thirdFRSAndPMSLoadWheelBalancing;
-        this.noOfVehiclesWheelBalancing = noOfVehiclesWheelBalancing;
-        this.earningWheelBalancing = earningWheelBalancing;
-        this.percentageAgeWheelBalancing = percentageAgeWheelBalancing;
-        this.FPRAndBDRLoadExteriorCleaning = FPRAndBDRLoadExteriorCleaning;
-        this.noOfVehiclesExteriorCleaning = noOfVehiclesExteriorCleaning;
-        this.amountExteriorCleaning = amountExteriorCleaning;
-        this.percentageAgeExteriorCleaning = percentageAgeExteriorCleaning;
-        this.noOfVehiclesInteriorCleaning = noOfVehiclesInteriorCleaning;
-        this.amountInteriorCleaning = amountInteriorCleaning;
-        this.percentageAgeInteriorCleaning = percentageAgeInteriorCleaning;
-        this.noOfVehiclesUnderBodyCoating = noOfVehiclesUnderBodyCoating;
-        this.amountUnderBodyCoating = amountUnderBodyCoating;
-        this.percentageAgeUnderBodyCoating = percentageAgeUnderBodyCoating;
-        this.noOfVehiclesTopBodyCoating = noOfVehiclesTopBodyCoating;
-        this.amountTopBodyCoating = amountTopBodyCoating;
-        this.percentageAgeTopBodyCoating = percentageAgeTopBodyCoating;
-        this.noOfVehiclesRatMesh = noOfVehiclesRatMesh;
-        this.amountRatMesh = amountRatMesh;
-        this.percentageAgeRatMesh = percentageAgeRatMesh;
-        this.noOfVehiclesACEvaporator = noOfVehiclesACEvaporator;
-        this.amountACEvaporator = amountACEvaporator;
-        this.percentageACEvaporator = percentageACEvaporator;
-        this.noOfVehiclesACVent = noOfVehiclesACVent;
-        this.amountACVent = amountACVent;
-        this.percentageAgeACVent = percentageAgeACVent;
-        this.noOfVehiclesPlasticRestorer = noOfVehiclesPlasticRestorer;
-        this.amountPlasticRestorer = amountPlasticRestorer;
-        this.percentageAgePlasticRestorer = percentageAgePlasticRestorer;
+        this.diagnosticChargesPMSLoad = diagnosticChargesPMSLoad;
+        this.diagnosticChargesNoOfVehicles = diagnosticChargesNoOfVehicles;
+        this.diagnosticChargesLabourEarning = diagnosticChargesLabourEarning;
+        this.diagnosticChargesPercentagePMSLoad = diagnosticChargesPercentagePMSLoad;
+        this.wheelAlignmentThirdFRSAndPMSLoad = wheelAlignmentThirdFRSAndPMSLoad;
+        this.wheelAlignmentNoOfVehicles = wheelAlignmentNoOfVehicles;
+        this.wheelAlignmentEarning = wheelAlignmentEarning;
+        this.wheelAlignmentPercentageAge = wheelAlignmentPercentageAge;
+        this.wheelBalancingThirdFRSAndPMSLoad = wheelBalancingThirdFRSAndPMSLoad;
+        this.wheelBalancingNoOfVehicles = wheelBalancingNoOfVehicles;
+        this.wheelBalancingEarning = wheelBalancingEarning;
+        this.wheelBalancingPercentageAge = wheelBalancingPercentageAge;
+        this.exteriorCleaningFPRAndBodyShopLoad = exteriorCleaningFPRAndBodyShopLoad;
+        this.exteriorCleaningNoOfVehicles = exteriorCleaningNoOfVehicles;
+        this.exteriorCleaningAmount = exteriorCleaningAmount;
+        this.exteriorCleaningPercentageAge = exteriorCleaningPercentageAge;
+        this.interiorCleaningNoOfVehicles = interiorCleaningNoOfVehicles;
+        this.interiorCleaningAmount = interiorCleaningAmount;
+        this.interiorCleaningPercentageAge = interiorCleaningPercentageAge;
     }
 
     public String getCity() {
@@ -102,344 +66,182 @@ public class VASSummaryDTO {
         this.branch = branch;
     }
 
-    public Double getPmsLoadDiagnosticCharges() {
-        return pmsLoadDiagnosticCharges;
+    public Double getDiagnosticChargesPMSLoad() {
+        return diagnosticChargesPMSLoad;
     }
 
-    public void setPmsLoadDiagnosticCharges(Double pmsLoadDiagnosticCharges) {
-        this.pmsLoadDiagnosticCharges = pmsLoadDiagnosticCharges;
+    public void setDiagnosticChargesPMSLoad(Double diagnosticChargesPMSLoad) {
+        this.diagnosticChargesPMSLoad = diagnosticChargesPMSLoad;
     }
 
-    public Double getNoOfVehiclesDiagnosticCharges() {
-        return noOfVehiclesDiagnosticCharges;
+    public Long getDiagnosticChargesNoOfVehicles() {
+        return diagnosticChargesNoOfVehicles;
     }
 
-    public void setNoOfVehiclesDiagnosticCharges(Double noOfVehiclesDiagnosticCharges) {
-        this.noOfVehiclesDiagnosticCharges = noOfVehiclesDiagnosticCharges;
+    public void setDiagnosticChargesNoOfVehicles(Long diagnosticChargesNoOfVehicles) {
+        this.diagnosticChargesNoOfVehicles = diagnosticChargesNoOfVehicles;
     }
 
-    public Double getLabourEarningDiagnosticCharges() {
-        return labourEarningDiagnosticCharges;
+    public Double getDiagnosticChargesLabourEarning() {
+        return diagnosticChargesLabourEarning;
     }
 
-    public void setLabourEarningDiagnosticCharges(Double labourEarningDiagnosticCharges) {
-        this.labourEarningDiagnosticCharges = labourEarningDiagnosticCharges;
+    public void setDiagnosticChargesLabourEarning(Double diagnosticChargesLabourEarning) {
+        this.diagnosticChargesLabourEarning = diagnosticChargesLabourEarning;
     }
 
-    public Double getPercentageOfDiagnosticPMSLoad() {
-        return percentageOfDiagnosticPMSLoad;
+    public Double getDiagnosticChargesPercentagePMSLoad() {
+        return diagnosticChargesPercentagePMSLoad;
     }
 
-    public void setPercentageOfDiagnosticPMSLoad(Double percentageOfDiagnosticPMSLoad) {
-        this.percentageOfDiagnosticPMSLoad = percentageOfDiagnosticPMSLoad;
+    public void setDiagnosticChargesPercentagePMSLoad(Double diagnosticChargesPercentagePMSLoad) {
+        this.diagnosticChargesPercentagePMSLoad = diagnosticChargesPercentagePMSLoad;
     }
 
-    public Double getThirdFRSAndPMLLoadWheelAlignment() {
-        return thirdFRSAndPMLLoadWheelAlignment;
+    public Double getWheelAlignmentThirdFRSAndPMSLoad() {
+        return wheelAlignmentThirdFRSAndPMSLoad;
     }
 
-    public void setThirdFRSAndPMLLoadWheelAlignment(Double thirdFRSAndPMLLoadWheelAlignment) {
-        this.thirdFRSAndPMLLoadWheelAlignment = thirdFRSAndPMLLoadWheelAlignment;
+    public void setWheelAlignmentThirdFRSAndPMSLoad(Double wheelAlignmentThirdFRSAndPMSLoad) {
+        this.wheelAlignmentThirdFRSAndPMSLoad = wheelAlignmentThirdFRSAndPMSLoad;
     }
 
-    public Double getNoOfVehiclesWheelAlignment() {
-        return noOfVehiclesWheelAlignment;
+    public Long getWheelAlignmentNoOfVehicles() {
+        return wheelAlignmentNoOfVehicles;
     }
 
-    public void setNoOfVehiclesWheelAlignment(Double noOfVehiclesWheelAlignment) {
-        this.noOfVehiclesWheelAlignment = noOfVehiclesWheelAlignment;
+    public void setWheelAlignmentNoOfVehicles(Long wheelAlignmentNoOfVehicles) {
+        this.wheelAlignmentNoOfVehicles = wheelAlignmentNoOfVehicles;
     }
 
-    public Double getEarningWheelAlignment() {
-        return earningWheelAlignment;
+    public Double getWheelAlignmentEarning() {
+        return wheelAlignmentEarning;
     }
 
-    public void setEarningWheelAlignment(Double earningWheelAlignment) {
-        this.earningWheelAlignment = earningWheelAlignment;
+    public void setWheelAlignmentEarning(Double wheelAlignmentEarning) {
+        this.wheelAlignmentEarning = wheelAlignmentEarning;
     }
 
-    public Double getPercentageAgeWheelAlignment() {
-        return percentageAgeWheelAlignment;
+    public Double getWheelAlignmentPercentageAge() {
+        return wheelAlignmentPercentageAge;
     }
 
-    public void setPercentageAgeWheelAlignment(Double percentageAgeWheelAlignment) {
-        this.percentageAgeWheelAlignment = percentageAgeWheelAlignment;
+    public void setWheelAlignmentPercentageAge(Double wheelAlignmentPercentageAge) {
+        this.wheelAlignmentPercentageAge = wheelAlignmentPercentageAge;
     }
 
-    public Double getThirdFRSAndPMSLoadWheelBalancing() {
-        return thirdFRSAndPMSLoadWheelBalancing;
+    public Double getWheelBalancingThirdFRSAndPMSLoad() {
+        return wheelBalancingThirdFRSAndPMSLoad;
     }
 
-    public void setThirdFRSAndPMSLoadWheelBalancing(Double thirdFRSAndPMSLoadWheelBalancing) {
-        this.thirdFRSAndPMSLoadWheelBalancing = thirdFRSAndPMSLoadWheelBalancing;
+    public void setWheelBalancingThirdFRSAndPMSLoad(Double wheelBalancingThirdFRSAndPMSLoad) {
+        this.wheelBalancingThirdFRSAndPMSLoad = wheelBalancingThirdFRSAndPMSLoad;
     }
 
-    public Double getNoOfVehiclesWheelBalancing() {
-        return noOfVehiclesWheelBalancing;
+    public Long getWheelBalancingNoOfVehicles() {
+        return wheelBalancingNoOfVehicles;
     }
 
-    public void setNoOfVehiclesWheelBalancing(Double noOfVehiclesWheelBalancing) {
-        this.noOfVehiclesWheelBalancing = noOfVehiclesWheelBalancing;
+    public void setWheelBalancingNoOfVehicles(Long wheelBalancingNoOfVehicles) {
+        this.wheelBalancingNoOfVehicles = wheelBalancingNoOfVehicles;
     }
 
-    public Double getEarningWheelBalancing() {
-        return earningWheelBalancing;
+    public Double getWheelBalancingEarning() {
+        return wheelBalancingEarning;
     }
 
-    public void setEarningWheelBalancing(Double earningWheelBalancing) {
-        this.earningWheelBalancing = earningWheelBalancing;
+    public void setWheelBalancingEarning(Double wheelBalancingEarning) {
+        this.wheelBalancingEarning = wheelBalancingEarning;
     }
 
-    public Double getPercentageAgeWheelBalancing() {
-        return percentageAgeWheelBalancing;
+    public Double getWheelBalancingPercentageAge() {
+        return wheelBalancingPercentageAge;
     }
 
-    public void setPercentageAgeWheelBalancing(Double percentageAgeWheelBalancing) {
-        this.percentageAgeWheelBalancing = percentageAgeWheelBalancing;
+    public void setWheelBalancingPercentageAge(Double wheelBalancingPercentageAge) {
+        this.wheelBalancingPercentageAge = wheelBalancingPercentageAge;
     }
 
-    public Double getFPRAndBDRLoadExteriorCleaning() {
-        return FPRAndBDRLoadExteriorCleaning;
+    public Double getExteriorCleaningFPRAndBodyShopLoad() {
+        return exteriorCleaningFPRAndBodyShopLoad;
     }
 
-    public void setFPRAndBDRLoadExteriorCleaning(Double FPRAndBDRLoadExteriorCleaning) {
-        this.FPRAndBDRLoadExteriorCleaning = FPRAndBDRLoadExteriorCleaning;
+    public void setExteriorCleaningFPRAndBodyShopLoad(Double exteriorCleaningFPRAndBodyShopLoad) {
+        this.exteriorCleaningFPRAndBodyShopLoad = exteriorCleaningFPRAndBodyShopLoad;
     }
 
-    public Double getNoOfVehiclesExteriorCleaning() {
-        return noOfVehiclesExteriorCleaning;
+    public Long getExteriorCleaningNoOfVehicles() {
+        return exteriorCleaningNoOfVehicles;
     }
 
-    public void setNoOfVehiclesExteriorCleaning(Double noOfVehiclesExteriorCleaning) {
-        this.noOfVehiclesExteriorCleaning = noOfVehiclesExteriorCleaning;
+    public void setExteriorCleaningNoOfVehicles(Long exteriorCleaningNoOfVehicles) {
+        this.exteriorCleaningNoOfVehicles = exteriorCleaningNoOfVehicles;
     }
 
-    public Double getAmountExteriorCleaning() {
-        return amountExteriorCleaning;
+    public Double getExteriorCleaningAmount() {
+        return exteriorCleaningAmount;
     }
 
-    public void setAmountExteriorCleaning(Double amountExteriorCleaning) {
-        this.amountExteriorCleaning = amountExteriorCleaning;
+    public void setExteriorCleaningAmount(Double exteriorCleaningAmount) {
+        this.exteriorCleaningAmount = exteriorCleaningAmount;
     }
 
-    public Double getPercentageAgeExteriorCleaning() {
-        return percentageAgeExteriorCleaning;
+    public Double getExteriorCleaningPercentageAge() {
+        return exteriorCleaningPercentageAge;
     }
 
-    public void setPercentageAgeExteriorCleaning(Double percentageAgeExteriorCleaning) {
-        this.percentageAgeExteriorCleaning = percentageAgeExteriorCleaning;
+    public void setExteriorCleaningPercentageAge(Double exteriorCleaningPercentageAge) {
+        this.exteriorCleaningPercentageAge = exteriorCleaningPercentageAge;
     }
 
-    public Double getNoOfVehiclesInteriorCleaning() {
-        return noOfVehiclesInteriorCleaning;
+    public Long getInteriorCleaningNoOfVehicles() {
+        return interiorCleaningNoOfVehicles;
     }
 
-    public void setNoOfVehiclesInteriorCleaning(Double noOfVehiclesInteriorCleaning) {
-        this.noOfVehiclesInteriorCleaning = noOfVehiclesInteriorCleaning;
+    public void setInteriorCleaningNoOfVehicles(Long interiorCleaningNoOfVehicles) {
+        this.interiorCleaningNoOfVehicles = interiorCleaningNoOfVehicles;
     }
 
-    public Double getAmountInteriorCleaning() {
-        return amountInteriorCleaning;
+    public Double getInteriorCleaningAmount() {
+        return interiorCleaningAmount;
     }
 
-    public void setAmountInteriorCleaning(Double amountInteriorCleaning) {
-        this.amountInteriorCleaning = amountInteriorCleaning;
+    public void setInteriorCleaningAmount(Double interiorCleaningAmount) {
+        this.interiorCleaningAmount = interiorCleaningAmount;
     }
 
-    public Double getPercentageAgeInteriorCleaning() {
-        return percentageAgeInteriorCleaning;
+    public Double getInteriorCleaningPercentageAge() {
+        return interiorCleaningPercentageAge;
     }
 
-    public void setPercentageAgeInteriorCleaning(Double percentageAgeInteriorCleaning) {
-        this.percentageAgeInteriorCleaning = percentageAgeInteriorCleaning;
-    }
-
-    public Double getNoOfVehiclesUnderBodyCoating() {
-        return noOfVehiclesUnderBodyCoating;
-    }
-
-    public void setNoOfVehiclesUnderBodyCoating(Double noOfVehiclesUnderBodyCoating) {
-        this.noOfVehiclesUnderBodyCoating = noOfVehiclesUnderBodyCoating;
-    }
-
-    public Double getAmountUnderBodyCoating() {
-        return amountUnderBodyCoating;
-    }
-
-    public void setAmountUnderBodyCoating(Double amountUnderBodyCoating) {
-        this.amountUnderBodyCoating = amountUnderBodyCoating;
-    }
-
-    public Double getPercentageAgeUnderBodyCoating() {
-        return percentageAgeUnderBodyCoating;
-    }
-
-    public void setPercentageAgeUnderBodyCoating(Double percentageAgeUnderBodyCoating) {
-        this.percentageAgeUnderBodyCoating = percentageAgeUnderBodyCoating;
-    }
-
-    public Double getNoOfVehiclesTopBodyCoating() {
-        return noOfVehiclesTopBodyCoating;
-    }
-
-    public void setNoOfVehiclesTopBodyCoating(Double noOfVehiclesTopBodyCoating) {
-        this.noOfVehiclesTopBodyCoating = noOfVehiclesTopBodyCoating;
-    }
-
-    public Double getAmountTopBodyCoating() {
-        return amountTopBodyCoating;
-    }
-
-    public void setAmountTopBodyCoating(Double amountTopBodyCoating) {
-        this.amountTopBodyCoating = amountTopBodyCoating;
-    }
-
-    public Double getPercentageAgeTopBodyCoating() {
-        return percentageAgeTopBodyCoating;
-    }
-
-    public void setPercentageAgeTopBodyCoating(Double percentageAgeTopBodyCoating) {
-        this.percentageAgeTopBodyCoating = percentageAgeTopBodyCoating;
-    }
-
-    public Double getNoOfVehiclesRatMesh() {
-        return noOfVehiclesRatMesh;
-    }
-
-    public void setNoOfVehiclesRatMesh(Double noOfVehiclesRatMesh) {
-        this.noOfVehiclesRatMesh = noOfVehiclesRatMesh;
-    }
-
-    public Double getAmountRatMesh() {
-        return amountRatMesh;
-    }
-
-    public void setAmountRatMesh(Double amountRatMesh) {
-        this.amountRatMesh = amountRatMesh;
-    }
-
-    public Double getPercentageAgeRatMesh() {
-        return percentageAgeRatMesh;
-    }
-
-    public void setPercentageAgeRatMesh(Double percentageAgeRatMesh) {
-        this.percentageAgeRatMesh = percentageAgeRatMesh;
-    }
-
-    public Double getNoOfVehiclesACEvaporator() {
-        return noOfVehiclesACEvaporator;
-    }
-
-    public void setNoOfVehiclesACEvaporator(Double noOfVehiclesACEvaporator) {
-        this.noOfVehiclesACEvaporator = noOfVehiclesACEvaporator;
-    }
-
-    public Double getAmountACEvaporator() {
-        return amountACEvaporator;
-    }
-
-    public void setAmountACEvaporator(Double amountACEvaporator) {
-        this.amountACEvaporator = amountACEvaporator;
-    }
-
-    public Double getPercentageACEvaporator() {
-        return percentageACEvaporator;
-    }
-
-    public void setPercentageACEvaporator(Double percentageACEvaporator) {
-        this.percentageACEvaporator = percentageACEvaporator;
-    }
-
-    public Double getNoOfVehiclesACVent() {
-        return noOfVehiclesACVent;
-    }
-
-    public void setNoOfVehiclesACVent(Double noOfVehiclesACVent) {
-        this.noOfVehiclesACVent = noOfVehiclesACVent;
-    }
-
-    public Double getAmountACVent() {
-        return amountACVent;
-    }
-
-    public void setAmountACVent(Double amountACVent) {
-        this.amountACVent = amountACVent;
-    }
-
-    public Double getPercentageAgeACVent() {
-        return percentageAgeACVent;
-    }
-
-    public void setPercentageAgeACVent(Double percentageAgeACVent) {
-        this.percentageAgeACVent = percentageAgeACVent;
-    }
-
-    public Double getNoOfVehiclesPlasticRestorer() {
-        return noOfVehiclesPlasticRestorer;
-    }
-
-    public void setNoOfVehiclesPlasticRestorer(Double noOfVehiclesPlasticRestorer) {
-        this.noOfVehiclesPlasticRestorer = noOfVehiclesPlasticRestorer;
-    }
-
-    public Double getAmountPlasticRestorer() {
-        return amountPlasticRestorer;
-    }
-
-    public void setAmountPlasticRestorer(Double amountPlasticRestorer) {
-        this.amountPlasticRestorer = amountPlasticRestorer;
-    }
-
-    public Double getPercentageAgePlasticRestorer() {
-        return percentageAgePlasticRestorer;
-    }
-
-    public void setPercentageAgePlasticRestorer(Double percentageAgePlasticRestorer) {
-        this.percentageAgePlasticRestorer = percentageAgePlasticRestorer;
+    public void setInteriorCleaningPercentageAge(Double interiorCleaningPercentageAge) {
+        this.interiorCleaningPercentageAge = interiorCleaningPercentageAge;
     }
 
     @Override
     public String toString() {
-        return "VASSummaryDTO{" +
+        return "VASSummary{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
-                ", pmsLoadDiagnosticCharges=" + pmsLoadDiagnosticCharges +
-                ", noOfVehiclesDiagnosticCharges=" + noOfVehiclesDiagnosticCharges +
-                ", labourEarningDiagnosticCharges=" + labourEarningDiagnosticCharges +
-                ", percentageOfDiagnosticPMSLoad=" + percentageOfDiagnosticPMSLoad +
-                ", thirdFRSAndPMLLoadWheelAlignment=" + thirdFRSAndPMLLoadWheelAlignment +
-                ", noOfVehiclesWheelAlignment=" + noOfVehiclesWheelAlignment +
-                ", earningWheelAlignment=" + earningWheelAlignment +
-                ", percentageAgeWheelAlignment=" + percentageAgeWheelAlignment +
-                ", thirdFRSAndPMSLoadWheelBalancing=" + thirdFRSAndPMSLoadWheelBalancing +
-                ", noOfVehiclesWheelBalancing=" + noOfVehiclesWheelBalancing +
-                ", earningWheelBalancing=" + earningWheelBalancing +
-                ", percentageAgeWheelBalancing=" + percentageAgeWheelBalancing +
-                ", FPRAndBDRLoadExteriorCleaning=" + FPRAndBDRLoadExteriorCleaning +
-                ", noOfVehiclesExteriorCleaning=" + noOfVehiclesExteriorCleaning +
-                ", amountExteriorCleaning=" + amountExteriorCleaning +
-                ", percentageAgeExteriorCleaning=" + percentageAgeExteriorCleaning +
-                ", noOfVehiclesInteriorCleaning=" + noOfVehiclesInteriorCleaning +
-                ", amountInteriorCleaning=" + amountInteriorCleaning +
-                ", percentageAgeInteriorCleaning=" + percentageAgeInteriorCleaning +
-                ", noOfVehiclesUnderBodyCoating=" + noOfVehiclesUnderBodyCoating +
-                ", amountUnderBodyCoating=" + amountUnderBodyCoating +
-                ", percentageAgeUnderBodyCoating=" + percentageAgeUnderBodyCoating +
-                ", noOfVehiclesTopBodyCoating=" + noOfVehiclesTopBodyCoating +
-                ", amountTopBodyCoating=" + amountTopBodyCoating +
-                ", percentageAgeTopBodyCoating=" + percentageAgeTopBodyCoating +
-                ", noOfVehiclesRatMesh=" + noOfVehiclesRatMesh +
-                ", amountRatMesh=" + amountRatMesh +
-                ", percentageAgeRatMesh=" + percentageAgeRatMesh +
-                ", noOfVehiclesACEvaporator=" + noOfVehiclesACEvaporator +
-                ", amountACEvaporator=" + amountACEvaporator +
-                ", percentageACEvaporator=" + percentageACEvaporator +
-                ", noOfVehiclesACVent=" + noOfVehiclesACVent +
-                ", amountACVent=" + amountACVent +
-                ", percentageAgeACVent=" + percentageAgeACVent +
-                ", noOfVehiclesPlasticRestorer=" + noOfVehiclesPlasticRestorer +
-                ", amountPlasticRestorer=" + amountPlasticRestorer +
-                ", percentageAgePlasticRestorer=" + percentageAgePlasticRestorer +
+                ", diagnosticChargesPMSLoad=" + diagnosticChargesPMSLoad +
+                ", diagnosticChargesNoOfVehicles=" + diagnosticChargesNoOfVehicles +
+                ", diagnosticChargesLabourEarning=" + diagnosticChargesLabourEarning +
+                ", diagnosticChargesPercentagePMSLoad=" + diagnosticChargesPercentagePMSLoad +
+                ", wheelAlignmentThirdFRSAndPMSLoad=" + wheelAlignmentThirdFRSAndPMSLoad +
+                ", wheelAlignmentNoOfVehicles=" + wheelAlignmentNoOfVehicles +
+                ", wheelAlignmentEarning=" + wheelAlignmentEarning +
+                ", wheelAlignmentPercentageAge=" + wheelAlignmentPercentageAge +
+                ", wheelBalancingThirdFRSAndPMSLoad=" + wheelBalancingThirdFRSAndPMSLoad +
+                ", wheelBalancingNoOfVehicles=" + wheelBalancingNoOfVehicles +
+                ", wheelBalancingEarning=" + wheelBalancingEarning +
+                ", wheelBalancingPercentageAge=" + wheelBalancingPercentageAge +
+                ", exteriorCleaningFPRAndBodyShopLoad=" + exteriorCleaningFPRAndBodyShopLoad +
+                ", exteriorCleaningNoOfVehicles=" + exteriorCleaningNoOfVehicles +
+                ", exteriorCleaningAmount=" + exteriorCleaningAmount +
+                ", exteriorCleaningPercentageAge=" + exteriorCleaningPercentageAge +
+                ", interiorCleaningNoOfVehicles=" + interiorCleaningNoOfVehicles +
+                ", interiorCleaningAmount=" + interiorCleaningAmount +
+                ", interiorCleaningPercentageAge=" + interiorCleaningPercentageAge +
                 '}';
     }
 }
