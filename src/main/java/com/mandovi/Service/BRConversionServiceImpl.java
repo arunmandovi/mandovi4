@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +18,19 @@ public class BRConversionServiceImpl implements BRConversionService {
     private final BRConversionRepository brConversionRepository;
     public BRConversionServiceImpl(BRConversionRepository brConversionRepository) {
         this.brConversionRepository = brConversionRepository;
+    }
+
+    private int getIntCellValue (Row row, int cellIndex, DataFormatter dataFormatter){
+        Cell cell = row.getCell(cellIndex);
+        if (cell == null) return 0;
+
+        switch (cell.getCellType()){
+            case STRING :
+                String value = dataFormatter.formatCellValue(cell);
+                return value.isEmpty() ? 0 : Integer.parseInt(value);
+            case NUMERIC: return (int) row.getCell(cellIndex).getNumericCellValue();
+            default: return 0;
+        }
     }
     @Override
     public void saveBR_ConversionDataFromExcel(MultipartFile file) throws IOException {
@@ -30,51 +44,49 @@ public class BRConversionServiceImpl implements BRConversionService {
                 Row row = sheet.getRow(i);
                 if (row == null)continue;
 
-                BRConversion br_conversion = new BRConversion();
+                BRConversion brConversion = new BRConversion();
 
-                br_conversion.setCity(row.getCell(0).getStringCellValue());
-                br_conversion.setBranch(row.getCell(1).getStringCellValue());
-                br_conversion.setMonth(row.getCell(2).getStringCellValue());
+                brConversion.setCity(row.getCell(0).getStringCellValue());
+                brConversion.setBranch(row.getCell(1).getStringCellValue());
+                brConversion.setMonth(row.getCell(2).getStringCellValue());
 
                 //Checking the year column has string value ot numeric value
                 switch (row.getCell(3).getCellType()){
                     case NUMERIC :
                         int num_year = (int)row.getCell(3).getNumericCellValue();
-                        br_conversion.setYear(String.valueOf(num_year));
+                        brConversion.setYear(String.valueOf(num_year));
                         break;
                     case STRING:
-                        br_conversion.setYear(row.getCell(3).getStringCellValue());
+                        brConversion.setYear(row.getCell(3).getStringCellValue());
                         break;
                     default:
-                        br_conversion.setYear("");
+                        brConversion.setYear("");
                         break;
                 }
 
-                br_conversion.setChannel(row.getCell(4).getStringCellValue());
-                br_conversion.setLabourAmt(row.getCell(5).getNumericCellValue());
-                br_conversion.setPartAmount(row.getCell(6).getNumericCellValue());
-                br_conversion.setBillAmount(row.getCell(7).getNumericCellValue());
+                brConversion.setChannel(row.getCell(4).getStringCellValue());
+                brConversion.setLabourAmt(row.getCell(5).getNumericCellValue());
+                brConversion.setPartAmount(row.getCell(6).getNumericCellValue());
+                brConversion.setBillAmount(row.getCell(7).getNumericCellValue());
 
                 //Checking if the columns no,br_conversion and grand_total having empty cell then it'll update 0 otherwise update the exact values
-                String novalue =  dataFormatter.formatCellValue(row.getCell(8));
-                br_conversion.setNo(novalue.isEmpty() ? 0 : Integer.parseInt(novalue));
-                String br_conversionvalue = dataFormatter.formatCellValue(row.getCell(9));
-                br_conversion.setBrConversion(br_conversionvalue.isEmpty() ? 0 : Integer.parseInt(br_conversionvalue));
-                String grand_totalvalue = dataFormatter.formatCellValue(row.getCell(10));
-                br_conversion.setGrandTotal(grand_totalvalue.isEmpty() ? 0 : Integer.parseInt(grand_totalvalue));
+                brConversion.setNo(getIntCellValue(row, 8, dataFormatter));
+                brConversion.setBrConversion(getIntCellValue(row, 9, dataFormatter));
+
+                brConversion.setGrandTotal(brConversion.getNo() + brConversion.getBrConversion());
 
 
                 //Updating the columns period,Qtr_wise and Half_Year Columns Using the value from month column
-                String month = br_conversion.getMonth();
+                String month = brConversion.getMonth();
                 String period = "1-"+month;
-                br_conversion.setPeriod(period);
+                brConversion.setPeriod(period);
                 switch (month) {
-                    case "Apr", "May", "Jun" -> { br_conversion.setQtrWise("Qtr1"); br_conversion.setHalfYear("H1"); }
-                    case "Jul", "Aug", "Sep" -> { br_conversion.setQtrWise("Qtr2"); br_conversion.setHalfYear("H1"); }
-                    case "Oct", "Nov", "Dec" -> { br_conversion.setQtrWise("Qtr3"); br_conversion.setHalfYear("H2"); }
-                    case "Jan", "Feb", "Mar" -> { br_conversion.setQtrWise("Qtr4"); br_conversion.setHalfYear("H2"); }
+                    case "Apr", "May", "Jun" -> { brConversion.setQtrWise("Qtr1"); brConversion.setHalfYear("H1"); }
+                    case "Jul", "Aug", "Sep" -> { brConversion.setQtrWise("Qtr2"); brConversion.setHalfYear("H1"); }
+                    case "Oct", "Nov", "Dec" -> { brConversion.setQtrWise("Qtr3"); brConversion.setHalfYear("H2"); }
+                    case "Jan", "Feb", "Mar" -> { brConversion.setQtrWise("Qtr4"); brConversion.setHalfYear("H2"); }
                 }
-                brConversionRepository.save(br_conversion);
+                brConversionRepository.save(brConversion);
 
             }
         }catch (IOException e){
