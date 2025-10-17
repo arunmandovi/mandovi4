@@ -3,6 +3,8 @@ package com.mandovi.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "tat")
 public class TAT {
@@ -27,7 +29,7 @@ public class TAT {
     private String linkServiceType;
 
     @Column(name = "average_of_open_to_close")
-    private Double  averageOfOpenToClose;
+    private LocalTime averageOfOpenToClose;
 
     @Column(name = "period")
     private String period;
@@ -41,7 +43,7 @@ public class TAT {
     public TAT() {
     }
 
-    public TAT(Integer tatSINo, String city, String branch, String month, String year, String linkServiceType, Double averageOfOpenToClose, String period, String qtrWise, String halfYear) {
+    public TAT(Integer tatSINo, String city, String branch, String month, String year, String linkServiceType, LocalTime averageOfOpenToClose, String period, String qtrWise, String halfYear) {
         this.tatSINo = tatSINo;
         this.city = city;
         this.branch = branch;
@@ -102,11 +104,11 @@ public class TAT {
         this.linkServiceType = linkServiceType;
     }
 
-    public Double getAverageOfOpenToClose() {
+    public LocalTime getAverageOfOpenToClose() {
         return averageOfOpenToClose;
     }
 
-    public void setAverageOfOpenToClose(Double averageOfOpenToClose) {
+    public void setAverageOfOpenToClose(LocalTime averageOfOpenToClose) {
         this.averageOfOpenToClose = averageOfOpenToClose;
     }
 

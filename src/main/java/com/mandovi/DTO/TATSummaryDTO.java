@@ -1,17 +1,19 @@
 package com.mandovi.DTO;
 
+import java.time.LocalTime;
+
 public class TATSummaryDTO {
     private String city;
     private String branch;
-    private Double firstFreeService;
-    private Double secondFreeService;
-    private Double thirdFreeService;
-    private Double paidService;
+    private LocalTime firstFreeService;
+    private LocalTime secondFreeService;
+    private LocalTime thirdFreeService;
+    private LocalTime paidService;
 
     public TATSummaryDTO() {
     }
 
-    public TATSummaryDTO(String city, String branch, Double firstFreeService, Double secondFreeService, Double thirdFreeService, Double paidService) {
+    public TATSummaryDTO(String city, String branch, LocalTime firstFreeService, LocalTime secondFreeService, LocalTime thirdFreeService, LocalTime paidService) {
         this.city = city;
         this.branch = branch;
         this.firstFreeService = firstFreeService;
@@ -36,35 +38,35 @@ public class TATSummaryDTO {
         this.branch = branch;
     }
 
-    public Double getFirstFreeService() {
+    public LocalTime getFirstFreeService() {
         return firstFreeService;
     }
 
-    public void setFirstFreeService(Double firstFreeService) {
+    public void setFirstFreeService(LocalTime firstFreeService) {
         this.firstFreeService = firstFreeService;
     }
 
-    public Double getSecondFreeService() {
+    public LocalTime getSecondFreeService() {
         return secondFreeService;
     }
 
-    public void setSecondFreeService(Double secondFreeService) {
+    public void setSecondFreeService(LocalTime secondFreeService) {
         this.secondFreeService = secondFreeService;
     }
 
-    public Double getThirdFreeService() {
+    public LocalTime getThirdFreeService() {
         return thirdFreeService;
     }
 
-    public void setThirdFreeService(Double thirdFreeService) {
+    public void setThirdFreeService(LocalTime thirdFreeService) {
         this.thirdFreeService = thirdFreeService;
     }
 
-    public Double getPaidService() {
+    public LocalTime getPaidService() {
         return paidService;
     }
 
-    public void setPaidService(Double paidService) {
+    public void setPaidService(LocalTime paidService) {
         this.paidService = paidService;
     }
 

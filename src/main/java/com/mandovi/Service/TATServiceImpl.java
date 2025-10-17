@@ -9,7 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TATServiceImpl implements TATService {
@@ -45,7 +51,55 @@ public class TATServiceImpl implements TATService {
                 String year = String.valueOf(num_year);
                 tat.setYear(year);
                 tat.setLinkServiceType(row.getCell(4).getStringCellValue());
-                tat.setAverageOfOpenToClose(round2Decimal(row.getCell(5).getNumericCellValue()));
+
+                // Checking and Updating Time
+                Cell timeCell = row.getCell(5);
+                LocalTime timeValue = null;
+
+                if (timeCell != null) {
+                    try {
+                        if (timeCell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(timeCell)) {
+                            // Excel stored as date+time (e.g. 31-Dec-1899 01:53:49)
+                            Date date = timeCell.getDateCellValue();
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(date);
+                            timeValue = LocalTime.of(
+                                    calendar.get(Calendar.HOUR_OF_DAY),
+                                    calendar.get(Calendar.MINUTE),
+                                    calendar.get(Calendar.SECOND));
+                        } else {
+                            // Handle string like "1.53.49 AM"
+                            DataFormatter formatter = new DataFormatter();
+                            String cellText = formatter.formatCellValue(timeCell).trim();
+
+                            if (!cellText.isEmpty()) {
+                                String normalized = cellText.replace('.', ':')
+                                        .replaceAll("\\s+", " ")
+                                        .toUpperCase()
+                                        .replaceAll("(?i)(AM|PM)$", " $1");
+
+                                DateTimeFormatter[] formats = {
+                                        DateTimeFormatter.ofPattern("h:mm:ss a", Locale.ENGLISH),
+                                        DateTimeFormatter.ofPattern("h:mm a", Locale.ENGLISH),
+                                        DateTimeFormatter.ofPattern("H:mm:ss", Locale.ENGLISH),
+                                        DateTimeFormatter.ofPattern("H:mm", Locale.ENGLISH)
+                                };
+
+                                for (DateTimeFormatter fmt : formats) {
+                                    try {
+                                        timeValue = LocalTime.parse(normalized, fmt);
+                                        break;
+                                    } catch (DateTimeParseException ignored) {}
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("⚠️ Error parsing time: " + e.getMessage());
+                    }
+                }
+
+// ✅ finally set the parsed value
+                tat.setAverageOfOpenToClose(timeValue);
 
                 //Updating the column period by concating the columns month & year and "-" in between
                 String period = tat.getMonth()+"-"+tat.getYear();
@@ -81,15 +135,56 @@ public class TATServiceImpl implements TATService {
 
     @Override
     public List<TATSummaryDTO> getTATSummary(String groupBy, String month, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()){
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return tatRepository.getTATSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return tatRepository.getTATSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return tatRepository.getTATSummaryByCityAndBranch(month, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
+        List<TAT> allTAT = tatRepository.findAll();
+
+        //Apply Filters
+        List<TAT> filterd = allTAT.stream()
+                .filter(tat -> (month == null ||  month.equalsIgnoreCase(tat.getMonth())))
+                .filter(tat -> (qtrWise == null || qtrWise.equalsIgnoreCase(tat.getQtrWise())))
+                .filter(tat -> (halfYear == null || halfYear.equalsIgnoreCase(tat.getHalfYear())))
+                .toList();
+
+        //Group by city
+       return filterd.stream()
+               .collect(Collectors.groupingBy(TAT::getCity))
+               .entrySet().stream()
+               .map(entry -> {
+                   String city = entry.getKey();
+                   List<TAT> groupList = entry.getValue();
+
+                   LocalTime firstFreeService = calculateAverageTime(groupList, "FR1");
+                   LocalTime secondFreeService = calculateAverageTime(groupList, "FR2");
+                   LocalTime thirdFreeService = calculateAverageTime(groupList, "FR3");
+                   LocalTime pms = calculateAverageTime(groupList, "PMS");
+
+                   return new TATSummaryDTO(
+                           city,
+                           null,
+                           firstFreeService,
+                           secondFreeService,
+                           thirdFreeService,
+                           pms
+                   );
+               })
+               .toList();
     }
+
+    private LocalTime calculateAverageTime(List<TAT> list, String linkType) {
+        List<LocalTime> times = list.stream()
+                .filter(t -> linkType.equals(t.getLinkServiceType()))
+                .map(TAT::getAverageOfOpenToClose)
+                .filter(Objects::nonNull)
+                .toList();
+
+        if (times.isEmpty()) return null;
+
+        double avgSeconds = times.stream()
+                .mapToDouble(time -> time.toSecondOfDay())
+                .average()
+                .orElse(0);
+
+        return LocalTime.ofSecondOfDay((long) avgSeconds);
+    }
+
 
 }
