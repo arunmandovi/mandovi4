@@ -15,18 +15,36 @@ public class VASSummaryDTO {
     private Long wheelBalancingNoOfVehicles;
     private Double wheelBalancingEarning;
     private Double wheelBalancingPercentageAge;
-    private Double exteriorCleaningFPRAndBodyShopLoad;
+    private Double exteriorCleaningFPRAndBSLoad;
     private Long exteriorCleaningNoOfVehicles;
     private Double exteriorCleaningAmount;
     private Double exteriorCleaningPercentageAge;
     private Long interiorCleaningNoOfVehicles;
     private Double interiorCleaningAmount;
     private Double interiorCleaningPercentageAge;
+    private Long underBodyCoatingNoOfVehicles;
+    private Double underBodyCoatingAmount;
+    private Double underBodyCoatingPercentageAge;
+    private Long topBodyCoatingNoOfVehicles;
+    private Double topBodyCoatingAmount;
+    private Double topBodyPercentageAge;
+    private Long ratMeshNoOfVehicle;
+    private Double ratMeshAmount;
+    private Double ratMeshPercentageAge;
+    private Long acEvaporatorNoOfVehicles;
+    private Double acEvaporatorAmount;
+    private Double acEvaporatorPercentageAge;
+    private Long acVentNoOfVehicles;
+    private Double acVentAmount;
+    private Double acVentPercentageAge;
+    private Long plasticRestorerNoOfVehicles;
+    private Double plasticRestorerAmount;
+    private Double plasticRestorerPercentageAge;
 
     public VASSummaryDTO() {
     }
 
-    public VASSummaryDTO(String city, String branch, Double diagnosticChargesPMSLoad, Long diagnosticChargesNoOfVehicles, Double diagnosticChargesLabourEarning, Double diagnosticChargesPercentagePMSLoad, Double wheelAlignmentThirdFRSAndPMSLoad, Long wheelAlignmentNoOfVehicles, Double wheelAlignmentEarning, Double wheelAlignmentPercentageAge, Double wheelBalancingThirdFRSAndPMSLoad, Long wheelBalancingNoOfVehicles, Double wheelBalancingEarning, Double wheelBalancingPercentageAge, Double exteriorCleaningFPRAndBodyShopLoad, Long exteriorCleaningNoOfVehicles, Double exteriorCleaningAmount, Double exteriorCleaningPercentageAge, Long interiorCleaningNoOfVehicles, Double interiorCleaningAmount, Double interiorCleaningPercentageAge) {
+    public VASSummaryDTO(String city, String branch, Double diagnosticChargesPMSLoad, Long diagnosticChargesNoOfVehicles, Double diagnosticChargesLabourEarning, Double diagnosticChargesPercentagePMSLoad, Double wheelAlignmentThirdFRSAndPMSLoad, Long wheelAlignmentNoOfVehicles, Double wheelAlignmentEarning, Double wheelAlignmentPercentageAge, Double wheelBalancingThirdFRSAndPMSLoad, Long wheelBalancingNoOfVehicles, Double wheelBalancingEarning, Double wheelBalancingPercentageAge, Double exteriorCleaningFPRAndBSLoad, Long exteriorCleaningNoOfVehicles, Double exteriorCleaningAmount, Double exteriorCleaningPercentageAge, Long interiorCleaningNoOfVehicles, Double interiorCleaningAmount, Double interiorCleaningPercentageAge, Long underBodyCoatingNoOfVehicles, Double underBodyCoatingAmount, Double underBodyCoatingPercentageAge, Long topBodyCoatingNoOfVehicles, Double topBodyCoatingAmount, Double topBodyPercentageAge, Long ratMeshNoOfVehicle, Double ratMeshAmount, Double ratMeshPercentageAge, Long acEvaporatorNoOfVehicles, Double acEvaporatorAmount, Double acEvaporatorPercentageAge, Long acVentNoOfVehicles, Double acVentAmount, Double acVentPercentageAge, Long plasticRestorerNoOfVehicles, Double plasticRestorerAmount, Double plasticRestorerPercentageAge) {
         this.city = city;
         this.branch = branch;
         this.diagnosticChargesPMSLoad = diagnosticChargesPMSLoad;
@@ -41,13 +59,31 @@ public class VASSummaryDTO {
         this.wheelBalancingNoOfVehicles = wheelBalancingNoOfVehicles;
         this.wheelBalancingEarning = wheelBalancingEarning;
         this.wheelBalancingPercentageAge = wheelBalancingPercentageAge;
-        this.exteriorCleaningFPRAndBodyShopLoad = exteriorCleaningFPRAndBodyShopLoad;
+        this.exteriorCleaningFPRAndBSLoad = exteriorCleaningFPRAndBSLoad;
         this.exteriorCleaningNoOfVehicles = exteriorCleaningNoOfVehicles;
         this.exteriorCleaningAmount = exteriorCleaningAmount;
         this.exteriorCleaningPercentageAge = exteriorCleaningPercentageAge;
         this.interiorCleaningNoOfVehicles = interiorCleaningNoOfVehicles;
         this.interiorCleaningAmount = interiorCleaningAmount;
         this.interiorCleaningPercentageAge = interiorCleaningPercentageAge;
+        this.underBodyCoatingNoOfVehicles = underBodyCoatingNoOfVehicles;
+        this.underBodyCoatingAmount = underBodyCoatingAmount;
+        this.underBodyCoatingPercentageAge = underBodyCoatingPercentageAge;
+        this.topBodyCoatingNoOfVehicles = topBodyCoatingNoOfVehicles;
+        this.topBodyCoatingAmount = topBodyCoatingAmount;
+        this.topBodyPercentageAge = topBodyPercentageAge;
+        this.ratMeshNoOfVehicle = ratMeshNoOfVehicle;
+        this.ratMeshAmount = ratMeshAmount;
+        this.ratMeshPercentageAge = ratMeshPercentageAge;
+        this.acEvaporatorNoOfVehicles = acEvaporatorNoOfVehicles;
+        this.acEvaporatorAmount = acEvaporatorAmount;
+        this.acEvaporatorPercentageAge = acEvaporatorPercentageAge;
+        this.acVentNoOfVehicles = acVentNoOfVehicles;
+        this.acVentAmount = acVentAmount;
+        this.acVentPercentageAge = acVentPercentageAge;
+        this.plasticRestorerNoOfVehicles = plasticRestorerNoOfVehicles;
+        this.plasticRestorerAmount = plasticRestorerAmount;
+        this.plasticRestorerPercentageAge = plasticRestorerPercentageAge;
     }
 
     public String getCity() {
@@ -162,12 +198,12 @@ public class VASSummaryDTO {
         this.wheelBalancingPercentageAge = wheelBalancingPercentageAge;
     }
 
-    public Double getExteriorCleaningFPRAndBodyShopLoad() {
-        return exteriorCleaningFPRAndBodyShopLoad;
+    public Double getExteriorCleaningFPRAndBSLoad() {
+        return exteriorCleaningFPRAndBSLoad;
     }
 
-    public void setExteriorCleaningFPRAndBodyShopLoad(Double exteriorCleaningFPRAndBodyShopLoad) {
-        this.exteriorCleaningFPRAndBodyShopLoad = exteriorCleaningFPRAndBodyShopLoad;
+    public void setExteriorCleaningFPRAndBSLoad(Double exteriorCleaningFPRAndBSLoad) {
+        this.exteriorCleaningFPRAndBSLoad = exteriorCleaningFPRAndBSLoad;
     }
 
     public Long getExteriorCleaningNoOfVehicles() {
@@ -218,9 +254,153 @@ public class VASSummaryDTO {
         this.interiorCleaningPercentageAge = interiorCleaningPercentageAge;
     }
 
+    public Long getUnderBodyCoatingNoOfVehicles() {
+        return underBodyCoatingNoOfVehicles;
+    }
+
+    public void setUnderBodyCoatingNoOfVehicles(Long underBodyCoatingNoOfVehicles) {
+        this.underBodyCoatingNoOfVehicles = underBodyCoatingNoOfVehicles;
+    }
+
+    public Double getUnderBodyCoatingAmount() {
+        return underBodyCoatingAmount;
+    }
+
+    public void setUnderBodyCoatingAmount(Double underBodyCoatingAmount) {
+        this.underBodyCoatingAmount = underBodyCoatingAmount;
+    }
+
+    public Double getUnderBodyCoatingPercentageAge() {
+        return underBodyCoatingPercentageAge;
+    }
+
+    public void setUnderBodyCoatingPercentageAge(Double underBodyCoatingPercentageAge) {
+        this.underBodyCoatingPercentageAge = underBodyCoatingPercentageAge;
+    }
+
+    public Long getTopBodyCoatingNoOfVehicles() {
+        return topBodyCoatingNoOfVehicles;
+    }
+
+    public void setTopBodyCoatingNoOfVehicles(Long topBodyCoatingNoOfVehicles) {
+        this.topBodyCoatingNoOfVehicles = topBodyCoatingNoOfVehicles;
+    }
+
+    public Double getTopBodyCoatingAmount() {
+        return topBodyCoatingAmount;
+    }
+
+    public void setTopBodyCoatingAmount(Double topBodyCoatingAmount) {
+        this.topBodyCoatingAmount = topBodyCoatingAmount;
+    }
+
+    public Double getTopBodyPercentageAge() {
+        return topBodyPercentageAge;
+    }
+
+    public void setTopBodyPercentageAge(Double topBodyPercentageAge) {
+        this.topBodyPercentageAge = topBodyPercentageAge;
+    }
+
+    public Long getRatMeshNoOfVehicle() {
+        return ratMeshNoOfVehicle;
+    }
+
+    public void setRatMeshNoOfVehicle(Long ratMeshNoOfVehicle) {
+        this.ratMeshNoOfVehicle = ratMeshNoOfVehicle;
+    }
+
+    public Double getRatMeshAmount() {
+        return ratMeshAmount;
+    }
+
+    public void setRatMeshAmount(Double ratMeshAmount) {
+        this.ratMeshAmount = ratMeshAmount;
+    }
+
+    public Double getRatMeshPercentageAge() {
+        return ratMeshPercentageAge;
+    }
+
+    public void setRatMeshPercentageAge(Double ratMeshPercentageAge) {
+        this.ratMeshPercentageAge = ratMeshPercentageAge;
+    }
+
+    public Long getAcEvaporatorNoOfVehicles() {
+        return acEvaporatorNoOfVehicles;
+    }
+
+    public void setAcEvaporatorNoOfVehicles(Long acEvaporatorNoOfVehicles) {
+        this.acEvaporatorNoOfVehicles = acEvaporatorNoOfVehicles;
+    }
+
+    public Double getAcEvaporatorAmount() {
+        return acEvaporatorAmount;
+    }
+
+    public void setAcEvaporatorAmount(Double acEvaporatorAmount) {
+        this.acEvaporatorAmount = acEvaporatorAmount;
+    }
+
+    public Double getAcEvaporatorPercentageAge() {
+        return acEvaporatorPercentageAge;
+    }
+
+    public void setAcEvaporatorPercentageAge(Double acEvaporatorPercentageAge) {
+        this.acEvaporatorPercentageAge = acEvaporatorPercentageAge;
+    }
+
+    public Long getAcVentNoOfVehicles() {
+        return acVentNoOfVehicles;
+    }
+
+    public void setAcVentNoOfVehicles(Long acVentNoOfVehicles) {
+        this.acVentNoOfVehicles = acVentNoOfVehicles;
+    }
+
+    public Double getAcVentAmount() {
+        return acVentAmount;
+    }
+
+    public void setAcVentAmount(Double acVentAmount) {
+        this.acVentAmount = acVentAmount;
+    }
+
+    public Double getAcVentPercentageAge() {
+        return acVentPercentageAge;
+    }
+
+    public void setAcVentPercentageAge(Double acVentPercentageAge) {
+        this.acVentPercentageAge = acVentPercentageAge;
+    }
+
+    public Long getPlasticRestorerNoOfVehicles() {
+        return plasticRestorerNoOfVehicles;
+    }
+
+    public void setPlasticRestorerNoOfVehicles(Long plasticRestorerNoOfVehicles) {
+        this.plasticRestorerNoOfVehicles = plasticRestorerNoOfVehicles;
+    }
+
+    public Double getPlasticRestorerAmount() {
+        return plasticRestorerAmount;
+    }
+
+    public void setPlasticRestorerAmount(Double plasticRestorerAmount) {
+        this.plasticRestorerAmount = plasticRestorerAmount;
+    }
+
+    public Double getPlasticRestorerPercentageAge() {
+        return plasticRestorerPercentageAge;
+    }
+
+    public void setPlasticRestorerPercentageAge(Double plasticRestorerPercentageAge) {
+        this.plasticRestorerPercentageAge = plasticRestorerPercentageAge;
+    }
+
     @Override
     public String toString() {
-        return "VASSummary{" +
+        return "VASSummaryDTO{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
                 ", diagnosticChargesPMSLoad=" + diagnosticChargesPMSLoad +
@@ -235,13 +415,31 @@ public class VASSummaryDTO {
                 ", wheelBalancingNoOfVehicles=" + wheelBalancingNoOfVehicles +
                 ", wheelBalancingEarning=" + wheelBalancingEarning +
                 ", wheelBalancingPercentageAge=" + wheelBalancingPercentageAge +
-                ", exteriorCleaningFPRAndBodyShopLoad=" + exteriorCleaningFPRAndBodyShopLoad +
+                ", exteriorCleaningFPRAndBSLoad=" + exteriorCleaningFPRAndBSLoad +
                 ", exteriorCleaningNoOfVehicles=" + exteriorCleaningNoOfVehicles +
                 ", exteriorCleaningAmount=" + exteriorCleaningAmount +
                 ", exteriorCleaningPercentageAge=" + exteriorCleaningPercentageAge +
                 ", interiorCleaningNoOfVehicles=" + interiorCleaningNoOfVehicles +
                 ", interiorCleaningAmount=" + interiorCleaningAmount +
                 ", interiorCleaningPercentageAge=" + interiorCleaningPercentageAge +
+                ", underBodyCoatingNoOfVehicles=" + underBodyCoatingNoOfVehicles +
+                ", underBodyCoatingAmount=" + underBodyCoatingAmount +
+                ", underBodyCoatingPercentageAge=" + underBodyCoatingPercentageAge +
+                ", topBodyCoatingNoOfVehicles=" + topBodyCoatingNoOfVehicles +
+                ", topBodyCoatingAmount=" + topBodyCoatingAmount +
+                ", topBodyPercentageAge=" + topBodyPercentageAge +
+                ", ratMeshNoOfVehicle=" + ratMeshNoOfVehicle +
+                ", ratMeshAmount=" + ratMeshAmount +
+                ", ratMeshPercentageAge=" + ratMeshPercentageAge +
+                ", acEvaporatorNoOfVehicles=" + acEvaporatorNoOfVehicles +
+                ", acEvaporatorAmount=" + acEvaporatorAmount +
+                ", acEvaporatorPercentageAge=" + acEvaporatorPercentageAge +
+                ", acVentNoOfVehicles=" + acVentNoOfVehicles +
+                ", acVentAmount=" + acVentAmount +
+                ", acVentPercentageAge=" + acVentPercentageAge +
+                ", plasticRestorerNoOfVehicles=" + plasticRestorerNoOfVehicles +
+                ", plasticRestorerAmount=" + plasticRestorerAmount +
+                ", plasticRestorerPercentageAge=" + plasticRestorerPercentageAge +
                 '}';
     }
 }

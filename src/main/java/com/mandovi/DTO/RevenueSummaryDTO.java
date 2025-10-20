@@ -3,6 +3,12 @@ package com.mandovi.DTO;
 public class RevenueSummaryDTO {
     private String city;
     private String branch;
+    private Double previousSRLabour;
+    private Double currentSRLabour;
+    private Double growthSRLabour;
+    private Double previousBRLabour;
+    private Double currentBRLabour;
+    private Double growthBRLabour;
     private Double previousSRBRLabour;
     private Double currentSRBRLabour;
     private Double growthSRBRLabour;
@@ -22,9 +28,15 @@ public class RevenueSummaryDTO {
     public RevenueSummaryDTO() {
     }
 
-    public RevenueSummaryDTO(String city, String branch, Double previousSRBRLabour, Double currentSRBRLabour, Double growthSRBRLabour, Double previousSRSpares, Double currentSRSpares, Double growthSRSpares, Double previousBRSpares, Double currentBRSpares, Double growthBRSpares, Double previousSRBRSpares, Double currentSRBRSpares, Double growthSRBRSpares, Double previousSRBRTotal, Double currentSRBRTotal, Double growthSRBRTotal) {
+    public RevenueSummaryDTO(String city, String branch, Double previousSRLabour, Double currentSRLabour, Double growthSRLabour, Double previousBRLabour, Double currentBRLabour, Double growthBRLabour, Double previousSRBRLabour, Double currentSRBRLabour, Double growthSRBRLabour, Double previousSRSpares, Double currentSRSpares, Double growthSRSpares, Double previousBRSpares, Double currentBRSpares, Double growthBRSpares, Double previousSRBRSpares, Double currentSRBRSpares, Double growthSRBRSpares, Double previousSRBRTotal, Double currentSRBRTotal, Double growthSRBRTotal) {
         this.city = city;
         this.branch = branch;
+        this.previousSRLabour = previousSRLabour;
+        this.currentSRLabour = currentSRLabour;
+        this.growthSRLabour = growthSRLabour;
+        this.previousBRLabour = previousBRLabour;
+        this.currentBRLabour = currentBRLabour;
+        this.growthBRLabour = growthBRLabour;
         this.previousSRBRLabour = previousSRBRLabour;
         this.currentSRBRLabour = currentSRBRLabour;
         this.growthSRBRLabour = growthSRBRLabour;
@@ -56,6 +68,54 @@ public class RevenueSummaryDTO {
 
     public void setBranch(String branch) {
         this.branch = branch;
+    }
+
+    public Double getPreviousSRLabour() {
+        return previousSRLabour;
+    }
+
+    public void setPreviousSRLabour(Double previousSRLabour) {
+        this.previousSRLabour = previousSRLabour;
+    }
+
+    public Double getCurrentSRLabour() {
+        return currentSRLabour;
+    }
+
+    public void setCurrentSRLabour(Double currentSRLabour) {
+        this.currentSRLabour = currentSRLabour;
+    }
+
+    public Double getGrowthSRLabour() {
+        return growthSRLabour;
+    }
+
+    public void setGrowthSRLabour(Double growthSRLabour) {
+        this.growthSRLabour = growthSRLabour;
+    }
+
+    public Double getPreviousBRLabour() {
+        return previousBRLabour;
+    }
+
+    public void setPreviousBRLabour(Double previousBRLabour) {
+        this.previousBRLabour = previousBRLabour;
+    }
+
+    public Double getCurrentBRLabour() {
+        return currentBRLabour;
+    }
+
+    public void setCurrentBRLabour(Double currentBRLabour) {
+        this.currentBRLabour = currentBRLabour;
+    }
+
+    public Double getGrowthBRLabour() {
+        return growthBRLabour;
+    }
+
+    public void setGrowthBRLabour(Double growthBRLabour) {
+        this.growthBRLabour = growthBRLabour;
     }
 
     public Double getPreviousSRBRLabour() {
@@ -183,6 +243,12 @@ public class RevenueSummaryDTO {
         return "RevenueSummaryDTO{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
+                ", previousSRLabour=" + previousSRLabour +
+                ", currentSRLabour=" + currentSRLabour +
+                ", growthSRLabour=" + growthSRLabour +
+                ", previousBRLabour=" + previousBRLabour +
+                ", currentBRLabour=" + currentBRLabour +
+                ", growthBRLabour=" + growthBRLabour +
                 ", previousSRBRLabour=" + previousSRBRLabour +
                 ", currentSRBRLabour=" + currentSRBRLabour +
                 ", growthSRBRLabour=" + growthSRBRLabour +

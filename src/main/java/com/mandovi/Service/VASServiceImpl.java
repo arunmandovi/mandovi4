@@ -50,40 +50,27 @@ public class VASServiceImpl implements VASService {
                     vas.setWheels(1);
                 }
 
-                if (labourType.toUpperCase().contains("WHEEL BALANCING")){
-                    vas.setVas("WHEEL BALANCING");
-                }else if (labourType.toUpperCase().equals("DIAGNOSTIC CHARGES")){
-                    vas.setVas("DIAGNOSTIC CHARGES");
-                } else if (labourType.toUpperCase().contains("POLISHING")) {
-                    vas.setVas("Exterior Cleaning");
-                } else if (labourType.toUpperCase().contains("WHEEL ALIGNMENT")) {
-                    vas.setVas("WHEEL ALIGNMENT");
-                } else if (labourType.toUpperCase().contains("UPHOLSTERY CLEANING")) {
-                    vas.setVas("Interior Cleaning");
-                } else {
-                    vas.setVas("UNKNOWN");
-                }
-
-                vas.setMonth(row.getCell(3).getStringCellValue());
+                vas.setVas(row.getCell(3).getStringCellValue());
+                vas.setMonth(row.getCell(4).getStringCellValue());
 
                 //Converting Integer year to String
-                Cell cell = row.getCell(4);
+                Cell cell = row.getCell(5);
                 String year = "UNKNOWN";
                 if(cell != null){
                     switch (cell.getCellType()){
                         case STRING:
-                            vas.setYear(row.getCell(4).getStringCellValue());
+                            vas.setYear(row.getCell(5).getStringCellValue());
                             break;
                         case NUMERIC:
-                            year = String.valueOf((int)row.getCell(4).getNumericCellValue());
+                            year = String.valueOf((int)row.getCell(5).getNumericCellValue());
                             vas.setYear(year);
                             break;
                     }
                 }
 
-                int number = (int)row.getCell(5).getNumericCellValue();
+                int number = (int)row.getCell(6).getNumericCellValue();
                 vas.setJobCardNo(number * vas.getWheels());
-                vas.setBasicAmt(round2Decimals(row.getCell(6).getNumericCellValue()));
+                vas.setBasicAmt(round2Decimals(row.getCell(7).getNumericCellValue()));
 
                 vasRepository.save(vas);
             }
@@ -110,7 +97,7 @@ public class VASServiceImpl implements VASService {
         }
         switch (groupBy.toLowerCase()){
             case "city" : return vasRepository.getVASSummaryByCity(month);
-            case "branch" : return vasRepository.getVASummaryByBranch(month);
+            case "branch" : return vasRepository.getVASSummaryByBranch(month);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }
