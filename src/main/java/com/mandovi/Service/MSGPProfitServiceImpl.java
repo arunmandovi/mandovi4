@@ -161,14 +161,14 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
     }
 
     @Override
-    public List<MSGPProfitSummaryDTO> getMSGPProfitSummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<MSGPProfitSummaryDTO> getMSGPProfitSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()) {
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return msgpProfitRepository.getMSGPProfitSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return msgpProfitRepository.getMSGPProfitSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return msgpProfitRepository.getMSGPProfitSummaryByCityAndBranch(month, qtrWise, halfYear);
+            case "city" : return msgpProfitRepository.getMSGPProfitSummaryByCity(months, qtrWise, halfYear);
+            case "branch" : return msgpProfitRepository.getMSGPProfitSummaryByBranch(months, qtrWise, halfYear);
+            case "city_branch" : return msgpProfitRepository.getMSGPProfitSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }

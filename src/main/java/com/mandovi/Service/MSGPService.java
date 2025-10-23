@@ -13,6 +13,6 @@ public interface MSGPService {
 
     public List<MSGP> getMSGPByMonthYear(String month, String year);
 
-    public List<MSGPSummaryDTO> getMSGPSummary (String groupBy, String month, String qtrWise, String halfYear);
+    public List<MSGPSummaryDTO> getMSGPSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
 
 }

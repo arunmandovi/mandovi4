@@ -49,11 +49,11 @@ public class BatteryTyreController {
     @GetMapping("/battery_tyre_summary")
     public ResponseEntity<?> getBatterySummary(
             @RequestParam String groupBy,
-            @RequestParam (required = false) String month,
+            @RequestParam (required = false) List<String> months,
             @RequestParam(required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<BatteryTyreSummaryDTO> listBattery = batteryTyreService.getBatteryTyreSummary(groupBy, month, qtrWise, halfYear);
+            List<BatteryTyreSummaryDTO> listBattery = batteryTyreService.getBatteryTyreSummary(groupBy, months, qtrWise, halfYear);
             if (listBattery.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -61,7 +61,7 @@ public class BatteryTyreController {
         }catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("ERROR : " + e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internal Server ERROR");
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
         }
     }
 

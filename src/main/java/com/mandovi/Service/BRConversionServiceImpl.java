@@ -107,14 +107,14 @@ public class BRConversionServiceImpl implements BRConversionService {
     }
 
     @Override
-    public List<BRConversionSummaryDTO> getBRConversionSummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<BRConversionSummaryDTO> getBRConversionSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()) {
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return brConversionRepository.getBRConversionSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return brConversionRepository.getBRConversionSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return brConversionRepository.getBRConversionSummaryByCityAndBranch(month, qtrWise, halfYear);
+            case "city" : return brConversionRepository.getBRConversionSummaryByCity(months, qtrWise, halfYear);
+            case "branch" : return brConversionRepository.getBRConversionSummaryByBranch(months, qtrWise, halfYear);
+            case "city_branch" : return brConversionRepository.getBRConversionSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }

@@ -14,5 +14,5 @@ public interface BRConversionService {
 
     public List<BRConversion> getBRConversionByMonthYear(String month, String year);
 
-    public List<BRConversionSummaryDTO> getBRConversionSummary (String groupBy, String month, String qtrWise, String halfYear);
+    public List<BRConversionSummaryDTO> getBRConversionSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
 }

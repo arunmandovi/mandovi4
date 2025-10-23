@@ -36,13 +36,13 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             ((SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL)) * 100.00 )  / SUM(b.sumOfNetRetailDDL)
             )
             FROM BatteryTyre b
-            WHERE (:month IS NULL OR b.month = :month)
+            WHERE (:months IS NULL OR b.month IN (:months))
              AND (:qtrWise IS NULL OR b.qtrWise = :qtrWise)
              AND (:halfYear IS NULL OR b.halfYear = :halfYear)
             GROUP BY b.city
             """)
     List<BatteryTyreSummaryDTO> getBatteryTyreSummaryByCity(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
@@ -68,13 +68,13 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             ((SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL)) * 100.00 )  / SUM(b.sumOfNetRetailDDL)
             )
             FROM BatteryTyre b
-            WHERE (:month IS NULL OR b.month = :month)
+            WHERE (:months IS NULL OR b.month IN (:months))
              AND (:qtrWise IS NULL OR b.qtrWise = :qtrWise)
              AND (:halfYear IS NULL OR b.halfYear = :halfYear)
             GROUP BY b.branch
             """)
     List<BatteryTyreSummaryDTO> getBatteryTyreSummaryByBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
@@ -100,13 +100,13 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             ((SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL)) * 100.00 )  / SUM(b.sumOfNetRetailDDL)
             )
             FROM BatteryTyre b
-            WHERE (:month IS NULL OR b.month = :month)
+            WHERE (:months IS NULL OR b.month IN (:months))
              AND (:qtrWise IS NULL OR b.qtrWise = :qtrWise)
              AND (:halfYear IS NULL OR b.halfYear = :halfYear)
             GROUP BY b.city, b.branch
             """)
     List<BatteryTyreSummaryDTO> getBatteryTyreSummaryByCityAnaBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );

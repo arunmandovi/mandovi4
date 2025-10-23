@@ -145,14 +145,14 @@ public class MSGPServiceImpl implements MSGPService {
     }
 
     @Override
-    public List<MSGPSummaryDTO> getMSGPSummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<MSGPSummaryDTO> getMSGPSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()){
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return msgpRepository.getMSGPSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return msgpRepository.getMSGPSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return msgpRepository.getMSGPSummaryByCityAndBranch(month, qtrWise, halfYear);
+            case "city" : return msgpRepository.getMSGPSummaryByCity(months, qtrWise, halfYear);
+            case "branch" : return msgpRepository.getMSGPSummaryByBranch(months, qtrWise, halfYear);
+            case "city_branch" : return msgpRepository.getMSGPSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }

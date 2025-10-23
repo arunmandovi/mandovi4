@@ -58,13 +58,13 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
             NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ), 0)
         )
         FROM MSGP m
-        WHERE (:month IS NULL OR m.month = :month)
+        WHERE (:months IS NULL OR m.month IN (:months))
           AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR m.halfYear = :halfYear)
         GROUP BY m.city
     """)
     List<MSGPSummaryDTO> getMSGPSummaryByCity(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 
@@ -110,13 +110,13 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
             NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ), 0)
         )
         FROM MSGP m
-        WHERE (:month IS NULL OR m.month = :month)
+        WHERE (:months IS NULL OR m.month IN (:months))
           AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR m.halfYear = :halfYear)
         GROUP BY m.branch
     """)
     List<MSGPSummaryDTO> getMSGPSummaryByBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 
@@ -162,13 +162,13 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
             NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ), 0)
         )
         FROM MSGP m
-        WHERE (:month IS NULL OR m.month = :month)
+        WHERE (:months IS NULL OR m.month IN (:months))
           AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR m.halfYear = :halfYear)
         GROUP BY m.city, m.branch
     """)
     List<MSGPSummaryDTO> getMSGPSummaryByCityAndBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 

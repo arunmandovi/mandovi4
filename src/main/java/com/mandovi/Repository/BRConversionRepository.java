@@ -49,13 +49,13 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
                 SUM(b.labourAmt) + SUM(b.partAmount)
             )
             FROM BRConversion b
-            WHERE (:month IS NULL OR b.month = :month)
+            WHERE (:months IS NULL OR b.month IN (:months))
               AND (:qtrWise IS NULL OR b.qtrWise = :qtrWise)
               AND (:halfYear IS NULL OR b.halfYear = :halfYear)
             GROUP BY b.city
             """)
     List<BRConversionSummaryDTO> getBRConversionSummaryByCity(
-            @Param("month") String month,
+            @Param("months") List<String> month,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
@@ -94,13 +94,13 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
                 SUM(b.labourAmt) + SUM(b.partAmount)
             )
             FROM BRConversion b
-            WHERE (:month IS NULL OR b.month = :month)
+            WHERE (:months IS NULL OR b.month IN (:months))
               AND (:qtrWise IS NULL OR b.qtrWise = :qtrWise)
               AND (:halfYear IS NULL OR b.halfYear = :halfYear)
             GROUP BY b.branch
             """)
     List<BRConversionSummaryDTO> getBRConversionSummaryByBranch(
-            @Param("month") String month,
+            @Param("months") List<String> month,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
@@ -139,13 +139,13 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
                 SUM(b.labourAmt) + SUM(b.partAmount)
             )
             FROM BRConversion b
-            WHERE (:month IS NULL OR b.month = :month)
+            WHERE (:months IS NULL OR b.month IN (:months))
               AND (:qtrWise IS NULL OR b.qtrWise = :qtrWise)
               AND (:halfYear IS NULL OR b.halfYear = :halfYear)
             GROUP BY b.city, b.branch
             """)
     List<BRConversionSummaryDTO> getBRConversionSummaryByCityAndBranch(
-            @Param("month") String month,
+            @Param("months") List<String> month,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );

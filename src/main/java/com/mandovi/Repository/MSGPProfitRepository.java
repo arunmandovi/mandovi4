@@ -42,13 +42,13 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
             NULLIF(SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END), 0)
         )
         FROM MSGPProfit m
-        WHERE (:month IS NULL OR m.month = :month)
+        WHERE (:months IS NULL OR m.month IN (:months))
           AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR m.halfYear = :halfYear)
         GROUP BY m.city
     """)
     List<MSGPProfitSummaryDTO> getMSGPProfitSummaryByCity(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
@@ -79,13 +79,13 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
             NULLIF(SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END), 0)
         )
         FROM MSGPProfit m
-        WHERE (:month IS NULL OR m.month = :month)
+        WHERE (:months IS NULL OR m.month IN (:months))
           AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR m.halfYear = :halfYear)
         GROUP BY m.branch
     """)
     List<MSGPProfitSummaryDTO> getMSGPProfitSummaryByBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
@@ -116,13 +116,13 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
             NULLIF(SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END), 0)
         )
         FROM MSGPProfit m
-        WHERE (:month IS NULL OR m.month = :month)
+        WHERE (:months IS NULL OR m.month IN (:months))
           AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR m.halfYear = :halfYear)
         GROUP BY m.city, m.branch
     """)
     List<MSGPProfitSummaryDTO> getMSGPProfitSummaryByCityAndBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );

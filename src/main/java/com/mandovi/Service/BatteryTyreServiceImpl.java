@@ -88,14 +88,14 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
     }
 
     @Override
-    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()) {
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return batteryTyreRepository.getBatteryTyreSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return batteryTyreRepository.getBatteryTyreSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return batteryTyreRepository.getBatteryTyreSummaryByCityAnaBranch(month, qtrWise, halfYear);
+            case "city" : return batteryTyreRepository.getBatteryTyreSummaryByCity(months, qtrWise, halfYear);
+            case "branch" : return batteryTyreRepository.getBatteryTyreSummaryByBranch(months, qtrWise, halfYear);
+            case "city_branch" : return batteryTyreRepository.getBatteryTyreSummaryByCityAnaBranch(months, qtrWise, halfYear);
             default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }

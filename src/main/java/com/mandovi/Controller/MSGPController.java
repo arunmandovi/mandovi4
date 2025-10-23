@@ -48,11 +48,11 @@ public class MSGPController {
     @GetMapping("/msgp_summary")
     public ResponseEntity<?> getMSGPServiceBodyShopSummary (
             @RequestParam String groupBy,
-            @RequestParam (required = false) String month,
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<MSGPSummaryDTO> listMSGPServiceBodyShopSummary = msgpService.getMSGPSummary(groupBy, month, qtrWise, halfYear);
+            List<MSGPSummaryDTO> listMSGPServiceBodyShopSummary = msgpService.getMSGPSummary(groupBy, months, qtrWise, halfYear);
             if (listMSGPServiceBodyShopSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
