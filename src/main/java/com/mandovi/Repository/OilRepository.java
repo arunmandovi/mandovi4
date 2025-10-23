@@ -37,13 +37,13 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
             SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailSelling ELSE 0 END)
         )
         FROM Oil o
-        WHERE (:month IS NULL OR o.month = :month)
+        WHERE (:months IS NULL OR o.month IN (:months))
           AND (:qtrWise IS NULL OR o.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR o.halfYear = :halfYear)
         GROUP BY o.city
     """)
     List<OilSummaryDTO> getOilSummaryByCity(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
@@ -69,13 +69,13 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
             SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailSelling ELSE 0 END)
         )
         FROM Oil o
-        WHERE (:month IS NULL OR o.month = :month)
+        WHERE (:months IS NULL OR o.month IN (:months))
           AND (:qtrWise IS NULL OR o.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR o.halfYear = :halfYear)
         GROUP BY o.branch
     """)
     List<OilSummaryDTO> getOilSummaryByBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
@@ -101,13 +101,13 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
             SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailSelling ELSE 0 END)
         )
         FROM Oil o
-        WHERE (:month IS NULL OR o.month = :month)
+        WHERE (:months IS NULL OR o.month IN (:months))
           AND (:qtrWise IS NULL OR o.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR o.halfYear = :halfYear)
         GROUP BY o.city,o.branch
     """)
     List<OilSummaryDTO> getOilSummaryByCityAndBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 }

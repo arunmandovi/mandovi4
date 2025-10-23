@@ -13,10 +13,5 @@ public interface OilService {
 
     public List<Oil> getOilByMonthYear(String month, String year);
 
-    public List<OilSummaryDTO> getOilSummary (String groupBy, String month, String qtrWise, String halfYear);
-
-//    public List<OilSummaryDTO> getOilPercentageQtySummary (String groupBy, String month, String qtrWise, String halfYear);
-//
-//    public List<OilSummaryDTO> getOilProfitSummary (String groupBy, String month, String qtrWise, String halfYear);
-
+    public List<OilSummaryDTO> getOilSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
 }

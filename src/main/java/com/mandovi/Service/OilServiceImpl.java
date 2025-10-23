@@ -2,7 +2,6 @@ package com.mandovi.Service;
 
 import com.mandovi.DTO.OilSummaryDTO;
 import com.mandovi.Entity.Oil;
-import com.mandovi.Repository.LabourRepository;
 import com.mandovi.Repository.OilRepository;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -87,14 +86,14 @@ public class OilServiceImpl implements OilService {
     }
 
     @Override
-    public List<OilSummaryDTO> getOilSummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<OilSummaryDTO> getOilSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()) {
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return oilRepository.getOilSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return oilRepository.getOilSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return oilRepository.getOilSummaryByCityAndBranch(month, qtrWise, halfYear);
+            case "city" : return oilRepository.getOilSummaryByCity(months, qtrWise, halfYear);
+            case "branch" : return oilRepository.getOilSummaryByBranch(months, qtrWise, halfYear);
+            case "city_branch" : return oilRepository.getOilSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }

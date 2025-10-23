@@ -87,13 +87,13 @@ public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
         END
         )
         FROM PMSParts p
-        WHERE (:month IS NULL OR p.month = :month)
+        WHERE (:months IS NULL OR p.month IN (:months))
          AND (:qtrWise IS NULL OR p.qtrWise = :qtrWise)
          AND (:halfYear IS NULL OR p.halfYear = :halfYear)
         GROUP BY p.city
         """)
     List<PMSPartsSummaryDTO> getPMSPartsSummaryByCity(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
@@ -169,13 +169,13 @@ public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
         END
         )
         FROM PMSParts p
-        WHERE (:month IS NULL OR p.month = :month)
+        WHERE (:months IS NULL OR p.month IN (:months))
          AND (:qtrWise IS NULL OR p.qtrWise = :qtrWise)
          AND (:halfYear IS NULL OR p.halfYear = :halfYear)
         GROUP BY p.branch
         """)
     List<PMSPartsSummaryDTO> getPMSPartsSummaryByBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
@@ -251,13 +251,13 @@ public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
         END
         )
         FROM PMSParts p
-        WHERE (:month IS NULL OR p.month = :month)
+        WHERE (:months IS NULL OR p.month IN (:months))
          AND (:qtrWise IS NULL OR p.qtrWise = :qtrWise)
          AND (:halfYear IS NULL OR p.halfYear = :halfYear)
         GROUP BY p.city, p.branch
         """)
     List<PMSPartsSummaryDTO> getPMSPartsSummaryByCityAndBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
