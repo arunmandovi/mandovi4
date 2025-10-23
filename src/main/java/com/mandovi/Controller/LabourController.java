@@ -48,11 +48,11 @@ public class LabourController {
     @GetMapping("/labour_summary")
     public ResponseEntity<?> getLabourSummary (
             @RequestParam String groupBy,
-            @RequestParam(required = false) String month,
+            @RequestParam(required = false) List<String> months,
             @RequestParam (required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<LabourSummaryDTO> listLabourServiceSummary = labourService.getLabourSummary(groupBy, month, qtrWise, halfYear);
+            List<LabourSummaryDTO> listLabourServiceSummary = labourService.getLabourSummary(groupBy, months, qtrWise, halfYear);
             if (listLabourServiceSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

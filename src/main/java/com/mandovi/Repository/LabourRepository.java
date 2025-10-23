@@ -22,167 +22,167 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
             null,
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE', 'PMS', 'RR','BODYSHOP') THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ), 0)
             )
             FROM Labour l
-            WHERE (:month IS NULL OR l.month = :month)
+            WHERE (:months IS NULL OR l.month IN (:months))
             AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise)
             AND (:halfYear IS NULL OR l.halfYear = :halfYear)
             GROUP BY l.city
             """)
     List<LabourSummaryDTO> getLabourSummaryByCity(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
-    //Group by branch
+    //Group by city
     @Query("""
             SELECT new com.mandovi.DTO.LabourSummaryDTO(
             MAX(l.city),
             l.branch,
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE', 'PMS', 'RR','BODYSHOP') THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ), 0)
             )
             FROM Labour l
-            WHERE (:month IS NULL OR l.month = :month)
+            WHERE (:months IS NULL OR l.month IN (:months))
             AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise)
             AND (:halfYear IS NULL OR l.halfYear = :halfYear)
             GROUP BY l.branch
             """)
     List<LabourSummaryDTO> getLabourSummaryByBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
-    //Group by city and branch
+    //Group by city
     @Query("""
             SELECT new com.mandovi.DTO.LabourSummaryDTO(
             l.city,
             l.branch,
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE', 'PMS', 'RR','BODYSHOP') THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ), 0),
             SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ),
             SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ),
-            (SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ) -
-            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END )) * 100 /
+            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ) -
+            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END )) * 100 /
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ), 0)
             )
             FROM Labour l
-            WHERE (:month IS NULL OR l.month = :month)
+            WHERE (:months IS NULL OR l.month IN (:months))
             AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise)
             AND (:halfYear IS NULL OR l.halfYear = :halfYear)
             GROUP BY l.city, l.branch
             """)
     List<LabourSummaryDTO> getLabourSummaryByCityAndBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 }
