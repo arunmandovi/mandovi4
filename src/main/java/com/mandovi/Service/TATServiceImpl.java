@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -52,54 +53,15 @@ public class TATServiceImpl implements TATService {
                 tat.setYear(year);
                 tat.setLinkServiceType(row.getCell(4).getStringCellValue());
 
-                // Checking and Updating Time
-                Cell timeCell = row.getCell(5);
-                LocalTime timeValue = null;
+                Cell cell = row.getCell(5);
+                DataFormatter formatter = new DataFormatter();
+                String raw = formatter.formatCellValue(cell); // ALWAYS STRING
 
-                if (timeCell != null) {
-                    try {
-                        if (timeCell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(timeCell)) {
-                            // Excel stored as date+time (e.g. 31-Dec-1899 01:53:49)
-                            Date date = timeCell.getDateCellValue();
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(date);
-                            timeValue = LocalTime.of(
-                                    calendar.get(Calendar.HOUR_OF_DAY),
-                                    calendar.get(Calendar.MINUTE),
-                                    calendar.get(Calendar.SECOND));
-                        } else {
-                            // Handle string like "1.53.49 AM"
-                            DataFormatter formatter = new DataFormatter();
-                            String cellText = formatter.formatCellValue(timeCell).trim();
-
-                            if (!cellText.isEmpty()) {
-                                String normalized = cellText.replace('.', ':')
-                                        .replaceAll("\\s+", " ")
-                                        .toUpperCase()
-                                        .replaceAll("(?i)(AM|PM)$", " $1");
-
-                                DateTimeFormatter[] formats = {
-                                        DateTimeFormatter.ofPattern("h:mm:ss a", Locale.ENGLISH),
-                                        DateTimeFormatter.ofPattern("h:mm a", Locale.ENGLISH),
-                                        DateTimeFormatter.ofPattern("H:mm:ss", Locale.ENGLISH),
-                                        DateTimeFormatter.ofPattern("H:mm", Locale.ENGLISH)
-                                };
-
-                                for (DateTimeFormatter fmt : formats) {
-                                    try {
-                                        timeValue = LocalTime.parse(normalized, fmt);
-                                        break;
-                                    } catch (DateTimeParseException ignored) {}
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                        System.out.println("⚠️ Error parsing time: " + e.getMessage());
-                    }
+                if(raw != null && !raw.isBlank()){
+                    String timeFormatted = raw.replace(".", ":"); // 100.05.02 -> 100:05:02
+                    tat.setAverageOfOpenToClose(timeFormatted);
                 }
 
-// ✅ finally set the parsed value
-                tat.setAverageOfOpenToClose(timeValue);
 
                 //Updating the column period by concating the columns month & year and "-" in between
                 String period = tat.getMonth()+"-"+tat.getYear();
@@ -137,40 +99,40 @@ public class TATServiceImpl implements TATService {
     public List<TATSummaryDTO> getTATSummary(String groupBy, String month, String qtrWise, String halfYear) {
         List<TAT> allTAT = tatRepository.findAll();
 
-        //Apply Filters
-        List<TAT> filterd = allTAT.stream()
-                .filter(tat -> (month == null ||  month.equalsIgnoreCase(tat.getMonth())))
-                .filter(tat -> (qtrWise == null || qtrWise.equalsIgnoreCase(tat.getQtrWise())))
-                .filter(tat -> (halfYear == null || halfYear.equalsIgnoreCase(tat.getHalfYear())))
+        // Apply Filters
+        List<TAT> filtered = allTAT.stream()
+                .filter(tat -> month == null || month.equalsIgnoreCase(tat.getMonth()))
+                .filter(tat -> qtrWise == null || qtrWise.equalsIgnoreCase(tat.getQtrWise()))
+                .filter(tat -> halfYear == null || halfYear.equalsIgnoreCase(tat.getHalfYear()))
                 .toList();
 
-        //Group by city
-       return filterd.stream()
-               .collect(Collectors.groupingBy(TAT::getCity))
-               .entrySet().stream()
-               .map(entry -> {
-                   String city = entry.getKey();
-                   List<TAT> groupList = entry.getValue();
+        // Group by city
+        return filtered.stream()
+                .collect(Collectors.groupingBy(TAT::getCity))
+                .entrySet().stream()
+                .map(entry -> {
+                    String city = entry.getKey();
+                    List<TAT> groupList = entry.getValue();
 
-                   LocalTime firstFreeService = calculateAverageTime(groupList, "FR1");
-                   LocalTime secondFreeService = calculateAverageTime(groupList, "FR2");
-                   LocalTime thirdFreeService = calculateAverageTime(groupList, "FR3");
-                   LocalTime pms = calculateAverageTime(groupList, "PMS");
+                    String firstFreeService = calculateAverageTime(groupList, "FR1");
+                    String secondFreeService = calculateAverageTime(groupList, "FR2");
+                    String thirdFreeService = calculateAverageTime(groupList, "FR3");
+                    String pms = calculateAverageTime(groupList, "PMS");
 
-                   return new TATSummaryDTO(
-                           city,
-                           null,
-                           firstFreeService,
-                           secondFreeService,
-                           thirdFreeService,
-                           pms
-                   );
-               })
-               .toList();
+                    return new TATSummaryDTO(
+                            city,
+                            null,
+                            firstFreeService,
+                            secondFreeService,
+                            thirdFreeService,
+                            pms
+                    );
+                })
+                .toList();
     }
 
-    private LocalTime calculateAverageTime(List<TAT> list, String linkType) {
-        List<LocalTime> times = list.stream()
+    private String calculateAverageTime(List<TAT> list, String linkType) {
+        List<String> times = list.stream()
                 .filter(t -> linkType.equals(t.getLinkServiceType()))
                 .map(TAT::getAverageOfOpenToClose)
                 .filter(Objects::nonNull)
@@ -178,13 +140,30 @@ public class TATServiceImpl implements TATService {
 
         if (times.isEmpty()) return null;
 
-        double avgSeconds = times.stream()
-                .mapToDouble(time -> time.toSecondOfDay())
-                .average()
-                .orElse(0);
+        // Convert all times to total seconds
+        long totalSeconds = times.stream()
+                .mapToLong(this::timeStringToSeconds)
+                .sum();
 
-        return LocalTime.ofSecondOfDay((long) avgSeconds);
+        long avgSeconds = totalSeconds / times.size();
+
+        return secondsToTimeString(avgSeconds);
     }
 
+    // Convert "100:05:02" -> seconds
+    private long timeStringToSeconds(String timeStr) {
+        String[] parts = timeStr.split(":");
+        long hours = Long.parseLong(parts[0]);
+        long minutes = Long.parseLong(parts[1]);
+        long seconds = Long.parseLong(parts[2]);
+        return hours * 3600 + minutes * 60 + seconds;
+    }
 
+    // Convert seconds -> "HH:mm:ss"
+    private String secondsToTimeString(long totalSeconds) {
+        long hours = totalSeconds / 3600;
+        long minutes = (totalSeconds % 3600) / 60;
+        long seconds = totalSeconds % 60;
+        return String.format("%d:%02d:%02d", hours, minutes, seconds);
+    }
 }

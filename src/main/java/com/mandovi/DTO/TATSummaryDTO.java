@@ -5,15 +5,15 @@ import java.time.LocalTime;
 public class TATSummaryDTO {
     private String city;
     private String branch;
-    private LocalTime firstFreeService;
-    private LocalTime secondFreeService;
-    private LocalTime thirdFreeService;
-    private LocalTime paidService;
+    private String firstFreeService;
+    private String secondFreeService;
+    private String thirdFreeService;
+    private String paidService;
 
     public TATSummaryDTO() {
     }
 
-    public TATSummaryDTO(String city, String branch, LocalTime firstFreeService, LocalTime secondFreeService, LocalTime thirdFreeService, LocalTime paidService) {
+    public TATSummaryDTO(String city, String branch, String firstFreeService, String secondFreeService, String thirdFreeService, String paidService) {
         this.city = city;
         this.branch = branch;
         this.firstFreeService = firstFreeService;
@@ -38,35 +38,35 @@ public class TATSummaryDTO {
         this.branch = branch;
     }
 
-    public LocalTime getFirstFreeService() {
+    public String getFirstFreeService() {
         return firstFreeService;
     }
 
-    public void setFirstFreeService(LocalTime firstFreeService) {
+    public void setFirstFreeService(String firstFreeService) {
         this.firstFreeService = firstFreeService;
     }
 
-    public LocalTime getSecondFreeService() {
+    public String getSecondFreeService() {
         return secondFreeService;
     }
 
-    public void setSecondFreeService(LocalTime secondFreeService) {
+    public void setSecondFreeService(String secondFreeService) {
         this.secondFreeService = secondFreeService;
     }
 
-    public LocalTime getThirdFreeService() {
+    public String getThirdFreeService() {
         return thirdFreeService;
     }
 
-    public void setThirdFreeService(LocalTime thirdFreeService) {
+    public void setThirdFreeService(String thirdFreeService) {
         this.thirdFreeService = thirdFreeService;
     }
 
-    public LocalTime getPaidService() {
+    public String getPaidService() {
         return paidService;
     }
 
-    public void setPaidService(LocalTime paidService) {
+    public void setPaidService(String paidService) {
         this.paidService = paidService;
     }
 
@@ -75,10 +75,10 @@ public class TATSummaryDTO {
         return "TATSummaryDTO{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
-                ", firstFreeService=" + firstFreeService +
-                ", secondFreeService=" + secondFreeService +
-                ", thirdFreeService=" + thirdFreeService +
-                ", paidService=" + paidService +
+                ", firstFreeService='" + firstFreeService + '\'' +
+                ", secondFreeService='" + secondFreeService + '\'' +
+                ", thirdFreeService='" + thirdFreeService + '\'' +
+                ", paidService='" + paidService + '\'' +
                 '}';
     }
 }
