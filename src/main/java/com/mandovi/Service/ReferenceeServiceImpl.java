@@ -92,14 +92,14 @@ public class ReferenceeServiceImpl implements ReferenceeService {
     }
 
     @Override
-    public List<ReferenceeSummaryDTO> getReferenceeSUmmary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<ReferenceeSummaryDTO> getReferenceeSUmmary(String groupBy, List<String> months, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()) {
             throw new IllegalArgumentException("groupBy Paramter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return referenceeRepository.getReferenceeSummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return referenceeRepository.getReferenceeSummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return referenceeRepository.getReferenceeSummaryByCityAndBranch(month, qtrWise, halfYear);
+            case "city" : return referenceeRepository.getReferenceeSummaryByCity(months, qtrWise, halfYear);
+            case "branch" : return referenceeRepository.getReferenceeSummaryByBranch(months, qtrWise, halfYear);
+            case "city_branch" : return referenceeRepository.getReferenceeSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }

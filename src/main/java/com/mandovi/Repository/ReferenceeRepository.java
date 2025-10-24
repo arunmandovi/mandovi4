@@ -29,13 +29,13 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
             SUM(r.invoice) * 100.00 / NULLIF(SUM(r.booking), 0)
             )
             FROM Referencee r
-            WHERE (:month IS NULL OR r.month = :month)
+            WHERE (:months IS NULL OR r.month IN (:months))
             AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
             AND (:halfYear IS NULL OR r.halfYear = :halfYear)
             GROUP BY r.city
             """)
     List<ReferenceeSummaryDTO> getReferenceeSummaryByCity (
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 
@@ -53,13 +53,13 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
             SUM(r.invoice) * 100.00 / NULLIF(SUM(r.booking), 0)
             )
             FROM Referencee r
-            WHERE (:month IS NULL OR r.month = :month)
+            WHERE (:months IS NULL OR r.month IN (:months))
             AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
             AND (:halfYear IS NULL OR r.halfYear = :halfYear)
             GROUP BY r.branch
             """)
     List<ReferenceeSummaryDTO> getReferenceeSummaryByBranch (
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 
@@ -77,13 +77,13 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
             SUM(r.invoice) * 100.00 / NULLIF(SUM(r.booking), 0)
             )
             FROM Referencee r
-            WHERE (:month IS NULL OR r.month = :month)
+            WHERE (:months IS NULL OR r.month IN (:months))
             AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
             AND (:halfYear IS NULL OR r.halfYear = :halfYear)
             GROUP BY r.city, r.branch
             """)
     List<ReferenceeSummaryDTO> getReferenceeSummaryByCityAndBranch (
-            @Param("month") String month,
+            @Param("month") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 }

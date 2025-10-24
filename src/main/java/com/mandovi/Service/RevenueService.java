@@ -13,5 +13,5 @@ public interface RevenueService {
 
     public List<Revenue> getRevenueByMonthYear (String month, String year);
 
-    public List<RevenueSummaryDTO> getRevenueSummary (String groupBy, String month, String qtrWise, String halfYear );
+    public List<RevenueSummaryDTO> getRevenueSummary (String groupBy, List<String> months, String qtrWise, String halfYear );
 }

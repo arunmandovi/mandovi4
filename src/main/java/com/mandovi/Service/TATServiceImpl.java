@@ -9,12 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -96,12 +90,12 @@ public class TATServiceImpl implements TATService {
     }
 
     @Override
-    public List<TATSummaryDTO> getTATSummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<TATSummaryDTO> getTATSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
         List<TAT> allTAT = tatRepository.findAll();
 
         // Apply Filters
         List<TAT> filtered = allTAT.stream()
-                .filter(tat -> month == null || month.equalsIgnoreCase(tat.getMonth()))
+                .filter(tat -> months == null || months.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getMonth())))
                 .filter(tat -> qtrWise == null || qtrWise.equalsIgnoreCase(tat.getQtrWise()))
                 .filter(tat -> halfYear == null || halfYear.equalsIgnoreCase(tat.getHalfYear()))
                 .toList();

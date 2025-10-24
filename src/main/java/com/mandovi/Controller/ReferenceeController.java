@@ -48,11 +48,11 @@ public class ReferenceeController {
     @GetMapping("/referencee_summary")
     public ResponseEntity<?> getReferenceeSummary (
             @RequestParam String groupBy,
-            @RequestParam (required = false) String month,
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<ReferenceeSummaryDTO> listReferenceeSummary = referenceeService.getReferenceeSUmmary(groupBy, month, qtrWise, halfYear);
+            List<ReferenceeSummaryDTO> listReferenceeSummary = referenceeService.getReferenceeSUmmary(groupBy, months, qtrWise, halfYear);
             if (listReferenceeSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

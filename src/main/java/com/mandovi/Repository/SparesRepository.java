@@ -37,13 +37,13 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
             (SUM(s.tyreCurrentYear) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
             )
             FROM Spares s
-            WHERE (:month IS NULL OR s.month = :month)
+            WHERE (:months IS NULL OR s.month IN (:months))
              AND (:qtrWise IS NULL OR s.qtrWise = :qtrWise)
              AND (:halfYear IS NULL OR s.halfYear = :halfYear)
             GROUP BY s.city
             """)
     List<SparesSummaryDTO> getSparesSummaryDTOByCity (
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 
@@ -69,13 +69,13 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
             (SUM(s.tyreCurrentYear) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
             )
             FROM Spares s
-            WHERE (:month IS NULL OR s.month = :month)
+            WHERE (:months IS NULL OR s.month IN (:months))
              AND (:qtrWise IS NULL OR s.qtrWise = :qtrWise)
              AND (:halfYear IS NULL OR s.halfYear = :halfYear)
             GROUP BY s.branch
             """)
     List<SparesSummaryDTO> getSparesSummaryDTOByBranch (
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 
@@ -101,13 +101,13 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
             (SUM(s.tyreCurrentYear) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
             )
             FROM Spares s
-            WHERE (:month IS NULL OR s.month = :month)
+            WHERE (:months IS NULL OR s.month IN (:months))
              AND (:qtrWise IS NULL OR s.qtrWise = :qtrWise)
              AND (:halfYear IS NULL OR s.halfYear = :halfYear)
             GROUP BY s.city, s.branch
             """)
     List<SparesSummaryDTO> getSparesSummaryDTOByCityAndBranch (
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 }

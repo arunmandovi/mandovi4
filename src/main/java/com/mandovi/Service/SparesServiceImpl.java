@@ -123,14 +123,14 @@ public class SparesServiceImpl implements SparesService{
     }
 
     @Override
-    public List<SparesSummaryDTO> getSparesSummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<SparesSummaryDTO> getSparesSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()){
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return sparesRepository.getSparesSummaryDTOByCity(month, qtrWise, halfYear);
-            case "branch" : return sparesRepository.getSparesSummaryDTOByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return sparesRepository.getSparesSummaryDTOByCityAndBranch(month, qtrWise, halfYear);
+            case "city" : return sparesRepository.getSparesSummaryDTOByCity(months, qtrWise, halfYear);
+            case "branch" : return sparesRepository.getSparesSummaryDTOByBranch(months, qtrWise, halfYear);
+            case "city_branch" : return sparesRepository.getSparesSummaryDTOByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }

@@ -14,5 +14,5 @@ public interface TATService {
 
     public List<TAT> getTATByMonthYear(String month, String year);
 
-    public List<TATSummaryDTO> getTATSummary (String groupBy, String month, String qtrWise, String halfYear);
+    public List<TATSummaryDTO> getTATSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
 }

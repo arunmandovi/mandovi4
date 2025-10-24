@@ -43,13 +43,13 @@ public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
             (SUM(r.srAndBrTotalCurrentYear) - SUM(r.srAndBrTotalLastYear)) * 100.0 / NULLIF(SUM(r.srAndBrTotalLastYear), 0)
             )
             FROM Revenue r
-            WHERE (:month IS NULL OR r.month = :month)
+            WHERE (:months IS NULL OR r.month IN (:months))
              AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
              AND (:halfYear IS NULL OR r.halfYear = :halfYear)
             GROUP By r.city
             """)
     List<RevenueSummaryDTO> getRevenueSummaryByCity (
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 
@@ -81,13 +81,13 @@ public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
             (SUM(r.srAndBrTotalCurrentYear) - SUM(r.srAndBrTotalLastYear)) * 100.0 / NULLIF(SUM(r.srAndBrTotalLastYear), 0)
             )
             FROM Revenue r
-            WHERE (:month IS NULL OR r.month = :month)
+            WHERE (:months IS NULL OR r.month IN (:months))
              AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
              AND (:halfYear IS NULL OR r.halfYear = :halfYear)
             GROUP By r.branch
             """)
     List<RevenueSummaryDTO> getRevenueSummaryByBranch (
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 
@@ -119,13 +119,13 @@ public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
             (SUM(r.srAndBrTotalCurrentYear) - SUM(r.srAndBrTotalLastYear)) * 100.0 / NULLIF(SUM(r.srAndBrTotalLastYear), 0)
             )
             FROM Revenue r
-            WHERE (:month IS NULL OR r.month = :month)
+            WHERE (:months IS NULL OR r.month IN (:months))
              AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
              AND (:halfYear IS NULL OR r.halfYear = :halfYear)
             GROUP By r.city, r.branch
             """)
     List<RevenueSummaryDTO> getRevenueSummaryByCityAndBranch (
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear );
 }
