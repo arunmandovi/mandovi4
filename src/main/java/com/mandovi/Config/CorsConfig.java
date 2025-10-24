@@ -16,7 +16,8 @@ public class CorsConfig {
                         .allowedOrigins("http://127.0.0.1:5500",
                                         "http://localhost:5500",
                                         "http://localhost:3000",
-                                        "https://mandovi4.netlify.app/")
+                                        "https://mandovi4.netlify.app/",
+                                        "https://mandovi44.netlify.app/")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowCredentials(true);
             }
