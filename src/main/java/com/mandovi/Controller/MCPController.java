@@ -48,11 +48,11 @@ public class MCPController {
     @GetMapping("/mcp_summary")
     public ResponseEntity<List<MCPSummaryDTO>> getMCPSummary (
             @RequestParam String groupBy,
-            @RequestParam (required = false) String month,
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<MCPSummaryDTO> listMCPSummary = mcpService.getMCPSummary(groupBy, month, qtrWise, halfYear);
+            List<MCPSummaryDTO> listMCPSummary = mcpService.getMCPSummary(groupBy, months, qtrWise, halfYear);
             if (listMCPSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

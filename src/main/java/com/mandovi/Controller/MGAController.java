@@ -49,11 +49,11 @@ public class MGAController {
     @GetMapping("mga_summary")
     public ResponseEntity<List<MGASummaryDTO>> getMGASummary (
             @RequestParam String groupBy,
-            @RequestParam (required = false) String month,
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<MGASummaryDTO> listMGASummary = mgaService.getMGASummary(groupBy, month, qtrWise, halfYear);
+            List<MGASummaryDTO> listMGASummary = mgaService.getMGASummary(groupBy, months, qtrWise, halfYear);
             if (listMGASummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

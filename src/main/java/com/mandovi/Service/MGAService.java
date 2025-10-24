@@ -14,5 +14,5 @@ public interface MGAService {
 
     public List<MGA> getMGAByMGADate(LocalDate mgaDate);
 
-    public List<MGASummaryDTO> getMGASummary (String groupBy, String month, String qtrWise, String halfYear);
+    public List<MGASummaryDTO> getMGASummary (String groupBy, List<String> months, String qtrWise, String halfYear);
 }

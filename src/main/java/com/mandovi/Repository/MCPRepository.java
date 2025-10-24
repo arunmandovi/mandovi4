@@ -24,13 +24,13 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
             SUM(m.mcpQuantity ),
             SUM(m.amountCollected ))
             FROM MCP m
-            WHERE (:month IS NULL OR m.month = :month)
+            WHERE (:months IS NULL OR m.month IN (:months))
               AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
               AND (:halfYear IS NULL OR m.halfYear = :halfYear)
             GROUP BY m.city
             """)
     List<MCPSummaryDTO> getMCPSummaryByCity(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
@@ -42,13 +42,13 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
             SUM(m.mcpQuantity ),
             SUM(m.amountCollected ))
             FROM MCP m
-            WHERE (:month IS NULL OR m.month = :month)
+            WHERE (:months IS NULL OR m.month IN (:months))
               AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
               AND (:halfYear IS NULL OR m.halfYear = :halfYear)
             GROUP BY m.branch
             """)
     List<MCPSummaryDTO> getMCPSummaryByBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
@@ -60,13 +60,13 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
             SUM(m.mcpQuantity ),
             SUM(m.amountCollected))
             FROM MCP m
-            WHERE (:month IS NULL OR m.month = :month)
+            WHERE (:months IS NULL OR m.month IN (:months))
               AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
               AND (:halfYear IS NULL OR m.halfYear = :halfYear)
             GROUP BY m.city, m.branch
             """)
     List<MCPSummaryDTO> getMCPSummaryByCityAndBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 }

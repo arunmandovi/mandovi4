@@ -20,19 +20,19 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
             SELECT new com.mandovi.DTO.BRConversionSummaryDTO(
                 b.city,
                 null,
-                SUM(CASE WHEN b.channel = 'ARENA' THEN b.no ELSE 0 END),
+                SUM(CASE WHEN b.channel = 'ARENA' THEN b.grandTotal ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.brConversion ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.brConversion ELSE 0 END) * 100.0 /
-                NULLIF(SUM(CASE WHEN b.channel = 'ARENA' THEN b.no ELSE 0 END), 0),
+                NULLIF(SUM(CASE WHEN b.channel = 'ARENA' THEN b.grandTotal ELSE 0 END), 0),
             
-                SUM(CASE WHEN b.channel = 'NEXA' THEN b.no ELSE 0 END),
+                SUM(CASE WHEN b.channel = 'NEXA' THEN b.grandTotal ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'NEXA' THEN b.brConversion ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'NEXA' THEN b.brConversion ELSE 0 END) * 100.0 /
-                NULLIF(SUM(CASE WHEN b.channel = 'NEXA' THEN b.no ELSE 0 END), 0),
+                NULLIF(SUM(CASE WHEN b.channel = 'NEXA' THEN b.grandTotal ELSE 0 END), 0),
             
-                SUM(b.no),
+                SUM(b.grandTotal),
                 SUM(b.brConversion),
-                SUM(b.brConversion) * 100.0 / NULLIF(SUM(b.no), 0),
+                SUM(b.brConversion) * 100.0 / NULLIF(SUM(b.grandTotal), 0),
             
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.labourAmt ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.partAmount ELSE 0 END),
@@ -65,19 +65,19 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
             SELECT new com.mandovi.DTO.BRConversionSummaryDTO(
                 MAX(b.city),
                 b.branch,
-                SUM(CASE WHEN b.channel = 'ARENA' THEN b.no ELSE 0 END),
+                SUM(CASE WHEN b.channel = 'ARENA' THEN b.grandTotal ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.brConversion ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.brConversion ELSE 0 END) * 100.0 /
-                NULLIF(SUM(CASE WHEN b.channel = 'ARENA' THEN b.no ELSE 0 END), 0),
+                NULLIF(SUM(CASE WHEN b.channel = 'ARENA' THEN b.grandTotal ELSE 0 END), 0),
             
-                SUM(CASE WHEN b.channel = 'NEXA' THEN b.no ELSE 0 END),
+                SUM(CASE WHEN b.channel = 'NEXA' THEN b.grandTotal ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'NEXA' THEN b.brConversion ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'NEXA' THEN b.brConversion ELSE 0 END) * 100.0 /
-                NULLIF(SUM(CASE WHEN b.channel = 'NEXA' THEN b.no ELSE 0 END), 0),
+                NULLIF(SUM(CASE WHEN b.channel = 'NEXA' THEN b.grandTotal ELSE 0 END), 0),
             
-                SUM(b.no),
+                SUM(b.grandTotal),
                 SUM(b.brConversion),
-                SUM(b.brConversion) * 100.0 / NULLIF(SUM(b.no), 0),
+                SUM(b.brConversion) * 100.0 / NULLIF(SUM(b.grandTotal), 0),
             
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.labourAmt ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.partAmount ELSE 0 END),
@@ -110,19 +110,19 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
             SELECT new com.mandovi.DTO.BRConversionSummaryDTO(
                 b.city,
                 b.branch,
-                SUM(CASE WHEN b.channel = 'ARENA' THEN b.no ELSE 0 END),
+                SUM(CASE WHEN b.channel = 'ARENA' THEN b.grandTotal ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.brConversion ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.brConversion ELSE 0 END) * 100.0 /
-                NULLIF(SUM(CASE WHEN b.channel = 'ARENA' THEN b.no ELSE 0 END), 0),
+                NULLIF(SUM(CASE WHEN b.channel = 'ARENA' THEN b.grandTotal ELSE 0 END), 0),
             
-                SUM(CASE WHEN b.channel = 'NEXA' THEN b.no ELSE 0 END),
+                SUM(CASE WHEN b.channel = 'NEXA' THEN b.grandTotal ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'NEXA' THEN b.brConversion ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'NEXA' THEN b.brConversion ELSE 0 END) * 100.0 /
-                NULLIF(SUM(CASE WHEN b.channel = 'NEXA' THEN b.no ELSE 0 END), 0),
+                NULLIF(SUM(CASE WHEN b.channel = 'NEXA' THEN b.grandTotal ELSE 0 END), 0),
             
-                SUM(b.no),
+                SUM(b.grandTotal),
                 SUM(b.brConversion),
-                SUM(b.brConversion) * 100.0 / NULLIF(SUM(b.no), 0),
+                SUM(b.brConversion) * 100.0 / NULLIF(SUM(b.grandTotal), 0),
             
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.labourAmt ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.partAmount ELSE 0 END),

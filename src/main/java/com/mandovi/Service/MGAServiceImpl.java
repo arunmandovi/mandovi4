@@ -4,14 +4,12 @@ import com.mandovi.DTO.MGASummaryDTO;
 import com.mandovi.Entity.MGA;
 import com.mandovi.Repository.MGARepository;
 import org.apache.poi.ss.usermodel.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -195,14 +193,14 @@ public class MGAServiceImpl implements MGAService {
     }
 
     @Override
-    public List<MGASummaryDTO> getMGASummary(String groupBy, String month, String qtrWise, String halfYear) {
+    public List<MGASummaryDTO> getMGASummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
         if (groupBy == null || groupBy.isEmpty()){
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return mgaRepository.getMGASummaryByCity(month, qtrWise, halfYear);
-            case "branch" : return mgaRepository.getMGASummaryByBranch(month, qtrWise, halfYear);
-            case "city_branch" : return mgaRepository.getMGASummaryByCityAndBranch(month, qtrWise, halfYear);
+            case "city" : return mgaRepository.getMGASummaryByCity(months, qtrWise, halfYear);
+            case "branch" : return mgaRepository.getMGASummaryByBranch(months, qtrWise, halfYear);
+            case "city_branch" : return mgaRepository.getMGASummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }

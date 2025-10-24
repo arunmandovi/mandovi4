@@ -29,13 +29,13 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
             ((SUM(m.loadd) * 455) - SUM(m.consumption)) / SUM(m.loadd)
         )
         FROM MGA m
-        WHERE (:month IS NULL OR m.month = :month)
+        WHERE (:months IS NULL OR m.month IN (:months))
           AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR m.halfYear = :halfYear)
         GROUP BY m.city
     """)
     List<MGASummaryDTO> getMGASummaryByCity(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear
     );
@@ -52,13 +52,13 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
             ((SUM(m.loadd) * 455) - SUM(m.consumption)) / SUM(m.loadd)
         )
         FROM MGA m
-        WHERE (:month IS NULL OR m.month = :month)
+        WHERE (:months IS NULL OR m.month IN (:months))
           AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR m.halfYear = :halfYear)
         GROUP BY m.branch
     """)
     List<MGASummaryDTO> getMGASummaryByBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
@@ -74,13 +74,13 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
             ((SUM(m.loadd) * 455) - SUM(m.consumption)) / SUM(m.loadd)
         )
         FROM MGA m
-        WHERE (:month IS NULL OR m.month = :month)
+        WHERE (:months IS NULL OR m.month IN (:months))
           AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
           AND (:halfYear IS NULL OR m.halfYear = :halfYear)
         GROUP BY m.city, m.branch
     """)
     List<MGASummaryDTO> getMGASummaryByCityAndBranch(
-            @Param("month") String month,
+            @Param("months") List<String> months,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
