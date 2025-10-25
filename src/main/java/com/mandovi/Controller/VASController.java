@@ -49,9 +49,9 @@ public class VASController {
     @GetMapping("/vas_summary")
     public ResponseEntity<?> getVAS (
             @RequestParam String groupBy,
-            @RequestParam (required = false) String month ){
+            @RequestParam (required = false) List<String> months ){
         try {
-            List<VASSummaryDTO> listVAS = vasService.getVAS(groupBy, month);
+            List<VASSummaryDTO> listVAS = vasService.getVAS(groupBy, months);
             if (listVAS.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

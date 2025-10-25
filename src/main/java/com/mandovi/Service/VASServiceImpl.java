@@ -91,13 +91,13 @@ public class VASServiceImpl implements VASService {
     }
 
     @Override
-    public List<VASSummaryDTO> getVAS(String groupBy, String month) {
+    public List<VASSummaryDTO> getVAS(String groupBy, List<String> months) {
         if (groupBy == null || groupBy.isEmpty()) {
             throw new IllegalArgumentException("groupBy Parameter is Required");
         }
         switch (groupBy.toLowerCase()){
-            case "city" : return vasRepository.getVASSummaryByCity(month);
-            case "branch" : return vasRepository.getVASSummaryByBranch(month);
+            case "city" : return vasRepository.getVASSummaryByCity(months);
+            case "branch" : return vasRepository.getVASSummaryByBranch(months);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
     }
