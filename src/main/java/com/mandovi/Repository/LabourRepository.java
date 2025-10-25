@@ -72,7 +72,7 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
-    //Group by city
+    //Group by branch
     @Query("""
             SELECT new com.mandovi.DTO.LabourSummaryDTO(
             MAX(l.city),
@@ -129,7 +129,7 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 
-    //Group by city
+    //Group by city and branch
     @Query("""
             SELECT new com.mandovi.DTO.LabourSummaryDTO(
             l.city,
@@ -176,13 +176,11 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ), 0)
             )
             FROM Labour l
-            WHERE (:months IS NULL OR l.month IN (:months))
-            AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise)
-            AND (:halfYear IS NULL OR l.halfYear = :halfYear)
-            GROUP BY l.city, l.branch
+            WHERE (:cities IS NULL OR l.city IN (:cities))
+             AND (:months IS NULL OR l.month IN (:months))
+            GROUP BY l.city,l.branch
             """)
     List<LabourSummaryDTO> getLabourSummaryByCityAndBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months);
 }

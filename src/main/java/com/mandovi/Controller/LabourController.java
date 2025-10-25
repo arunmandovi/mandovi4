@@ -64,4 +64,19 @@ public class LabourController {
         }
     }
 
+    @GetMapping("/labour_branch_summary")
+    public ResponseEntity<?> getLabourSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<LabourSummaryDTO> listLabourSummaryBranchWise = labourService.getLabourSummaryBranchWise(cities, months);
+            if (listLabourSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listLabourSummaryBranchWise);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Internal Server Error : "+e.getMessage());
+        }
+    }
+
 }

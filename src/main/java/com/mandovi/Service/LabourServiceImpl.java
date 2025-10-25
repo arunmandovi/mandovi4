@@ -142,9 +142,13 @@ public class LabourServiceImpl implements LabourService {
         switch (groupBy.toLowerCase()){
             case "city" : return labourRepository.getLabourSummaryByCity(months, qtrWise, halfYear);
             case "branch" : return labourRepository.getLabourSummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return labourRepository.getLabourSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
+    }
+
+    @Override
+    public List<LabourSummaryDTO> getLabourSummaryBranchWise(List<String> cities, List<String> months) {
+        return labourRepository.getLabourSummaryByCityAndBranch(cities, months);
     }
 
 }
