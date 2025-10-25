@@ -47,7 +47,7 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             @Param("halfYear") String halfYear
     );
 
-    //Group by city
+    //Group by branch
     @Query("""
             SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(
             null,
@@ -79,7 +79,7 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             @Param("halfYear") String halfYear
     );
 
-    //Group by city
+    //Group by city and branch
     @Query("""
             SELECT new com.mandovi.DTO.BatteryTyreSummaryDTO(
             b.city,
@@ -100,15 +100,12 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             ((SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL)) * 100.00 )  / SUM(b.sumOfNetRetailDDL)
             )
             FROM BatteryTyre b
-            WHERE (:months IS NULL OR b.month IN (:months))
-             AND (:qtrWise IS NULL OR b.qtrWise = :qtrWise)
-             AND (:halfYear IS NULL OR b.halfYear = :halfYear)
+            WHERE (:cities IS NULL OR b.city IN (:cities))
+             AND (:months IS NULL OR b.month IN (:months))
             GROUP BY b.city, b.branch
             """)
-    List<BatteryTyreSummaryDTO> getBatteryTyreSummaryByCityAnaBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear
-    );
+    List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise(
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months );
 
 }

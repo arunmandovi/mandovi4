@@ -114,9 +114,13 @@ public class BRConversionServiceImpl implements BRConversionService {
         switch (groupBy.toLowerCase()){
             case "city" : return brConversionRepository.getBRConversionSummaryByCity(months, qtrWise, halfYear);
             case "branch" : return brConversionRepository.getBRConversionSummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return brConversionRepository.getBRConversionSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
+    }
+
+    @Override
+    public List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise(List<String> cities, List<String> month) {
+        return brConversionRepository.getBRConversionSummaryBranchWise(cities, month);
     }
 
 

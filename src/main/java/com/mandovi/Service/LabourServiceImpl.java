@@ -148,7 +148,7 @@ public class LabourServiceImpl implements LabourService {
 
     @Override
     public List<LabourSummaryDTO> getLabourSummaryBranchWise(List<String> cities, List<String> months) {
-        return labourRepository.getLabourSummaryByCityAndBranch(cities, months);
+        return labourRepository.getLabourSummaryBranchWise(cities, months);
     }
 
 }

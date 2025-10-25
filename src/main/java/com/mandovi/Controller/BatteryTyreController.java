@@ -65,5 +65,20 @@ public class BatteryTyreController {
         }
     }
 
+    @GetMapping("battery_tyre_branch_summary")
+    public ResponseEntity<?> getBatteryTyreSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<BatteryTyreSummaryDTO> listBatteryTyreSummaryBranchWise = batteryTyreService.getBatteryTyreSummaryBranchWise(cities, months);
+            if (listBatteryTyreSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listBatteryTyreSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server Error : "+e.getMessage());
+        }
+    }
+
 
 }

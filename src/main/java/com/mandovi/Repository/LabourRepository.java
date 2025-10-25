@@ -180,7 +180,7 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
              AND (:months IS NULL OR l.month IN (:months))
             GROUP BY l.city,l.branch
             """)
-    List<LabourSummaryDTO> getLabourSummaryByCityAndBranch(
+    List<LabourSummaryDTO> getLabourSummaryBranchWise(
             @Param("cities") List<String> cities,
             @Param("months") List<String> months);
 }

@@ -16,4 +16,6 @@ public interface BatteryTyreService {
 
     public List<BatteryTyreSummaryDTO> getBatteryTyreSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
 
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise (List<String> cities, List<String> months);
+
 }

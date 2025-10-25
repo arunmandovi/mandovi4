@@ -95,9 +95,13 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
         switch (groupBy.toLowerCase()){
             case "city" : return batteryTyreRepository.getBatteryTyreSummaryByCity(months, qtrWise, halfYear);
             case "branch" : return batteryTyreRepository.getBatteryTyreSummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return batteryTyreRepository.getBatteryTyreSummaryByCityAnaBranch(months, qtrWise, halfYear);
             default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
+    }
+
+    @Override
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise(List<String> cities, List<String> months) {
+        return batteryTyreRepository.getBatteryTyreSummaryBranchWise(cities, months);
     }
 
 }

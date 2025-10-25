@@ -139,14 +139,11 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
                 SUM(b.labourAmt) + SUM(b.partAmount)
             )
             FROM BRConversion b
-            WHERE (:months IS NULL OR b.month IN (:months))
-              AND (:qtrWise IS NULL OR b.qtrWise = :qtrWise)
-              AND (:halfYear IS NULL OR b.halfYear = :halfYear)
+            WHERE (:cities IS NULL OR b.city IN (:cities))
+             AND (:months IS NULL OR b.month IN (:months))
             GROUP BY b.city, b.branch
             """)
-    List<BRConversionSummaryDTO> getBRConversionSummaryByCityAndBranch(
-            @Param("months") List<String> month,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear
-    );
+    List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise(
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> month );
 }

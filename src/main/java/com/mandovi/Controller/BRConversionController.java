@@ -12,10 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/br_conversion")
 public class BRConversionController {
-    private final BRConversionService br_conversionService;
+    private final BRConversionService brConversionService;
 
     public BRConversionController(BRConversionService brConversionService) {
-        br_conversionService = brConversionService;
+        this.brConversionService = brConversionService;
     }
 
     @PostMapping("/upload")
@@ -24,7 +24,7 @@ public class BRConversionController {
             return ResponseEntity.badRequest().body("❌ Please upload a valid BR Conversion Excel file.");
         }
         try {
-            br_conversionService.saveBR_ConversionDataFromExcel(file);
+            brConversionService.saveBR_ConversionDataFromExcel(file);
             return ResponseEntity.ok(" BR Conversion File has been uploaded successfully.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("❌ Error: " + e.getMessage());
@@ -33,12 +33,12 @@ public class BRConversionController {
 
     @GetMapping("/getallbr_conversion")
     public List<BRConversion> getAllBR_Conversion() {
-        return br_conversionService.getAllBRConversion();
+        return brConversionService.getAllBRConversion();
     }
 
     @GetMapping("/getbr_conversion/{month}/{year}")
     public ResponseEntity<List<BRConversion>> getBR_ConversionByMonthYear(@PathVariable String month, @PathVariable String year) {
-        List<BRConversion> brConversionRecords = br_conversionService.getBRConversionByMonthYear(month, year);
+        List<BRConversion> brConversionRecords = brConversionService.getBRConversionByMonthYear(month, year);
         if (brConversionRecords.isEmpty()) {
             ResponseEntity.noContent().build();
         }
@@ -52,7 +52,7 @@ public class BRConversionController {
             @RequestParam(required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<BRConversionSummaryDTO> listBRConversionSummary = br_conversionService.getBRConversionSummary(groupBy, months, qtrWise, halfYear);
+            List<BRConversionSummaryDTO> listBRConversionSummary = brConversionService.getBRConversionSummary(groupBy, months, qtrWise, halfYear);
             if (listBRConversionSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -61,6 +61,21 @@ public class BRConversionController {
             return ResponseEntity.badRequest().body("ERROR : "+ e.getMessage());
         }catch (Exception e){
             return ResponseEntity.internalServerError().body("Internal Server ERROR :"+ e.getMessage());
+        }
+    }
+
+    @GetMapping("br_conversion_branch_summary")
+    public ResponseEntity<?> getBRConversionSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<BRConversionSummaryDTO> listBRConversionSummaryBranchWise = brConversionService.getBRConversionSummaryBranchWise(cities, months);
+            if (listBRConversionSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listBRConversionSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server Error : "+e.getMessage());
         }
     }
 }
