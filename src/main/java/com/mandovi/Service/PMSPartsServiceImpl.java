@@ -165,8 +165,12 @@ public class PMSPartsServiceImpl implements PMSPartsService {
         switch (groupBy.toLowerCase()){
             case "city" : return pmsPartsRepository.getPMSPartsSummaryByCity(months, qtrWise, halfYear);
             case "branch" : return pmsPartsRepository.getPMSPartsSummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return pmsPartsRepository.getPMSPartsSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy parameter is Invalid");
         }
+    }
+
+    @Override
+    public List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise(List<String> cities, List<String> months) {
+        return pmsPartsRepository.getPMSPartsSummaryBranchWise(cities, months);
     }
 }

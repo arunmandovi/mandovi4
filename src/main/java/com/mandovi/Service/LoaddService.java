@@ -13,8 +13,10 @@ public interface LoaddService {
 
     public List<Loadd> getAllLoadData();
 
-    List<Loadd> getLoadByMonthYear(String month, String year);
+    public List<Loadd> getLoadByMonthYear(String month, String year);
 
-    List<LoaddSummaryDTO> getLoaddSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
+    public List<LoaddSummaryDTO> getLoaddSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
+
+    public List<LoaddSummaryDTO> getLoaddSummaryBranchWise (List<String> cities, List<String> months);
 
 }

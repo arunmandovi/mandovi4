@@ -15,4 +15,6 @@ public interface PMSPartsService {
     public List<PMSParts> getPMSPartsByPMSDate(LocalDate pmsDate);
 
     public List<PMSPartsSummaryDTO> getPMSPartsSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
+
+    public List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise (List<String> cities, List<String> months);
 }

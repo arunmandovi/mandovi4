@@ -185,13 +185,11 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.serviceLoad ELSE 0 END ), 0)
             )
             FROM Loadd l
-            WHERE (:months IS NULL OR l.month IN (:months))
-            AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise)
-            AND (:halfYear IS NULL OR l.halfYear = :halfYear)
+            WHERE (:cities IS NULL OR l.city IN (:cities))
+             AND (:months IS NULL OR l.month IN (:months))
             GROUP BY l.city, l.branch
             """)
-    List<LoaddSummaryDTO> getLoaddSummaryByCityAndBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
+    List<LoaddSummaryDTO> getLoaddSummaryBranchWise(
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months);
 }

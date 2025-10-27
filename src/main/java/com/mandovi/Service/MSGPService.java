@@ -15,4 +15,6 @@ public interface MSGPService {
 
     public List<MSGPSummaryDTO> getMSGPSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
 
+    public List<MSGPSummaryDTO> getMSGPSummaryBranchWise (List<String> cities, List<String> months);
+
 }

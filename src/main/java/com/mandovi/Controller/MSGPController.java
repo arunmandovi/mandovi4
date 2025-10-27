@@ -64,4 +64,19 @@ public class MSGPController {
         }
     }
 
+    @GetMapping("msgp_branch_summary")
+    public ResponseEntity<?> getMSGPSummaryBranchWise(
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<MSGPSummaryDTO> listMSGPSummaryBranchWise = msgpService.getMSGPSummaryBranchWise(cities, months);
+            if (listMSGPSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listMSGPSummaryBranchWise);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Internale Server ERROR : "+e.getMessage());
+        }
+    }
+
 }

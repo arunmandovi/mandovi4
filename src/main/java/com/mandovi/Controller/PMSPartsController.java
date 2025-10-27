@@ -62,4 +62,19 @@ public class PMSPartsController {
             return ResponseEntity.internalServerError().body(null);
         }
     }
+
+    @GetMapping("/pms_parts_branch_summary")
+    public ResponseEntity<?> getPMSPartsSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<PMSPartsSummaryDTO> listPMSPartsSummaryBranchWise = pmsPartsService.getPMSPartsSummaryBranchWise(cities, months);
+            if (listPMSPartsSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listPMSPartsSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
+    }
 }

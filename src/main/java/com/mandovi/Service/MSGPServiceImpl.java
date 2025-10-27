@@ -152,8 +152,12 @@ public class MSGPServiceImpl implements MSGPService {
         switch (groupBy.toLowerCase()){
             case "city" : return msgpRepository.getMSGPSummaryByCity(months, qtrWise, halfYear);
             case "branch" : return msgpRepository.getMSGPSummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return msgpRepository.getMSGPSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
+    }
+
+    @Override
+    public List<MSGPSummaryDTO> getMSGPSummaryBranchWise(List<String> cities, List<String> months) {
+        return msgpRepository.getMSGPSummaryBranchWise(cities, months);
     }
 }

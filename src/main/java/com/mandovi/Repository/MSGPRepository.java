@@ -162,14 +162,12 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
             NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ), 0)
         )
         FROM MSGP m
-        WHERE (:months IS NULL OR m.month IN (:months))
-          AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR m.halfYear = :halfYear)
+        WHERE (:cities IS NULL OR m.city IN (:cities))
+         AND (:months IS NULL OR m.month IN (:months))
         GROUP BY m.city, m.branch
     """)
-    List<MSGPSummaryDTO> getMSGPSummaryByCityAndBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
+    List<MSGPSummaryDTO> getMSGPSummaryBranchWise(
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months);
 
 }

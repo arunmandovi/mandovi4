@@ -65,4 +65,19 @@ public class LoaddController {
         }
     }
 
+    @GetMapping("loadd_branch_summary")
+    public ResponseEntity<?> getLoaddSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<LoaddSummaryDTO> listLoaddSummaryBranchWise = loaddService.getLoaddSummaryBranchWise(cities, months);
+            if (listLoaddSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listLoaddSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server Error : "+e.getMessage());
+        }
+    }
+
 }

@@ -227,9 +227,13 @@ public class LoaddServiceImpl implements LoaddService {
      switch (groupBy.toLowerCase()) {
          case "city" : return loaddRepository.getLoaddSummaryByCity(months, qtrWise, halfYear);
          case "branch" : return loaddRepository.getLoaddSummaryByBranch(months, qtrWise, halfYear);
-         case "city_branch" : return  loaddRepository.getLoaddSummaryByCityAndBranch(months, qtrWise, halfYear);
          default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
      }
+    }
+
+    @Override
+    public List<LoaddSummaryDTO> getLoaddSummaryBranchWise(List<String> cities, List<String> months) {
+        return loaddRepository.getLoaddSummaryBranchWise(cities, months);
     }
 
 }

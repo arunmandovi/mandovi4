@@ -168,8 +168,12 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
         switch (groupBy.toLowerCase()){
             case "city" : return msgpProfitRepository.getMSGPProfitSummaryByCity(months, qtrWise, halfYear);
             case "branch" : return msgpProfitRepository.getMSGPProfitSummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return msgpProfitRepository.getMSGPProfitSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
+    }
+
+    @Override
+    public List<MSGPProfitSummaryDTO> getMSGPProfitSummaryBranchWise(List<String> cities, List<String> months) {
+        return msgpProfitRepository.getMSGPProfitSummaryBranchWise(cities, months);
     }
 }

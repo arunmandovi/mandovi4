@@ -93,9 +93,13 @@ public class OilServiceImpl implements OilService {
         switch (groupBy.toLowerCase()){
             case "city" : return oilRepository.getOilSummaryByCity(months, qtrWise, halfYear);
             case "branch" : return oilRepository.getOilSummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return oilRepository.getOilSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
+    }
+
+    @Override
+    public List<OilSummaryDTO> getOilSummaryBranchWise(List<String> cities, List<String> months) {
+        return oilRepository.getOilSummaryBranchWise(cities, months);
     }
 
 }

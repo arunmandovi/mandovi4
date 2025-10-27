@@ -101,13 +101,11 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
             SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailSelling ELSE 0 END)
         )
         FROM Oil o
-        WHERE (:months IS NULL OR o.month IN (:months))
-          AND (:qtrWise IS NULL OR o.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR o.halfYear = :halfYear)
+        WHERE (:cities IS NULL OR o.city IN (:cities))
+         AND (:months IS NULL OR o.month IN (:months))
         GROUP BY o.city,o.branch
     """)
-    List<OilSummaryDTO> getOilSummaryByCityAndBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
+    List<OilSummaryDTO> getOilSummaryBranchWise(
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months);
 }

@@ -64,4 +64,19 @@ public class OilController {
         }
     }
 
+    @GetMapping("/oil_branch_summary")
+    public ResponseEntity<?> getOilSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<OilSummaryDTO> listOilSummaryBranchWise = oilService.getOilSummaryBranchWise(cities, months);
+            if (listOilSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listOilSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
+    }
+
 }

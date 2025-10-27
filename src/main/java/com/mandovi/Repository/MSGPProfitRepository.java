@@ -116,14 +116,11 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
             NULLIF(SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END), 0)
         )
         FROM MSGPProfit m
-        WHERE (:months IS NULL OR m.month IN (:months))
-          AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR m.halfYear = :halfYear)
+        WHERE (:cities IS NULL OR m.city IN (:cities))
+         AND (:months IS NULL OR m.month IN (:months))
         GROUP BY m.city, m.branch
     """)
-    List<MSGPProfitSummaryDTO> getMSGPProfitSummaryByCityAndBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear
-    );
+    List<MSGPProfitSummaryDTO> getMSGPProfitSummaryBranchWise(
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months );
 }

@@ -62,4 +62,19 @@ public class MSGPProfitController {
             return ResponseEntity.internalServerError().body("Internal Server Error :"+e.getMessage());
         }
     }
+
+    @GetMapping("msgp_profit_branch_summary")
+    public ResponseEntity<?> getMSGPSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<MSGPProfitSummaryDTO> listMSGPProfitSummaryBranchWise = msgpProfitService.getMSGPProfitSummaryBranchWise(cities, months);
+            if (listMSGPProfitSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listMSGPProfitSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server ERROR :"+e.getMessage());
+        }
+    }
 }

@@ -251,14 +251,11 @@ public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
         END
         )
         FROM PMSParts p
-        WHERE (:months IS NULL OR p.month IN (:months))
-         AND (:qtrWise IS NULL OR p.qtrWise = :qtrWise)
-         AND (:halfYear IS NULL OR p.halfYear = :halfYear)
+        WHERE (:cities IS NULL OR p.city IN (:cities))
+         AND (:months IS NULL OR p.month IN (:months))
         GROUP BY p.city, p.branch
         """)
-    List<PMSPartsSummaryDTO> getPMSPartsSummaryByCityAndBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear
-    );
+    List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise(
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months );
 }
