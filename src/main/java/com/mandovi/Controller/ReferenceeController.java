@@ -52,7 +52,7 @@ public class ReferenceeController {
             @RequestParam (required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<ReferenceeSummaryDTO> listReferenceeSummary = referenceeService.getReferenceeSUmmary(groupBy, months, qtrWise, halfYear);
+            List<ReferenceeSummaryDTO> listReferenceeSummary = referenceeService.getReferenceeSummaryBranchWise(groupBy, months, qtrWise, halfYear);
             if (listReferenceeSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -60,6 +60,21 @@ public class ReferenceeController {
         }catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
         }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("referencee_branch_summary")
+    public ResponseEntity<?> getReferenceeSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<ReferenceeSummaryDTO> listReferenceeSummaryBranchWise = referenceeService.getReferenceeSummaryBranchWise(cities, months);
+            if (listReferenceeSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listReferenceeSummaryBranchWise);
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
         }
     }

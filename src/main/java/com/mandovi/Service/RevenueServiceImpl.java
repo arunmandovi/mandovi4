@@ -115,8 +115,12 @@ public class RevenueServiceImpl implements RevenueService {
         switch (groupBy.toLowerCase()){
             case "city" : return revenueRepository.getRevenueSummaryByCity(months, qtrWise, halfYear);
             case "branch" : return revenueRepository.getRevenueSummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return revenueRepository.getRevenueSummaryByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
+    }
+
+    @Override
+    public List<RevenueSummaryDTO> getRevenueSummaryBranchWise(List<String> cities, List<String> months) {
+        return revenueRepository.getRevenueSummaryBranchWise(cities, months);
     }
 }

@@ -62,4 +62,19 @@ public class RevenueController {
             return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
         }
     }
+
+    @GetMapping("/revenue_branch_summary")
+    public ResponseEntity<?> getRevenueSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<RevenueSummaryDTO> listRevenueSummaryBranchWise = revenueService.getRevenueSummaryBranchWise(cities, months);
+            if (listRevenueSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listRevenueSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
+    }
 }

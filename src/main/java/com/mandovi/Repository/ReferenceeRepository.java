@@ -77,13 +77,11 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
             SUM(r.invoice) * 100.00 / NULLIF(SUM(r.booking), 0)
             )
             FROM Referencee r
-            WHERE (:months IS NULL OR r.month IN (:months))
-            AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
-            AND (:halfYear IS NULL OR r.halfYear = :halfYear)
+            WHERE (:cities IS NULL OR r.city IN (:cities))
+             AND (:months IS NULL OR r.month IN (:months))
             GROUP BY r.city, r.branch
             """)
-    List<ReferenceeSummaryDTO> getReferenceeSummaryByCityAndBranch (
-            @Param("month") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
+    List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise (
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months );
 }

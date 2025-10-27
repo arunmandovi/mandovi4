@@ -13,5 +13,7 @@ public interface ReferenceeService {
 
     public List<Referencee> getReferenceeByMonthYear(String month, String year);
 
-    public List<ReferenceeSummaryDTO> getReferenceeSUmmary (String groupBy, List<String> months, String qtrWise, String halfYear);
+    public List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise(String groupBy, List<String> months, String qtrWise, String halfYear);
+
+    public List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise(List<String> cities, List<String> months);
 }

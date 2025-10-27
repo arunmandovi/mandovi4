@@ -119,13 +119,11 @@ public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
             (SUM(r.srAndBrTotalCurrentYear) - SUM(r.srAndBrTotalLastYear)) * 100.0 / NULLIF(SUM(r.srAndBrTotalLastYear), 0)
             )
             FROM Revenue r
-            WHERE (:months IS NULL OR r.month IN (:months))
-             AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
-             AND (:halfYear IS NULL OR r.halfYear = :halfYear)
+            WHERE (:cities IS NULL OR r.city IN (:cities))
+             AND (:months IS NULL OR r.month IN (:months))
             GROUP By r.city, r.branch
             """)
-    List<RevenueSummaryDTO> getRevenueSummaryByCityAndBranch (
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
+    List<RevenueSummaryDTO> getRevenueSummaryBranchWise (
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months);
 }
