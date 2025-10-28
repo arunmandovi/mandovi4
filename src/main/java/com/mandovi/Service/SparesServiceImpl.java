@@ -130,8 +130,12 @@ public class SparesServiceImpl implements SparesService{
         switch (groupBy.toLowerCase()){
             case "city" : return sparesRepository.getSparesSummaryDTOByCity(months, qtrWise, halfYear);
             case "branch" : return sparesRepository.getSparesSummaryDTOByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return sparesRepository.getSparesSummaryDTOByCityAndBranch(months, qtrWise, halfYear);
             default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
         }
+    }
+
+    @Override
+    public List<SparesSummaryDTO> getSparesSummaryBranchWise(List<String> cities, List<String> months) {
+        return sparesRepository.getSparesSummaryBranchWise(cities, months);
     }
 }

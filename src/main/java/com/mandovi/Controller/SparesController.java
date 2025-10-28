@@ -63,4 +63,19 @@ public class SparesController {
             return ResponseEntity.internalServerError().body("Internal Sever ERROR : "+e.getMessage());
         }
     }
+
+    @GetMapping("/spares_branch_summary")
+    public ResponseEntity<?> getSparesSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<SparesSummaryDTO> listSparesSummaryBranchWise = sparesService.getSparesSummaryBranchWise(cities, months);
+            if (listSparesSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listSparesSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
+    }
 }

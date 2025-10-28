@@ -101,13 +101,11 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
             (SUM(s.tyreCurrentYear) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
             )
             FROM Spares s
-            WHERE (:months IS NULL OR s.month IN (:months))
-             AND (:qtrWise IS NULL OR s.qtrWise = :qtrWise)
-             AND (:halfYear IS NULL OR s.halfYear = :halfYear)
+            WHERE (:cities IS NULL OR s.city IN (:cities))
+             AND (:months IS NULL OR s.month IN (:months))
             GROUP BY s.city, s.branch
             """)
-    List<SparesSummaryDTO> getSparesSummaryDTOByCityAndBranch (
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
+    List<SparesSummaryDTO> getSparesSummaryBranchWise (
+            @Param("cities") List<String> cities,
+            @Param("months") List<String> months );
 }

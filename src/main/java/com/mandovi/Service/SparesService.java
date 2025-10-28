@@ -15,4 +15,6 @@ public interface SparesService{
     public List<Spares> getSparesByMonthYear(String month, String year);
 
     public List<SparesSummaryDTO> getSparesSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
+
+    public List<SparesSummaryDTO> getSparesSummaryBranchWise (List<String> cities, List<String> months);
 }
