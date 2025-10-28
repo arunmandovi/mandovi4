@@ -63,4 +63,19 @@ public class TATController {
             return ResponseEntity.internalServerError().body("Internal Sever ERROR : "+e.getMessage());
         }
     }
+
+    @GetMapping("/tat_branch_summary")
+    public ResponseEntity<?> getTATSummary (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<TATSummaryDTO> listTATSummaryBranchWise = tatService.getTATSummaryBranchWise(cities, months);
+            if (listTATSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listTATSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
+    }
 }

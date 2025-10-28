@@ -47,7 +47,7 @@ public class VASController {
     }
 
     @GetMapping("/vas_summary")
-    public ResponseEntity<?> getVAS (
+    public ResponseEntity<?> getVASSummary (
             @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months ){
         try {
@@ -59,6 +59,21 @@ public class VASController {
         }catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body("ERROR : "+ e.getMessage());
         }catch (Exception e){
+            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/vas_branch_summary")
+    public ResponseEntity<?> getVASSummaryBranchWise (
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months ){
+        try {
+            List<VASSummaryDTO> listVASSummaryBranchWise = vasService.getVASSummaryBranchWise(cities, months);
+            if (listVASSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listVASSummaryBranchWise);
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
         }
     }

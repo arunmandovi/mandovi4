@@ -18,9 +18,6 @@ public class RevenueServiceImpl implements RevenueService {
     public RevenueServiceImpl(RevenueRepository revenueRepository) {
         this.revenueRepository = revenueRepository;
     }
-    private Double round2Decimal(Double value) {
-        return Math.round(value * 100.0) / 100.0;
-    }
     private Double getNumericCellValue (Row row, int index){
         if (row == null || row.getCell(index) == null )return  0.0;
         try {
@@ -28,6 +25,10 @@ public class RevenueServiceImpl implements RevenueService {
         }catch (Exception e){
             return 0.0;
         }
+    }
+    private Double growth (Double last, Double current){
+        if (last == null || last == 0) return 100.0;
+        return (current - last) / last;
     }
 
     @Override
@@ -56,29 +57,29 @@ public class RevenueServiceImpl implements RevenueService {
                 revenue.setBranch(row.getCell(5).getStringCellValue());
 
 
-                revenue.setSrLabourLastYear(round2Decimal(getNumericCellValue(row, 6)));
-                revenue.setSrLabourCurrentYear(round2Decimal(getNumericCellValue(row, 7)));
-                revenue.setBrLabourLastYear(round2Decimal(getNumericCellValue(row, 9)));
-                revenue.setBrLabourCurrentYear(round2Decimal(getNumericCellValue(row,10)));
-                revenue.setSrAndBrLabourLastYear(round2Decimal(getNumericCellValue(row, 12)));
-                revenue.setSrAndBrLabourCurrentYear(round2Decimal(getNumericCellValue(row, 13)));
-                revenue.setSrSparesLastYear(round2Decimal(getNumericCellValue(row, 15)));
-                revenue.setSrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 16)));
-                revenue.setBrSparesLastYear(round2Decimal(getNumericCellValue(row, 18)));
-                revenue.setBrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 19)));
-                revenue.setSrAndBrSparesLastYear(round2Decimal(getNumericCellValue(row, 21)));
-                revenue.setSrAndBrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 22)));
-                revenue.setSrAndBrTotalLastYear(round2Decimal(getNumericCellValue(row, 24)));
-                revenue.setSrAndBrTotalCurrentYear(round2Decimal(getNumericCellValue(row, 25)));
+                revenue.setSrLabourLastYear(getNumericCellValue(row, 6));
+                revenue.setSrLabourCurrentYear(getNumericCellValue(row, 7));
+                revenue.setBrLabourLastYear(getNumericCellValue(row, 9));
+                revenue.setBrLabourCurrentYear(getNumericCellValue(row,10));
+                revenue.setSrAndBrLabourLastYear(getNumericCellValue(row, 12));
+                revenue.setSrAndBrLabourCurrentYear(getNumericCellValue(row, 13));
+                revenue.setSrSparesLastYear(getNumericCellValue(row, 15));
+                revenue.setSrSparesCurrentYear(getNumericCellValue(row, 16));
+                revenue.setBrSparesLastYear(getNumericCellValue(row, 18));
+                revenue.setBrSparesCurrentYear(getNumericCellValue(row, 19));
+                revenue.setSrAndBrSparesLastYear(getNumericCellValue(row, 21));
+                revenue.setSrAndBrSparesCurrentYear(getNumericCellValue(row, 22));
+                revenue.setSrAndBrTotalLastYear(getNumericCellValue(row, 24));
+                revenue.setSrAndBrTotalCurrentYear(getNumericCellValue(row, 25));
 
                 //Updating ALlGrowth columns by calculating the values from last & current year columns
-                revenue.setSrLabourGrowth(round2Decimal((revenue.getSrLabourCurrentYear()-revenue.getSrLabourLastYear())/revenue.getSrLabourLastYear()));
-                revenue.setBrLabourGrowth(round2Decimal((revenue.getBrLabourCurrentYear()-revenue.getBrLabourLastYear())/revenue.getBrLabourLastYear()));
-                revenue.setSrAndBrLabourGrowth(round2Decimal((revenue.getSrAndBrLabourCurrentYear()-revenue.getSrAndBrLabourLastYear())/revenue.getSrAndBrLabourLastYear()));
-                revenue.setSrSparesGrowth(round2Decimal((revenue.getSrSparesCurrentYear()-revenue.getSrSparesLastYear())/revenue.getSrSparesLastYear()));
-                revenue.setBrSparesGrowth(round2Decimal((revenue.getBrSparesCurrentYear()-revenue.getBrSparesLastYear())/revenue.getBrSparesLastYear()));
-                revenue.setSrAndBrSparesGrowth(round2Decimal((revenue.getSrAndBrSparesCurrentYear()-revenue.getSrAndBrSparesLastYear())/revenue.getSrAndBrSparesLastYear()));
-                revenue.setSrAndBrTotalGrowth(round2Decimal((revenue.getSrAndBrTotalCurrentYear()-revenue.getSrAndBrTotalLastYear())/revenue.getSrAndBrTotalLastYear()));
+                revenue.setSrLabourGrowth(growth(revenue.getSrLabourLastYear(), revenue.getSrLabourCurrentYear()));
+                revenue.setBrLabourGrowth(growth(revenue.getBrLabourLastYear(), revenue.getBrLabourCurrentYear()));
+                revenue.setSrAndBrLabourGrowth(growth(revenue.getSrAndBrLabourLastYear(), revenue.getSrAndBrLabourCurrentYear()));
+                revenue.setSrSparesGrowth(growth(revenue.getSrSparesLastYear(), revenue.getSrSparesCurrentYear()));
+                revenue.setBrSparesGrowth(growth(revenue.getBrSparesLastYear(), revenue.getBrSparesCurrentYear()));
+                revenue.setSrAndBrSparesGrowth(growth(revenue.getSrAndBrSparesLastYear(), revenue.getSrAndBrSparesCurrentYear()));
+                revenue.setSrAndBrTotalGrowth(growth(revenue.getSrAndBrTotalLastYear(), revenue.getSrAndBrTotalCurrentYear()));
 
                 //Updating qtr_wise & half_year column by checking month
                 switch (revenue.getMonth().trim().toUpperCase()){

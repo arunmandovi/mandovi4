@@ -15,5 +15,7 @@ public interface VASService {
 
     public List<VASSummaryDTO> getVAS (String groupBy, List<String> months);
 
+    public List<VASSummaryDTO> getVASSummaryBranchWise (List<String> cities, List<String> months);
+
 
 }

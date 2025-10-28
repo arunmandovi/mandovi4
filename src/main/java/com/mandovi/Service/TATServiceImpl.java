@@ -160,4 +160,43 @@ public class TATServiceImpl implements TATService {
         long seconds = totalSeconds % 60;
         return String.format("%d:%02d:%02d", hours, minutes, seconds);
     }
+
+    @Override
+    public List<TATSummaryDTO> getTATSummaryBranchWise(List<String> cities, List<String> months) {
+        List<TAT> allTAT = tatRepository.findAll();
+
+        // Apply Filters
+        List<TAT> filtered = allTAT.stream()
+                .filter(tat -> months == null || months.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getMonth())))
+                .filter(tat -> cities == null || cities.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getCity())))
+                .toList();
+
+        // Group by CITY then BRANCH
+        return filtered.stream()
+                .collect(Collectors.groupingBy(TAT::getCity, Collectors.groupingBy(TAT::getBranch)))
+                .entrySet().stream() // city level
+                .flatMap(cityEntry -> {
+                    String city = cityEntry.getKey();
+                    return cityEntry.getValue().entrySet().stream().map(branchEntry -> {
+                        String branch = branchEntry.getKey();
+                        List<TAT> groupList = branchEntry.getValue();
+
+                        String firstFreeService = calculateAverageTime(groupList, "FR1");
+                        String secondFreeService = calculateAverageTime(groupList, "FR2");
+                        String thirdFreeService = calculateAverageTime(groupList, "FR3");
+                        String pms = calculateAverageTime(groupList, "PMS");
+
+                        return new TATSummaryDTO(
+                                city,
+                                branch,
+                                firstFreeService,
+                                secondFreeService,
+                                thirdFreeService,
+                                pms
+                        );
+                    });
+                })
+                .toList();
+    }
+
 }

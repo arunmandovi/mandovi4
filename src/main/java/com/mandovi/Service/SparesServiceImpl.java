@@ -19,8 +19,6 @@ public class SparesServiceImpl implements SparesService{
         this.sparesRepository = sparesRepository;
     }
 
-    private Double round2Decimal(Double value){ return Math.round(value*100.0)/100.0; }
-
     private Double getNumericCellValue (Row row, int index){
         if (row == null || row.getCell(index) == null) return 0.0;
         try {
@@ -29,6 +27,12 @@ public class SparesServiceImpl implements SparesService{
             return 0.0;
         }
     }
+
+    private Double growth(Double last, Double current) {
+        if (last == null || last == 0) return 100.0;
+        return (current - last) / last;
+    }
+
 
     @Override
     public void saveSparesDataFromExcel(MultipartFile file) throws IOException {
@@ -56,43 +60,25 @@ public class SparesServiceImpl implements SparesService{
                 spares.setPeriod(spares.getMonth()+"-"+spares.getYear());
 
                 spares.setBranch(row.getCell(4).getStringCellValue());
-                spares.setSrSparesLastYear(round2Decimal(getNumericCellValue(row,5)));
-                spares.setSrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 6)));
+                spares.setSrSparesLastYear(getNumericCellValue(row,5));
+                spares.setSrSparesCurrentYear(getNumericCellValue(row, 6));
+                spares.setSrSparesGrowth(growth(spares.getSrSparesLastYear(), spares.getSrSparesCurrentYear()));
 
-                //Updating GROWTH columns by calculating the values from last year & current year
-                spares.setSrSparesGrowth(round2Decimal((spares.getSrSparesCurrentYear()- spares.getSrSparesLastYear())/spares.getSrSparesLastYear()));
+                spares.setBrSparesLastYear(getNumericCellValue(row, 8));
+                spares.setBrSparesCurrentYear(getNumericCellValue(row, 9));
+                spares.setBrSparesGrowth(growth(spares.getBrSparesLastYear(), spares.getBrSparesCurrentYear()));
 
-                spares.setBrSparesLastYear(round2Decimal(getNumericCellValue(row, 8)));
-                spares.setBrSparesCurrentYear(round2Decimal(getNumericCellValue(row, 9)));
+                spares.setSrBrSparesLastYear(spares.getSrSparesLastYear()+spares.getBrSparesLastYear());
+                spares.setSrBrSparesCurrentYear(spares.getSrSparesCurrentYear()+spares.getBrSparesCurrentYear());
+                spares.setSrBrSparesGrowth(growth(spares.getSrBrSparesLastYear(), spares.getSrBrSparesCurrentYear()));
 
-                //Updating GROWTH columns by calculating the values from last year & current year
-                spares.setBrSparesGrowth(round2Decimal((spares.getBrSparesCurrentYear()-spares.getBrSparesLastYear())/spares.getBrSparesLastYear()));
+                spares.setBatteryLastYear(getNumericCellValue(row, 14));
+                spares.setBatteryCurrentYear(getNumericCellValue(row, 15));
+                spares.setBatteryGrowth(growth(spares.getBatteryLastYear(), spares.getBatteryCurrentYear()));
 
-                //Adding srbr columns by adding sr & btr columns for respective years
-                spares.setSrBrSparesLastYear(round2Decimal(spares.getSrSparesLastYear()+spares.getBrSparesLastYear()));
-                spares.setSrBrSparesCurrentYear(round2Decimal(spares.getSrSparesCurrentYear()+spares.getBrSparesCurrentYear()));
-
-                //Updating GROWTH columns by calculating the values from last year & current year
-                spares.setSrBrSparesGrowth(round2Decimal((spares.getSrBrSparesCurrentYear()-spares.getSrBrSparesLastYear())/spares.getSrBrSparesLastYear()));
-
-                spares.setBatteryLastYear(round2Decimal(getNumericCellValue(row, 14)));
-                spares.setBatteryCurrentYear(round2Decimal(getNumericCellValue(row, 15)));
-
-                //Updating Battery growth after checking that the last yeat column has any 0 value
-                if (spares.getBatteryLastYear() == 0){
-                    spares.setBatteryGrowth(100.0);
-                }else {
-                    spares.setBatteryGrowth((spares.getBatteryCurrentYear()-spares.getBatteryLastYear())/spares.getBatteryLastYear());
-                }
-                spares.setTyreLastYear(round2Decimal(getNumericCellValue(row, 17)));
-                spares.setTyreCurrentYear(round2Decimal(getNumericCellValue(row, 18)));
-
-                //Updating Tyre growth after checking that the last yeat column has any 0 value
-                if (spares.getTyreLastYear() == 0){
-                    spares.setTyreGrowth(100.0);
-                }else {
-                    spares.setTyreGrowth(round2Decimal((spares.getTyreCurrentYear()-spares.getTyreLastYear())/spares.getTyreLastYear()));
-                }
+                spares.setTyreLastYear(getNumericCellValue(row, 17));
+                spares.setTyreCurrentYear(getNumericCellValue(row, 18));
+                spares.setTyreGrowth(growth(spares.getTyreLastYear(), spares.getTyreCurrentYear()));
 
 
                 //Updating the column Qtr_Wise & Half-Year by comparing the values from colum Month
