@@ -135,15 +135,8 @@ public class LabourServiceImpl implements LabourService {
     }
 
     @Override
-    public List<LabourSummaryDTO> getLabourSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return labourRepository.getLabourSummaryByCity(months, qtrWise, halfYear);
-            case "branch" : return labourRepository.getLabourSummaryByBranch(months, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
+    public List<LabourSummaryDTO> getLabourSummary(List<String> months, List<String> channels, String qtrWise, String halfYear) {
+        return labourRepository.getLabourSummaryByCity(months, channels, qtrWise, halfYear);
     }
 
     @Override

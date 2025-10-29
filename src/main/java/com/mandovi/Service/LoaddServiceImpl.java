@@ -220,15 +220,8 @@ public class LoaddServiceImpl implements LoaddService {
     }
 
     @Override
-    public List<LoaddSummaryDTO> getLoaddSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
-     if (groupBy == null || groupBy.isEmpty()){
-         throw new IllegalArgumentException("groupBy Parameter is Required");
-     }
-     switch (groupBy.toLowerCase()) {
-         case "city" : return loaddRepository.getLoaddSummaryByCity(months, qtrWise, halfYear);
-         case "branch" : return loaddRepository.getLoaddSummaryByBranch(months, qtrWise, halfYear);
-         default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-     }
+    public List<LoaddSummaryDTO> getLoaddSummary(List<String> months, List<String> channels, String qtrWise, String halfYear) {
+     return loaddRepository.getLoaddSummaryByCity(months, channels, qtrWise, halfYear);
     }
 
     @Override

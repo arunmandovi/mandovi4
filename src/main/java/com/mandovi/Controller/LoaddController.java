@@ -48,12 +48,12 @@ public class LoaddController {
 
     @GetMapping("/loadd_summary")
     public ResponseEntity<?> getLoaddServiceSummary(
-            @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) String qtrWise,
             @RequestParam (required = false) String halfYear ){
         try {
-            List<LoaddSummaryDTO> listLoaddServiceSummary = loaddService.getLoaddSummary(groupBy, months, qtrWise, halfYear);
+            List<LoaddSummaryDTO> listLoaddServiceSummary = loaddService.getLoaddSummary(months, channels, qtrWise, halfYear);
             if (listLoaddServiceSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

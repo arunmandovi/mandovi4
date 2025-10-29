@@ -25,12 +25,14 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
             SUM(m.amountCollected ))
             FROM MCP m
             WHERE (:months IS NULL OR m.month IN (:months))
+              AND (:channels IS  NULL OR m.channel IN (:channels))
               AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
               AND (:halfYear IS NULL OR m.halfYear = :halfYear)
             GROUP BY m.city
             """)
     List<MCPSummaryDTO> getMCPSummaryByCity(
             @Param("months") List<String> months,
+            @Param("channels") List<String> channels,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 

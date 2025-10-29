@@ -45,22 +45,19 @@ public class LabourController {
         return ResponseEntity.ok(labourRecords);
     }
 
-    @GetMapping("/labour_summary")
-    public ResponseEntity<?> getLabourSummary (
-            @RequestParam String groupBy,
-            @RequestParam(required = false) List<String> months,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+    @GetMapping("labour_summary")
+     public ResponseEntity<?> getLabourSummary (
+             @RequestParam (required = false) List<String> months,
+             @RequestParam (required = false) List<String> channels,
+             @RequestParam (required = false) String qtrWise,
+             @RequestParam (required = false) String halfYear ){
         try {
-            List<LabourSummaryDTO> listLabourServiceSummary = labourService.getLabourSummary(groupBy, months, qtrWise, halfYear);
-            if (listLabourServiceSummary.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(listLabourServiceSummary);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("ERROR :" + e.getMessage());
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internal Server ERROR :"+ e.getMessage());
+            List<LabourSummaryDTO> list = labourService.getLabourSummary( months, channels , qtrWise, halfYear);
+            return ResponseEntity.ok(list);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 

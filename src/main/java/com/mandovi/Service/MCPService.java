@@ -13,5 +13,5 @@ public interface MCPService {
 
     List<MCP> getMCPByMonthYear(String month, String year);
 
-    public List<MCPSummaryDTO> getMCPSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
+    public List<MCPSummaryDTO> getMCPSummary (List<String> months,List<String> channels, String qtrWise, String halfYear);
 }

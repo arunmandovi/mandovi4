@@ -66,12 +66,14 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
             )
             FROM Loadd l
             WHERE (:months IS NULL OR l.month IN (:months))
+            AND (:channels IS NULL OR l.channel IN (:channels))
             AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise)
             AND (:halfYear IS NULL OR l.halfYear = :halfYear)
             GROUP BY l.city
             """)
     List<LoaddSummaryDTO> getLoaddSummaryByCity(
             @Param("months") List<String> months,
+            @Param("channels") List<String> channels,
             @Param("qtrWise") String qtrWise,
             @Param("halfYear") String halfYear);
 

@@ -152,15 +152,7 @@ public class MCPServiceImpl implements MCPService {
     }
 
     @Override
-    public List<MCPSummaryDTO> getMCPSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return mcpRepository.getMCPSummaryByCity(months, qtrWise, halfYear);
-            case "branch" : return mcpRepository.getMCPSummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return mcpRepository.getMCPSummaryByCityAndBranch(months, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is  Invalid");
-        }
+    public List<MCPSummaryDTO> getMCPSummary(List<String> months, List<String> channels, String qtrWise, String halfYear) {
+        return mcpRepository.getMCPSummaryByCity(months, channels, qtrWise, halfYear);
     }
 }
