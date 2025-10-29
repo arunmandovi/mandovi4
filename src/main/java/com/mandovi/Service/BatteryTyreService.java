@@ -14,7 +14,7 @@ public interface BatteryTyreService {
 
     public List<BatteryTyre> getBattery_TyreByMonthYear(String month, String year);
 
-    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 
     public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise (List<String> cities, List<String> months);
 

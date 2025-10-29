@@ -19,10 +19,6 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
         this.batteryTyreRepository = batteryTyreRepository;
     }
 
-    private Double round2Decimal(Double value){
-        return Math.round(value*100.0)/100.0;
-    }
-
     @Override
     public void saveBatteryTyreDataFromExcel(MultipartFile file) throws IOException {
         try {
@@ -50,8 +46,8 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
                 batteryTyre.setOilType(row.getCell(4).getStringCellValue());
 
                 batteryTyre.setSumOfNetRetailQTY((int)   row.getCell(5).getNumericCellValue());
-                batteryTyre.setSumOfNetRetailDDL(round2Decimal(row.getCell(6).getNumericCellValue()));
-                batteryTyre.setSumOfNetRetailSelling(round2Decimal(row.getCell(7).getNumericCellValue()));
+                batteryTyre.setSumOfNetRetailDDL(row.getCell(6).getNumericCellValue());
+                batteryTyre.setSumOfNetRetailSelling(row.getCell(7).getNumericCellValue());
 
                 //Updating the column period from Concating columns Month & Year
                 batteryTyre.setPeriod(batteryTyre.getMonth()+"-"+batteryTyre.getYear());
@@ -88,15 +84,8 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
     }
 
     @Override
-    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return batteryTyreRepository.getBatteryTyreSummaryByCity(months, qtrWise, halfYear);
-            case "branch" : return batteryTyreRepository.getBatteryTyreSummaryByBranch(months, qtrWise, halfYear);
-            default:throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
+        return batteryTyreRepository.getBatteryTyreSummaryByCity(months, qtrWise, halfYear);
     }
 
     @Override

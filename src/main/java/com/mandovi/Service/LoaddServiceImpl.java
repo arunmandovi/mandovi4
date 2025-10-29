@@ -220,7 +220,7 @@ public class LoaddServiceImpl implements LoaddService {
     }
 
     @Override
-    public List<LoaddSummaryDTO> getLoaddSummary(List<String> months, List<String> channels, String qtrWise, String halfYear) {
+    public List<LoaddSummaryDTO> getLoaddSummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
      return loaddRepository.getLoaddSummaryByCity(months, channels, qtrWise, halfYear);
     }
 

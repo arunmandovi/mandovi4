@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -107,15 +106,8 @@ public class BRConversionServiceImpl implements BRConversionService {
     }
 
     @Override
-    public List<BRConversionSummaryDTO> getBRConversionSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return brConversionRepository.getBRConversionSummaryByCity(months, qtrWise, halfYear);
-            case "branch" : return brConversionRepository.getBRConversionSummaryByBranch(months, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
+    public List<BRConversionSummaryDTO> getBRConversionSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
+        return brConversionRepository.getBRConversionSummaryByCity(months, qtrWise, halfYear);
     }
 
     @Override

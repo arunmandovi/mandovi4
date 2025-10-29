@@ -49,8 +49,8 @@ public class LabourController {
      public ResponseEntity<?> getLabourSummary (
              @RequestParam (required = false) List<String> months,
              @RequestParam (required = false) List<String> channels,
-             @RequestParam (required = false) String qtrWise,
-             @RequestParam (required = false) String halfYear ){
+             @RequestParam (required = false) List<String> qtrWise,
+             @RequestParam (required = false) List<String> halfYear ){
         try {
             List<LabourSummaryDTO> list = labourService.getLabourSummary( months, channels , qtrWise, halfYear);
             return ResponseEntity.ok(list);

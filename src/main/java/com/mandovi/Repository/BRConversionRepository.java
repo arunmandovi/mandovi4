@@ -50,14 +50,14 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
             )
             FROM BRConversion b
             WHERE (:months IS NULL OR b.month IN (:months))
-              AND (:qtrWise IS NULL OR b.qtrWise = :qtrWise)
-              AND (:halfYear IS NULL OR b.halfYear = :halfYear)
+              AND (:qtrWise IS NULL OR b.qtrWise IN (:qtrWise))
+              AND (:halfYear IS NULL OR b.halfYear IN (:halfYear))
             GROUP BY b.city
             """)
     List<BRConversionSummaryDTO> getBRConversionSummaryByCity(
             @Param("months") List<String> month,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear
     );
 
     // Group by branch

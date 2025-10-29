@@ -23,11 +23,7 @@ public class LabourServiceImpl implements LabourService {
         this.labourRepository = labourRepository;
     }
 
-    private Double round2Decimal(Double value){
-        return Math.round(value*100.0)/100.0;
-    }
-
-    @Override
+        @Override
     @Transactional
     public void saveLabourFromExcel(MultipartFile file) {
         try {
@@ -66,10 +62,10 @@ public class LabourServiceImpl implements LabourService {
                 labour.setYear(row.getCell(2).getStringCellValue());
                 labour.setMonth(row.getCell(3).getStringCellValue());
                 labour.setServiceTypeCode(row.getCell(4).getStringCellValue());
-                labour.setSumOfBasicAmt(round2Decimal(row.getCell(5).getNumericCellValue()));
+                labour.setSumOfBasicAmt(row.getCell(5).getNumericCellValue());
 
                 //Updating labour column by dividing the sumofbasicamt;s value from 100000
-                labour.setLabour(round2Decimal(labour.getSumOfBasicAmt()/100000));
+                labour.setLabour(labour.getSumOfBasicAmt()/100000);
 
                 //Updating column period by concating columns month & year
                 labour.setPeriod(labour.getMonth()+"-"+labour.getYear());
@@ -135,7 +131,7 @@ public class LabourServiceImpl implements LabourService {
     }
 
     @Override
-    public List<LabourSummaryDTO> getLabourSummary(List<String> months, List<String> channels, String qtrWise, String halfYear) {
+    public List<LabourSummaryDTO> getLabourSummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
         return labourRepository.getLabourSummaryByCity(months, channels, qtrWise, halfYear);
     }
 

@@ -47,12 +47,11 @@ public class BRConversionController {
 
     @GetMapping("/br_conversion_summary")
     public ResponseEntity<?> getBRConversionSummary (
-            @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months,
-            @RequestParam(required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam(required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<BRConversionSummaryDTO> listBRConversionSummary = brConversionService.getBRConversionSummary(groupBy, months, qtrWise, halfYear);
+            List<BRConversionSummaryDTO> listBRConversionSummary = brConversionService.getBRConversionSummary(months, qtrWise, halfYear);
             if (listBRConversionSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

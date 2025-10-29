@@ -50,8 +50,8 @@ public class LoaddController {
     public ResponseEntity<?> getLoaddServiceSummary(
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> channels,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
             List<LoaddSummaryDTO> listLoaddServiceSummary = loaddService.getLoaddSummary(months, channels, qtrWise, halfYear);
             if (listLoaddServiceSummary.isEmpty()) {

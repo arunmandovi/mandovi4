@@ -15,7 +15,7 @@ public interface LoaddService {
 
     public List<Loadd> getLoadByMonthYear(String month, String year);
 
-    public List<LoaddSummaryDTO> getLoaddSummary (List<String> months, List<String> channels, String qtrWise, String halfYear);
+    public List<LoaddSummaryDTO> getLoaddSummary (List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
 
     public List<LoaddSummaryDTO> getLoaddSummaryBranchWise (List<String> cities, List<String> months);
 

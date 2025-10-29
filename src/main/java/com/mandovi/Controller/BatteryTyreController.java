@@ -48,12 +48,11 @@ public class BatteryTyreController {
 
     @GetMapping("/battery_tyre_summary")
     public ResponseEntity<?> getBatterySummary(
-            @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months,
-            @RequestParam(required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam(required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<BatteryTyreSummaryDTO> listBattery = batteryTyreService.getBatteryTyreSummary(groupBy, months, qtrWise, halfYear);
+            List<BatteryTyreSummaryDTO> listBattery = batteryTyreService.getBatteryTyreSummary(months, qtrWise, halfYear);
             if (listBattery.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
