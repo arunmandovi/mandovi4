@@ -31,15 +31,15 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
             FROM Referencee r
             WHERE (:months IS NULL OR r.month IN (:months))
             AND (:channels IS NULL OR r.channel IN (:channels))
-            AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
-            AND (:halfYear IS NULL OR r.halfYear = :halfYear)
+            AND (:qtrWise IS NULL OR r.qtrWise IN (:qtrWise))
+            AND (:halfYear IS NULL OR r.halfYear IN (:halfYear))
             GROUP BY r.city
             """)
     List<ReferenceeSummaryDTO> getReferenceeSummaryByCity (
             @Param("months") List<String> months,
             @Param("channels") List<String> channels,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 
     //Group By branch
     @Query("""

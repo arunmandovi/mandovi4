@@ -47,12 +47,11 @@ public class OilController {
 
     @GetMapping("/oil_summary")
     public ResponseEntity<?> getOilSummary (
-            @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<OilSummaryDTO> listOilQtySummary = oilService.getOilSummary(groupBy, months, qtrWise, halfYear);
+            List<OilSummaryDTO> listOilQtySummary = oilService.getOilSummary(months, qtrWise, halfYear);
             if (listOilQtySummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

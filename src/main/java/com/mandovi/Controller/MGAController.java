@@ -3,7 +3,6 @@ package com.mandovi.Controller;
 import com.mandovi.DTO.MGASummaryDTO;
 import com.mandovi.Entity.MGA;
 import com.mandovi.Service.MGAService;
-import jdk.dynalink.linker.LinkerServices;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,12 +47,11 @@ public class MGAController {
 
     @GetMapping("mga_summary")
     public ResponseEntity<List<MGASummaryDTO>> getMGASummary (
-            @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<MGASummaryDTO> listMGASummary = mgaService.getMGASummary(groupBy, months, qtrWise, halfYear);
+            List<MGASummaryDTO> listMGASummary = mgaService.getMGASummary(months, qtrWise, halfYear);
             if (listMGASummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

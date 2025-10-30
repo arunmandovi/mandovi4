@@ -26,15 +26,15 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
             FROM MCP m
             WHERE (:months IS NULL OR m.month IN (:months))
               AND (:channels IS  NULL OR m.channel IN (:channels))
-              AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-              AND (:halfYear IS NULL OR m.halfYear = :halfYear)
+              AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
+              AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
             GROUP BY m.city
             """)
     List<MCPSummaryDTO> getMCPSummaryByCity(
             @Param("months") List<String> months,
             @Param("channels") List<String> channels,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear);
 
     //Group by branch
     @Query("""

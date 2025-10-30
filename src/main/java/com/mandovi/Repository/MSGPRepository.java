@@ -59,14 +59,14 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
         )
         FROM MSGP m
         WHERE (:months IS NULL OR m.month IN (:months))
-          AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR m.halfYear = :halfYear)
+          AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
+          AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
         GROUP BY m.city
     """)
     List<MSGPSummaryDTO> getMSGPSummaryByCity(
             @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 
     //Group by city
     @Query("""

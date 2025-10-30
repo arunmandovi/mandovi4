@@ -116,9 +116,14 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
             )
     FROM VAS v
     WHERE (:months IS NULL OR v.month IN (:months))
+    AND (:qtrWise IS NULL OR v.qtrWise IN (:qtrWise))
+    AND (:halfYear IS NULL OR v.halfYear IN (:halfYear))
     GROUP BY v.city
     """)
-    List<VASSummaryDTO> getVASSummaryByCity(@Param("months") List<String> months);
+    List<VASSummaryDTO> getVASSummaryByCity(
+            @Param("months") List<String> months,
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 
     //Group by branch
     @Query("""

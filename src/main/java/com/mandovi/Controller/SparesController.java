@@ -47,12 +47,11 @@ public class SparesController {
 
     @GetMapping("/spares_summary")
     public ResponseEntity<?> getSparesSummary (
-            @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<SparesSummaryDTO> listSparesSummary = sparesService.getSparesSummary(groupBy, months, qtrWise, halfYear);
+            List<SparesSummaryDTO> listSparesSummary = sparesService.getSparesSummary(months, qtrWise, halfYear);
             if (listSparesSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

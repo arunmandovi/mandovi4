@@ -38,14 +38,14 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
             )
             FROM Spares s
             WHERE (:months IS NULL OR s.month IN (:months))
-             AND (:qtrWise IS NULL OR s.qtrWise = :qtrWise)
-             AND (:halfYear IS NULL OR s.halfYear = :halfYear)
+             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
+             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))
             GROUP BY s.city
             """)
     List<SparesSummaryDTO> getSparesSummaryDTOByCity (
             @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 
     //Group by branch
     @Query("""

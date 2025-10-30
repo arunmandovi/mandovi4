@@ -109,15 +109,8 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public List<RevenueSummaryDTO> getRevenueSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return revenueRepository.getRevenueSummaryByCity(months, qtrWise, halfYear);
-            case "branch" : return revenueRepository.getRevenueSummaryByBranch(months, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
+    public List<RevenueSummaryDTO> getRevenueSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
+        return revenueRepository.getRevenueSummaryByCity(months, qtrWise, halfYear);
     }
 
     @Override

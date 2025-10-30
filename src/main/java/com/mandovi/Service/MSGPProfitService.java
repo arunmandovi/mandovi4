@@ -13,7 +13,7 @@ public interface MSGPProfitService {
 
     public List<MSGPProfit> getMSGPProfitByMonthYear(String month, String year);
 
-    public List<MSGPProfitSummaryDTO> getMSGPProfitSummary (String groupBy, List<String> months, String qtrWise, String halfYear);
+    public List<MSGPProfitSummaryDTO> getMSGPProfitSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 
     public List<MSGPProfitSummaryDTO> getMSGPProfitSummaryBranchWise (List<String> cities, List<String> months);
 }

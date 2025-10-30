@@ -22,10 +22,6 @@ public class PMSPartsServiceImpl implements PMSPartsService {
         this.pmsPartsRepository = pmsPartsRepository;
     }
 
-    private Double round2Decimal(Double value){
-        return Math.round(value*100.0)/100.;
-    }
-
     @Override
     public void savePMSPartsFromExcel(MultipartFile file) {
         try {
@@ -61,7 +57,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                 //Updating Double data type pms value from Intger required & changed column's values
                 Double required = Double.valueOf(pmsParts.getRequired());
                 Double changed = Double.valueOf(pmsParts.getChanged());
-                pmsParts.setPms(round2Decimal(changed/required*100));
+                pmsParts.setPms(changed/required*100);
 
                 //Updating branch column using values from column location code
                 String locationCode = pmsParts.getLocationCode();
@@ -158,15 +154,8 @@ public class PMSPartsServiceImpl implements PMSPartsService {
     }
 
     @Override
-    public List<PMSPartsSummaryDTO> getPMSPartsSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return pmsPartsRepository.getPMSPartsSummaryByCity(months, qtrWise, halfYear);
-            case "branch" : return pmsPartsRepository.getPMSPartsSummaryByBranch(months, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy parameter is Invalid");
-        }
+    public List<PMSPartsSummaryDTO> getPMSPartsSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
+        return pmsPartsRepository.getPMSPartsSummaryByCity(months, qtrWise, halfYear);
     }
 
     @Override

@@ -43,14 +43,14 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
         )
         FROM MSGPProfit m
         WHERE (:months IS NULL OR m.month IN (:months))
-          AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR m.halfYear = :halfYear)
+          AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
+          AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
         GROUP BY m.city
     """)
     List<MSGPProfitSummaryDTO> getMSGPProfitSummaryByCity(
             @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear
     );
 
     //Group by branch

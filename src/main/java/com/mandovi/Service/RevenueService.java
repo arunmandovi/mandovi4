@@ -13,7 +13,7 @@ public interface RevenueService {
 
     public List<Revenue> getRevenueByMonthYear (String month, String year);
 
-    public List<RevenueSummaryDTO> getRevenueSummary (String groupBy, List<String> months, String qtrWise, String halfYear );
+    public List<RevenueSummaryDTO> getRevenueSummary (List<String> months, List<String> qtrWise, List<String> halfYear );
 
     public List<RevenueSummaryDTO> getRevenueSummaryBranchWise (List<String> cities, List<String> months);
 }

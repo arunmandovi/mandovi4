@@ -44,14 +44,14 @@ public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
             )
             FROM Revenue r
             WHERE (:months IS NULL OR r.month IN (:months))
-             AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
-             AND (:halfYear IS NULL OR r.halfYear = :halfYear)
+             AND (:qtrWise IS NULL OR r.qtrWise IN (:qtrWise))
+             AND (:halfYear IS NULL OR r.halfYear IN (:halfYear))
             GROUP By r.city
             """)
     List<RevenueSummaryDTO> getRevenueSummaryByCity (
             @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 
     //Group by city
     @Query("""

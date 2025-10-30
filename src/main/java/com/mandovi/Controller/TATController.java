@@ -47,12 +47,11 @@ public class TATController {
 
     @GetMapping("/tat_summary")
     public ResponseEntity<?> getTATSummary (
-            @RequestParam (required = false, defaultValue = "city") String groupBy,
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<TATSummaryDTO> listTATSummary = tatService.getTATSummary(groupBy, months, qtrWise, halfYear);
+            List<TATSummaryDTO> listTATSummary = tatService.getTATSummary(months, qtrWise, halfYear);
             if (listTATSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

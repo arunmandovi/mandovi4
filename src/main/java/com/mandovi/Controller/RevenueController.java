@@ -46,12 +46,11 @@ public class RevenueController {
 
     @GetMapping("/revenue_summary")
     public ResponseEntity<?> getRevenueSummary (
-            @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<RevenueSummaryDTO> listRevenueSummary = revenueService.getRevenueSummary(groupBy, months, qtrWise, halfYear);
+            List<RevenueSummaryDTO> listRevenueSummary = revenueService.getRevenueSummary(months, qtrWise, halfYear);
             if (listRevenueSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

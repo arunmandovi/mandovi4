@@ -49,8 +49,8 @@ public class MCPController {
     public ResponseEntity<List<MCPSummaryDTO>> getMCPSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> channels,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
             List<MCPSummaryDTO> listMCPSummary = mcpService.getMCPSummary(months, channels, qtrWise, halfYear);
             if (listMCPSummary.isEmpty()) {

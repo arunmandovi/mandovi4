@@ -72,6 +72,12 @@ public class VASServiceImpl implements VASService {
                 vas.setJobCardNo(number * vas.getWheels());
                 vas.setBasicAmt(round2Decimals(row.getCell(7).getNumericCellValue()));
 
+                switch (vas.getMonth().trim().toUpperCase()){
+                    case "APR", "MAY", "JUN" -> { vas.setQtrWise("Qtr1"); vas.setHalfYear("H1");}
+                    case "JUL", "AUG", "SEP" -> { vas.setQtrWise("Qtr2"); vas.setHalfYear("H1");}
+                    case "OCT", "NOV", "DEC" -> { vas.setQtrWise("Qtr3"); vas.setHalfYear("H2");}
+                    case "JAN", "FEB", "MAR" -> { vas.setQtrWise("Qtr4"); vas.setHalfYear("H2");}
+                    }
                 vasRepository.save(vas);
             }
         } catch (Exception e) {
@@ -91,15 +97,8 @@ public class VASServiceImpl implements VASService {
     }
 
     @Override
-    public List<VASSummaryDTO> getVAS(String groupBy, List<String> months) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return vasRepository.getVASSummaryByCity(months);
-            case "branch" : return vasRepository.getVASSummaryByBranch(months);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
+    public List<VASSummaryDTO> getVASSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
+        return vasRepository.getVASSummaryByCity(months, qtrWise, halfYear);
     }
 
     @Override

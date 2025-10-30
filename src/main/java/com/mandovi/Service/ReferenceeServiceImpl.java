@@ -92,7 +92,7 @@ public class ReferenceeServiceImpl implements ReferenceeService {
     }
 
     @Override
-    public List<ReferenceeSummaryDTO> getReferenceeSummary(List<String> months, List<String> channels, String qtrWise, String halfYear) {
+    public List<ReferenceeSummaryDTO> getReferenceeSummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
         return referenceeRepository.getReferenceeSummaryByCity(months, channels, qtrWise, halfYear);
     }
 

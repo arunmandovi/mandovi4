@@ -90,14 +90,14 @@ public class TATServiceImpl implements TATService {
     }
 
     @Override
-    public List<TATSummaryDTO> getTATSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
+    public List<TATSummaryDTO> getTATSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
         List<TAT> allTAT = tatRepository.findAll();
 
         // Apply Filters
         List<TAT> filtered = allTAT.stream()
                 .filter(tat -> months == null || months.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getMonth())))
-                .filter(tat -> qtrWise == null || qtrWise.equalsIgnoreCase(tat.getQtrWise()))
-                .filter(tat -> halfYear == null || halfYear.equalsIgnoreCase(tat.getHalfYear()))
+                .filter(tat -> qtrWise == null || qtrWise.stream().anyMatch(q -> q.equalsIgnoreCase(tat.getQtrWise())))
+                .filter(tat -> halfYear == null || halfYear.stream().anyMatch(h -> h.equalsIgnoreCase(tat.getHalfYear())))
                 .toList();
 
         // Group by city

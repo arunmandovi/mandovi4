@@ -49,8 +49,8 @@ public class ReferenceeController {
     public ResponseEntity<?> getReferenceeSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> channels,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
             List<ReferenceeSummaryDTO> listReferenceeSummary = referenceeService.getReferenceeSummary(months, channels, qtrWise, halfYear);
             if (listReferenceeSummary.isEmpty()) {

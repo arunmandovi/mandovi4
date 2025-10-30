@@ -46,12 +46,11 @@ public class MSGPProfitController {
 
     @GetMapping("/msgp_profit_summary")
     public ResponseEntity<?> getMSGPProfitSummary (
-            @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<MSGPProfitSummaryDTO> listMSGPProfitSummary = msgpProfitService.getMSGPProfitSummary(groupBy, months, qtrWise, halfYear);
+            List<MSGPProfitSummaryDTO> listMSGPProfitSummary = msgpProfitService.getMSGPProfitSummary(months, qtrWise, halfYear);
             if (listMSGPProfitSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

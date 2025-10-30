@@ -38,10 +38,16 @@ public class VAS {
     @Column(name = "basic_amt")
     private Double basicAmt;
 
+    @Column(name = "qtr_wise")
+    private String qtrWise;
+
+    @Column(name = "half_year")
+    private String halfYear;
+
     public VAS() {
     }
 
-    public VAS(Integer vasSINo, String city, String branch, String labourType, Integer wheels, String vas, String month, String year, Integer jobCardNo, Double basicAmt) {
+    public VAS(Integer vasSINo, String city, String branch, String labourType, Integer wheels, String vas, String month, String year, Integer jobCardNo, Double basicAmt, String qtrWise, String halfYear) {
         this.vasSINo = vasSINo;
         this.city = city;
         this.branch = branch;
@@ -52,6 +58,8 @@ public class VAS {
         this.year = year;
         this.jobCardNo = jobCardNo;
         this.basicAmt = basicAmt;
+        this.qtrWise = qtrWise;
+        this.halfYear = halfYear;
     }
 
     public Integer getVasSINo() {
@@ -134,6 +142,22 @@ public class VAS {
         this.basicAmt = basicAmt;
     }
 
+    public String getQtrWise() {
+        return qtrWise;
+    }
+
+    public void setQtrWise(String qtrWise) {
+        this.qtrWise = qtrWise;
+    }
+
+    public String getHalfYear() {
+        return halfYear;
+    }
+
+    public void setHalfYear(String halfYear) {
+        this.halfYear = halfYear;
+    }
+
     @Override
     public String toString() {
         return "VAS{" +
@@ -147,6 +171,8 @@ public class VAS {
                 ", year='" + year + '\'' +
                 ", jobCardNo=" + jobCardNo +
                 ", basicAmt=" + basicAmt +
+                ", qtrWise='" + qtrWise + '\'' +
+                ", halfYear='" + halfYear + '\'' +
                 '}';
     }
 }

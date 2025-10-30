@@ -38,14 +38,14 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
         )
         FROM Oil o
         WHERE (:months IS NULL OR o.month IN (:months))
-          AND (:qtrWise IS NULL OR o.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR o.halfYear = :halfYear)
+          AND (:qtrWise IS NULL OR o.qtrWise IN (:qtrWise))
+          AND (:halfYear IS NULL OR o.halfYear IN (:halfYear))
         GROUP BY o.city
     """)
     List<OilSummaryDTO> getOilSummaryByCity(
             @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear);
 
     //Group by branch
     @Query("""

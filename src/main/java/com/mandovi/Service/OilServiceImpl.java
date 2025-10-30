@@ -86,15 +86,8 @@ public class OilServiceImpl implements OilService {
     }
 
     @Override
-    public List<OilSummaryDTO> getOilSummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()) {
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return oilRepository.getOilSummaryByCity(months, qtrWise, halfYear);
-            case "branch" : return oilRepository.getOilSummaryByBranch(months, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
+    public List<OilSummaryDTO> getOilSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
+        return oilRepository.getOilSummaryByCity(months, qtrWise, halfYear);
     }
 
     @Override

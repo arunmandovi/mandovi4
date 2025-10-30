@@ -22,9 +22,6 @@ public class MGAServiceImpl implements MGAService {
     public MGAServiceImpl(MGARepository mgaRepository) {
         this.mgaRepository = mgaRepository;
     }
-    private Double round2Decimal (Double value) {
-        return Math.round(value * 100.0) / 100.0;
-    }
     private String getStringCell(Row row, int index) {
         Cell cell = row.getCell(index);
         if (cell == null) return null;
@@ -90,14 +87,14 @@ public class MGAServiceImpl implements MGAService {
                 mga.setLocation(row.getCell(6).getStringCellValue());
                 mga.setDealerName(row.getCell(7).getStringCellValue());
                 mga.setServiceAdvisor(row.getCell(8).getStringCellValue());
-                mga.setConsumption(round2Decimal(row.getCell(9).getNumericCellValue()));
+                mga.setConsumption(row.getCell(9).getNumericCellValue());
 
                 //Getting only Numeric Value
                 switch (row.getCell(10).getCellType()){
                     case NUMERIC -> mga.setLoadd((int)row.getCell(10).getNumericCellValue());
                     default -> mga.setLoadd(0);
                 }
-                mga.setMgaLoad(round2Decimal(row.getCell(11).getNumericCellValue()));
+                mga.setMgaLoad(row.getCell(11).getNumericCellValue());
 
                 //Updating branch based on location
                 if (mga.getLocation() != null) {
@@ -193,17 +190,10 @@ public class MGAServiceImpl implements MGAService {
     }
 
     @Override
-    public List<MGASummaryDTO> getMGASummary(String groupBy, List<String> months, String qtrWise, String halfYear) {
-        if (groupBy == null || groupBy.isEmpty()){
-            throw new IllegalArgumentException("groupBy Parameter is Required");
-        }
-        switch (groupBy.toLowerCase()){
-            case "city" : return mgaRepository.getMGASummaryByCity(months, qtrWise, halfYear);
-            case "branch" : return mgaRepository.getMGASummaryByBranch(months, qtrWise, halfYear);
-            case "city_branch" : return mgaRepository.getMGASummaryByCityAndBranch(months, qtrWise, halfYear);
-            default: throw new IllegalArgumentException("groupBy Parameter is Invalid");
-        }
+    public List<MGASummaryDTO> getMGASummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
+        return mgaRepository.getMGASummaryByCity(months, qtrWise, halfYear);
     }
+
 
 
 }

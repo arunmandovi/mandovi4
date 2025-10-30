@@ -48,12 +48,11 @@ public class PMSPartsController {
 
     @GetMapping("/pms_parts_summary")
     public ResponseEntity<List<PMSPartsSummaryDTO>> getPMSPartsSummary (
-            @RequestParam String groupBy,
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) String qtrWise,
-            @RequestParam (required = false) String halfYear ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<PMSPartsSummaryDTO> listPMSPartsSummary = pmsPartsService.getPMSPartsSummary(groupBy, months, qtrWise, halfYear);
+            List<PMSPartsSummaryDTO> listPMSPartsSummary = pmsPartsService.getPMSPartsSummary(months, qtrWise, halfYear);
             if (listPMSPartsSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
