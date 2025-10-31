@@ -46,7 +46,7 @@ public class MGAController {
     }
 
     @GetMapping("mga_summary")
-    public ResponseEntity<List<MGASummaryDTO>> getMGASummary (
+    public ResponseEntity<?> getMGASummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
             @RequestParam (required = false) List<String> halfYear ){
@@ -56,10 +56,25 @@ public class MGAController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listMGASummary);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(null);
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body(null);
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/mga_branch_summary")
+    public ResponseEntity<?> getMGASummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
+        try {
+            List<MGASummaryDTO> listMGASummaryBranchWise = mgaService.getMGASummaryBranchWise(months, cities, qtrWise, halfYear);
+            if (listMGASummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listMGASummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 }

@@ -39,36 +39,22 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
     //Group by branch
     @Query("""
             SELECT new com.mandovi.DTO.MCPSummaryDTO(
-            null,
-            m.branch,
-            SUM(m.mcpQuantity ),
-            SUM(m.amountCollected ))
-            FROM MCP m
-            WHERE (:months IS NULL OR m.month IN (:months))
-              AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-              AND (:halfYear IS NULL OR m.halfYear = :halfYear)
-            GROUP BY m.branch
-            """)
-    List<MCPSummaryDTO> getMCPSummaryByBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
-
-    //Group by city and branch
-    @Query("""
-            SELECT new com.mandovi.DTO.MCPSummaryDTO(
             m.city,
             m.branch,
             SUM(m.mcpQuantity ),
             SUM(m.amountCollected))
             FROM MCP m
             WHERE (:months IS NULL OR m.month IN (:months))
-              AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-              AND (:halfYear IS NULL OR m.halfYear = :halfYear)
+            AND (:cities IS NULL OR m.city IN (:cities))
+            AND (:channels IS NULL OR m.channel IN (:channels))
+            AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
+            AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
             GROUP BY m.city, m.branch
             """)
-    List<MCPSummaryDTO> getMCPSummaryByCityAndBranch(
+    List<MCPSummaryDTO> getMCPSummaryBranchWise(
             @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
+            @Param("cities") List<String> cities,
+            @Param("channels") List<String> channels,
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear);
 }

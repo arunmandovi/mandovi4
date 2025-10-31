@@ -57,10 +57,26 @@ public class MCPController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listMCPSummary);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(null);
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    @GetMapping("/mcp_branch_summary")
+    public ResponseEntity<?> getMCPSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> channels,
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
+        try {
+            List<MCPSummaryDTO> listMCPSummaryBranchWise = mcpService.getMCPSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+            if (listMCPSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listMCPSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 }

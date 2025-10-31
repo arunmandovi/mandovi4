@@ -155,4 +155,9 @@ public class MCPServiceImpl implements MCPService {
     public List<MCPSummaryDTO> getMCPSummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
         return mcpRepository.getMCPSummaryByCity(months, channels, qtrWise, halfYear);
     }
+
+    @Override
+    public List<MCPSummaryDTO> getMCPSummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear) {
+        return mcpRepository.getMCPSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+    }
 }

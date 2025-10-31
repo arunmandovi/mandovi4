@@ -43,28 +43,6 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
     //Group by branch
     @Query("""
         SELECT new com.mandovi.DTO.MGASummaryDTO(
-            null,
-            m.branch,
-            SUM(m.loadd),
-            SUM(m.consumption),
-            SUM(m.consumption) / SUM(m.loadd),
-            (SUM(m.loadd) * 455) - SUM(m.consumption),
-            ((SUM(m.loadd) * 455) - SUM(m.consumption)) / SUM(m.loadd)
-        )
-        FROM MGA m
-        WHERE (:months IS NULL OR m.month IN (:months))
-          AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR m.halfYear = :halfYear)
-        GROUP BY m.branch
-    """)
-    List<MGASummaryDTO> getMGASummaryByBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
-
-    //Group by city and branch
-    @Query("""
-        SELECT new com.mandovi.DTO.MGASummaryDTO(
             m.city,
             m.branch,
             SUM(m.loadd),
@@ -75,13 +53,15 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
         )
         FROM MGA m
         WHERE (:months IS NULL OR m.month IN (:months))
-          AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR m.halfYear = :halfYear)
+        AND (:cities IS NULL OR m.city IN (:cities))
+        AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
+        AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
         GROUP BY m.city, m.branch
     """)
-    List<MGASummaryDTO> getMGASummaryByCityAndBranch(
+    List<MGASummaryDTO> getMGASummaryBranchWise(
             @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
+            @Param("cities") List<String> cities,
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear);
 
 }
