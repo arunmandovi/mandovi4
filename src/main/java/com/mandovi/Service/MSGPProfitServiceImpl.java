@@ -166,7 +166,7 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
     }
 
     @Override
-    public List<MSGPProfitSummaryDTO> getMSGPProfitSummaryBranchWise(List<String> cities, List<String> months) {
-        return msgpProfitRepository.getMSGPProfitSummaryBranchWise(cities, months);
+    public List<MSGPProfitSummaryDTO> getMSGPProfitSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+        return msgpProfitRepository.getMSGPProfitSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 }

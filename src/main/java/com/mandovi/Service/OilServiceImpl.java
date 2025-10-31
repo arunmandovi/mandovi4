@@ -91,8 +91,8 @@ public class OilServiceImpl implements OilService {
     }
 
     @Override
-    public List<OilSummaryDTO> getOilSummaryBranchWise(List<String> cities, List<String> months) {
-        return oilRepository.getOilSummaryBranchWise(cities, months);
+    public List<OilSummaryDTO> getOilSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+        return oilRepository.getOilSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 
 }

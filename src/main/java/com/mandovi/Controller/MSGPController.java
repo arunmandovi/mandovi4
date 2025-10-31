@@ -56,25 +56,25 @@ public class MSGPController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listMSGPServiceBodyShopSummary);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("ERROR :" + e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+ e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+ e.getMessage());
         }
     }
 
-    @GetMapping("msgp_branch_summary")
-    public ResponseEntity<?> getMSGPSummaryBranchWise(
+    @GetMapping("/msgp_branch_summary")
+    public ResponseEntity<?> getMSGPSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<MSGPSummaryDTO> listMSGPSummaryBranchWise = msgpService.getMSGPSummaryBranchWise(cities, months);
+            List<MSGPSummaryDTO> listMSGPSummaryBranchWise = msgpService.getMSGPSummaryBranchWise(months, cities, qtrWise, halfYear);
             if (listMSGPSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listMSGPSummaryBranchWise);
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internale Server ERROR : "+e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 

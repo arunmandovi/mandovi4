@@ -159,7 +159,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
     }
 
     @Override
-    public List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise(List<String> cities, List<String> months) {
-        return pmsPartsRepository.getPMSPartsSummaryBranchWise(cities, months);
+    public List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+        return pmsPartsRepository.getPMSPartsSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 }

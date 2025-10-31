@@ -16,5 +16,5 @@ public interface PMSPartsService {
 
     public List<PMSPartsSummaryDTO> getPMSPartsSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 
-    public List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise (List<String> cities, List<String> months);
+    public List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
 }

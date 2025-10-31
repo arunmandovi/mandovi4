@@ -47,7 +47,7 @@ public class PMSPartsController {
     }
 
     @GetMapping("/pms_parts_summary")
-    public ResponseEntity<List<PMSPartsSummaryDTO>> getPMSPartsSummary (
+    public ResponseEntity<?> getPMSPartsSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
             @RequestParam (required = false) List<String> halfYear ){
@@ -58,22 +58,24 @@ public class PMSPartsController {
             }
             return ResponseEntity.ok(listPMSPartsSummary);
         }catch (Exception e) {
-            return ResponseEntity.internalServerError().body(null);
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 
     @GetMapping("/pms_parts_branch_summary")
     public ResponseEntity<?> getPMSPartsSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<PMSPartsSummaryDTO> listPMSPartsSummaryBranchWise = pmsPartsService.getPMSPartsSummaryBranchWise(cities, months);
+            List<PMSPartsSummaryDTO> listPMSPartsSummaryBranchWise = pmsPartsService.getPMSPartsSummaryBranchWise(months, cities, qtrWise, halfYear);
             if (listPMSPartsSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listPMSPartsSummaryBranchWise);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 }

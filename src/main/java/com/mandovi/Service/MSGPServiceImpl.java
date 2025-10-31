@@ -146,7 +146,9 @@ public class MSGPServiceImpl implements MSGPService {
     }
 
     @Override
-    public List<MSGPSummaryDTO> getMSGPSummaryBranchWise(List<String> cities, List<String> months) {
-        return msgpRepository.getMSGPSummaryBranchWise(cities, months);
+    public List<MSGPSummaryDTO> getMSGPSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+        return msgpRepository.getMSGPSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
+
+
 }

@@ -15,5 +15,5 @@ public interface OilService {
 
     public List<OilSummaryDTO> getOilSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 
-    public List<OilSummaryDTO> getOilSummaryBranchWise (List<String> cities, List<String> months);
+    public List<OilSummaryDTO> getOilSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
 }

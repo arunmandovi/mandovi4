@@ -101,88 +101,6 @@ public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
     //Group  By branch
     @Query("""
         SELECT new com.mandovi.DTO.PMSPartsSummaryDTO(
-        null,
-        p.branch,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'Air filter' THEN p.required ELSE 0 END) = 0
-             THEN 0
-             ELSE SUM(CASE WHEN p.partGroup = 'Air filter' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'Air filter' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'Belt water pump' THEN p.required ELSE 0 END) = 0 
-             THEN 0 
-             ELSE SUM(CASE WHEN p.partGroup = 'Belt water pump' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'Belt water pump' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'Brake fluid' THEN p.required ELSE 0 END) = 0 
-             THEN 0 
-             ELSE SUM(CASE WHEN p.partGroup = 'Brake fluid' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'Brake fluid' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'Coolant' THEN p.required ELSE 0 END) = 0 
-             THEN 0 
-             ELSE SUM(CASE WHEN p.partGroup = 'Coolant' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'Coolant' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'Fuel Filter' THEN p.required ELSE 0 END) = 0 
-             THEN 0 
-             ELSE SUM(CASE WHEN p.partGroup = 'Fuel Filter' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'Fuel Filter' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'Oil filter' THEN p.required ELSE 0 END) = 0 
-             THEN 0 
-             ELSE SUM(CASE WHEN p.partGroup = 'Oil filter' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'Oil filter' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'Spark plug' THEN p.required ELSE 0 END) = 0 
-             THEN 0 
-             ELSE SUM(CASE WHEN p.partGroup = 'Spark plug' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'Spark plug' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup IN ('Air filter','Belt water pump','Brake fluid','Coolant','Fuel Filter','Oil filter','Spark plug') THEN p.required ELSE 0 END) = 0
-             THEN 0
-             ELSE SUM(CASE WHEN p.partGroup IN ('Air filter','Belt water pump','Brake fluid','Coolant','Fuel Filter','Oil filter','Spark plug') THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup IN ('Air filter','Belt water pump','Brake fluid','Coolant','Fuel Filter','Oil filter','Spark plug') THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'DRAIN PLUG GASKET' THEN p.required ELSE 0 END) = 0
-             THEN 0
-             ELSE SUM(CASE WHEN p.partGroup = 'DRAIN PLUG GASKET' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'DRAIN PLUG GASKET' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'ISG BELT GENERATOR' THEN p.required ELSE 0 END) = 0
-             THEN 0
-             ELSE SUM(CASE WHEN p.partGroup = 'ISG BELT GENERATOR' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'ISG BELT GENERATOR' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup = 'CNG FILTER' THEN p.required ELSE 0 END) = 0
-             THEN 0
-             ELSE SUM(CASE WHEN p.partGroup = 'CNG FILTER' THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup = 'CNG FILTER' THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(CASE WHEN p.partGroup IN ('DRAIN PLUG GASKET','ISG BELT GENERATOR','CNG FILTER') THEN p.required ELSE 0 END) = 0
-             THEN 0
-             ELSE SUM(CASE WHEN p.partGroup IN ('DRAIN PLUG GASKET','ISG BELT GENERATOR','CNG FILTER') THEN p.changed ELSE 0 END) * 100.0 /
-                  SUM(CASE WHEN p.partGroup IN ('DRAIN PLUG GASKET','ISG BELT GENERATOR','CNG FILTER') THEN p.required ELSE 0 END)
-        END,
-        CASE WHEN SUM(p.required) = 0
-             THEN 0
-             ELSE SUM(p.changed) * 100.0 / SUM(p.required)
-        END
-        )
-        FROM PMSParts p
-        WHERE (:months IS NULL OR p.month IN (:months))
-         AND (:qtrWise IS NULL OR p.qtrWise = :qtrWise)
-         AND (:halfYear IS NULL OR p.halfYear = :halfYear)
-        GROUP BY p.branch
-        """)
-    List<PMSPartsSummaryDTO> getPMSPartsSummaryByBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear
-    );
-
-    //Group  By city and branch
-    @Query("""
-        SELECT new com.mandovi.DTO.PMSPartsSummaryDTO(
         p.city,
         p.branch,
         CASE WHEN SUM(CASE WHEN p.partGroup = 'Air filter' THEN p.required ELSE 0 END) = 0
@@ -251,11 +169,15 @@ public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
         END
         )
         FROM PMSParts p
-        WHERE (:cities IS NULL OR p.city IN (:cities))
-         AND (:months IS NULL OR p.month IN (:months))
+        WHERE (:months IS NULL OR p.month IN (:months))
+         AND (:cities IS NULL OR p.city IN (:cities))
+         AND (:qtrWise IS NULL OR p.qtrWise IN (:qtrWise))
+         AND (:halfYear IS NULL OR p.halfYear IN (:halfYear))
         GROUP BY p.city, p.branch
         """)
     List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise(
+            @Param("months") List<String> months,
             @Param("cities") List<String> cities,
-            @Param("months") List<String> months );
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 }

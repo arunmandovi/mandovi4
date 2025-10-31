@@ -50,38 +50,6 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
     //Group by branch
     @Query("""
         SELECT new com.mandovi.DTO.OilSummaryDTO(
-            MAX(o.city),
-            o.branch,
-            SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailQty ELSE 0 END),
-            SUM(CASE WHEN o.oilType = 'SEMI SYNTHETIC' THEN o.netRetailQty ELSE 0 END),
-            SUM(CASE WHEN o.oilType = 'MINERAL' THEN o.netRetailQty ELSE 0 END),
-            SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailQty ELSE 0 END),
-            SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailQty ELSE 0 END) * 100 /
-            NULLIF(SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailQty ELSE 0 END), 0),
-            SUM(CASE WHEN o.oilType = 'SEMI SYNTHETIC' THEN o.netRetailQty ELSE 0 END) * 100 /
-            NULLIF(SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailQty ELSE 0 END), 0),
-            SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC') THEN o.netRetailQty ELSE 0 END) * 100 /
-            NULLIF(SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailQty ELSE 0 END), 0),
-            SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailSelling ELSE 0 END),
-            SUM(CASE WHEN o.oilType = 'SEMI SYNTHETIC' THEN o.netRetailSelling ELSE 0 END),
-            SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC') THEN o.netRetailSelling ELSE 0 END),
-            SUM(CASE WHEN o.oilType = 'MINERAL' THEN o.netRetailSelling ELSE 0 END),
-            SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailSelling ELSE 0 END)
-        )
-        FROM Oil o
-        WHERE (:months IS NULL OR o.month IN (:months))
-          AND (:qtrWise IS NULL OR o.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR o.halfYear = :halfYear)
-        GROUP BY o.branch
-    """)
-    List<OilSummaryDTO> getOilSummaryByBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear);
-
-    //Group by city and branch
-    @Query("""
-        SELECT new com.mandovi.DTO.OilSummaryDTO(
             o.city,
             o.branch,
             SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailQty ELSE 0 END),
@@ -101,11 +69,15 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
             SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailSelling ELSE 0 END)
         )
         FROM Oil o
-        WHERE (:cities IS NULL OR o.city IN (:cities))
-         AND (:months IS NULL OR o.month IN (:months))
+        WHERE (:months IS NULL OR o.month IN (:months))
+         AND (:cities IS NULL OR o.city IN (:cities))
+         AND (:qtrWise IS NULL OR o.qtrWise IN (:qtrWise))
+         AND (:halfYear IS NULL OR o.halfYear IN (:halfYear))
         GROUP BY o.city,o.branch
     """)
     List<OilSummaryDTO> getOilSummaryBranchWise(
+            @Param("months") List<String> months,
             @Param("cities") List<String> cities,
-            @Param("months") List<String> months);
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 }

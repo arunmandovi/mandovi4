@@ -56,43 +56,6 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
     //Group by branch
     @Query("""
         SELECT new com.mandovi.DTO.MSGPProfitSummaryDTO(
-            MAX(m.city),
-            m.branch,
-            SUM(m.sumOfNetRetailDDL),
-            SUM(m.sumOfNetRetailSelling),
-            SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL),
-            (SUM(m.sumOfNetRetailSelling) - SUM(m.sumOfNetRetailDDL)) * 100.00 /
-            NULLIF(SUM(m.sumOfNetRetailDDL), 0),
-            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END),
-            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END) -
-            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END),
-            (SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailSelling ELSE 0 END) -
-            SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
-            NULLIF(SUM(CASE WHEN m.serviceDescription = 'Service' THEN m.sumOfNetRetailDDL ELSE 0 END), 0),
-            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END),
-            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END) -
-            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END),
-            (SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailSelling ELSE 0 END) -
-            SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
-            NULLIF(SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END), 0)
-        )
-        FROM MSGPProfit m
-        WHERE (:months IS NULL OR m.month IN (:months))
-          AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR m.halfYear = :halfYear)
-        GROUP BY m.branch
-    """)
-    List<MSGPProfitSummaryDTO> getMSGPProfitSummaryByBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear
-    );
-
-    //Group by city and branch
-    @Query("""
-        SELECT new com.mandovi.DTO.MSGPProfitSummaryDTO(
             m.city,
             m.branch,
             SUM(m.sumOfNetRetailDDL),
@@ -116,11 +79,15 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
             NULLIF(SUM(CASE WHEN m.serviceDescription = 'Bodyshop' THEN m.sumOfNetRetailDDL ELSE 0 END), 0)
         )
         FROM MSGPProfit m
-        WHERE (:cities IS NULL OR m.city IN (:cities))
-         AND (:months IS NULL OR m.month IN (:months))
+        WHERE (:months IS NULL OR m.month IN (:months))
+         AND (:cities IS NULL OR m.city IN (:cities))
+         AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
+         AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
         GROUP BY m.city, m.branch
     """)
     List<MSGPProfitSummaryDTO> getMSGPProfitSummaryBranchWise(
+            @Param("months") List<String> months,
             @Param("cities") List<String> cities,
-            @Param("months") List<String> months );
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear);
 }

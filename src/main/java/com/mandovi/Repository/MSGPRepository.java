@@ -68,59 +68,7 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear );
 
-    //Group by city
-    @Query("""
-        SELECT new com.mandovi.DTO.MSGPSummaryDTO(
-            MAX(m.city),
-            m.branch,
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ), 0)
-        )
-        FROM MSGP m
-        WHERE (:months IS NULL OR m.month IN (:months))
-          AND (:qtrWise IS NULL OR m.qtrWise = :qtrWise)
-          AND (:halfYear IS NULL OR m.halfYear = :halfYear)
-        GROUP BY m.branch
-    """)
-    List<MSGPSummaryDTO> getMSGPSummaryByBranch(
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
-
-    //Group by city
+    //Group by branch
     @Query("""
         SELECT new com.mandovi.DTO.MSGPSummaryDTO(
             m.city,
@@ -162,12 +110,16 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
             NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ), 0)
         )
         FROM MSGP m
-        WHERE (:cities IS NULL OR m.city IN (:cities))
-         AND (:months IS NULL OR m.month IN (:months))
+        WHERE (:months IS NULL OR m.month IN (:months))
+         AND (:cities IS NULL OR m.city IN (:cities))
+         AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
+         AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
         GROUP BY m.city, m.branch
     """)
     List<MSGPSummaryDTO> getMSGPSummaryBranchWise(
+            @Param("months") List<String> months,
             @Param("cities") List<String> cities,
-            @Param("months") List<String> months);
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 
 }
