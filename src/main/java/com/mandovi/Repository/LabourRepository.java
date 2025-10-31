@@ -75,63 +75,6 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
             @Param("halfYear") List<String> halfYear);
 
     //Group by branch
-//    @Query("""
-//            SELECT new com.mandovi.DTO.LabourSummaryDTO(
-//            MAX(l.city),
-//            l.branch,
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ),
-//            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ),
-//            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ) -
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END )) * 100 /
-//            NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN l.labour ELSE 0 END ), 0),
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ),
-//            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ),
-//            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ) -
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END )) * 100 /
-//            NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'BODYSHOP' THEN l.labour ELSE 0 END ), 0),
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ),
-//            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ),
-//            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END ) -
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN l.labour ELSE 0 END )) * 100 /
-//            NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('OTHERS','FREE SERVICE', 'PMS', 'RR','BODYSHOP') THEN l.labour ELSE 0 END ), 0),
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ),
-//            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ),
-//            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ) -
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END )) * 100 /
-//            NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'FREE SERVICE' THEN l.labour ELSE 0 END ), 0),
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ),
-//            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ),
-//            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ) -
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END )) * 100 /
-//            NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'PMS' THEN l.labour ELSE 0 END ), 0),
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ),
-//            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ),
-//            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ) -
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END )) * 100 /
-//            NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType IN ('FREE SERVICE', 'PMS', 'RR') THEN l.labour ELSE 0 END ), 0),
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ),
-//            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ),
-//            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ) -
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END )) * 100 /
-//            NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'RR' THEN l.labour ELSE 0 END ), 0),
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ),
-//            SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ),
-//            (SUM(CASE WHEN l.financialYear = '2025-2026' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ) -
-//            SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END )) * 100 /
-//            NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ), 0)
-//            )
-//            FROM Labour l
-//            WHERE (:months IS NULL OR l.month IN (:months))
-//            AND (:qtrWise IS NULL OR l.qtrWise = :qtrWise)
-//            AND (:halfYear IS NULL OR l.halfYear = :halfYear)
-//            GROUP BY l.branch
-//            """)
-//    List<LabourSummaryDTO> getLabourSummaryByBranch(
-//            @Param("months") List<String> months,
-//            @Param("qtrWise") String qtrWise,
-//            @Param("halfYear") String halfYear);
-
-    //Group by city and branch
     @Query("""
             SELECT new com.mandovi.DTO.LabourSummaryDTO(
             l.city,
@@ -178,11 +121,17 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
             NULLIF(SUM(CASE WHEN l.financialYear = '2024-2025' AND l.loadType = 'OTHERS' THEN l.labour ELSE 0 END ), 0)
             )
             FROM Labour l
-            WHERE (:cities IS NULL OR l.city IN (:cities))
-             AND (:months IS NULL OR l.month IN (:months))
+            WHERE (:months IS NULL OR l.month IN (:months))
+             AND (:cities IS NULL OR l.city IN (:cities))
+             AND (:channels IS NULL OR l.channel IN (:channels))
+             AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
+             AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))
             GROUP BY l.city,l.branch
             """)
     List<LabourSummaryDTO> getLabourSummaryBranchWise(
+            @Param("months") List<String> months,
             @Param("cities") List<String> cities,
-            @Param("months") List<String> months);
+            @Param("channels") List<String> channels,
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear);
 }

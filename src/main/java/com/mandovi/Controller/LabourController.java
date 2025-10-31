@@ -54,26 +54,28 @@ public class LabourController {
         try {
             List<LabourSummaryDTO> list = labourService.getLabourSummary( months, channels , qtrWise, halfYear);
             return ResponseEntity.ok(list);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 
     @GetMapping("/labour_branch_summary")
     public ResponseEntity<?> getLabourSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
+            @RequestParam (required = false) List<String> channels,
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<LabourSummaryDTO> listLabourSummaryBranchWise = labourService.getLabourSummaryBranchWise(cities, months);
+            List<LabourSummaryDTO> listLabourSummaryBranchWise = labourService.getLabourSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
             if (listLabourSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listLabourSummaryBranchWise);
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internal Server Error : "+e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
 
 }

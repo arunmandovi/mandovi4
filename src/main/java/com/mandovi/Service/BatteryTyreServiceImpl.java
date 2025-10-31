@@ -89,8 +89,8 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
     }
 
     @Override
-    public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise(List<String> cities, List<String> months) {
-        return batteryTyreRepository.getBatteryTyreSummaryBranchWise(cities, months);
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+        return batteryTyreRepository.getBatteryTyreSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 
 }

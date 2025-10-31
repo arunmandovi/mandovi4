@@ -111,8 +111,8 @@ public class BRConversionServiceImpl implements BRConversionService {
     }
 
     @Override
-    public List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise(List<String> cities, List<String> month) {
-        return brConversionRepository.getBRConversionSummaryBranchWise(cities, month);
+    public List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+        return brConversionRepository.getBRConversionSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 
 

@@ -15,5 +15,6 @@ public interface LabourService {
 
     public List<LabourSummaryDTO> getLabourSummary ( List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
 
-    public List<LabourSummaryDTO> getLabourSummaryBranchWise (List<String> cities, List<String> months);
+    public List<LabourSummaryDTO> getLabourSummaryBranchWise (List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
+
 }

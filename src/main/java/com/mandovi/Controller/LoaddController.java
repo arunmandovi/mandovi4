@@ -67,10 +67,13 @@ public class LoaddController {
 
     @GetMapping("loadd_branch_summary")
     public ResponseEntity<?> getLoaddSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
+            @RequestParam (required = false) List<String> channels,
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear){
         try {
-            List<LoaddSummaryDTO> listLoaddSummaryBranchWise = loaddService.getLoaddSummaryBranchWise(cities, months);
+            List<LoaddSummaryDTO> listLoaddSummaryBranchWise = loaddService.getLoaddSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
             if (listLoaddSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

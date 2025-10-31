@@ -225,8 +225,8 @@ public class LoaddServiceImpl implements LoaddService {
     }
 
     @Override
-    public List<LoaddSummaryDTO> getLoaddSummaryBranchWise(List<String> cities, List<String> months) {
-        return loaddRepository.getLoaddSummaryBranchWise(cities, months);
+    public List<LoaddSummaryDTO> getLoaddSummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear) {
+        return loaddRepository.getLoaddSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
     }
 
 }

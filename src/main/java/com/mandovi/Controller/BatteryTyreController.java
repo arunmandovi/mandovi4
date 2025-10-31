@@ -57,19 +57,20 @@ public class BatteryTyreController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listBattery);
-        }catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERROR : " + e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 
     @GetMapping("battery_tyre_branch_summary")
     public ResponseEntity<?> getBatteryTyreSummaryBranchWise (
+
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<BatteryTyreSummaryDTO> listBatteryTyreSummaryBranchWise = batteryTyreService.getBatteryTyreSummaryBranchWise(cities, months);
+            List<BatteryTyreSummaryDTO> listBatteryTyreSummaryBranchWise = batteryTyreService.getBatteryTyreSummaryBranchWise(months, cities, qtrWise, halfYear);
             if (listBatteryTyreSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

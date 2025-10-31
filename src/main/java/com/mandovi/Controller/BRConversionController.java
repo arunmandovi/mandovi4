@@ -56,25 +56,25 @@ public class BRConversionController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listBRConversionSummary);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("ERROR : "+ e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internal Server ERROR :"+ e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR :"+ e.getMessage());
         }
     }
 
     @GetMapping("br_conversion_branch_summary")
     public ResponseEntity<?> getBRConversionSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear){
         try {
-            List<BRConversionSummaryDTO> listBRConversionSummaryBranchWise = brConversionService.getBRConversionSummaryBranchWise(cities, months);
+            List<BRConversionSummaryDTO> listBRConversionSummaryBranchWise = brConversionService.getBRConversionSummaryBranchWise(months, cities, qtrWise, halfYear);
             if (listBRConversionSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listBRConversionSummaryBranchWise);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Internal Server Error : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 }
