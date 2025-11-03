@@ -67,22 +67,7 @@ public class TATController {
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
             @RequestParam (required = false) List<String> halfYear ){
-        try {@GetMapping("/tat_branch_summary")
-            public ResponseEntity<?> getTATSummary (
-                    @RequestParam (required = false) List<String> months,
-                    @RequestParam (required = false) List<String> cities,
-                    @RequestParam (required = false) List<String> qtrWise,
-                    @RequestParam (required = false) List<String> halfYear ){
-                try {
-                    List<TATSummaryDTO> listTATSummaryBranchWise = tatService.getTATSummaryBranchWise(months, cities, qtrWise, halfYear);
-                    if (listTATSummaryBranchWise.isEmpty()) {
-                        return ResponseEntity.noContent().build();
-                    }
-                    return ResponseEntity.ok(listTATSummaryBranchWise);
-                } catch (Exception e) {
-                    return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
-                }
-            }
+        try {
             List<TATSummaryDTO> listTATSummaryBranchWise = tatService.getTATSummaryBranchWise(months, cities, qtrWise, halfYear);
             if (listTATSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
