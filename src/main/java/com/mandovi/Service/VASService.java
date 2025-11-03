@@ -15,7 +15,7 @@ public interface VASService {
 
     public List<VASSummaryDTO> getVASSummary(List<String> months, List<String> qtrWise, List<String> halfYear);
 
-    public List<VASSummaryDTO> getVASSummaryBranchWise (List<String> cities, List<String> months);
+    public List<VASSummaryDTO> getVASSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
 
 
 }

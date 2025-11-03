@@ -57,25 +57,25 @@ public class VASController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listVAS);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("ERROR : "+ e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 
     @GetMapping("/vas_branch_summary")
     public ResponseEntity<?> getVASSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<VASSummaryDTO> listVASSummaryBranchWise = vasService.getVASSummaryBranchWise(cities, months);
+            List<VASSummaryDTO> listVASSummaryBranchWise = vasService.getVASSummaryBranchWise(months, cities, qtrWise, halfYear);
             if (listVASSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listVASSummaryBranchWise);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 }

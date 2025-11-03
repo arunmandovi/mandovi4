@@ -55,25 +55,25 @@ public class RevenueController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listRevenueSummary);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 
     @GetMapping("/revenue_branch_summary")
     public ResponseEntity<?> getRevenueSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<RevenueSummaryDTO> listRevenueSummaryBranchWise = revenueService.getRevenueSummaryBranchWise(cities, months);
+            List<RevenueSummaryDTO> listRevenueSummaryBranchWise = revenueService.getRevenueSummaryBranchWise(months, cities, qtrWise, halfYear);
             if (listRevenueSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listRevenueSummaryBranchWise);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 }

@@ -102,8 +102,8 @@ public class VASServiceImpl implements VASService {
     }
 
     @Override
-    public List<VASSummaryDTO> getVASSummaryBranchWise(List<String> cities, List<String> months) {
-        return vasRepository.getVASSummaryBranchWise(cities, months);
+    public List<VASSummaryDTO> getVASSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+        return vasRepository.getVASSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 
 }

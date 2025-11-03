@@ -50,38 +50,6 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
     //Group by branch
     @Query("""
             SELECT new com.mandovi.DTO.SparesSummaryDTO(
-            MAX(s.city),
-            s.branch,
-            SUM(s.srSparesLastYear),
-            SUM(s.srSparesCurrentYear),
-            (SUM(s.srSparesCurrentYear) - SUM(s.srSparesLastYear)) * 100 / NULLIF(SUM(s.srSparesLastYear), 0),
-            SUM(s.brSparesLastYear),
-            SUM(s.brSparesCurrentYear),
-            (SUM(s.brSparesCurrentYear) - SUM(s.brSparesLastYear)) * 100 / NULLIF(SUM(s.brSparesLastYear), 0),
-            SUM(s.srBrSparesLastYear),
-            SUM(s.srBrSparesCurrentYear),
-            (SUM(s.srBrSparesCurrentYear) - SUM(s.srBrSparesLastYear)) * 100 / NULLIF(SUM(s.srBrSparesLastYear), 0),
-            SUM(s.batteryLastYear),
-            SUM(s.batteryCurrentYear),
-            (SUM(s.batteryCurrentYear) - SUM(s.batteryLastYear)) * 100 / NULLIF(SUM(s.batteryLastYear), 0),
-            SUM(s.tyreLastYear),
-            SUM(s.tyreCurrentYear),
-            (SUM(s.tyreCurrentYear) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
-            )
-            FROM Spares s
-            WHERE (:months IS NULL OR s.month IN (:months))
-             AND (:qtrWise IS NULL OR s.qtrWise = :qtrWise)
-             AND (:halfYear IS NULL OR s.halfYear = :halfYear)
-            GROUP BY s.branch
-            """)
-    List<SparesSummaryDTO> getSparesSummaryDTOByBranch (
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
-
-    //Group by city and branch
-    @Query("""
-            SELECT new com.mandovi.DTO.SparesSummaryDTO(
             s.city,
             s.branch,
             SUM(s.srSparesLastYear),
@@ -101,11 +69,15 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
             (SUM(s.tyreCurrentYear) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
             )
             FROM Spares s
-            WHERE (:cities IS NULL OR s.city IN (:cities))
-             AND (:months IS NULL OR s.month IN (:months))
+            WHERE (:months IS NULL OR s.month IN (:months))
+             AND (:cities IS NULL OR s.city IN (:cities))
+             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
+             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))
             GROUP BY s.city, s.branch
             """)
     List<SparesSummaryDTO> getSparesSummaryBranchWise (
+            @Param("months") List<String> months,
             @Param("cities") List<String> cities,
-            @Param("months") List<String> months );
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 }

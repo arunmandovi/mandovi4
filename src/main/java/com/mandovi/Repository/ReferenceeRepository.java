@@ -44,30 +44,6 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
     //Group By branch
     @Query("""
             SELECT new com.mandovi.DTO.ReferenceeSummaryDTO(
-            MAX(r.city),
-            r.branch,
-            SUM(r.referencee),
-            SUM(r.enquiry),
-            SUM(r.booking),
-            SUM(r.invoice),
-            SUM(r.booking) * 100.00 / NULLIF(SUM(r.enquiry), 0),
-            SUM(r.invoice) * 100.00 / NULLIF(SUM(r.enquiry), 0),
-            SUM(r.invoice) * 100.00 / NULLIF(SUM(r.booking), 0)
-            )
-            FROM Referencee r
-            WHERE (:months IS NULL OR r.month IN (:months))
-            AND (:qtrWise IS NULL OR r.qtrWise = :qtrWise)
-            AND (:halfYear IS NULL OR r.halfYear = :halfYear)
-            GROUP BY r.branch
-            """)
-    List<ReferenceeSummaryDTO> getReferenceeSummaryByBranch (
-            @Param("months") List<String> months,
-            @Param("qtrWise") String qtrWise,
-            @Param("halfYear") String halfYear );
-
-    //Group By city and branch
-    @Query("""
-            SELECT new com.mandovi.DTO.ReferenceeSummaryDTO(
             r.city,
             r.branch,
             SUM(r.referencee),
@@ -79,11 +55,17 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
             SUM(r.invoice) * 100.00 / NULLIF(SUM(r.booking), 0)
             )
             FROM Referencee r
-            WHERE (:cities IS NULL OR r.city IN (:cities))
-             AND (:months IS NULL OR r.month IN (:months))
+            WHERE (:months IS NULL OR r.month IN (:months))
+             AND (:cities IS NULL OR r.city IN (:cities))
+             AND (:channels IS NULL OR r.channel IN (:channels))
+             AND (:qtrWise IS NULL OR r.qtrWise IN (:qtrWise))
+             AND (:halfYear IS NULL OR r.halfYear IN (:halfYear))
             GROUP BY r.city, r.branch
             """)
     List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise (
+            @Param("months") List<String> months,
             @Param("cities") List<String> cities,
-            @Param("months") List<String> months );
+            @Param("channels") List<String> channels,
+            @Param("qtrWise") List<String> qtrWise,
+            @Param("halfYear") List<String> halfYear );
 }

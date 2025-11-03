@@ -66,16 +66,19 @@ public class ReferenceeController {
 
     @GetMapping("referencee_branch_summary")
     public ResponseEntity<?> getReferenceeSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
+            @RequestParam (required = false) List<String> channels,
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
         try {
-            List<ReferenceeSummaryDTO> listReferenceeSummaryBranchWise = referenceeService.getReferenceeSummaryBranchWise(cities, months);
+            List<ReferenceeSummaryDTO> listReferenceeSummaryBranchWise = referenceeService.getReferenceeSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
             if (listReferenceeSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listReferenceeSummaryBranchWise);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 

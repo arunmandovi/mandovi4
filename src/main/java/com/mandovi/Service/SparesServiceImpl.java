@@ -114,7 +114,7 @@ public class SparesServiceImpl implements SparesService{
     }
 
     @Override
-    public List<SparesSummaryDTO> getSparesSummaryBranchWise(List<String> cities, List<String> months) {
-        return sparesRepository.getSparesSummaryBranchWise(cities, months);
+    public List<SparesSummaryDTO> getSparesSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+        return sparesRepository.getSparesSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 }

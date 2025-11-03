@@ -16,5 +16,5 @@ public interface SparesService{
 
     public List<SparesSummaryDTO> getSparesSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 
-    public List<SparesSummaryDTO> getSparesSummaryBranchWise (List<String> cities, List<String> months);
+    public List<SparesSummaryDTO> getSparesSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
 }
