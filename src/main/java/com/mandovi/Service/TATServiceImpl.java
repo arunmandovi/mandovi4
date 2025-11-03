@@ -162,13 +162,15 @@ public class TATServiceImpl implements TATService {
     }
 
     @Override
-    public List<TATSummaryDTO> getTATSummaryBranchWise(List<String> cities, List<String> months) {
+    public List<TATSummaryDTO> getTATSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
         List<TAT> allTAT = tatRepository.findAll();
 
         // Apply Filters
         List<TAT> filtered = allTAT.stream()
                 .filter(tat -> months == null || months.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getMonth())))
                 .filter(tat -> cities == null || cities.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getCity())))
+                .filter(tat -> qtrWise == null || qtrWise.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getQtrWise())))
+                .filter(tat -> halfYear == null || halfYear.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getHalfYear())))
                 .toList();
 
         // Group by CITY then BRANCH

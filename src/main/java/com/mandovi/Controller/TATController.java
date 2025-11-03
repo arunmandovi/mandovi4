@@ -56,25 +56,40 @@ public class TATController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listTATSummary);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("ERROR : "+e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Internal Sever ERROR : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 
     @GetMapping("/tat_branch_summary")
     public ResponseEntity<?> getTATSummary (
+            @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
-            @RequestParam (required = false) List<String> months ){
-        try {
-            List<TATSummaryDTO> listTATSummaryBranchWise = tatService.getTATSummaryBranchWise(cities, months);
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
+        try {@GetMapping("/tat_branch_summary")
+            public ResponseEntity<?> getTATSummary (
+                    @RequestParam (required = false) List<String> months,
+                    @RequestParam (required = false) List<String> cities,
+                    @RequestParam (required = false) List<String> qtrWise,
+                    @RequestParam (required = false) List<String> halfYear ){
+                try {
+                    List<TATSummaryDTO> listTATSummaryBranchWise = tatService.getTATSummaryBranchWise(months, cities, qtrWise, halfYear);
+                    if (listTATSummaryBranchWise.isEmpty()) {
+                        return ResponseEntity.noContent().build();
+                    }
+                    return ResponseEntity.ok(listTATSummaryBranchWise);
+                } catch (Exception e) {
+                    return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+                }
+            }
+            List<TATSummaryDTO> listTATSummaryBranchWise = tatService.getTATSummaryBranchWise(months, cities, qtrWise, halfYear);
             if (listTATSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listTATSummaryBranchWise);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Internal Server ERROR : "+e.getMessage());
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 }
