@@ -190,13 +190,13 @@ public class MGAServiceImpl implements MGAService {
     }
 
     @Override
-    public List<MGASummaryDTO> getMGASummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
-        return mgaRepository.getMGASummaryByCity(months, qtrWise, halfYear);
+    public List<MGASummaryDTO> getMGASummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
+        return mgaRepository.getMGASummaryByCity(months, channels, qtrWise, halfYear);
     }
 
     @Override
-    public List<MGASummaryDTO> getMGASummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
-        return mgaRepository.getMGASummaryBranchWise(months, cities, qtrWise, halfYear);
+    public List<MGASummaryDTO> getMGASummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear) {
+        return mgaRepository.getMGASummaryBranchWise(months, cities, channels, qtrWise, halfYear);
     }
 
 

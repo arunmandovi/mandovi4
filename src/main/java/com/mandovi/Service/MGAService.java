@@ -14,7 +14,7 @@ public interface MGAService {
 
     public List<MGA> getMGAByMGADate(LocalDate mgaDate);
 
-    public List<MGASummaryDTO> getMGASummary (List<String> months, List<String> qtrWise, List<String> halfYear);
+    public List<MGASummaryDTO> getMGASummary (List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
 
-    public List<MGASummaryDTO> getMGASummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+    public List<MGASummaryDTO> getMGASummaryBranchWise (List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
 }

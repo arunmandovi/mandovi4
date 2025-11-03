@@ -30,12 +30,14 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
         )
         FROM MGA m
         WHERE (:months IS NULL OR m.month IN (:months))
-          AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
-          AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
+        AND (:channels IS NULL OR m.channel IN (:channels))
+        AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
+        AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
         GROUP BY m.city
     """)
     List<MGASummaryDTO> getMGASummaryByCity(
             @Param("months") List<String> months,
+            @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear
     );
@@ -54,6 +56,7 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
         FROM MGA m
         WHERE (:months IS NULL OR m.month IN (:months))
         AND (:cities IS NULL OR m.city IN (:cities))
+        AND (:channels IS NULL OR m.channel IN (:channels))
         AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
         AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
         GROUP BY m.city, m.branch
@@ -61,6 +64,7 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
     List<MGASummaryDTO> getMGASummaryBranchWise(
             @Param("months") List<String> months,
             @Param("cities") List<String> cities,
+            @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear);
 
