@@ -40,11 +40,11 @@ public class LoaddServiceImpl implements LoaddService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
             // Define location Codes for respective Cities
-            Set<String> bangaloreBranches = new HashSet<>(Arrays.asList(
+            Set<String> bangaloreLocations = new HashSet<>(Arrays.asList(
                     "BKH","BNG","BSN","CDE","CMJ","GRB","HNR","JPN",
                     "KDH","MAF","MLU","NXS","RJN","VDR","VJN","WGR","YLH","YPR"
             ));
-            Set<String> mysoreBranches = new HashSet<>(Arrays.asList(
+            Set<String> mysoreLocations = new HashSet<>(Arrays.asList(
                     "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH",
                     "KSN","MSE","NGL","SOM","TNR","KLG"
             ));
@@ -147,9 +147,9 @@ public class LoaddServiceImpl implements LoaddService {
                 // Auto update city based on location
                 String locationCode = loadd.getLocation();
 
-                if (bangaloreBranches.contains(locationCode)) {
+                if (bangaloreLocations.contains(locationCode)) {
                     loadd.setCity("Bangalore");
-                } else if (mysoreBranches.contains(locationCode)) {
+                } else if (mysoreLocations.contains(locationCode)) {
                     loadd.setCity("Mysore");
                 } else if (mangaloreLocations.contains(locationCode)) {
                     loadd.setCity("Mangalore");
