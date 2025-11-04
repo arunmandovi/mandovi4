@@ -12,8 +12,16 @@ import java.util.List;
 public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Integer>, JpaSpecificationExecutor<BatteryTyre> {
 
 
-    @Query("SELECT b FROM BatteryTyre b WHERE b.month = :month AND b.year = :year")
-    List<BatteryTyre> getBatteryTyreByMonthYear(@Param("month") String month, @Param("year") String year);
+    @Query("""
+          SELECT b
+          FROM BatteryTyre b
+          WHERE (:months IS NULL OR b.month IN :months)
+          AND (:years IS NULL OR b.year IN :years)
+    """)
+    List<BatteryTyre> getBatteryTyreByMonthYear(
+            @Param("months") List<String> months,
+            @Param("years") List<String> years
+    );
 
     //Group by city
     @Query("""

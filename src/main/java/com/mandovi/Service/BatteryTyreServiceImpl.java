@@ -77,11 +77,10 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
     }
 
     @Override
-    public List<BatteryTyre> getBattery_TyreByMonthYear(String month, String year) {
-        // normalize month input (e.g., make first letter uppercase, rest lowercase)
-        String formattedMonth = month.substring(0, 1).toUpperCase() + month.substring(1).toLowerCase();
-        return batteryTyreRepository.getBatteryTyreByMonthYear(formattedMonth, year);
+    public List<BatteryTyre> getBattery_TyreByMonthYear(List<String> months, List<String> years) {
+        return batteryTyreRepository.getBatteryTyreByMonthYear(months, years);
     }
+
 
     @Override
     public List<BatteryTyreSummaryDTO> getBatteryTyreSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {

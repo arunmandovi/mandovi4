@@ -12,7 +12,7 @@ public interface BatteryTyreService {
 
     public List<BatteryTyre> getAllBattery_Tyre();
 
-    public List<BatteryTyre> getBattery_TyreByMonthYear(String month, String year);
+    public List<BatteryTyre> getBattery_TyreByMonthYear(List<String> months, List<String> years);
 
     public List<BatteryTyreSummaryDTO> getBatteryTyreSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 
