@@ -155,9 +155,8 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
     }
 
     @Override
-    public List<MSGPProfit> getMSGPProfitByMonthYear(String month, String year) {
-        String formatteMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
-        return msgpProfitRepository.getMSGPProfitByMonthYear(formatteMonth, year);
+    public List<MSGPProfit> getMSGPProfitByMonthYear(List<String> months, List<String> years) {
+        return msgpProfitRepository.getMSGPProfitByMonthYear(months, years);
     }
 
     @Override

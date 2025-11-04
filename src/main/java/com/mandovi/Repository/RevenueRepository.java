@@ -12,8 +12,12 @@ import java.util.List;
 public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
 
     @Transactional
-    @Query("SELECT r FROM Revenue r WHERE r.month = :month AND r.year = :year")
-    public List<Revenue> getRevenueByMonthYear(@Param("month") String month, @Param("year") String year);
+    @Query("""
+    SELECT r FROM Revenue r
+    WHERE (:months IS NULL OR r.month IN (:months))
+    AND (:years IS NULL OR r.year IN (:years))
+    """)
+    public List<Revenue> getRevenueByMonthYear(@Param("months") List<String> months, @Param("years") List<String> years);
 
     //Group by city
     @Query("""

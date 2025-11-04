@@ -11,7 +11,7 @@ public interface MSGPService {
 
     public List<MSGP> getAllMSGP();
 
-    public List<MSGP> getMSGPByMonthYear(String month, String year);
+    public List<MSGP> getMSGPByMonthYear(List<String> months, List<String> years);
 
     public List<MSGPSummaryDTO> getMSGPSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 

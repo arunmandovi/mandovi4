@@ -14,8 +14,13 @@ import java.util.List;
 public interface MGARepository extends JpaRepository<MGA, Integer> {
 
     @Transactional
-    @Query("SELECT m FROM MGA m WHERE m.mgaDate = :mgaDate")
-    public List<MGA> getMGAByMGADate(@Param("mgaDate") LocalDate mgaDate);
+    @Query("""
+    SELECT m FROM MGA m
+    WHERE (:months IS NULL OR m.month IN (:months))
+    AND (:years IS NULL OR m.year IN (:years))
+    """)
+    public List<MGA> getMGAMonth(
+            @Param("months") List<String> months, @Param("years") List<String> years );
 
     //Group by city
     @Query("""

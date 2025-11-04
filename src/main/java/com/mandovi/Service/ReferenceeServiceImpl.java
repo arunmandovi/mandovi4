@@ -86,9 +86,8 @@ public class ReferenceeServiceImpl implements ReferenceeService {
     }
 
     @Override
-    public List<Referencee> getReferenceeByMonthYear(String month, String year) {
-        String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
-        return referenceeRepository.getReferenceeByMonthYear(formattedMonth, year);
+    public List<Referencee> getReferenceeByMonthYear(List<String> months, List<String> years) {
+        return referenceeRepository.getReferenceeByMonthYear(months, years);
     }
 
     @Override

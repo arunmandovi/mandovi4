@@ -43,6 +43,9 @@ public class PMSParts {
     @Column(name = "month")
     private String month;
 
+    @Column (name = "year")
+    private String year;
+
     @Column(name = "qtr_wise")
     private String qtrWise;
 
@@ -52,7 +55,7 @@ public class PMSParts {
     public PMSParts() {
     }
 
-    public PMSParts(Integer pms_partsSINo, String parent, String locationCode, LocalDate pmsDate, String partGroup, Integer required, Integer changed, Double pms, String branch, String city, String month, String qtrWise, String halfYear) {
+    public PMSParts(Integer pms_partsSINo, String parent, String locationCode, LocalDate pmsDate, String partGroup, Integer required, Integer changed, Double pms, String branch, String city, String month, String year, String qtrWise, String halfYear) {
         this.pms_partsSINo = pms_partsSINo;
         this.parent = parent;
         this.locationCode = locationCode;
@@ -64,6 +67,7 @@ public class PMSParts {
         this.branch = branch;
         this.city = city;
         this.month = month;
+        this.year = year;
         this.qtrWise = qtrWise;
         this.halfYear = halfYear;
     }
@@ -156,6 +160,14 @@ public class PMSParts {
         this.month = month;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     public String getQtrWise() {
         return qtrWise;
     }
@@ -186,6 +198,7 @@ public class PMSParts {
                 ", branch='" + branch + '\'' +
                 ", city='" + city + '\'' +
                 ", month='" + month + '\'' +
+                ", year='" + year + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +
                 ", halfYear='" + halfYear + '\'' +
                 '}';

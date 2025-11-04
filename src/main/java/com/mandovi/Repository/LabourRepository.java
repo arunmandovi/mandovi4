@@ -12,8 +12,14 @@ import java.util.List;
 public interface LabourRepository extends JpaRepository<Labour, Integer> {
 
     @Transactional
-    @Query("SELECT l FROM Labour l WHERE l.month = :month AND l.year = :year")
-    List<Labour> getLabourByMonthYear(@Param("month") String month, @Param("year") String year);
+    @Query("""
+    SELECT l FROM Labour l
+    WHERE (:months IS NULL OR l.month IN (:months))
+     AND (:years IS NULL OR l.year IN (:years))
+     """)
+    List<Labour> getLabourByMonthYear(
+            @Param("months") List<String> months,
+            @Param("years") List<String> years);
 
     //Group by city
     @Query("""

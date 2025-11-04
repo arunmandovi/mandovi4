@@ -35,13 +35,19 @@ public class RevenueController {
         return revenueService.getAllRevenue();
     }
 
-    @GetMapping("/getrevenue/{month}/{year}")
-    public ResponseEntity<List<Revenue>> getRevenueByMonthYear (@PathVariable String month, @PathVariable String year){
-        List<Revenue> revenueRecords = revenueService.getRevenueByMonthYear(month,year);
-        if (revenueRecords.isEmpty()){
-            return ResponseEntity.noContent().build();
+    @GetMapping("/getrevenue")
+    public ResponseEntity<?> getRevenueByMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<Revenue> revenueRecords = revenueService.getRevenueByMonthYear(months, years);
+            if (revenueRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(revenueRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(revenueRecords);
     }
 
     @GetMapping("/revenue_summary")

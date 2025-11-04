@@ -36,13 +36,19 @@ public class MSGPController {
         return msgpService.getAllMSGP();
     }
 
-    @GetMapping("/getmsgp/{month}/{year}")
-    public ResponseEntity<List<MSGP>> getMSGPByMonthYear(@PathVariable String month, @PathVariable String year){
-        List<MSGP> msgpRecords = msgpService.getMSGPByMonthYear(month, year);
-        if (msgpRecords.isEmpty()){
-            return ResponseEntity.noContent().build();
+    @GetMapping("/getmsgp")
+    public ResponseEntity<?> getMSGPByMonthYear(
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years){
+        try {
+            List<MSGP> msgpRecords = msgpService.getMSGPByMonthYear(months, years);
+            if (msgpRecords.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(msgpRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(msgpRecords);
     }
 
     @GetMapping("/msgp_summary")

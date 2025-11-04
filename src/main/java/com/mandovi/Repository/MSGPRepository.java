@@ -13,8 +13,12 @@ import java.util.List;
 public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
 
     @Transactional
-    @Query("SELECT m FROM MSGP m WHERE m.month = :month AND m.year = :year")
-    public List<MSGP> getMSGPByMonthYear(@Param("month") String month,@Param("year") String year);
+    @Query("""
+    SELECT m FROM MSGP m
+    WHERE (:months IS NULL OR m.month IN  (:months))
+    AND (:years IS NULL OR m.year IN  (:years))
+    """)
+    public List<MSGP> getMSGPByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
 
     //Group by city
     @Query("""

@@ -37,4 +37,19 @@ public class MGAProfitController {
         }
         return ResponseEntity.ok(listMGAProfit);
     }
+
+    @GetMapping ("getmga_profit")
+    public ResponseEntity<?> getMGAMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<MGAProfit> mgaProfitRecords = mgaProfitService.getMGAProfitMonthYear(months, years);
+            if (mgaProfitRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(mgaProfitRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
 }

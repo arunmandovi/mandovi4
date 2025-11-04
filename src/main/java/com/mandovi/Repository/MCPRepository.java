@@ -13,8 +13,12 @@ import java.util.List;
 public interface MCPRepository extends JpaRepository<MCP,Long> {
 
     @Transactional
-    @Query("SELECT m FROM MCP m WHERE m.month = :month AND m.year = :year")
-    List<MCP> getMCPByMonthYear(@Param("month") String month,@Param("year") String year);
+    @Query("""
+    SELECT m FROM MCP m
+    WHERE (:months IS NULL OR m.month IN (:months))
+     AND (:years IS NULL OR m.year IN (:years))
+    """)
+    List<MCP> getMCPByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
 
     //Group by city
     @Query("""

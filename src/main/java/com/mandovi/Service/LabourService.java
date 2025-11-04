@@ -11,7 +11,7 @@ public interface LabourService {
 
     public List<Labour> getAllLabour();
 
-    public List<Labour> getLabourByMonthYear(String month, String year);
+    public List<Labour> getLabourByMonthYear(List<String> months, List<String> years);
 
     public List<LabourSummaryDTO> getLabourSummary ( List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
 

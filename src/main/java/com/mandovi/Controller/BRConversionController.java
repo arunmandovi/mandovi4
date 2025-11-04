@@ -36,13 +36,19 @@ public class BRConversionController {
         return brConversionService.getAllBRConversion();
     }
 
-    @GetMapping("/getbr_conversion/{month}/{year}")
-    public ResponseEntity<List<BRConversion>> getBR_ConversionByMonthYear(@PathVariable String month, @PathVariable String year) {
-        List<BRConversion> brConversionRecords = brConversionService.getBRConversionByMonthYear(month, year);
-        if (brConversionRecords.isEmpty()) {
-            ResponseEntity.noContent().build();
+    @GetMapping ("/getbr_conversion")
+    public ResponseEntity<?> getBRConversionMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<BRConversion> brConversionRecords = brConversionService.getBRConversionByMonthYear(months, years);
+            if (brConversionRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(brConversionRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
         }
-        return ResponseEntity.ok(brConversionRecords);
     }
 
     @GetMapping("/br_conversion_summary")

@@ -100,9 +100,8 @@ public class BRConversionServiceImpl implements BRConversionService {
     }
 
     @Override
-    public List<BRConversion> getBRConversionByMonthYear(String month, String year) {
-        String formattedMonth = month.substring(0, 1).toUpperCase() +month.substring(1).toLowerCase();
-        return brConversionRepository.getBR_ConversionByMonthYear(formattedMonth, year);
+    public List<BRConversion> getBRConversionByMonthYear(List<String> months, List<String> years) {
+        return brConversionRepository.getBR_ConversionByMonthYear(months, years);
     }
 
     @Override

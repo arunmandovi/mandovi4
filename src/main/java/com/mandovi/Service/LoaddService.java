@@ -13,7 +13,7 @@ public interface LoaddService {
 
     public List<Loadd> getAllLoadData();
 
-    public List<Loadd> getLoadByMonthYear(String month, String year);
+    public List<Loadd> getLoadByMonthYear(List<String> months, List<String> years);
 
     public List<LoaddSummaryDTO> getLoaddSummary (List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
 

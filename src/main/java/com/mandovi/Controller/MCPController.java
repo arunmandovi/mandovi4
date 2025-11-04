@@ -36,13 +36,19 @@ public class MCPController {
         return mcpService.getAllMCP();
     }
 
-    @GetMapping("/getmcp/{month}/{year}")
-    public ResponseEntity<List<MCP>> getMCPByMonthYear(@PathVariable String month, @PathVariable String year){
-        List<MCP> mcpRecords = mcpService.getMCPByMonthYear(month, year);
-        if (mcpRecords.isEmpty()){
-            return ResponseEntity.noContent().build();
+    @GetMapping("/getmcp")
+    public ResponseEntity<?> getMCPByMonthYear(
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<MCP> mcpRecords = mcpService.getMCPByMonthYear(months, years);
+            if (mcpRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(mcpRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(mcpRecords);
     }
 
     @GetMapping("/mcp_summary")

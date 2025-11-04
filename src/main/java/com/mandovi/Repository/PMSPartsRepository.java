@@ -13,8 +13,12 @@ import java.util.List;
 public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
 
     @Transactional
-    @Query("SELECT p FROM PMSParts p WHERE p.pmsDate = :pmsDate")
-    public List<PMSParts> getPMSPartsByPMSDate(@Param("pmsDate")LocalDate pmsDate);
+    @Query("""
+    SELECT p FROM PMSParts p
+    WHERE (:months IS NULL OR p.month IN (:months))
+    AND (:years IS NULL OR p.year IN (:years))
+    """)
+    public List<PMSParts> getPMSPartsByMonthYear(@Param("months") List<String> months, @Param("years") List<String> years);
 
     //Group  By city
     @Query("""

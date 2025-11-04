@@ -12,8 +12,14 @@ import java.util.List;
 public interface BRConversionRepository extends JpaRepository<BRConversion, Integer> {
 
     @Transactional
-    @Query("SELECT b FROM BRConversion b WHERE b.month = :month AND b.year = :year")
-    List<BRConversion> getBR_ConversionByMonthYear(@Param("month") String month, @Param("year") String year);
+    @Query("""
+    SELECT b FROM BRConversion b
+    WHERE (:months IS NULL OR b.month IN (:months))
+    AND (:years IS NULL OR b.year IN (:years))
+    """)
+    List<BRConversion> getBR_ConversionByMonthYear(
+            @Param("months") List<String> months,
+            @Param("years") List<String> years );
 
     // Group by city
     @Query("""

@@ -12,8 +12,12 @@ import java.util.List;
 public interface ReferenceeRepository extends JpaRepository<Referencee, Integer> {
 
     @Transactional
-    @Query("SELECT r FROM Referencee r WHERE r.month = :month AND r.year = :year")
-    public List<Referencee> getReferenceeByMonthYear(@Param("month") String month,@Param("year") String year);
+    @Query("""
+    SELECT r FROM Referencee r
+    WHERE (:months IS NULL OR r.month IN (:months))
+    AND (:years IS NULL OR r.year IN (:years))
+    """)
+    public List<Referencee> getReferenceeByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
 
     //Group By city
     @Query("""

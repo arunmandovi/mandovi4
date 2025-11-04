@@ -37,14 +37,18 @@ public class BatteryTyreController {
     }
 
     @GetMapping("/getbattery_tyre")
-    public ResponseEntity<List<BatteryTyre>> getBatteryTyreByMonthYear(
+    public ResponseEntity<?> getBatteryTyreByMonthYear(
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> years){
-        List<BatteryTyre> batteryTyreRecords = batteryTyreService.getBattery_TyreByMonthYear(months, years);
-        if (batteryTyreRecords.isEmpty()){
-            return ResponseEntity.noContent().build();
+        try {
+            List<BatteryTyre> batteryTyreRecords = batteryTyreService.getBattery_TyreByMonthYear(months, years);
+            if (batteryTyreRecords.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(batteryTyreRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(batteryTyreRecords);
     }
 
 

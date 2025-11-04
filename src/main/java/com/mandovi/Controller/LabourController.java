@@ -36,13 +36,19 @@ public class LabourController {
         return labourService.getAllLabour();
     }
 
-    @GetMapping("/getlabour/{month}/{year}")
-    public ResponseEntity<List<Labour>> getLabourByMonthYear(@PathVariable String month, @PathVariable String year){
-        List<Labour> labourRecords = labourService.getLabourByMonthYear(month, year);
-        if (labourRecords.isEmpty()){
-            return ResponseEntity.noContent().build();
+    @GetMapping("/getlabour")
+    public ResponseEntity<?> getLabourByMonthYear(
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<Labour> labourRecords = labourService.getLabourByMonthYear(months, years);
+            if (labourRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(labourRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(labourRecords);
     }
 
     @GetMapping("labour_summary")

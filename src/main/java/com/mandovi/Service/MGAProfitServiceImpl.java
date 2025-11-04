@@ -146,4 +146,9 @@ public class MGAProfitServiceImpl implements MGAProfitService{
     public List<MGAProfit> getALLMGAProfit() {
         return mgaProfitRepository.findAll();
     }
+
+    @Override
+    public List<MGAProfit> getMGAProfitMonthYear(List<String> months, List<String> years) {
+        return mgaProfitRepository.getMGAProfitMonthYear(months, years);
+    }
 }

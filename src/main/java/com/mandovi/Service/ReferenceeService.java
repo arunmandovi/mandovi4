@@ -11,7 +11,7 @@ public interface ReferenceeService {
 
     public List<Referencee> getAllReference();
 
-    public List<Referencee> getReferenceeByMonthYear(String month, String year);
+    public List<Referencee> getReferenceeByMonthYear(List<String> months, List<String> years);
 
     public List<ReferenceeSummaryDTO> getReferenceeSummary (List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
 

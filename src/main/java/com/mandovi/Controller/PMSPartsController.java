@@ -37,13 +37,19 @@ public class PMSPartsController {
         return pmsPartsService.getAllPMS_Parts();
     }
 
-    @GetMapping("/getpms_parts/{pmsDate}")
-    public ResponseEntity<List<PMSParts>> getPMSPartsByPMSDate(@PathVariable LocalDate pmsDate){
-        List<PMSParts> pmsPartsRecords = pmsPartsService.getPMSPartsByPMSDate(pmsDate);
-        if (pmsPartsRecords.isEmpty()){
-            return ResponseEntity.noContent().build();
+    @GetMapping("/getpms_parts")
+    public ResponseEntity<?> getPMSPartByMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<PMSParts> pmsPartsRecords = pmsPartsService.getPMSPartsByMonthYear(months, years);
+            if (pmsPartsRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(pmsPartsRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(pmsPartsRecords);
     }
 
     @GetMapping("/pms_parts_summary")

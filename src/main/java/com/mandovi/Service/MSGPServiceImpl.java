@@ -135,9 +135,8 @@ public class MSGPServiceImpl implements MSGPService {
     }
 
     @Override
-    public List<MSGP> getMSGPByMonthYear(String month, String year) {
-        String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
-        return msgpRepository.getMSGPByMonthYear(formattedMonth, year);
+    public List<MSGP> getMSGPByMonthYear(List<String> months, List<String> years) {
+        return msgpRepository.getMSGPByMonthYear(months, years);
     }
 
     @Override

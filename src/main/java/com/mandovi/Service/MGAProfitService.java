@@ -10,4 +10,6 @@ public interface MGAProfitService {
     void saveMGAProfitFromExcel (MultipartFile file);
 
     public List<MGAProfit> getALLMGAProfit ();
+
+    public List<MGAProfit> getMGAProfitMonthYear (List<String> months, List<String> years);
 }

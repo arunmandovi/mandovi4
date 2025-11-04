@@ -12,8 +12,12 @@ import java.util.List;
 public interface OilRepository extends JpaRepository<Oil, Integer> {
 
     @Transactional
-    @Query("SELECT o FROM Oil o WHERE o.month = :month AND o.year = :year")
-    public List<Oil> getOilByMonthYear(@Param("month") String month,@Param("year") String year);
+    @Query("""
+    SELECT o FROM Oil o
+    WHERE (:months IS NULL OR o.month IN (:months))
+    AND (:years IS NULL OR o.year IN (:years))
+    """)
+    public List<Oil> getOilByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
 
     //Group by city
     @Query("""

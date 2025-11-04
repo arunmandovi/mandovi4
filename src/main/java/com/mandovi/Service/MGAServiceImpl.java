@@ -147,12 +147,10 @@ public class MGAServiceImpl implements MGAService {
                 }
 
                 //Updating month based on mga_date
-                if (row.getCell(0)!= null){
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");
-                    mga.setMonth(formatter.format(mga.getMgaDate()));
-                }else {
-                    mga.setMonth("UNKNOWN");
-                }
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");
+                mga.setMonth(formatter.format(mga.getMgaDate()));
+                DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("YYYY");
+                mga.setYear(yearFormatter.format(mga.getMgaDate()));
 
                 String location = mga.getLocation().trim().toUpperCase();
                 if (arenaChannel.contains(location)) {
@@ -185,8 +183,8 @@ public class MGAServiceImpl implements MGAService {
     }
 
     @Override
-    public List<MGA> getMGAByMGADate(LocalDate mgaDate) {
-        return mgaRepository.getMGAByMGADate(mgaDate);
+    public List<MGA> getMGAMonthYear(List<String> months, List<String> years) {
+        return mgaRepository.getMGAMonth(months, years);
     }
 
     @Override

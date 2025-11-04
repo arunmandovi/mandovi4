@@ -12,8 +12,13 @@ import java.util.List;
 public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
 
     @Transactional
-    @Query("SELECT l FROM Loadd l WHERE l.month = :month AND l.year = :year ")
-    List<Loadd> getLoadByMonthYear(@Param("month") String month, @Param("year") String year);
+    @Query("""
+    SELECT l FROM Loadd l
+    WHERE (:months IS NULL OR l.month IN (:months))
+     AND (:years IS NULL OR l.year IN (:years))
+    """)
+    List<Loadd> getLoadByMonthYear(
+            @Param("months") List<String> months, @Param("years") List<String> years);
 
     // Group by city
     @Query("""

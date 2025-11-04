@@ -11,7 +11,7 @@ public interface MSGPProfitService {
 
     public List<MSGPProfit> getAllMSGP_Profit();
 
-    public List<MSGPProfit> getMSGPProfitByMonthYear(String month, String year);
+    public List<MSGPProfit> getMSGPProfitByMonthYear(List<String> months, List<String> years);
 
     public List<MSGPProfitSummaryDTO> getMSGPProfitSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 

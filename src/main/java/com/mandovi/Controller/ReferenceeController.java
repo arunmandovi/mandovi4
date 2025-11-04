@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Ref;
 import java.util.List;
 
 @RestController
@@ -36,13 +37,19 @@ public class ReferenceeController {
         return referenceeService.getAllReference();
     }
 
-    @GetMapping("/getreferencee/{month}/{year}")
-    public ResponseEntity<List<Referencee>> getReferenceeByMonthYear (@PathVariable String month, @PathVariable String year ){
-        List<Referencee> referencesRecords = referenceeService.getReferenceeByMonthYear(month, year);
-        if(referencesRecords.isEmpty()){
-            return ResponseEntity.noContent().build();
+    @GetMapping("/getreferencee")
+    public ResponseEntity<?> getReferenceeByMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<Referencee> referenceeRecords = referenceeService.getReferenceeByMonthYear(months, years);
+            if (referenceeRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(referenceeRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(referencesRecords);
     }
 
     @GetMapping("/referencee_summary")

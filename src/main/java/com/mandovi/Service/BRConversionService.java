@@ -12,7 +12,7 @@ public interface BRConversionService {
 
     public List<BRConversion> getAllBRConversion();
 
-    public List<BRConversion> getBRConversionByMonthYear(String month, String year);
+    public List<BRConversion> getBRConversionByMonthYear(List<String> months, List<String> years);
 
     public List<BRConversionSummaryDTO> getBRConversionSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 

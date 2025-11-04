@@ -214,9 +214,8 @@ public class LoaddServiceImpl implements LoaddService {
     }
 
     @Override
-    public List<Loadd> getLoadByMonthYear(String month, String year) {
-        String formattedMonth = month.substring(0, 1).toUpperCase()+month.substring(1).toLowerCase();
-        return loaddRepository.getLoadByMonthYear(formattedMonth, year);
+    public List<Loadd> getLoadByMonthYear(List<String> months, List<String> years) {
+        return loaddRepository.getLoadByMonthYear(months, years);
     }
 
     @Override

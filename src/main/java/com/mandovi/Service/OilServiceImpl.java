@@ -80,9 +80,8 @@ public class OilServiceImpl implements OilService {
     }
 
     @Override
-    public List<Oil> getOilByMonthYear(String month, String year) {
-        String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
-        return oilRepository.getOilByMonthYear(formattedMonth, year);
+    public List<Oil> getOilByMonthYear(List<String> months, List<String> years) {
+        return oilRepository.getOilByMonthYear(months, years);
     }
 
     @Override

@@ -103,9 +103,8 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public List<Revenue> getRevenueByMonthYear(String month, String year) {
-        String formattedMonth = month.trim().toUpperCase();
-        return revenueRepository.getRevenueByMonthYear(formattedMonth, year);
+    public List<Revenue> getRevenueByMonthYear(List<String> months, List<String> years) {
+        return revenueRepository.getRevenueByMonthYear(months, years);
     }
 
     @Override

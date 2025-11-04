@@ -146,9 +146,8 @@ public class MCPServiceImpl implements MCPService {
     }
 
     @Override
-    public List<MCP> getMCPByMonthYear(String month, String year) {
-        String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
-        return mcpRepository.getMCPByMonthYear(formattedMonth, year);
+    public List<MCP> getMCPByMonthYear(List<String> months, List<String> years) {
+        return mcpRepository.getMCPByMonthYear(months, years);
     }
 
     @Override

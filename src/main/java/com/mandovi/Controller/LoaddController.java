@@ -37,13 +37,19 @@ public class LoaddController {
         return loaddService.getAllLoadData();
     }
 
-    @GetMapping("/getloadd/{month}/{year}")
-    public ResponseEntity<List<Loadd>> getLoadByMonthYear(@PathVariable String month, @PathVariable String year){
-        List<Loadd> loaddRecords = loaddService.getLoadByMonthYear(month, year);
-        if (loaddRecords.isEmpty()){
-            return ResponseEntity.noContent().build();
+    @GetMapping("/getloadd")
+    public ResponseEntity<?> getLoaddMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<Loadd> loaddRecords = loaddService.getLoadByMonthYear(months, years);
+            if (loaddRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(loaddRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(loaddRecords);
     }
 
     @GetMapping("/loadd_summary")

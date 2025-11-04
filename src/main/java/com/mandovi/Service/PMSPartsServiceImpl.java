@@ -124,15 +124,16 @@ public class PMSPartsServiceImpl implements PMSPartsService {
 
                 //Updating month column using the value stored in date column
                 LocalDate date = pmsParts.getPmsDate();
-                DateTimeFormatter sdf = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH); //getting full month name
-                String month =  sdf.format(date);
-                pmsParts.setMonth(month);
+                DateTimeFormatter sdf = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
+                pmsParts.setMonth(sdf.format(pmsParts.getPmsDate()));
+                DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("YYYY");
+                pmsParts.setYear(yearFormatter.format(pmsParts.getPmsDate()));
 
-                switch (month) {
-                    case "Apr", "May", "Jun", "APR", "MAY", "JUN" ->{ pmsParts.setQtrWise("Qtr1"); pmsParts.setHalfYear("H1");}
-                    case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" ->{ pmsParts.setQtrWise("Qtr2"); pmsParts.setHalfYear("H1");}
-                    case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" ->{ pmsParts.setQtrWise("Qtr3"); pmsParts.setHalfYear("H2");}
-                    case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" ->{ pmsParts.setQtrWise("Qtr4"); pmsParts.setHalfYear("H2");}
+                switch (pmsParts.getMonth().trim().toUpperCase()) {
+                    case "APR", "MAY", "JUN" ->{ pmsParts.setQtrWise("Qtr1"); pmsParts.setHalfYear("H1");}
+                    case "JUL", "AUG", "SEP" ->{ pmsParts.setQtrWise("Qtr2"); pmsParts.setHalfYear("H1");}
+                    case "OCT", "NOV", "DEC" ->{ pmsParts.setQtrWise("Qtr3"); pmsParts.setHalfYear("H2");}
+                    case "JAN", "FEB", "MAR" ->{ pmsParts.setQtrWise("Qtr4"); pmsParts.setHalfYear("H2");}
 
                 }
                 pmsPartsRepository.save(pmsParts);
@@ -149,8 +150,8 @@ public class PMSPartsServiceImpl implements PMSPartsService {
     }
 
     @Override
-    public List<PMSParts> getPMSPartsByPMSDate(LocalDate pmsDate) {
-        return pmsPartsRepository.getPMSPartsByPMSDate(pmsDate);
+    public List<PMSParts> getPMSPartsByMonthYear(List<String> months, List<String> years) {
+        return pmsPartsRepository.getPMSPartsByMonthYear(months, years);
     }
 
     @Override
