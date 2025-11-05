@@ -37,13 +37,19 @@ public class VASController {
         return vasService.getAllVas();
     }
 
-    @GetMapping("/getvas/{month}/{year}")
-    public ResponseEntity<List<VAS>> getVASByMonthYear (@PathVariable String month, @PathVariable String year){
-        List<VAS> vasRecords = vasService.getVASByMonthYear(month, year);
-        if (vasRecords.isEmpty()) {
-            return ResponseEntity.noContent().build();
+    @GetMapping("/getvas")
+    public ResponseEntity<?> getVASByMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<VAS> vasRecords = vasService.getVASByMonthYear(months, years);
+            if (vasRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(vasRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(vasRecords);
     }
 
     @GetMapping("/vas_summary")

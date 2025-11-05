@@ -36,13 +36,19 @@ public class TATController {
         return tatService.getAllTat();
     }
 
-    @GetMapping("/gettat/{month}/{year}")
-    public ResponseEntity<List<TAT>> getTATByMonthYear (@PathVariable String month, @PathVariable String year){
-        List<TAT> TATRecords = tatService.getTATByMonthYear(month, year);
-        if (TATRecords.isEmpty()) {
-            return ResponseEntity.noContent().build();
+    @GetMapping("/gettat")
+    public ResponseEntity<?> getTATByMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<TAT> tatRecords = tatService.getTATByMonthYear(months, years);
+            if (tatRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(tatRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(TATRecords);
     }
 
     @GetMapping("/tat_summary")

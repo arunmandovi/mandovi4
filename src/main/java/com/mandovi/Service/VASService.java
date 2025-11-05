@@ -11,7 +11,7 @@ public interface VASService {
 
     public List<VAS> getAllVas();
 
-    public List<VAS> getVASByMonthYear (String month, String year);
+    public List<VAS> getVASByMonthYear (List<String> months, List<String> years);
 
     public List<VASSummaryDTO> getVASSummary(List<String> months, List<String> qtrWise, List<String> halfYear);
 

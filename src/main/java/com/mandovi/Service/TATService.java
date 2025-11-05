@@ -12,7 +12,7 @@ public interface TATService {
 
     public List<TAT> getAllTat();
 
-    public List<TAT> getTATByMonthYear(String month, String year);
+    public List<TAT> getTATByMonthYear(List<String> months, List<String> years);
 
     public List<TATSummaryDTO> getTATSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 

@@ -103,9 +103,8 @@ public class SparesServiceImpl implements SparesService{
     }
 
     @Override
-    public List<Spares> getSparesByMonthYear(String month, String year) {
-        String formattedMonth = month.trim().toUpperCase();
-        return sparesRepository.getSparedByMonthYear(formattedMonth, year);
+    public List<Spares> getSparesByMonthYear(List<String> months, List<String> years) {
+        return sparesRepository.getSparedByMonthYear(months, years);
     }
 
     @Override

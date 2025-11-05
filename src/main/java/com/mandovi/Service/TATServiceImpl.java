@@ -84,9 +84,8 @@ public class TATServiceImpl implements TATService {
     }
 
     @Override
-    public List<TAT> getTATByMonthYear(String month, String year) {
-        String formattedMonth = month.substring(0,1).toUpperCase()+month.substring(1).toLowerCase();
-        return tatRepository.getTATByMonthYear(formattedMonth, year);
+    public List<TAT> getTATByMonthYear(List<String> months, List<String> years) {
+        return tatRepository.getTATByMonthYear(months, years);
     }
 
     @Override

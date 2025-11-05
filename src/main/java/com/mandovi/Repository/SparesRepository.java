@@ -12,8 +12,12 @@ import java.util.List;
 public interface SparesRepository extends JpaRepository<Spares, Integer> {
 
     @Transactional
-    @Query("SELECT s FROM Spares s WHERE s.month = :month AND s.year = :year")
-    public List<Spares> getSparedByMonthYear(@Param("month") String month, @Param("year") String year);
+    @Query("""
+    SELECT s FROM Spares s
+    WHERE (:months IS NULL OR s.month IN (:months))
+    AND (:years IS NULL OR s.year IN (:years))
+    """)
+    public List<Spares> getSparedByMonthYear(@Param("months") List<String> months, @Param("years") List<String> years);
 
     //Group by city
     @Query("""

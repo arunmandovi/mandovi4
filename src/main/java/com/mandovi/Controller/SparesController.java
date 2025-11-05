@@ -36,13 +36,19 @@ public class SparesController {
         return sparesService.getAllSpares();
     }
 
-    @GetMapping("/getspares/{month}/{year}")
-    public ResponseEntity<List<Spares>> getSparesByMonthYear(@PathVariable String month, @PathVariable String year){
-        List<Spares> sparesRecords = sparesService.getSparesByMonthYear(month, year);
-        if (sparesRecords.isEmpty()) {
-            return ResponseEntity.noContent().build();
+    @GetMapping("/getspares")
+    public ResponseEntity<?> getSparesByMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<Spares> sparesRecords = sparesService.getSparesByMonthYear(months, years);
+            if (sparesRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(sparesRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
-        return ResponseEntity.ok(sparesRecords);
     }
 
     @GetMapping("/spares_summary")

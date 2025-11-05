@@ -12,7 +12,7 @@ public interface SparesService{
 
     public List<Spares> getAllSpares();
 
-    public List<Spares> getSparesByMonthYear(String month, String year);
+    public List<Spares> getSparesByMonthYear(List<String> months, List<String> years);
 
     public List<SparesSummaryDTO> getSparesSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 

@@ -12,8 +12,12 @@ import java.util.List;
 public interface VASRepository extends JpaRepository<VAS, Integer> {
 
     @Transactional
-    @Query("SELECT v FROM VAS v WHERE v.month = :month AND v.year = :year")
-    public List<VAS> getVASByMonthYear (@Param("month") String month, @Param("year") String year);
+    @Query("""
+    SELECT v FROM VAS v
+    WHERE (:months IS NULL OR v.month IN (:months))
+    AND (:years IS NULL OR v.year IN (:years))
+    """)
+    public List<VAS> getVASByMonthYear (@Param("months") List<String> months, @Param("years") List<String> years);
 
     //Group by city
     @Query("""
