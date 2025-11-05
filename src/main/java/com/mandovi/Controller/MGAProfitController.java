@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.MGAProfitSummaryDTO;
 import com.mandovi.Entity.MGAProfit;
 import com.mandovi.Service.MGAProfitService;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class MGAProfitController {
         return ResponseEntity.ok(listMGAProfit);
     }
 
-    @GetMapping ("getmga_profit")
+    @GetMapping ("/getmga_profit")
     public ResponseEntity<?> getMGAMonthYear (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> years ){
@@ -48,6 +49,39 @@ public class MGAProfitController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(mgaProfitRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping ("/mga_profit_summary")
+    public ResponseEntity<?> getMGAProfitSummary (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
+        try {
+            List<MGAProfitSummaryDTO> listMGAProfitSummary = mgaProfitService.getMGAProfitSummary(months, qtrWise, halfYear);
+            if (listMGAProfitSummary.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listMGAProfitSummary);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/mga_profit_branch_summary")
+    public ResponseEntity<?> getMGAProfitSummaryBranchWise (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> qtrWise,
+            @RequestParam (required = false) List<String> halfYear ){
+        try {
+            List<MGAProfitSummaryDTO> listMGAProfitSummaryBranchWise = mgaProfitService.getMGAProfitSummaryBranchWise(months, cities, qtrWise, halfYear);
+            if (listMGAProfitSummaryBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listMGAProfitSummaryBranchWise);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }

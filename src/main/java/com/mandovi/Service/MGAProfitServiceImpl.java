@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.MGAProfitSummaryDTO;
 import com.mandovi.Entity.MGAProfit;
 import com.mandovi.Repository.MGAProfitRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -68,11 +69,11 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                 mgaProfit.setServiceType(mgaProfit.getServiceDescription());
                 String locationCode = mgaProfit.getLocationCode();
                 if (bangaloreLocations.contains(locationCode)){
-                    mgaProfit.setCity(" Bangalore");
+                    mgaProfit.setCity("Bangalore");
                 } else if (mysoreLocations.contains(locationCode)){
-                    mgaProfit.setCity(" Mysore");
+                    mgaProfit.setCity("Mysore");
                 } else if (mangaloreLocations.contains(locationCode)) {
-                    mgaProfit.setCity(" Mangalore");
+                    mgaProfit.setCity("Mangalore");
                 } else {
                     mgaProfit.setCity("UNKNOWN");
                 }
@@ -150,5 +151,15 @@ public class MGAProfitServiceImpl implements MGAProfitService{
     @Override
     public List<MGAProfit> getMGAProfitMonthYear(List<String> months, List<String> years) {
         return mgaProfitRepository.getMGAProfitMonthYear(months, years);
+    }
+
+    @Override
+    public List<MGAProfitSummaryDTO> getMGAProfitSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
+        return mgaProfitRepository.getMGAProfitSummary(months, qtrWise, halfYear);
+    }
+
+    @Override
+    public List<MGAProfitSummaryDTO> getMGAProfitSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+        return mgaProfitRepository.getMGAProfitSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 }
