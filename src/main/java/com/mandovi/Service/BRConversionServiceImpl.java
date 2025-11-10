@@ -114,5 +114,10 @@ public class BRConversionServiceImpl implements BRConversionService {
         return brConversionRepository.getBRConversionSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 
+    @Override
+    public void deleteBRConversionAll() {
+        brConversionRepository.deleteBRConversionAll();
+    }
+
 
 }

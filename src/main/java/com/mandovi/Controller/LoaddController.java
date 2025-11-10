@@ -89,4 +89,14 @@ public class LoaddController {
         }
     }
 
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteLoaddAll (){
+        try {
+            loaddService.deleteLoaddAll();
+            return ResponseEntity.ok("All Data Deleted from Load");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error :"+e.getMessage());
+        }
+    }
+
 }

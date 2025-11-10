@@ -17,4 +17,6 @@ public interface LabourService {
 
     public List<LabourSummaryDTO> getLabourSummaryBranchWise (List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
 
+    void deleteLabourAll ();
+
 }

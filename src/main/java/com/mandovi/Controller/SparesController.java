@@ -83,4 +83,14 @@ public class SparesController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteSparesAll (){
+        try {
+            sparesService.deleteSparesAll();
+            return ResponseEntity.ok().body("ALL DATA deleted from Spares");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
 }

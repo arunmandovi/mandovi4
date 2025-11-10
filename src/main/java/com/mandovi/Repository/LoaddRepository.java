@@ -4,6 +4,7 @@ import com.mandovi.DTO.LoaddSummaryDTO;
 import com.mandovi.Entity.Loadd;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -145,4 +146,9 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear );
+
+    @Modifying
+    @Transactional
+    @Query(value = "TRUNCATE TABLE mandovi.loadd", nativeQuery = true)
+    void deleteLoaddAll();
 }

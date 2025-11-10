@@ -139,5 +139,10 @@ public class LabourServiceImpl implements LabourService {
         return labourRepository.getLabourSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
     }
 
+    @Override
+    public void deleteLabourAll() {
+        labourRepository.deleteLabourAll();
+    }
+
 
 }

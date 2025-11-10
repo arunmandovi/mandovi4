@@ -84,4 +84,14 @@ public class VASController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteVASAll (){
+        try {
+            vasService.deleteVASAll();
+            return ResponseEntity.ok().body("ALL DATA deleted from VAS");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
 }

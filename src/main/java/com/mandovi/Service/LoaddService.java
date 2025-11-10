@@ -19,4 +19,6 @@ public interface LoaddService {
 
     public List<LoaddSummaryDTO> getLoaddSummaryBranchWise (List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
 
+    public void deleteLoaddAll ();
+
 }

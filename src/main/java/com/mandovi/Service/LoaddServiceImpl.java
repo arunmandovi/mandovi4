@@ -228,4 +228,9 @@ public class LoaddServiceImpl implements LoaddService {
         return loaddRepository.getLoaddSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
     }
 
+    @Override
+    public void deleteLoaddAll() {
+        loaddRepository.deleteLoaddAll();
+    }
+
 }

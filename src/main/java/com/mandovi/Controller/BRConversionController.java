@@ -67,7 +67,7 @@ public class BRConversionController {
         }
     }
 
-    @GetMapping("br_conversion_branch_summary")
+    @GetMapping("/br_conversion_branch_summary")
     public ResponseEntity<?> getBRConversionSummaryBranchWise (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
@@ -79,6 +79,16 @@ public class BRConversionController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listBRConversionSummaryBranchWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteBRConversionAll (){
+        try {
+            brConversionService.deleteBRConversionAll();
+            return ResponseEntity.ok().body("ALL DATA Deleted from BRConversion");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }

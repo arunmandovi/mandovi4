@@ -17,5 +17,5 @@ public interface VASService {
 
     public List<VASSummaryDTO> getVASSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
 
-
+    void deleteVASAll ();
 }

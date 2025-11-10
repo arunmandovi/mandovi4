@@ -4,6 +4,7 @@ import com.mandovi.DTO.BRConversionSummaryDTO;
 import com.mandovi.Entity.BRConversion;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -111,4 +112,9 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
             @Param("cities") List<String> cities,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear );
+
+    @Modifying
+    @Transactional
+    @Query (value = "TRUNCATE TABLE mandovi.br_conversion;", nativeQuery = true)
+    void deleteBRConversionAll ();
 }

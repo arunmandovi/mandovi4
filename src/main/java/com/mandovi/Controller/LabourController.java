@@ -83,5 +83,15 @@ public class LabourController {
         }
     }
 
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteLabourAll (){
+        try {
+            labourService.deleteLabourAll();
+            return ResponseEntity.ok().body("ALL DATA deleted from Labour");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
 
 }

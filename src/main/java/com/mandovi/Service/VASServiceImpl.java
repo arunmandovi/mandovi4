@@ -105,4 +105,9 @@ public class VASServiceImpl implements VASService {
         return vasRepository.getVASSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 
+    @Override
+    public void deleteVASAll() {
+        vasRepository.deleteVASAll();
+    }
+
 }

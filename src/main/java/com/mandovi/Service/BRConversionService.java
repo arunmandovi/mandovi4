@@ -17,4 +17,6 @@ public interface BRConversionService {
     public List<BRConversionSummaryDTO> getBRConversionSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 
     public List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+
+    void deleteBRConversionAll ();
 }

@@ -4,6 +4,7 @@ import com.mandovi.DTO.VASSummaryDTO;
 import com.mandovi.Entity.VAS;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -286,5 +287,9 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
            @Param("qtrWise") List<String> qtrWise,
            @Param("halfYear") List<String> halfYear );
 
+    @Modifying
+    @Transactional
+    @Query(value = "TRUNCATE TABLE mandovi.vas;", nativeQuery = true)
+    void deleteVASAll ();
 
 }

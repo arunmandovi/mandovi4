@@ -4,6 +4,7 @@ import com.mandovi.DTO.SparesSummaryDTO;
 import com.mandovi.Entity.Spares;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -84,4 +85,9 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
             @Param("cities") List<String> cities,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear );
+
+    @Modifying
+    @Transactional
+    @Query(value = "TRUNCATE TABLE mandovi.spares;", nativeQuery = true)
+    void deleteSparesAll ();
 }
