@@ -162,4 +162,9 @@ public class MGAProfitServiceImpl implements MGAProfitService{
     public List<MGAProfitSummaryDTO> getMGAProfitSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
         return mgaProfitRepository.getMGAProfitSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
+
+    @Override
+    public void deleteMGAAll() {
+        mgaProfitRepository.deleteMGAProfitAll();
+    }
 }

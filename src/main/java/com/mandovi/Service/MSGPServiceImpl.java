@@ -149,5 +149,10 @@ public class MSGPServiceImpl implements MSGPService {
         return msgpRepository.getMSGPSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 
+    @Override
+    public void deleteMSGPAll() {
+        msgpRepository.deleteMSGPALL();
+    }
+
 
 }

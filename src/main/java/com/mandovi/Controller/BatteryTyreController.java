@@ -86,5 +86,15 @@ public class BatteryTyreController {
         }
     }
 
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteBatteryTyreAll (){
+        try {
+            batteryTyreService.deleteBatteryTyreAll();
+            return ResponseEntity.ok().body("ALL DATA deleted from BatteryTyre ");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("EROOR :"+e.getMessage());
+        }
+    }
+
 
 }

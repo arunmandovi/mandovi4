@@ -16,4 +16,6 @@ public interface MSGPProfitService {
     public List<MSGPProfitSummaryDTO> getMSGPProfitSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
 
     public List<MSGPProfitSummaryDTO> getMSGPProfitSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+
+    void deleteMSGPProfitAll ();
 }

@@ -18,4 +18,6 @@ public interface BatteryTyreService {
 
     public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise (List<String> months, List<String> cities,List<String> qtrWise, List<String> halfYear);
 
+    void deleteBatteryTyreAll ();
+
 }

@@ -17,4 +17,6 @@ public interface MSGPService {
 
     public List<MSGPSummaryDTO> getMSGPSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
 
+    void deleteMSGPAll ();
+
 }

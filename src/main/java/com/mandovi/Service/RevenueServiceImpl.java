@@ -116,4 +116,9 @@ public class RevenueServiceImpl implements RevenueService {
     public List<RevenueSummaryDTO> getRevenueSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
         return revenueRepository.getRevenueSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
+
+    @Override
+    public void deleteRevenueAll() {
+        revenueRepository.deleteRevenueAll();
+    }
 }

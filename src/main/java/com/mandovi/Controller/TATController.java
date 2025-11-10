@@ -83,4 +83,14 @@ public class TATController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteTATAll (){
+        try {
+            tatService.deleteTATAll();
+            return ResponseEntity.ok().body("ALL DATA deleted from TAT");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
+        }
+    }
 }

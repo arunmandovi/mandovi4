@@ -197,5 +197,10 @@ public class MGAServiceImpl implements MGAService {
         return mgaRepository.getMGASummaryBranchWise(months, cities, channels, qtrWise, halfYear);
     }
 
+    @Override
+    public void deleteMGAAll() {
+        mgaRepository.deleteMGAAll();
+    }
+
 
 }

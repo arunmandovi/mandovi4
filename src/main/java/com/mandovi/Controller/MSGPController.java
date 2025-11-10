@@ -84,4 +84,14 @@ public class MSGPController {
         }
     }
 
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteMSGPAll (){
+        try {
+            msgpService.deleteMSGPAll();
+            return ResponseEntity.ok().body(" ALL DATA deleted from MSGP");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(" ERROR : "+e.getMessage());
+        }
+    }
+
 }

@@ -86,4 +86,14 @@ public class MGAProfitController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteMGAProfitALL (){
+        try {
+            mgaProfitService.deleteMGAAll();
+            return ResponseEntity.ok().body("ALL DATA deleted from MGA Profit");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
+        }
+    }
 }

@@ -84,4 +84,14 @@ public class PMSPartsController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deletePMSPartsAll (){
+        try {
+            pmsPartsService.deletePMSPartsAll();
+            return ResponseEntity.ok().body("ALL DATA deleted from PMS Parts");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
+        }
+    }
 }

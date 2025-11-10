@@ -16,4 +16,6 @@ public interface RevenueService {
     public List<RevenueSummaryDTO> getRevenueSummary (List<String> months, List<String> qtrWise, List<String> halfYear );
 
     public List<RevenueSummaryDTO> getRevenueSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+
+    void deleteRevenueAll ();
 }

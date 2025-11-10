@@ -82,4 +82,14 @@ public class RevenueController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteRevenueAll (){
+        try {
+            revenueService.deleteRevenueAll();
+            return ResponseEntity.ok().body(" ALL DATA deleted from Revenue");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(" ERROR : "+e.getMessage());
+        }
+    }
 }

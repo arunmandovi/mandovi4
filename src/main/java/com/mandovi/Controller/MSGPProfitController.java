@@ -62,7 +62,7 @@ public class MSGPProfitController {
         }
     }
 
-    @GetMapping("msgp_profit_branch_summary")
+    @GetMapping("/msgp_profit_branch_summary")
     public ResponseEntity<?> getMSGPSummaryBranchWise (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
@@ -78,4 +78,15 @@ public class MSGPProfitController {
             return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteMSGPProfitALL (){
+        try {
+            msgpProfitService.deleteMSGPProfitAll();
+            return ResponseEntity.ok().body(" ALL DATA deleted from MSGP Profit");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
 }

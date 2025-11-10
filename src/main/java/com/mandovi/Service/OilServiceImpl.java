@@ -94,5 +94,10 @@ public class OilServiceImpl implements OilService {
         return oilRepository.getOilSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 
+    @Override
+    public void deleteOilALL() {
+        oilRepository.deleteOilAll();;
+    }
+
 }
 

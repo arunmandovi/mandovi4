@@ -4,6 +4,7 @@ import com.mandovi.DTO.OilSummaryDTO;
 import com.mandovi.Entity.Oil;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -84,4 +85,9 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
             @Param("cities") List<String> cities,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear );
+
+    @Modifying
+    @Transactional
+    @Query (value = "TRUNCATE TABLE mandovi.oil;", nativeQuery = true)
+    void deleteOilAll ();
 }

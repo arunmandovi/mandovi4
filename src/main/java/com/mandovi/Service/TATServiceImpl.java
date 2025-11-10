@@ -200,4 +200,9 @@ public class TATServiceImpl implements TATService {
                 .toList();
     }
 
+    @Override
+    public void deleteTATAll() {
+        tatRepository.deleteTATAll();
+    }
+
 }

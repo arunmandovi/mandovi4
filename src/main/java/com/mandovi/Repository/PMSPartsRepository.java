@@ -4,6 +4,7 @@ import com.mandovi.DTO.PMSPartsSummaryDTO;
 import com.mandovi.Entity.PMSParts;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -184,4 +185,9 @@ public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
             @Param("cities") List<String> cities,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear );
+
+    @Modifying
+    @Transactional
+    @Query(value = "TRUNCATE TABLE mandovi.pms_parts;", nativeQuery = true)
+    void deletePMSPartsALl ();
 }

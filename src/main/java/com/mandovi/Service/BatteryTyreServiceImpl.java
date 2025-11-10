@@ -92,4 +92,9 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
         return batteryTyreRepository.getBatteryTyreSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
 
+    @Override
+    public void deleteBatteryTyreAll() {
+        batteryTyreRepository.deleteBatteryTyreAll();
+    }
+
 }

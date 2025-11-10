@@ -84,4 +84,14 @@ public class OilController {
         }
     }
 
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteOilAll (){
+        try {
+            oilService.deleteOilALL();
+            return ResponseEntity.ok().body("ALL DATA deleted from Oil");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(" ERROR :"+e.getMessage());
+        }
+    }
+
 }

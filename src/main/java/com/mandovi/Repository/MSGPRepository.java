@@ -5,6 +5,7 @@ import com.mandovi.DTO.MSGPSummaryDTO;
 import com.mandovi.Entity.MSGP;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -125,5 +126,10 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
             @Param("cities") List<String> cities,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear );
+
+    @Modifying
+    @Transactional
+    @Query(value = "TRUNCATE TABLE mandovi.msgp;", nativeQuery = true)
+    void deleteMSGPALL ();
 
 }

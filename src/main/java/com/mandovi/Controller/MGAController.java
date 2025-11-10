@@ -84,4 +84,14 @@ public class MGAController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @GetMapping("/delete_all")
+    public ResponseEntity<?> deleteMGAAll (){
+        try {
+            mgaService.deleteMGAAll();
+            return ResponseEntity.ok().body("ALL DATA deleted from MGA");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
+        }
+    }
 }

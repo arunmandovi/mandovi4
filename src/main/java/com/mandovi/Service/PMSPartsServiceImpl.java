@@ -163,4 +163,9 @@ public class PMSPartsServiceImpl implements PMSPartsService {
     public List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
         return pmsPartsRepository.getPMSPartsSummaryBranchWise(months, cities, qtrWise, halfYear);
     }
+
+    @Override
+    public void deletePMSPartsAll() {
+        pmsPartsRepository.deletePMSPartsALl();
+    }
 }
