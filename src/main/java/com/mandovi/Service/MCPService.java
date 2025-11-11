@@ -16,4 +16,6 @@ public interface MCPService {
     public List<MCPSummaryDTO> getMCPSummary (List<String> months,List<String> channels, List<String> qtrWise, List<String> halfYear);
 
     public List<MCPSummaryDTO> getMCPSummaryBranchWise (List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
+
+    void deleteMCPALl ();
 }

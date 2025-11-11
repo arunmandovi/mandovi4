@@ -5,6 +5,7 @@ import com.mandovi.DTO.MCPSummaryDTO;
 import com.mandovi.Entity.MCP;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -61,4 +62,9 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear);
+
+    @Modifying
+    @Transactional
+    @Query(value = "TRUNCATE TABLE mandovi.mcp;",nativeQuery = true)
+    void deleteMCPAll ();
 }

@@ -14,4 +14,6 @@ public interface ProfitLossService {
     List<ProfitLossSummaryDTO> getProfitLossSummary ();
 
     List<ProfitLossSummaryDTO> getProfitSummaryBranchWise (List<String> cities);
+
+    void deleteProfitLossAll ();
 }

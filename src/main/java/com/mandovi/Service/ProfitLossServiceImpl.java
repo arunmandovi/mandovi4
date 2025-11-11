@@ -214,4 +214,9 @@ public class ProfitLossServiceImpl implements ProfitLossService {
     public List<ProfitLossSummaryDTO> getProfitSummaryBranchWise(List<String> cities) {
         return profitlossRepository.getProfitLossSummaryByCityBranch(cities);
     }
+
+    @Override
+    public void deleteProfitLossAll() {
+        profitlossRepository.deleteProfitLossAll();
+    }
 }

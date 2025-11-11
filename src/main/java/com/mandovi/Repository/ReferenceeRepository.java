@@ -4,6 +4,7 @@ import com.mandovi.DTO.ReferenceeSummaryDTO;
 import com.mandovi.Entity.Referencee;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -72,4 +73,9 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear );
+
+    @Modifying
+    @Transactional
+    @Query(value = "TRUNCATE TABLE mandovi.referencee;", nativeQuery = true)
+    void deleteReferenceeAll ();
 }

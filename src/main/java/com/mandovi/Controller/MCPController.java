@@ -85,4 +85,14 @@ public class MCPController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteMCPAll (){
+        try {
+            mcpService.deleteMCPALl();
+            return ResponseEntity.ok().body("ALl data deleted from MCP");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
+        }
+    }
 }

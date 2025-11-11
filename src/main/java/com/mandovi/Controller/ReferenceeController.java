@@ -89,4 +89,14 @@ public class ReferenceeController {
         }
     }
 
+    @GetMapping("/delete_all")
+    public ResponseEntity<?> deleteReferenceeALl (){
+        try {
+            referenceeService.deleteReferenceeAll();
+            return ResponseEntity.ok().body("All data deleted from Referencee");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
+        }
+    }
+
 }

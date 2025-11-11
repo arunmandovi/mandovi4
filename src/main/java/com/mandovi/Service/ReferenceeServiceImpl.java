@@ -26,7 +26,7 @@ public class ReferenceeServiceImpl implements ReferenceeService {
                 DataFormatter dataFormatter = new DataFormatter();
                 Sheet sheet = workbook.getSheetAt(0);
 
-                for(int i = 1; i < sheet.getLastRowNum(); i++){
+                for(int i = 1; i <= sheet.getLastRowNum(); i++){
                     Row row = sheet.getRow(i);
                     if(row == null)continue;
 
@@ -99,5 +99,10 @@ public class ReferenceeServiceImpl implements ReferenceeService {
     @Override
     public List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear) {
         return referenceeRepository.getReferenceeSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+    }
+
+    @Override
+    public void deleteReferenceeAll() {
+        referenceeRepository.deleteReferenceeAll();
     }
 }

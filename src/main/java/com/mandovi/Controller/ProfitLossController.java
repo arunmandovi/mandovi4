@@ -61,4 +61,14 @@ public class ProfitLossController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    public ResponseEntity<?> deleteProfitLossAll (){
+        try {
+            profitLossService.deleteProfitLossAll();
+            return ResponseEntity.ok().body("All data deleted from ProfitLoss");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
+        }
+    }
 }

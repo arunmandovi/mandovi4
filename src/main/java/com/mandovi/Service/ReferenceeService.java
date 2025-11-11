@@ -16,4 +16,6 @@ public interface ReferenceeService {
     public List<ReferenceeSummaryDTO> getReferenceeSummary (List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
 
     public List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
+
+    void deleteReferenceeAll ();
 }
