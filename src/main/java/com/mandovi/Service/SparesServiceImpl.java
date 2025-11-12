@@ -48,11 +48,11 @@ public class SparesServiceImpl implements SparesService{
 
                 Spares spares = new Spares();
 
-                spares.setCity(row.getCell(0).getStringCellValue());
-                spares.setMonth(row.getCell(1).getStringCellValue());
+                spares.setCity(row.getCell(1).getStringCellValue());
+                spares.setMonth(row.getCell(2).getStringCellValue());
 
                 //Converting Integer cell's year Column's value into string
-                int num_year = (int)  row.getCell(2).getNumericCellValue();
+                int num_year = (int)  row.getCell(0).getNumericCellValue();
                 String year = String.valueOf(num_year);
                 spares.setYear(year);
 

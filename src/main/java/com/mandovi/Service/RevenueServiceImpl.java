@@ -45,8 +45,8 @@ public class RevenueServiceImpl implements RevenueService {
 
                 Revenue revenue = new Revenue();
 
-                revenue.setCity(row.getCell(2).getStringCellValue());
-                revenue.setMonth(row.getCell(1).getStringCellValue());
+                revenue.setCity(row.getCell(1).getStringCellValue());
+                revenue.setMonth(row.getCell(2).getStringCellValue());
                 int year = (int) row.getCell(0).getNumericCellValue();
                 revenue.setYear(String.valueOf(year));
 
@@ -61,16 +61,16 @@ public class RevenueServiceImpl implements RevenueService {
                 revenue.setSrLabourCurrentYear(getNumericCellValue(row, 7));
                 revenue.setBrLabourLastYear(getNumericCellValue(row, 9));
                 revenue.setBrLabourCurrentYear(getNumericCellValue(row,10));
-                revenue.setSrAndBrLabourLastYear(getNumericCellValue(row, 12));
-                revenue.setSrAndBrLabourCurrentYear(getNumericCellValue(row, 13));
+                revenue.setSrAndBrLabourLastYear(revenue.getSrLabourLastYear()+revenue.getBrLabourLastYear());
+                revenue.setSrAndBrLabourCurrentYear(revenue.getSrLabourCurrentYear()+revenue.getBrLabourCurrentYear());
                 revenue.setSrSparesLastYear(getNumericCellValue(row, 15));
                 revenue.setSrSparesCurrentYear(getNumericCellValue(row, 16));
                 revenue.setBrSparesLastYear(getNumericCellValue(row, 18));
                 revenue.setBrSparesCurrentYear(getNumericCellValue(row, 19));
-                revenue.setSrAndBrSparesLastYear(getNumericCellValue(row, 21));
-                revenue.setSrAndBrSparesCurrentYear(getNumericCellValue(row, 22));
-                revenue.setSrAndBrTotalLastYear(getNumericCellValue(row, 24));
-                revenue.setSrAndBrTotalCurrentYear(getNumericCellValue(row, 25));
+                revenue.setSrAndBrSparesLastYear(revenue.getSrSparesLastYear()+revenue.getBrSparesLastYear());
+                revenue.setSrAndBrSparesCurrentYear(revenue.getSrSparesCurrentYear()+revenue.getBrSparesCurrentYear());
+                revenue.setSrAndBrTotalLastYear(revenue.getSrLabourLastYear()+revenue.getBrLabourLastYear()+revenue.getSrSparesLastYear()+revenue.getBrSparesLastYear());
+                revenue.setSrAndBrTotalCurrentYear(revenue.getSrLabourCurrentYear()+revenue.getBrLabourCurrentYear()+revenue.getSrSparesCurrentYear()+revenue.getBrSparesCurrentYear());
 
                 //Updating ALlGrowth columns by calculating the values from last & current year columns
                 revenue.setSrLabourGrowth(growth(revenue.getSrLabourLastYear(), revenue.getSrLabourCurrentYear()));
