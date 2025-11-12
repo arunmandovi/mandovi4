@@ -59,19 +59,19 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
             s.branch,
             SUM(s.srSparesLastYear),
             SUM(s.srSparesCurrentYear),
-            (SUM(s.srSparesCurrentYear) - SUM(s.srSparesLastYear)) * 100 / NULLIF(SUM(s.srSparesLastYear), 0),
+            (NULLIF(SUM(s.srSparesCurrentYear), 0) - SUM(s.srSparesLastYear)) * 100 / NULLIF(SUM(s.srSparesLastYear), 0),
             SUM(s.brSparesLastYear),
             SUM(s.brSparesCurrentYear),
             (SUM(s.brSparesCurrentYear) - SUM(s.brSparesLastYear)) * 100 / NULLIF(SUM(s.brSparesLastYear), 0),
             SUM(s.srBrSparesLastYear),
             SUM(s.srBrSparesCurrentYear),
-            (SUM(s.srBrSparesCurrentYear) - SUM(s.srBrSparesLastYear)) * 100 / NULLIF(SUM(s.srBrSparesLastYear), 0),
+            (NULLIF(SUM(s.srBrSparesCurrentYear), 0) - SUM(s.srBrSparesLastYear)) * 100 / NULLIF(SUM(s.srBrSparesLastYear), 0),
             SUM(s.batteryLastYear),
             SUM(s.batteryCurrentYear),
-            (SUM(s.batteryCurrentYear) - SUM(s.batteryLastYear)) * 100 / NULLIF(SUM(s.batteryLastYear), 0),
+            (NULLIF(SUM(s.batteryCurrentYear), 0) - SUM(s.batteryLastYear)) * 100 / NULLIF(SUM(s.batteryLastYear), 0),
             SUM(s.tyreLastYear),
             SUM(s.tyreCurrentYear),
-            (SUM(s.tyreCurrentYear) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
+            (NULLIF(SUM(s.tyreCurrentYear), 0) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
             )
             FROM Spares s
             WHERE (:months IS NULL OR s.month IN (:months))
