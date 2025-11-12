@@ -45,9 +45,9 @@ public class RevenueServiceImpl implements RevenueService {
 
                 Revenue revenue = new Revenue();
 
-                revenue.setCity(row.getCell(0).getStringCellValue());
+                revenue.setCity(row.getCell(2).getStringCellValue());
                 revenue.setMonth(row.getCell(1).getStringCellValue());
-                int year = (int) row.getCell(2).getNumericCellValue();
+                int year = (int) row.getCell(0).getNumericCellValue();
                 revenue.setYear(String.valueOf(year));
 
                 //Updating period column by concating columns month & year
