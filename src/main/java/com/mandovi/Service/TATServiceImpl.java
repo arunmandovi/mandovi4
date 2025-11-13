@@ -145,10 +145,20 @@ public class TATServiceImpl implements TATService {
 
     // Convert "100:05:02" -> seconds
     private long timeStringToSeconds(String timeStr) {
+        if (timeStr == null || timeStr.isBlank()) return 0;
+
         String[] parts = timeStr.split(":");
-        long hours = Long.parseLong(parts[0]);
-        long minutes = Long.parseLong(parts[1]);
-        long seconds = Long.parseLong(parts[2]);
+
+        long hours = 0, minutes = 0, seconds = 0;
+
+        try {
+            if (parts.length >= 1) hours = Long.parseLong(parts[0]);
+            if (parts.length >= 2) minutes = Long.parseLong(parts[1]);
+            if (parts.length >= 3) seconds = Long.parseLong(parts[2]);
+        } catch (NumberFormatException e) {
+            System.out.println("⚠ Invalid time format: " + timeStr);
+        }
+
         return hours * 3600 + minutes * 60 + seconds;
     }
 
