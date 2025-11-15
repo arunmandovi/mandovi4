@@ -34,14 +34,22 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
-            (SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
-            NULLIF(SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),0),
+            CAST((SELECT (NULLIF(SUM(s.batteryCurrentYear), 0) - SUM(s.batteryLastYear)) * 100 / NULLIF(SUM(s.batteryLastYear), 0)
+              FROM Spares s
+              WHERE s.city = b.city
+              AND (:months IS NULL OR s.month IN (:months))
+             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
+             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))) AS double),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailQTY ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
-            (SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
-            NULLIF(SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),0),
+            CAST((SELECT (NULLIF(SUM(s.tyreCurrentYear), 0) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
+              FROM Spares s
+              WHERE s.city = b.city
+              AND (:months IS NULL OR s.month IN (:months))
+             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
+             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))) AS double),
             SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL),
             ((SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL)) * 100.00 )  / SUM(b.sumOfNetRetailDDL)
             )
@@ -65,14 +73,24 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
-            (SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
-            NULLIF(SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),0),
+            CAST((SELECT (NULLIF(SUM(s.batteryCurrentYear), 0) - SUM(s.batteryLastYear)) * 100 / NULLIF(SUM(s.batteryLastYear), 0)
+              FROM Spares s
+              WHERE s.city = b.city AND s.branch = b.branch
+              AND (:months IS NULL OR s.month IN (:months))
+             AND (:cities IS NULL OR s.city IN (:cities))
+             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
+             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))) AS double),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailQTY ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
-            (SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END)) * 100.00 /
-            NULLIF(SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),0),
+            CAST((SELECT (NULLIF(SUM(s.tyreCurrentYear), 0) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
+              FROM Spares s
+              WHERE s.city = b.city AND s.branch = b.branch
+              AND (:months IS NULL OR s.month IN (:months))
+             AND (:cities IS NULL OR s.city IN (:cities))
+             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
+             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))) AS double),
             SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL),
             ((SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL)) * 100.00 )  / SUM(b.sumOfNetRetailDDL)
             )
