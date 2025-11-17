@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfitLossServiceImpl implements ProfitLossService {
@@ -29,180 +30,207 @@ public class ProfitLossServiceImpl implements ProfitLossService {
         this.profitlossRepository = profitlossRepository;
     }
 
+    // ============================================================
+    // MAIN METHOD
+    // ============================================================
     @Override
     public void saveProfitLossExcel(MultipartFile file) {
         try (InputStream inputStream = file.getInputStream()) {
+
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
-            // Get header row
+            // 1️⃣ READ HEADER → ORIGINAL COLUMN NAMES
             Row headerRow = sheet.getRow(0);
-            List<String> columns = new ArrayList<>();
+            List<String> originalColumns = new ArrayList<>();
+
             for (Cell cell : headerRow) {
-                String rawName = cell.getStringCellValue().trim().replace(" ", "_");
-                // Convert date-style column names (like 01-05-2025 → May_25)
-                String formattedName = formatColumnNameIfDate(rawName);
-                columns.add(formattedName);
+                originalColumns.add(cell.getStringCellValue().trim());
             }
 
-            // Ensure city and branch exist
-            if (!columns.contains("city") || !columns.contains("branch")) {
-                throw new RuntimeException("Profit and Loss Excel file must have 'city' and 'branch' columns.");
+            // 2️⃣ NORMALIZE → SQL SAFE COLUMN NAMES
+            List<String> normalizedColumns = originalColumns.stream()
+                    .map(this::normalizeColumn)
+                    .filter(c -> !c.equalsIgnoreCase("city") &&
+                            !c.equalsIgnoreCase("branch"))
+                    .distinct()
+                    .collect(Collectors.toList());
+
+            // 3️⃣ INDEX MAP (CASE-INSENSITIVE)
+            Map<String, Integer> indexMap = new HashMap<>();
+            for (int i = 0; i < originalColumns.size(); i++) {
+                indexMap.put(originalColumns.get(i).toLowerCase(), i);
             }
 
-            // Detect column types
-            Map<String, String> colTypes = detectColTypes(sheet, columns);
+            if (!indexMap.containsKey("city") || !indexMap.containsKey("branch")) {
+                throw new RuntimeException("❌ Excel missing required columns: city or branch");
+            }
 
-            // Create table if not exists
-            createTableIfNotExists(columns);
+            int cityIndex   = indexMap.get("city");
+            int branchIndex = indexMap.get("branch");
 
-            // Drop all existing columns except city and branch
+            // 4️⃣ DETECT COLUMN TYPES
+            Map<String, String> colTypes = detectColTypes(sheet, normalizedColumns);
+
+            // 5️⃣ PREPARE DATABASE STRUCTURE
+            createTableIfNotExists();
             dropAllColumnsExceptCityBranch();
+            addMissingColumns(normalizedColumns, colTypes);
 
-            // Add columns from new file
-            addMissingColumns(columns, colTypes);
-
-            // Insert or update data
-            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                Row row = sheet.getRow(i);
+            // 6️⃣ INSERT OR UPDATE ROWS
+            for (int r = 1; r <= sheet.getLastRowNum(); r++) {
+                Row row = sheet.getRow(r);
                 if (row == null) continue;
 
-                String city = Objects.toString(getCellValueAsObject(row.getCell(columns.indexOf("city"))), "");
-                String branch = Objects.toString(getCellValueAsObject(row.getCell(columns.indexOf("branch"))), "");
+                String city   = Objects.toString(getCellValueAsObject(row.getCell(cityIndex)), "");
+                String branch = Objects.toString(getCellValueAsObject(row.getCell(branchIndex)), "");
 
-                Map<String, Object> dataMap = new LinkedHashMap<>();
-                for (int j = 0; j < columns.size(); j++) {
-                    String colName = columns.get(j);
-                    Object value = getCellValueAsObject(row.getCell(j));
-                    dataMap.put(colName, value);
+                Map<String, Object> rowMap = new LinkedHashMap<>();
+
+                // For each normalized column, fetch original index
+                for (int i = 0; i < normalizedColumns.size(); i++) {
+                    String rawCol = originalColumns.get(i);
+                    int excelIndex = indexMap.get(rawCol.toLowerCase());
+                    Object value = getCellValueAsObject(row.getCell(excelIndex));
+                    rowMap.put(normalizedColumns.get(i), value);
                 }
 
-                upsertRow(city, branch, dataMap);
+                upsertRow(city, branch, rowMap);
             }
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException("❌ Failed to process Excel: " + e.getMessage(), e);
         }
     }
 
-    @Override
-    public List<Map<String, Object>> getAllProfit_Loss() {
-        String sql = "SELECT * FROM " + TABLE_NAME;
-        return jdbcTemplate.queryForList(sql);
-    }
+    // ============================================================
+    // SQL COLUMN NORMALIZER
+    // ============================================================
+    private String normalizeColumn(String col) {
+        col = col.trim().toLowerCase();
+        col = col.replaceAll("[\\s-]+", "_");
 
-    /**
-     * Converts strings like "01-05-2025" → "May_25"
-     */
-    private String formatColumnNameIfDate(String rawName) {
-        try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
-            Date date = inputFormat.parse(rawName);
-            SimpleDateFormat outputFormat = new SimpleDateFormat("MMM_yy", Locale.ENGLISH);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            // Not a date, return as-is
-            return rawName;
+        if (!Character.isLetter(col.charAt(0))) {
+            col = "col_" + col;
         }
+        return col;
     }
 
-    /**
-     * Delete all columns from profit_loss table except 'city' and 'branch'
-     */
-    private void dropAllColumnsExceptCityBranch() {
-        String query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?";
-        List<String> existingCols = jdbcTemplate.queryForList(query, new Object[]{DATABASE, TABLE_NAME}, String.class);
-
-        for (String col : existingCols) {
-            if (!col.equalsIgnoreCase("city") && !col.equalsIgnoreCase("branch")
-                    && !col.equalsIgnoreCase("profit_lossSINo")) {
-                String dropSql = "ALTER TABLE `" + DATABASE + "`.`" + TABLE_NAME + "` DROP COLUMN `" + col + "`";
-                jdbcTemplate.execute(dropSql);
-            }
-        }
-    }
-
+    // ============================================================
+    // UPSERT (INSERT OR UPDATE)
+    // ============================================================
     private void upsertRow(String city, String branch, Map<String, Object> dataMap) {
         dataMap.put("city", city);
         dataMap.put("branch", branch);
 
         StringBuilder sql = new StringBuilder("INSERT INTO " + TABLE_NAME + " (");
-        StringBuilder placeholder = new StringBuilder(" VALUES (");
-        StringBuilder updateSql = new StringBuilder(" ON DUPLICATE KEY UPDATE ");
+        StringBuilder values = new StringBuilder(" VALUES (");
+        StringBuilder updates = new StringBuilder(" ON DUPLICATE KEY UPDATE ");
 
-        List<Object> values = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
 
-        for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
-            sql.append("`").append(entry.getKey()).append("`,");
-            placeholder.append("?,");
-            updateSql.append("`").append(entry.getKey()).append("`=VALUES(`").append(entry.getKey()).append("`),");
-            values.add(entry.getValue());
+        for (String key : dataMap.keySet()) {
+            sql.append("`").append(key).append("`,");
+            values.append("?,");
+            updates.append("`").append(key).append("`=VALUES(`").append(key).append("`),");
+
+            params.add(dataMap.get(key));
         }
 
         sql.setLength(sql.length() - 1);
-        placeholder.setLength(placeholder.length() - 1);
-        updateSql.setLength(updateSql.length() - 1);
+        values.setLength(values.length() - 1);
+        updates.setLength(updates.length() - 1);
 
-        sql.append(")");
-        sql.append(placeholder).append(")");
-        sql.append(updateSql);
+        String finalSql = sql + ")" + values + ")" + updates;
 
-        jdbcTemplate.update(sql.toString(), values.toArray());
+        jdbcTemplate.update(finalSql, params.toArray());
     }
 
+    // ============================================================
+    // READ CELL VALUE
+    // ============================================================
     private Object getCellValueAsObject(Cell cell) {
         if (cell == null) return null;
-        switch (cell.getCellType()) {
-            case STRING:
-                return cell.getStringCellValue().trim();
-            case NUMERIC:
-                return cell.getNumericCellValue();
-            default:
-                return null;
+        return switch (cell.getCellType()) {
+            case STRING -> cell.getStringCellValue().trim();
+            case NUMERIC -> cell.getNumericCellValue();
+            default -> null;
+        };
+    }
+
+    // ============================================================
+    // DROP OLD DYNAMIC COLUMNS
+    // ============================================================
+    private void dropAllColumnsExceptCityBranch() {
+        String sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA=? AND TABLE_NAME=?";
+        List<String> cols = jdbcTemplate.queryForList(sql, new Object[]{DATABASE, TABLE_NAME}, String.class);
+
+        for (String col : cols) {
+            if (!col.equalsIgnoreCase("city") &&
+                    !col.equalsIgnoreCase("branch") &&
+                    !col.equalsIgnoreCase("profit_lossSINo")) {
+
+                String drop = "ALTER TABLE `" + DATABASE + "`.`" + TABLE_NAME + "` DROP COLUMN `" + col + "`";
+                jdbcTemplate.execute(drop);
+            }
         }
     }
 
+    // ============================================================
+    // ADD NEW EXCEL COLUMNS
+    // ============================================================
     private void addMissingColumns(List<String> columns, Map<String, String> colTypes) {
-        String query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?";
-        List<String> existingCols = jdbcTemplate.queryForList(query, new Object[]{DATABASE, TABLE_NAME}, String.class);
+        String sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA=? AND TABLE_NAME=?";
+        List<String> existing = jdbcTemplate.queryForList(sql, new Object[]{DATABASE, TABLE_NAME}, String.class);
 
         for (String col : columns) {
-            if (!existingCols.contains(col)) {
-                if (!col.equalsIgnoreCase("city") && !col.equalsIgnoreCase("branch")) {
-                    String colType = colTypes.getOrDefault(col, "VARCHAR(255)");
-                    String alterSql = "ALTER TABLE `" + DATABASE + "`.`" + TABLE_NAME + "` ADD COLUMN `" + col + "` " + colType;
-                    jdbcTemplate.execute(alterSql);
-                }
+            if (!existing.contains(col)) {
+                String type = colTypes.getOrDefault(col, "VARCHAR(255)");
+                String alter = "ALTER TABLE `" + DATABASE + "`.`" + TABLE_NAME + "` ADD COLUMN `" + col + "` " + type;
+                jdbcTemplate.execute(alter);
             }
         }
     }
 
+    // ============================================================
+    // DETECT COLUMN TYPES
+    // ============================================================
     private Map<String, String> detectColTypes(Sheet sheet, List<String> columns) {
-        Map<String, String> colTypes = new HashMap<>();
-        Row sampleRow = sheet.getRow(1);
+        Map<String, String> types = new HashMap<>();
+        Row row = sheet.getRow(1);
 
         for (int j = 0; j < columns.size(); j++) {
-            String colName = columns.get(j);
-            if (colName.equalsIgnoreCase("city") || colName.equalsIgnoreCase("branch")) {
-                colTypes.put(colName, "VARCHAR(100)");
-                continue;
-            }
-            Cell cell = (sampleRow != null) ? sampleRow.getCell(j) : null;
+            Cell cell = (row != null) ? row.getCell(j) : null;
+
             if (cell != null && cell.getCellType() == CellType.NUMERIC) {
-                colTypes.put(colName, "DOUBLE");
+                types.put(columns.get(j), "DOUBLE");
             } else {
-                colTypes.put(colName, "VARCHAR(100)");
+                types.put(columns.get(j), "VARCHAR(255)");
             }
         }
-        return colTypes;
+        return types;
     }
 
-    private void createTableIfNotExists(List<String> columns) {
-        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-                "profit_lossSINo INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                "city VARCHAR(450), branch VARCHAR(450), " +
-                "UNIQUE KEY uq_city_branch (city, branch))";
+    // ============================================================
+    // CREATE TABLE
+    // ============================================================
+    private void createTableIfNotExists() {
+        String sql =
+                "CREATE TABLE IF NOT EXISTS `" + TABLE_NAME + "` (" +
+                        "profit_lossSINo INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                        "city VARCHAR(450), " +
+                        "branch VARCHAR(450), " +
+                        "UNIQUE KEY uq_city_branch (city, branch)" +
+                        ")";
         jdbcTemplate.execute(sql);
+    }
+
+    // ============================================================
+    // OTHER ENDPOINTS
+    // ============================================================
+    @Override
+    public List<Map<String, Object>> getAllProfit_Loss() {
+        return jdbcTemplate.queryForList("SELECT * FROM " + TABLE_NAME);
     }
 
     @Override

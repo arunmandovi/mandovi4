@@ -63,8 +63,8 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                 }
                 mgaProfit.setNetRetailDD(row.getCell(4).getNumericCellValue());
                 mgaProfit.setNetRetailSell(row.getCell(5).getNumericCellValue());
-                mgaProfit.setNetRetailDDL(row.getCell(6).getNumericCellValue());
-                mgaProfit.setNetRetailSelling(row.getCell(7).getNumericCellValue());
+                mgaProfit.setNetRetailDDL(mgaProfit.getNetRetailDD()/100000);
+                mgaProfit.setNetRetailSelling(mgaProfit.getNetRetailSell()/100000);
 
                 mgaProfit.setServiceType(mgaProfit.getServiceDescription());
                 String locationCode = mgaProfit.getLocationCode();
