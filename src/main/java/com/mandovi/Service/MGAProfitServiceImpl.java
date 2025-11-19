@@ -32,15 +32,19 @@ public class MGAProfitServiceImpl implements MGAProfitService{
             // Define location Codes for respective Cities
             Set<String> bangaloreLocations = new HashSet<>(Arrays.asList(
                     "BKH","BNG","BSN","CDE","CMJ","GRB","HNR","JPN",
-                    "KDH","MAF","MLU","NXS","RJN","VDR","VJN","WGR","YLH","YPR"
-            ));
+                    "KDH","MAF","MLU","NXS","RJN","VDR","VJN","WGR","YLH","YPR" ));
             Set<String> mysoreLocations = new HashSet<>(Arrays.asList(
                     "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH",
-                    "KSN","MSE","NGL","SOM","TNR","KLG"
-            ));
+                    "KSN","MSE","NGL","SOM","TNR","KLG" ));
             Set<String> mangaloreLocations = new HashSet<>(Arrays.asList(
-                    "BMR","BTL","VLA","KDB","UPA","SKL","SLL","AYR","YEY","MNL","SJH","SYG"
-            ));
+                    "BMR","BTL","VLA","KDB","UPA","SKL","SLL","AYR","YEY","MNL","SJH","SYG" ));
+
+            Row firstRow = sheet.getRow(1);
+            if (firstRow == null)
+                throw new RuntimeException("No Data found in Excel");
+
+            String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
+            mgaProfitRepository.deleteByMonth(uploadMonth);
 
             for (int i=1; i<= sheet.getLastRowNum(); i++){
                 Row row = sheet.getRow(i);

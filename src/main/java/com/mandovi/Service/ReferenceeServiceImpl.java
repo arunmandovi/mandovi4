@@ -26,6 +26,8 @@ public class ReferenceeServiceImpl implements ReferenceeService {
                 DataFormatter dataFormatter = new DataFormatter();
                 Sheet sheet = workbook.getSheetAt(0);
 
+                referenceeRepository.deleteReferenceeAll();
+
                 for(int i = 1; i <= sheet.getLastRowNum(); i++){
                     Row row = sheet.getRow(i);
                     if(row == null)continue;

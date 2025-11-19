@@ -20,6 +20,11 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
     """)
     public List<Spares> getSparedByMonthYear(@Param("months") List<String> months, @Param("years") List<String> years);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Spares s WHERE s.month = :month")
+    void deleteByMonth(@Param("month") String month);
+
     //Group by city
     @Query("""
             SELECT new com.mandovi.DTO.SparesSummaryDTO(

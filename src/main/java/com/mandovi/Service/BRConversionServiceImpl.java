@@ -9,7 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class BRConversionServiceImpl implements BRConversionService {
@@ -38,6 +41,15 @@ public class BRConversionServiceImpl implements BRConversionService {
             DataFormatter dataFormatter = new DataFormatter();
             FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
             Sheet sheet = workbook.getSheetAt(0);
+
+            Row firstDataRow = sheet.getRow(1);
+            if (firstDataRow == null)
+                throw new RuntimeException("No data found in Excel");
+
+            String uploadMonth = firstDataRow.getCell(2).getStringCellValue().trim();
+
+            brConversionRepository.deleteByMonth(uploadMonth);
+            System.out.println("Deleted existing records for: " + uploadMonth );
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);

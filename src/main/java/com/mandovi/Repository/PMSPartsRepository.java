@@ -21,6 +21,11 @@ public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
     """)
     public List<PMSParts> getPMSPartsByMonthYear(@Param("months") List<String> months, @Param("years") List<String> years);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM PMSParts p WHERE p.period = :period")
+    void deleteByMonth(@Param("period") LocalDate period);
+
     //Group  By city
     @Query("""
         SELECT new com.mandovi.DTO.PMSPartsSummaryDTO(

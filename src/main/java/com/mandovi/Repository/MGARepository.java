@@ -23,6 +23,11 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
     public List<MGA> getMGAMonth(
             @Param("months") List<String> months, @Param("years") List<String> years );
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM MGA m WHERE m.mgaDate = :mgaDate")
+    void deleteByMonth(@Param("mgaDate") LocalDate mgaDate);
+
     //Group by city
     @Query("""
         SELECT new com.mandovi.DTO.MGASummaryDTO(

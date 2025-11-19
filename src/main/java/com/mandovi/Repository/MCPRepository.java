@@ -21,6 +21,11 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
     """)
     List<MCP> getMCPByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM MCP m WHERE m.month = :month")
+    void deleteByMonth(@Param("month") String month);
+
     //Group by city
     @Query("""
             SELECT new com.mandovi.DTO.MCPSummaryDTO(

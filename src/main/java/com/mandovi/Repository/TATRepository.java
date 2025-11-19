@@ -19,6 +19,11 @@ public interface TATRepository extends JpaRepository<TAT,Integer> {
     """)
     public List<TAT> getTATByMonthYear (@Param("months") List<String> months, @Param("years") List<String> years);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM TAT t WHERE t.month = :month")
+    void deleteByMonth(@Param("month") String month);
+
     @Modifying
     @Transactional
     @Query(value = "TRUNCATE TABLE mandovi.tat;", nativeQuery = true)

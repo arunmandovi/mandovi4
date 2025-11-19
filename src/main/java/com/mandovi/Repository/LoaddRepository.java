@@ -21,6 +21,13 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     List<Loadd> getLoadByMonthYear(
             @Param("months") List<String> months, @Param("years") List<String> years);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Loadd l WHERE l.month = :month")
+    void deleteByMonth(@Param("month") String month);
+
+
+
     // Group by city
     @Query("""
             SELECT new com.mandovi.DTO.LoaddSummaryDTO(
@@ -282,6 +289,7 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
             FROM Loadd l
             WHERE (:months IS NULL OR l.month IN (:months))
              AND (:cities IS NULL OR l.city IN (:cities))
+             AND (:branches IS NULL OR l.branch IN (:branches))
              AND (:channels IS NULL OR l.channel IN (:channels))
              AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
              AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))
@@ -290,6 +298,7 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     List<LoaddSummaryDTO> getLoaddSummaryBranchWise(
             @Param("months") List<String> months,
             @Param("cities") List<String> cities,
+            @Param("branches") List<String> branches,
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
             @Param("halfYear") List<String> halfYear );

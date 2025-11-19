@@ -20,6 +20,11 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
     """)
     public List<VAS> getVASByMonthYear (@Param("months") List<String> months, @Param("years") List<String> years);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM VAS v WHERE v.month = :month")
+    void deleteByMonth(@Param("month") String month);
+
     //Group by city
     @Query("""
     SELECT new com.mandovi.DTO.VASSummaryDTO(
@@ -53,7 +58,7 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
               AND (:months IS NULL OR l.month IN (:months))) AS double),
         SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.basicAmt ELSE 0 END) AS double),
-        (SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.jobCardNo ELSE 0 END) * 100.0) /
+        ((SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.jobCardNo ELSE 0 END) / 4) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.city = v.city AND l.financialYear = '2025-2026'
@@ -178,7 +183,7 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
                      AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double),
         SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.basicAmt ELSE 0 END) AS double),
-        ((SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.jobCardNo ELSE 0 END) * 100.0) /
+        (((SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.jobCardNo ELSE 0 END) / 4) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'

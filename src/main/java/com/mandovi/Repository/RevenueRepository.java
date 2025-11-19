@@ -20,6 +20,11 @@ public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
     """)
     public List<Revenue> getRevenueByMonthYear(@Param("months") List<String> months, @Param("years") List<String> years);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Revenue r WHERE r.month = :month")
+    void deleteByMonth(@Param("month") String month);
+
     //Group by city
     @Query("""
             SELECT new com.mandovi.DTO.RevenueSummaryDTO(

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.rmi.RemoteException;
 import java.util.List;
 
 @Service
@@ -41,6 +42,14 @@ public class SparesServiceImpl implements SparesService{
             Workbook workbook = WorkbookFactory.create(inputStream);
             DataFormatter dataFormatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
+
+            Row firstRow = sheet.getRow(1);
+            if (firstRow == null)
+                throw new RemoteException("No Data from Excel");
+
+            String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
+
+            sparesRepository.deleteByMonth(uploadMonth);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);

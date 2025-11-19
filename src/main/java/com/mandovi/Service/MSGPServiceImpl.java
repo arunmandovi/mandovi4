@@ -27,6 +27,11 @@ public class MSGPServiceImpl implements MSGPService {
             DataFormatter dataFormatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
 
+            Row firstRow = sheet.getRow(1);
+            String uploadMonth = firstRow.getCell(3).getStringCellValue().trim();
+
+            msgpRepository.deleteByMonth(uploadMonth);
+
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if (row == null)continue;

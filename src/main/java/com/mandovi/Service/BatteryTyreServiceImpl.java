@@ -27,6 +27,13 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
             DataFormatter  formatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
 
+            Row firstRow = sheet.getRow(1);
+            if (firstRow == null)
+                throw new RuntimeException("No Data found in Excel");
+
+            String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
+            batteryTyreRepository.deleteByMonth(uploadMonth);
+
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if (row == null)continue;

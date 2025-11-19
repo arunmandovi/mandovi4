@@ -30,6 +30,13 @@ public class PMSPartsServiceImpl implements PMSPartsService {
             DataFormatter dataFormatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
 
+            Row firstRow = sheet.getRow(1);
+            if (firstRow ==  null)
+                throw new RuntimeException("No Data found in Excel");
+
+            LocalDate uploadPeriod = firstRow.getCell(2).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            pmsPartsRepository.deleteByMonth(uploadPeriod);
+
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
 
@@ -49,7 +56,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
 
                 pmsParts.setParent(row.getCell(0).getStringCellValue());
                 pmsParts.setLocationCode(row.getCell(1).getStringCellValue());
-                pmsParts.setPmsDate(row.getCell(2).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                pmsParts.setPeriod(row.getCell(2).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                 pmsParts.setPartGroup(row.getCell(3).getStringCellValue());
                 pmsParts.setRequired((int)row.getCell(4).getNumericCellValue());
                 pmsParts.setChanged((int)row.getCell(5).getNumericCellValue());
@@ -123,11 +130,11 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                 }
 
                 //Updating month column using the value stored in date column
-                LocalDate date = pmsParts.getPmsDate();
+                LocalDate date = pmsParts.getPeriod();
                 DateTimeFormatter sdf = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
-                pmsParts.setMonth(sdf.format(pmsParts.getPmsDate()));
+                pmsParts.setMonth(sdf.format(pmsParts.getPeriod()));
                 DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("YYYY");
-                pmsParts.setYear(yearFormatter.format(pmsParts.getPmsDate()));
+                pmsParts.setYear(yearFormatter.format(pmsParts.getPeriod()));
 
                 switch (pmsParts.getMonth().trim().toUpperCase()) {
                     case "APR", "MAY", "JUN" ->{ pmsParts.setQtrWise("Qtr1"); pmsParts.setHalfYear("H1");}

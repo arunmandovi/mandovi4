@@ -21,6 +21,11 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
     """)
     public List<MSGP> getMSGPByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM MSGP m WHERE m.month = :month")
+    void deleteByMonth(@Param("month") String month);
+
     //Group by city
     @Query("""
         SELECT new com.mandovi.DTO.MSGPSummaryDTO(

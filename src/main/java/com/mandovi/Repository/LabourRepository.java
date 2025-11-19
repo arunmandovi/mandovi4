@@ -17,10 +17,16 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
     SELECT l FROM Labour l
     WHERE (:months IS NULL OR l.month IN (:months))
      AND (:years IS NULL OR l.year IN (:years))
-     """)
+    """)
     List<Labour> getLabourByMonthYear(
             @Param("months") List<String> months,
             @Param("years") List<String> years);
+
+
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Labour l WHERE l.month = :month")
+    void deleteByMonth(@Param("month") String month);
 
     //Group by city
     @Query("""

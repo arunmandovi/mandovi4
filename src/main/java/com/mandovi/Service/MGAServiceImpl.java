@@ -52,6 +52,13 @@ public class MGAServiceImpl implements MGAService {
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
+            Row firstRow = sheet.getRow(1);
+            if (firstRow == null)
+                throw new RuntimeException("No Data found in Excel");
+
+            LocalDate uploadDate = firstRow.getCell(0).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            mgaRepository.deleteByMonth(uploadDate);
+
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if (row == null) continue;

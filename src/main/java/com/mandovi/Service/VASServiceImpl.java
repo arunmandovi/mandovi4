@@ -28,6 +28,14 @@ public class VASServiceImpl implements VASService {
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
+            Row firstRow = sheet.getRow(1);
+            if (firstRow == null)
+                throw new RuntimeException("No Data found in Excel");
+
+            String uploadMonth = firstRow.getCell(4).getStringCellValue().trim();
+
+            vasRepository.deleteByMonth(uploadMonth);
+
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
 
@@ -46,6 +54,10 @@ public class VASServiceImpl implements VASService {
                         int num = Integer.parseInt(wheels);
                         vas.setWheels(num);
                     }
+                } else if (labourType.toUpperCase().contains("DYNAMIC BALANCING")) {
+                    String wheelsDynamic = "4";
+                    int numDynamic = Integer.parseInt(wheelsDynamic);
+                    vas.setWheels(numDynamic);
                 } else {
                     vas.setWheels(1);
                 }

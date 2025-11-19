@@ -22,6 +22,11 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
             @Param("months") List<String> months,
             @Param("years") List<String> years );
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM BRConversion b WHERE b.month = :month")
+    void deleteByMonth(@Param("month") String month);
+
     // Group by city
     @Query("""
             SELECT new com.mandovi.DTO.BRConversionSummaryDTO(

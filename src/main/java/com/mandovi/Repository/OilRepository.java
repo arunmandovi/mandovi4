@@ -20,6 +20,11 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
     """)
     public List<Oil> getOilByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Oil o WHERE o.month = :month")
+    void deleteByMonth(@Param("month") String month);
+
     //Group by city
     @Query("""
         SELECT new com.mandovi.DTO.OilSummaryDTO(
