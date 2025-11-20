@@ -20,18 +20,21 @@ import jakarta.persistence.*;
             t.`Jun-25` AS Jun_25,
             t.`Jul-25` AS Jul_25,
             t.`Aug-25` AS Aug_25,
+            t.`Sep-25` AS Sep_25,
             t.`2025-26` AS FY_2025_26,
             t.load_Apr AS load_Apr,
             t.load_May AS load_May,
             t.load_Jun AS load_Jun,
             t.load_Jul AS load_Jul,
             t.load_Aug AS load_Aug,
+            t.load_Sep AS load_Sep,
             t.load_Total AS load_Total,
             ROUND((t.`Apr-25` / NULLIF(t.load_Apr, 0)) * 100000, 3) AS Apr25_per_100k,
             ROUND((t.`May-25` / NULLIF(t.load_May, 0)) * 100000, 3) AS May25_per_100k,
             ROUND((t.`Jun-25` / NULLIF(t.load_Jun, 0)) * 100000, 3) AS Jun25_per_100k,
             ROUND((t.`Jul-25` / NULLIF(t.load_Jul, 0)) * 100000, 3) AS Jul25_per_100k,
             ROUND((t.`Aug-25` / NULLIF(t.load_Aug, 0)) * 100000, 3) AS Aug25_per_100k,
+            ROUND((t.`Sep-25` / NULLIF(t.load_Sep, 0)) * 100000, 3) AS Sep25_per_100k,
             ROUND((t.`Total_25` / NULLIF(t.load_Total, 0)) * 100000, 3) AS Total25_per_100k
         FROM (
             SELECT
@@ -47,14 +50,16 @@ import jakarta.persistence.*;
                 SUM(pl.`jun_25`) AS `Jun-25`,
                 SUM(pl.`jul_25`) AS `Jul-25`,
                 SUM(pl.`aug_25`) AS `Aug-25`,
-                (SUM(pl.`apr_25`) + SUM(pl.`may_25`) + SUM(pl.`jun_25`) + SUM(pl.`jul_25`) + SUM(pl.`aug_25`)) AS `Total_25`,
+                SUM(pl.`sep_25`) AS `Sep-25`,
+                (SUM(pl.`apr_25`) + SUM(pl.`may_25`) + SUM(pl.`jun_25`) + SUM(pl.`jul_25`) + SUM(pl.`aug_25`) + SUM(pl.`sep_25`)) AS `Total_25`,
                 SUM(pl.`2025_26`) AS `2025-26`,
                 COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Apr' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Apr,
                 COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'May' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_May,
                 COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Jun' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Jun,
                 COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Jul' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Jul,
                 COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Aug' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Aug,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month IN ('Apr', 'May', 'Jun', 'Jul', 'Aug') AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Total
+                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Sep' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Sep,
+                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month IN ('Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep') AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Total
             FROM mandovi.profit_loss pl
             WHERE pl.city IN ('Bangalore', 'Mysore', 'Mangalore')
             GROUP BY pl.city
@@ -78,18 +83,21 @@ import jakarta.persistence.*;
                         @ColumnResult(name = "Jun_25", type = Double.class),
                         @ColumnResult(name = "Jul_25", type = Double.class),
                         @ColumnResult(name = "Aug_25", type = Double.class),
+                        @ColumnResult(name = "Sep_25", type = Double.class),
                         @ColumnResult(name = "FY_2025_26", type = Double.class),
                         @ColumnResult(name = "load_Apr", type = Double.class),
                         @ColumnResult(name = "load_May", type = Double.class),
                         @ColumnResult(name = "load_Jun", type = Double.class),
                         @ColumnResult(name = "load_Jul", type = Double.class),
                         @ColumnResult(name = "load_Aug", type = Double.class),
+                        @ColumnResult(name = "load_Sep", type = Double.class),
                         @ColumnResult(name = "load_Total", type = Double.class),
                         @ColumnResult(name = "Apr25_per_100k", type = Double.class),
                         @ColumnResult(name = "May25_per_100k", type = Double.class),
                         @ColumnResult(name = "Jun25_per_100k", type = Double.class),
                         @ColumnResult(name = "Jul25_per_100k", type = Double.class),
                         @ColumnResult(name = "Aug25_per_100k", type = Double.class),
+                        @ColumnResult(name = "Sep25_per_100k", type = Double.class),
                         @ColumnResult(name = "Total25_per_100k", type = Double.class)
                 }
         )
@@ -110,18 +118,21 @@ import jakarta.persistence.*;
             t.`Jun-25` AS Jun_25,
             t.`Jul-25` AS Jul_25,
             t.`Aug-25` AS Aug_25,
+            t.`Sep-25` AS Sep_25,
             t.`2025-26` AS FY_2025_26,
             t.load_Apr AS load_Apr,
             t.load_May AS load_May,
             t.load_Jun AS load_Jun,
             t.load_Jul AS load_Jul,
             t.load_Aug AS load_Aug,
+            t.load_Sep AS load_Sep,
             t.load_Total AS load_Total,
             ROUND((t.`Apr-25` / NULLIF(t.load_Apr, 0)) * 100000, 3) AS Apr25_per_100k,
             ROUND((t.`May-25` / NULLIF(t.load_May, 0)) * 100000, 3) AS May25_per_100k,
             ROUND((t.`Jun-25` / NULLIF(t.load_Jun, 0)) * 100000, 3) AS Jun25_per_100k,
             ROUND((t.`Jul-25` / NULLIF(t.load_Jul, 0)) * 100000, 3) AS Jul25_per_100k,
             ROUND((t.`Aug-25` / NULLIF(t.load_Aug, 0)) * 100000, 3) AS Aug25_per_100k,
+            ROUND((t.`Sep-25` / NULLIF(t.load_Sep, 0)) * 100000, 3) AS Sep25_per_100k,
             ROUND((t.`Total_25` / NULLIF(t.load_Total, 0)) * 100000, 3) AS Total25_per_100k
         FROM (
             SELECT
@@ -137,7 +148,8 @@ import jakarta.persistence.*;
                 SUM(pl.`jun_25`) AS `Jun-25`,
                 SUM(pl.`jul_25`) AS `Jul-25`,
                 SUM(pl.`aug_25`) AS `Aug-25`,
-                (SUM(pl.`apr_25`) + SUM(pl.`may_25`) + SUM(pl.`jun_25`) + SUM(pl.`jul_25`) + SUM(pl.`aug_25`)) AS `Total_25`,
+                SUM(pl.`sep_25`) AS `Sep-25`,
+                (SUM(pl.`apr_25`) + SUM(pl.`may_25`) + SUM(pl.`jun_25`) + SUM(pl.`jul_25`) + SUM(pl.`aug_25`) + SUM(pl.`sep_25`)) AS `Total_25`,
                 SUM(pl.`2025_26`) AS `2025-26`,
                 COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
                           WHERE l.branch = pl.branch AND l.month = 'Apr' AND l.year = '2025'
@@ -155,7 +167,10 @@ import jakarta.persistence.*;
                           WHERE l.branch = pl.branch AND l.month = 'Aug' AND l.year = '2025'
                           AND l.load_type NOT IN ('NO')), 0) AS load_Aug,
                 COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month IN ('Apr','May','Jun','Jul','Aug')
+                          WHERE l.branch = pl.branch AND l.month = 'Sep' AND l.year = '2025'
+                          AND l.load_type NOT IN ('NO')), 0) AS load_Sep,
+                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
+                          WHERE l.branch = pl.branch AND l.month IN ('Apr','May','Jun','Jul','Aug','Sep')
                           AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Total
             FROM mandovi.profit_loss pl
             WHERE (:cities IS NULL OR pl.city IN (:cities))
@@ -182,18 +197,21 @@ import jakarta.persistence.*;
                         @ColumnResult(name = "Jun_25", type = Double.class),
                         @ColumnResult(name = "Jul_25", type = Double.class),
                         @ColumnResult(name = "Aug_25", type = Double.class),
+                        @ColumnResult(name = "Sep_25", type = Double.class),
                         @ColumnResult(name = "FY_2025_26", type = Double.class),
                         @ColumnResult(name = "load_Apr", type = Double.class),
                         @ColumnResult(name = "load_May", type = Double.class),
                         @ColumnResult(name = "load_Jun", type = Double.class),
                         @ColumnResult(name = "load_Jul", type = Double.class),
                         @ColumnResult(name = "load_Aug", type = Double.class),
+                        @ColumnResult(name = "load_Sep", type = Double.class),
                         @ColumnResult(name = "load_Total", type = Double.class),
                         @ColumnResult(name = "Apr25_per_100k", type = Double.class),
                         @ColumnResult(name = "May25_per_100k", type = Double.class),
                         @ColumnResult(name = "Jun25_per_100k", type = Double.class),
                         @ColumnResult(name = "Jul25_per_100k", type = Double.class),
                         @ColumnResult(name = "Aug25_per_100k", type = Double.class),
+                        @ColumnResult(name = "Sep25_per_100k", type = Double.class),
                         @ColumnResult(name = "Total25_per_100k", type = Double.class)
                 }
         )
