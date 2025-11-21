@@ -31,41 +31,41 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
         SELECT new com.mandovi.DTO.MSGPSummaryDTO(
             m.city,
             null,
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ), 0)
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0)
         )
         FROM MSGP m
         WHERE (:months IS NULL OR m.month IN (:months))
@@ -83,41 +83,41 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
         SELECT new com.mandovi.DTO.MSGPSummaryDTO(
             m.city,
             m.branch,
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.netRetailDDL ELSE 0 END ), 0),
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END),
-            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END),
-            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ) -
-            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ))*100.00) /
-            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.netRetailDDL ELSE 0 END ), 0)
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR','BODYSHOP') THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND m.loadType IN ('OTHERS','FREE SERVICE','PMS','RR') THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'BODYSHOP' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'FREE SERVICE' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'PMS' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'RR' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0),
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END),
+            ((SUM(CASE WHEN m.financialYear = '2025-2026' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END ) -
+            SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END ))*100.00) /
+            NULLIF(SUM(CASE WHEN m.financialYear = '2024-2025' AND loadType = 'OTHERS' THEN m.sumOfNetRetailDDL ELSE 0 END ), 0)
         )
         FROM MSGP m
         WHERE (:months IS NULL OR m.month IN (:months))
