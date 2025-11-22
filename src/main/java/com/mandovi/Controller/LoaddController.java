@@ -33,8 +33,17 @@ public class LoaddController {
     }
 
     @GetMapping("/getallloadd")
-    public List<Loadd> getAllLoadData(){
-        return loaddService.getAllLoadData();
+    public ResponseEntity<?> getAllLoadData(){
+
+        try {
+            List<Loadd> loaddRecords = loaddService.getAllLoadData();
+            if (loaddRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(loaddRecords);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
+        }
     }
 
     @GetMapping("/getloadd")

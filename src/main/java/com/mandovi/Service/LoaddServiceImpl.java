@@ -33,11 +33,7 @@ public class LoaddServiceImpl implements LoaddService {
         try (InputStream inputStream = file.getInputStream();
              Workbook workbook = WorkbookFactory.create(inputStream)) {
 
-            DataFormatter dataFormatter = new DataFormatter();
-            FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
             Sheet sheet = workbook.getSheetAt(0);
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
             // Location groups
             Set<String> bangaloreLocations = new HashSet<>(Arrays.asList(
@@ -51,19 +47,14 @@ public class LoaddServiceImpl implements LoaddService {
                     "BMR","BTL","VLA","KDB","UPA","SKL","SLL","AYR","YEY","MNL","SJH","SYG"
             ));
 
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
+
             Row firstDataRow = sheet.getRow(1);
             if (firstDataRow == null)
                 throw new RuntimeException("No data found in Excel");
 
             String uploadMonth = firstDataRow.getCell(3).getStringCellValue().trim();
-
-
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
-            Month parsedMonth = Month.from(dateTimeFormatter.parse(uploadMonth));
-            int uploadMonthNum = parsedMonth.getValue();
-
             loaddRepository.deleteByMonth(uploadMonth);
-            System.out.println("Deleted existing records for: " + uploadMonth );
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 
