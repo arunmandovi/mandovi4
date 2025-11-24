@@ -123,7 +123,7 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
                 WHEN SUM(CASE WHEN l.financialYear = '2025-2026'
                 AND l.loadType = 'BODYSHOP'
                 THEN l.labour ELSE 0 END) = 0
-                THEN 0
+                THEN NULL
                 ELSE
                     (
                         (SUM(CASE WHEN l.financialYear = '2025-2026'

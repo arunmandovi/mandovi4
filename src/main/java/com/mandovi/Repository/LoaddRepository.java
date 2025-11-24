@@ -127,7 +127,7 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
                 WHEN SUM(CASE WHEN l.financialYear = '2025-2026'
                 AND l.loadType = 'BODYSHOP'
                 THEN l.serviceLoad ELSE 0 END) = 0
-                THEN 0
+                THEN NULL
                 ELSE
                     (
                         (
