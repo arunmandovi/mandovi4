@@ -3,49 +3,49 @@ package com.mandovi.DTO;
 public class BRConversionSummaryDTO {
     private String city;
     private String branch;
-    private Long arenaFSPMSLoadd;
-    private Long arenaBRConversion;
-    private Double arenaPercentageBRConversion;
-    private Long nexaFSPMSLoadd;
-    private Long nexaBRConversion;
-    private Double nexaPercentageBRConversion;
-    private Long arenaNexaFSPMSLoadd;
-    private Long arenaNexaBRConversion;
-    private Double arenaNexaPercentageBRConversion;
-    private Double arenaLabourAmount;
-    private Double arenaPartAmount;
-    private Double arenaTotalAmount;
-    private Double nexaLabourAmount;
-    private Double nexaPartAmount;
-    private Double nexaTotalAmount;
-    private Double arenaNexaLabourAmount;
-    private Double arenaNexaPartAmount;
-    private Double arenaNexaTotalAmount;
+    private Long fspmsLoaddArena;
+    private Long brConversionArena;
+    private Double percentageArenaBRConversion;
+    private Long fspmsLoaddNexa;
+    private Long brConversionNexa;
+    private Double percentageNexaBRConversion;
+    private Long fspmsLoaddArenaNexa;
+    private Long brConversionArenaNexa;
+    private Double percentageArenaNexaBRConversion;
+    private Double labourAmountArena;
+    private Double partAmountArena;
+    private Double totalArenaAmount;
+    private Double labourAmountNexa;
+    private Double partAmountNexa;
+    private Double totalNexaAmount;
+    private Double labourAmountArenaNexa;
+    private Double partAmountArenaNexa;
+    private Double totalArenaNexaAmount;
 
     public BRConversionSummaryDTO() {
     }
 
-    public BRConversionSummaryDTO(String city, String branch, Long arenaFSPMSLoadd, Long arenaBRConversion, Double arenaPercentageBRConversion, Long nexaFSPMSLoadd, Long nexaBRConversion, Double nexaPercentageBRConversion, Long arenaNexaFSPMSLoadd, Long arenaNexaBRConversion, Double arenaNexaPercentageBRConversion, Double arenaLabourAmount, Double arenaPartAmount, Double arenaTotalAmount, Double nexaLabourAmount, Double nexaPartAmount, Double nexaTotalAmount, Double arenaNexaLabourAmount, Double arenaNexaPartAmount, Double arenaNexaTotalAmount) {
+    public BRConversionSummaryDTO(String city, String branch, Long fspmsLoaddArena, Long brConversionArena, Double percentageArenaBRConversion, Long fspmsLoaddNexa, Long brConversionNexa, Double percentageNexaBRConversion, Long fspmsLoaddArenaNexa, Long brConversionArenaNexa, Double percentageArenaNexaBRConversion, Double labourAmountArena, Double partAmountArena, Double totalArenaAmount, Double labourAmountNexa, Double partAmountNexa, Double totalNexaAmount, Double labourAmountArenaNexa, Double partAmountArenaNexa, Double totalArenaNexaAmount) {
         this.city = city;
         this.branch = branch;
-        this.arenaFSPMSLoadd = arenaFSPMSLoadd;
-        this.arenaBRConversion = arenaBRConversion;
-        this.arenaPercentageBRConversion = arenaPercentageBRConversion;
-        this.nexaFSPMSLoadd = nexaFSPMSLoadd;
-        this.nexaBRConversion = nexaBRConversion;
-        this.nexaPercentageBRConversion = nexaPercentageBRConversion;
-        this.arenaNexaFSPMSLoadd = arenaNexaFSPMSLoadd;
-        this.arenaNexaBRConversion = arenaNexaBRConversion;
-        this.arenaNexaPercentageBRConversion = arenaNexaPercentageBRConversion;
-        this.arenaLabourAmount = arenaLabourAmount;
-        this.arenaPartAmount = arenaPartAmount;
-        this.arenaTotalAmount = arenaTotalAmount;
-        this.nexaLabourAmount = nexaLabourAmount;
-        this.nexaPartAmount = nexaPartAmount;
-        this.nexaTotalAmount = nexaTotalAmount;
-        this.arenaNexaLabourAmount = arenaNexaLabourAmount;
-        this.arenaNexaPartAmount = arenaNexaPartAmount;
-        this.arenaNexaTotalAmount = arenaNexaTotalAmount;
+        this.fspmsLoaddArena = fspmsLoaddArena;
+        this.brConversionArena = brConversionArena;
+        this.percentageArenaBRConversion = percentageArenaBRConversion;
+        this.fspmsLoaddNexa = fspmsLoaddNexa;
+        this.brConversionNexa = brConversionNexa;
+        this.percentageNexaBRConversion = percentageNexaBRConversion;
+        this.fspmsLoaddArenaNexa = fspmsLoaddArenaNexa;
+        this.brConversionArenaNexa = brConversionArenaNexa;
+        this.percentageArenaNexaBRConversion = percentageArenaNexaBRConversion;
+        this.labourAmountArena = labourAmountArena;
+        this.partAmountArena = partAmountArena;
+        this.totalArenaAmount = totalArenaAmount;
+        this.labourAmountNexa = labourAmountNexa;
+        this.partAmountNexa = partAmountNexa;
+        this.totalNexaAmount = totalNexaAmount;
+        this.labourAmountArenaNexa = labourAmountArenaNexa;
+        this.partAmountArenaNexa = partAmountArenaNexa;
+        this.totalArenaNexaAmount = totalArenaNexaAmount;
     }
 
     public String getCity() {
@@ -64,148 +64,148 @@ public class BRConversionSummaryDTO {
         this.branch = branch;
     }
 
-    public Long getArenaFSPMSLoadd() {
-        return arenaFSPMSLoadd;
+    public Long getFspmsLoaddArena() {
+        return fspmsLoaddArena;
     }
 
-    public void setArenaFSPMSLoadd(Long arenaFSPMSLoadd) {
-        this.arenaFSPMSLoadd = arenaFSPMSLoadd;
+    public void setFspmsLoaddArena(Long fspmsLoaddArena) {
+        this.fspmsLoaddArena = fspmsLoaddArena;
     }
 
-    public Long getArenaBRConversion() {
-        return arenaBRConversion;
+    public Long getBrConversionArena() {
+        return brConversionArena;
     }
 
-    public void setArenaBRConversion(Long arenaBRConversion) {
-        this.arenaBRConversion = arenaBRConversion;
+    public void setBrConversionArena(Long brConversionArena) {
+        this.brConversionArena = brConversionArena;
     }
 
-    public Double getArenaPercentageBRConversion() {
-        return arenaPercentageBRConversion;
+    public Double getPercentageArenaBRConversion() {
+        return percentageArenaBRConversion;
     }
 
-    public void setArenaPercentageBRConversion(Double arenaPercentageBRConversion) {
-        this.arenaPercentageBRConversion = arenaPercentageBRConversion;
+    public void setPercentageArenaBRConversion(Double percentageArenaBRConversion) {
+        this.percentageArenaBRConversion = percentageArenaBRConversion;
     }
 
-    public Long getNexaFSPMSLoadd() {
-        return nexaFSPMSLoadd;
+    public Long getFspmsLoaddNexa() {
+        return fspmsLoaddNexa;
     }
 
-    public void setNexaFSPMSLoadd(Long nexaFSPMSLoadd) {
-        this.nexaFSPMSLoadd = nexaFSPMSLoadd;
+    public void setFspmsLoaddNexa(Long fspmsLoaddNexa) {
+        this.fspmsLoaddNexa = fspmsLoaddNexa;
     }
 
-    public Long getNexaBRConversion() {
-        return nexaBRConversion;
+    public Long getBrConversionNexa() {
+        return brConversionNexa;
     }
 
-    public void setNexaBRConversion(Long nexaBRConversion) {
-        this.nexaBRConversion = nexaBRConversion;
+    public void setBrConversionNexa(Long brConversionNexa) {
+        this.brConversionNexa = brConversionNexa;
     }
 
-    public Double getNexaPercentageBRConversion() {
-        return nexaPercentageBRConversion;
+    public Double getPercentageNexaBRConversion() {
+        return percentageNexaBRConversion;
     }
 
-    public void setNexaPercentageBRConversion(Double nexaPercentageBRConversion) {
-        this.nexaPercentageBRConversion = nexaPercentageBRConversion;
+    public void setPercentageNexaBRConversion(Double percentageNexaBRConversion) {
+        this.percentageNexaBRConversion = percentageNexaBRConversion;
     }
 
-    public Long getArenaNexaFSPMSLoadd() {
-        return arenaNexaFSPMSLoadd;
+    public Long getFspmsLoaddArenaNexa() {
+        return fspmsLoaddArenaNexa;
     }
 
-    public void setArenaNexaFSPMSLoadd(Long arenaNexaFSPMSLoadd) {
-        this.arenaNexaFSPMSLoadd = arenaNexaFSPMSLoadd;
+    public void setFspmsLoaddArenaNexa(Long fspmsLoaddArenaNexa) {
+        this.fspmsLoaddArenaNexa = fspmsLoaddArenaNexa;
     }
 
-    public Long getArenaNexaBRConversion() {
-        return arenaNexaBRConversion;
+    public Long getBrConversionArenaNexa() {
+        return brConversionArenaNexa;
     }
 
-    public void setArenaNexaBRConversion(Long arenaNexaBRConversion) {
-        this.arenaNexaBRConversion = arenaNexaBRConversion;
+    public void setBrConversionArenaNexa(Long brConversionArenaNexa) {
+        this.brConversionArenaNexa = brConversionArenaNexa;
     }
 
-    public Double getArenaNexaPercentageBRConversion() {
-        return arenaNexaPercentageBRConversion;
+    public Double getPercentageArenaNexaBRConversion() {
+        return percentageArenaNexaBRConversion;
     }
 
-    public void setArenaNexaPercentageBRConversion(Double arenaNexaPercentageBRConversion) {
-        this.arenaNexaPercentageBRConversion = arenaNexaPercentageBRConversion;
+    public void setPercentageArenaNexaBRConversion(Double percentageArenaNexaBRConversion) {
+        this.percentageArenaNexaBRConversion = percentageArenaNexaBRConversion;
     }
 
-    public Double getArenaLabourAmount() {
-        return arenaLabourAmount;
+    public Double getLabourAmountArena() {
+        return labourAmountArena;
     }
 
-    public void setArenaLabourAmount(Double arenaLabourAmount) {
-        this.arenaLabourAmount = arenaLabourAmount;
+    public void setLabourAmountArena(Double labourAmountArena) {
+        this.labourAmountArena = labourAmountArena;
     }
 
-    public Double getArenaPartAmount() {
-        return arenaPartAmount;
+    public Double getPartAmountArena() {
+        return partAmountArena;
     }
 
-    public void setArenaPartAmount(Double arenaPartAmount) {
-        this.arenaPartAmount = arenaPartAmount;
+    public void setPartAmountArena(Double partAmountArena) {
+        this.partAmountArena = partAmountArena;
     }
 
-    public Double getArenaTotalAmount() {
-        return arenaTotalAmount;
+    public Double getTotalArenaAmount() {
+        return totalArenaAmount;
     }
 
-    public void setArenaTotalAmount(Double arenaTotalAmount) {
-        this.arenaTotalAmount = arenaTotalAmount;
+    public void setTotalArenaAmount(Double totalArenaAmount) {
+        this.totalArenaAmount = totalArenaAmount;
     }
 
-    public Double getNexaLabourAmount() {
-        return nexaLabourAmount;
+    public Double getLabourAmountNexa() {
+        return labourAmountNexa;
     }
 
-    public void setNexaLabourAmount(Double nexaLabourAmount) {
-        this.nexaLabourAmount = nexaLabourAmount;
+    public void setLabourAmountNexa(Double labourAmountNexa) {
+        this.labourAmountNexa = labourAmountNexa;
     }
 
-    public Double getNexaPartAmount() {
-        return nexaPartAmount;
+    public Double getPartAmountNexa() {
+        return partAmountNexa;
     }
 
-    public void setNexaPartAmount(Double nexaPartAmount) {
-        this.nexaPartAmount = nexaPartAmount;
+    public void setPartAmountNexa(Double partAmountNexa) {
+        this.partAmountNexa = partAmountNexa;
     }
 
-    public Double getNexaTotalAmount() {
-        return nexaTotalAmount;
+    public Double getTotalNexaAmount() {
+        return totalNexaAmount;
     }
 
-    public void setNexaTotalAmount(Double nexaTotalAmount) {
-        this.nexaTotalAmount = nexaTotalAmount;
+    public void setTotalNexaAmount(Double totalNexaAmount) {
+        this.totalNexaAmount = totalNexaAmount;
     }
 
-    public Double getArenaNexaLabourAmount() {
-        return arenaNexaLabourAmount;
+    public Double getLabourAmountArenaNexa() {
+        return labourAmountArenaNexa;
     }
 
-    public void setArenaNexaLabourAmount(Double arenaNexaLabourAmount) {
-        this.arenaNexaLabourAmount = arenaNexaLabourAmount;
+    public void setLabourAmountArenaNexa(Double labourAmountArenaNexa) {
+        this.labourAmountArenaNexa = labourAmountArenaNexa;
     }
 
-    public Double getArenaNexaPartAmount() {
-        return arenaNexaPartAmount;
+    public Double getPartAmountArenaNexa() {
+        return partAmountArenaNexa;
     }
 
-    public void setArenaNexaPartAmount(Double arenaNexaPartAmount) {
-        this.arenaNexaPartAmount = arenaNexaPartAmount;
+    public void setPartAmountArenaNexa(Double partAmountArenaNexa) {
+        this.partAmountArenaNexa = partAmountArenaNexa;
     }
 
-    public Double getArenaNexaTotalAmount() {
-        return arenaNexaTotalAmount;
+    public Double getTotalArenaNexaAmount() {
+        return totalArenaNexaAmount;
     }
 
-    public void setArenaNexaTotalAmount(Double arenaNexaTotalAmount) {
-        this.arenaNexaTotalAmount = arenaNexaTotalAmount;
+    public void setTotalArenaNexaAmount(Double totalArenaNexaAmount) {
+        this.totalArenaNexaAmount = totalArenaNexaAmount;
     }
 
     @Override
@@ -213,24 +213,24 @@ public class BRConversionSummaryDTO {
         return "BRConversionSummaryDTO{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
-                ", arenaFSPMSLoadd=" + arenaFSPMSLoadd +
-                ", arenaBRConversion=" + arenaBRConversion +
-                ", arenaPercentageBRConversion=" + arenaPercentageBRConversion +
-                ", nexaFSPMSLoadd=" + nexaFSPMSLoadd +
-                ", nexaBRConversion=" + nexaBRConversion +
-                ", nexaPercentageBRConversion=" + nexaPercentageBRConversion +
-                ", arenaNexaFSPMSLoadd=" + arenaNexaFSPMSLoadd +
-                ", arenaNexaBRConversion=" + arenaNexaBRConversion +
-                ", arenaNexaPercentageBRConversion=" + arenaNexaPercentageBRConversion +
-                ", arenaLabourAmount=" + arenaLabourAmount +
-                ", arenaPartAmount=" + arenaPartAmount +
-                ", arenaTotalAmount=" + arenaTotalAmount +
-                ", nexaLabourAmount=" + nexaLabourAmount +
-                ", nexaPartAmount=" + nexaPartAmount +
-                ", nexaTotalAmount=" + nexaTotalAmount +
-                ", arenaNexaLabourAmount=" + arenaNexaLabourAmount +
-                ", arenaNexaPartAmount=" + arenaNexaPartAmount +
-                ", arenaNexaTotalAmount=" + arenaNexaTotalAmount +
+                ", fspmsLoaddArena=" + fspmsLoaddArena +
+                ", brConversionArena=" + brConversionArena +
+                ", percentageArenaBRConversion=" + percentageArenaBRConversion +
+                ", fspmsLoaddNexa=" + fspmsLoaddNexa +
+                ", brConversionNexa=" + brConversionNexa +
+                ", percentageNexaBRConversion=" + percentageNexaBRConversion +
+                ", fspmsLoaddArenaNexa=" + fspmsLoaddArenaNexa +
+                ", brConversionArenaNexa=" + brConversionArenaNexa +
+                ", percentageArenaNexaBRConversion=" + percentageArenaNexaBRConversion +
+                ", labourAmountArena=" + labourAmountArena +
+                ", partAmountArena=" + partAmountArena +
+                ", totalArenaAmount=" + totalArenaAmount +
+                ", labourAmountNexa=" + labourAmountNexa +
+                ", partAmountNexa=" + partAmountNexa +
+                ", totalNexaAmount=" + totalNexaAmount +
+                ", labourAmountArenaNexa=" + labourAmountArenaNexa +
+                ", partAmountArenaNexa=" + partAmountArenaNexa +
+                ", totalArenaNexaAmount=" + totalArenaNexaAmount +
                 '}';
     }
 }

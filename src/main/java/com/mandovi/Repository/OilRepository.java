@@ -32,6 +32,7 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
             null,
             SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailQty ELSE 0 END),
             SUM(CASE WHEN o.oilType = 'SEMI SYNTHETIC' THEN o.netRetailQty ELSE 0 END),
+            (SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailQty ELSE 0 END) + SUM(CASE WHEN o.oilType = 'SEMI SYNTHETIC' THEN o.netRetailQty ELSE 0 END)),
             SUM(CASE WHEN o.oilType = 'MINERAL' THEN o.netRetailQty ELSE 0 END),
             SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailQty ELSE 0 END),
             SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailQty ELSE 0 END) * 100 /
@@ -64,6 +65,7 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
             o.branch,
             SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailQty ELSE 0 END),
             SUM(CASE WHEN o.oilType = 'SEMI SYNTHETIC' THEN o.netRetailQty ELSE 0 END),
+            (SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailQty ELSE 0 END) + SUM(CASE WHEN o.oilType = 'SEMI SYNTHETIC' THEN o.netRetailQty ELSE 0 END)),
             SUM(CASE WHEN o.oilType = 'MINERAL' THEN o.netRetailQty ELSE 0 END),
             SUM(CASE WHEN o.oilType IN ('FULL SYNTHETIC','SEMI SYNTHETIC','MINERAL') THEN o.netRetailQty ELSE 0 END),
             SUM(CASE WHEN o.oilType = 'FULL SYNTHETIC' THEN o.netRetailQty ELSE 0 END) * 100 /

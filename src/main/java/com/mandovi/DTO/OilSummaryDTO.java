@@ -5,11 +5,12 @@ public class OilSummaryDTO {
     private String branch;
     private Double fullSyntheticQTY;
     private Double semiSyntheticQTY;
+    private Double fullAndSemiSyntheticQty;
     private Double mineralQTY;
     private Double grandTotal;
-    private Double fullSyntheticPercentageQTY;
-    private Double semiSyntheticPercentageQTY;
-    private Double fullSemiSyntheticPercentageQTY;
+    private Double percentageFullSyntheticQTY;
+    private Double percentageSemiSyntheticQTY;
+    private Double percentageFullSemiSyntheticQTY;
     private Double fullSyntheticProfit;
     private Double semiSyntheticProfit;
     private Double fullSemiSyntheticProfit;
@@ -19,16 +20,17 @@ public class OilSummaryDTO {
     public OilSummaryDTO() {
     }
 
-    public OilSummaryDTO(String city, String branch, Double fullSyntheticQTY, Double semiSyntheticQTY, Double mineralQTY, Double grandTotal, Double fullSyntheticPercentageQTY, Double semiSyntheticPercentageQTY, Double fullSemiSyntheticPercentageQTY, Double fullSyntheticProfit, Double semiSyntheticProfit, Double fullSemiSyntheticProfit, Double mineralProfit, Double profitTotal) {
+    public OilSummaryDTO(String city, String branch, Double fullSyntheticQTY, Double semiSyntheticQTY, Double fullAndSemiSyntheticQty, Double mineralQTY, Double grandTotal, Double percentageFullSyntheticQTY, Double percentageSemiSyntheticQTY, Double percentageFullSemiSyntheticQTY, Double fullSyntheticProfit, Double semiSyntheticProfit, Double fullSemiSyntheticProfit, Double mineralProfit, Double profitTotal) {
         this.city = city;
         this.branch = branch;
         this.fullSyntheticQTY = fullSyntheticQTY;
         this.semiSyntheticQTY = semiSyntheticQTY;
+        this.fullAndSemiSyntheticQty = fullAndSemiSyntheticQty;
         this.mineralQTY = mineralQTY;
         this.grandTotal = grandTotal;
-        this.fullSyntheticPercentageQTY = fullSyntheticPercentageQTY;
-        this.semiSyntheticPercentageQTY = semiSyntheticPercentageQTY;
-        this.fullSemiSyntheticPercentageQTY = fullSemiSyntheticPercentageQTY;
+        this.percentageFullSyntheticQTY = percentageFullSyntheticQTY;
+        this.percentageSemiSyntheticQTY = percentageSemiSyntheticQTY;
+        this.percentageFullSemiSyntheticQTY = percentageFullSemiSyntheticQTY;
         this.fullSyntheticProfit = fullSyntheticProfit;
         this.semiSyntheticProfit = semiSyntheticProfit;
         this.fullSemiSyntheticProfit = fullSemiSyntheticProfit;
@@ -68,6 +70,14 @@ public class OilSummaryDTO {
         this.semiSyntheticQTY = semiSyntheticQTY;
     }
 
+    public Double getFullAndSemiSyntheticQty() {
+        return fullAndSemiSyntheticQty;
+    }
+
+    public void setFullAndSemiSyntheticQty(Double fullAndSemiSyntheticQty) {
+        this.fullAndSemiSyntheticQty = fullAndSemiSyntheticQty;
+    }
+
     public Double getMineralQTY() {
         return mineralQTY;
     }
@@ -84,28 +94,28 @@ public class OilSummaryDTO {
         this.grandTotal = grandTotal;
     }
 
-    public Double getFullSyntheticPercentageQTY() {
-        return fullSyntheticPercentageQTY;
+    public Double getPercentageFullSyntheticQTY() {
+        return percentageFullSyntheticQTY;
     }
 
-    public void setFullSyntheticPercentageQTY(Double fullSyntheticPercentageQTY) {
-        this.fullSyntheticPercentageQTY = fullSyntheticPercentageQTY;
+    public void setPercentageFullSyntheticQTY(Double percentageFullSyntheticQTY) {
+        this.percentageFullSyntheticQTY = percentageFullSyntheticQTY;
     }
 
-    public Double getSemiSyntheticPercentageQTY() {
-        return semiSyntheticPercentageQTY;
+    public Double getPercentageSemiSyntheticQTY() {
+        return percentageSemiSyntheticQTY;
     }
 
-    public void setSemiSyntheticPercentageQTY(Double semiSyntheticPercentageQTY) {
-        this.semiSyntheticPercentageQTY = semiSyntheticPercentageQTY;
+    public void setPercentageSemiSyntheticQTY(Double percentageSemiSyntheticQTY) {
+        this.percentageSemiSyntheticQTY = percentageSemiSyntheticQTY;
     }
 
-    public Double getFullSemiSyntheticPercentageQTY() {
-        return fullSemiSyntheticPercentageQTY;
+    public Double getPercentageFullSemiSyntheticQTY() {
+        return percentageFullSemiSyntheticQTY;
     }
 
-    public void setFullSemiSyntheticPercentageQTY(Double fullSemiSyntheticPercentageQTY) {
-        this.fullSemiSyntheticPercentageQTY = fullSemiSyntheticPercentageQTY;
+    public void setPercentageFullSemiSyntheticQTY(Double percentageFullSemiSyntheticQTY) {
+        this.percentageFullSemiSyntheticQTY = percentageFullSemiSyntheticQTY;
     }
 
     public Double getFullSyntheticProfit() {
@@ -155,11 +165,12 @@ public class OilSummaryDTO {
                 ", branch='" + branch + '\'' +
                 ", fullSyntheticQTY=" + fullSyntheticQTY +
                 ", semiSyntheticQTY=" + semiSyntheticQTY +
+                ", fullAndSemiSyntheticQty=" + fullAndSemiSyntheticQty +
                 ", mineralQTY=" + mineralQTY +
                 ", grandTotal=" + grandTotal +
-                ", fullSyntheticPercentageQTY=" + fullSyntheticPercentageQTY +
-                ", semiSyntheticPercentageQTY=" + semiSyntheticPercentageQTY +
-                ", fullSemiSyntheticPercentageQTY=" + fullSemiSyntheticPercentageQTY +
+                ", percentageFullSyntheticQTY=" + percentageFullSyntheticQTY +
+                ", percentageSemiSyntheticQTY=" + percentageSemiSyntheticQTY +
+                ", percentageFullSemiSyntheticQTY=" + percentageFullSemiSyntheticQTY +
                 ", fullSyntheticProfit=" + fullSyntheticProfit +
                 ", semiSyntheticProfit=" + semiSyntheticProfit +
                 ", fullSemiSyntheticProfit=" + fullSemiSyntheticProfit +
