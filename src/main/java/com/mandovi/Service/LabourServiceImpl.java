@@ -29,7 +29,6 @@ public class LabourServiceImpl implements LabourService {
         try {
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
-            DataFormatter formatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
 
             Set<String> bangaloreBranches = new HashSet<>(Arrays.asList(

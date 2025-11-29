@@ -80,7 +80,6 @@ public class BRConversionServiceImpl implements BRConversionService {
                 brConversion.setPartAmount(row.getCell(6).getNumericCellValue());
                 brConversion.setBillAmount(row.getCell(7).getNumericCellValue());
 
-                //Checking if the columns no,br_conversion and grand_total having empty cell then it'll update 0 otherwise update the exact values
                 brConversion.setNo(getIntCellValue(row, 8, dataFormatter));
                 brConversion.setBrConversion(getIntCellValue(row, 9, dataFormatter));
 
