@@ -65,27 +65,23 @@ public class MGAServiceImpl implements MGAService {
 
                 MGA mga = new MGA();
 
-                //Converting Date to LocalDate to store in DB
                 Cell cell = row.getCell(0);
                 LocalDate localDate = null;
 
                 if (cell != null) {
                     if (cell.getCellType() == CellType.NUMERIC) {
-                        // Numeric cell (date)
                         Date date = cell.getDateCellValue();
                         localDate = date.toInstant()
                                 .atZone(ZoneId.systemDefault())
                                 .toLocalDate();
                     } else if (cell.getCellType() == CellType.STRING) {
-                        // String cell (like "2025-09-19")
                         String dateStr = cell.getStringCellValue();
-                        localDate = LocalDate.parse(dateStr); // Use DateTimeFormatter if custom format
+                        localDate = LocalDate.parse(dateStr);
                     }
                 }
 
                 mga.setMgaDate(localDate);
 
-//                mga.setMgaDate((LocalDate) row.getCell(0).getDateCellValue());
                 mga.setDealerCode(row.getCell(1).getStringCellValue());
                 mga.setForCode(row.getCell(2).getStringCellValue());
                 mga.setOutletCode(row.getCell(3).getStringCellValue());
@@ -96,14 +92,12 @@ public class MGAServiceImpl implements MGAService {
                 mga.setServiceAdvisor(row.getCell(8).getStringCellValue());
                 mga.setConsumption(row.getCell(9).getNumericCellValue());
 
-                //Getting only Numeric Value
                 switch (row.getCell(10).getCellType()){
                     case NUMERIC -> mga.setLoadd((int)row.getCell(10).getNumericCellValue());
                     default -> mga.setLoadd(0);
                 }
                 mga.setMgaLoad(row.getCell(11).getNumericCellValue());
 
-                //Updating branch based on location
                 if (mga.getLocation() != null) {
                     switch (mga.getLocation().trim().toUpperCase()) {
                         case "WILSON GARDEN" -> mga.setBranch("Wilson Garden");
@@ -153,7 +147,6 @@ public class MGAServiceImpl implements MGAService {
                     }
                 }
 
-                //Updating month based on mga_date
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");
                 mga.setMonth(formatter.format(mga.getMgaDate()));
                 DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("YYYY");
@@ -168,7 +161,6 @@ public class MGAServiceImpl implements MGAService {
                     mga.setChannel("UNKNOWN");
                 }
 
-                //Updating qtr_wise & half_year based on month\
                 switch (mga.getMonth().trim().toUpperCase()){
                     case "APR", "MAY", "JUN" ->{ mga.setQtrWise("Qtr1"); mga.setHalfYear("H1");}
                     case "JUL", "AUG", "SEP" ->{ mga.setQtrWise("Qtr2"); mga.setHalfYear("H1");}

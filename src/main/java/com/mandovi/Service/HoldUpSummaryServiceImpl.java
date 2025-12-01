@@ -4,7 +4,6 @@ import com.mandovi.DTO.HoldUpSummaryDTO;
 import com.mandovi.Repository.HoldUpSummaryRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -16,12 +15,12 @@ public class HoldUpSummaryServiceImpl implements HoldUpSummaryService {
     }
 
     @Override
-    public List<HoldUpSummaryDTO> getHoldUpSummaryCityWise(List<LocalDate> holdUpSummaryDate) {
-        return holdUpSummaryRepository.getHoldUpSummaryCityWise(holdUpSummaryDate);
+    public List<HoldUpSummaryDTO> getHoldUpSummaryCityWise(String month, String day) {
+        return holdUpSummaryRepository.getHoldUpSummaryCityWise(month, day);
     }
 
     @Override
-    public List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise(List<LocalDate> holdUpSummaryDate) {
-        return holdUpSummaryRepository.getHoldUpSummaryBranchWise(holdUpSummaryDate);
+    public List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise(String month, String day, List<String> cities) {
+        return holdUpSummaryRepository.getHoldUpSummaryBranchWise(month, day, cities);
     }
 }

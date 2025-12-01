@@ -17,13 +17,16 @@ public interface HoldUpSummaryRepository extends JpaRepository<HoldUpSummary, In
             null,
             SUM(CASE WHEN h.service = 'Service' THEN h.count ElSE 0 END),
             SUM(CASE WHEN h.service = 'Bodyshop' THEN h.count ElSE 0 END),
-            SUM(CASE WHEN h.service = 'PMS' THEN h.count ElSE 0 END)
+            SUM(CASE WHEN h.service = 'PMS' THEN h.count ElSE 0 END),
+            SUM(CASE WHEN h.service IN ('Service', 'Bodyshop') THEN h.count ElSE 0 END)
             )
             FROM HoldUpSummary h
-            WHERE (:holdUpSummaryDate IS NULL OR h.holdUpSummaryDate IN (:holdUpSummaryDate))
+            WHERE h.month = :month AND h.day = :day
             GROUP BY h.city
             """)
-    List<HoldUpSummaryDTO> getHoldUpSummaryCityWise (@Param("holdUpSummaryDate")List<LocalDate> holdUpSummaryDate);
+    List<HoldUpSummaryDTO> getHoldUpSummaryCityWise (
+            @Param("month") String month,
+            @Param("day") String day );
 
     //Group By branch
     @Query("""
@@ -32,11 +35,16 @@ public interface HoldUpSummaryRepository extends JpaRepository<HoldUpSummary, In
             h.branch,
             SUM(CASE WHEN h.service = 'Service' THEN h.count ElSE 0 END),
             SUM(CASE WHEN h.service = 'Bodyshop' THEN h.count ElSE 0 END),
-            SUM(CASE WHEN h.service = 'PMS' THEN h.count ElSE 0 END)
+            SUM(CASE WHEN h.service = 'PMS' THEN h.count ElSE 0 END),
+            SUM(CASE WHEN h.service IN ('Service', 'Bodyshop') THEN h.count ElSE 0 END)
             )
             FROM HoldUpSummary h
-            WHERE (:holdUpSummaryDate IS NULL OR h.holdUpSummaryDate IN (:holdUpSummaryDate))
+            WHERE h.month = :month AND h.day = :day
+            AND (:cities IS NULL OR h.city IN (:cities))
             GROUP BY h.city,h.branch
             """)
-    List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise (@Param("holdUpSummaryDate")List<LocalDate> holdUpSummaryDate);
+    List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise (
+            @Param("month") String month,
+            @Param( "day") String day,
+            @Param("cities") List<String> cities );
 }

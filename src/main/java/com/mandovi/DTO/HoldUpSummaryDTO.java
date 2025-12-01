@@ -4,18 +4,20 @@ public class HoldUpSummaryDTO {
     private String city;
     private String branch;
     private long countService;
-    private long countBodySHop;
+    private long countBodyShop;
     private long countPMS;
+    private long countServiceBodyShop;
 
     public HoldUpSummaryDTO() {
     }
 
-    public HoldUpSummaryDTO(String city, String branch, long countService, long countBodySHop, long countPMS) {
+    public HoldUpSummaryDTO(String city, String branch, long countService, long countBodyShop, long countPMS, long countServiceBodyShop) {
         this.city = city;
         this.branch = branch;
         this.countService = countService;
-        this.countBodySHop = countBodySHop;
+        this.countBodyShop = countBodyShop;
         this.countPMS = countPMS;
+        this.countServiceBodyShop = countServiceBodyShop;
     }
 
     public String getCity() {
@@ -42,12 +44,12 @@ public class HoldUpSummaryDTO {
         this.countService = countService;
     }
 
-    public long getCountBodySHop() {
-        return countBodySHop;
+    public long getCountBodyShop() {
+        return countBodyShop;
     }
 
-    public void setCountBodySHop(long countBodySHop) {
-        this.countBodySHop = countBodySHop;
+    public void setCountBodyShop(long countBodyShop) {
+        this.countBodyShop = countBodyShop;
     }
 
     public long getCountPMS() {
@@ -58,14 +60,23 @@ public class HoldUpSummaryDTO {
         this.countPMS = countPMS;
     }
 
+    public long getCountServiceBodyShop() {
+        return countServiceBodyShop;
+    }
+
+    public void setCountServiceBodyShop(long countServiceBodyShop) {
+        this.countServiceBodyShop = countServiceBodyShop;
+    }
+
     @Override
     public String toString() {
         return "HoldUpSummaryDTO{" +
                 "city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
                 ", countService=" + countService +
-                ", countBodySHop=" + countBodySHop +
+                ", countBodyShop=" + countBodyShop +
                 ", countPMS=" + countPMS +
+                ", countServiceBodyShop=" + countServiceBodyShop +
                 '}';
     }
 }

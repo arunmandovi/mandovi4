@@ -2,8 +2,6 @@ package com.mandovi.Service;
 
 import com.mandovi.Entity.HoldUp;
 import com.mandovi.Repository.HoldUpRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class HoldUpServiceImpl implements  HoldUpService{
@@ -35,20 +33,7 @@ public class HoldUpServiceImpl implements  HoldUpService{
             if (firstRow == null)
                 throw new RuntimeException("No Data found in Excel");
 
-            Cell checkCell = firstRow.getCell(4);
-            LocalDate checkLocalDate = null;
-
-            if (checkCell != null) {
-                if (checkCell.getCellType() == CellType.NUMERIC) {
-                    Date date = checkCell.getDateCellValue();
-                    checkLocalDate = date.toInstant()
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDate();
-                } else if (checkCell.getCellType() == CellType.STRING) {
-                    String dateStr = checkCell.getStringCellValue();
-                    checkLocalDate = LocalDate.parse(dateStr);
-                }
-            }
+            LocalDate checkLocalDate = firstRow.getCell(4).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
             boolean exists = holdUpRepository.existsByHoldUpDate(checkLocalDate);
 
@@ -68,25 +53,14 @@ public class HoldUpServiceImpl implements  HoldUpService{
                     holdUp.setBranch(row.getCell(1).getStringCellValue());
                     holdUp.setServiceType(row.getCell(2).getStringCellValue());
                     holdUp.setService(row.getCell(3).getStringCellValue());
-
-                    Cell cell = row.getCell(4);
-                    LocalDate localDate = null;
-
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.NUMERIC) {
-                            Date date = cell.getDateCellValue();
-                            localDate = date.toInstant()
-                                    .atZone(ZoneId.systemDefault())
-                                    .toLocalDate();
-                        } else if (cell.getCellType() == CellType.STRING) {
-                            String dateStr = cell.getStringCellValue();
-                            localDate = LocalDate.parse(dateStr);
-                        }
-                    }
-
-                    holdUp.setHoldUpDate(localDate);
+                    holdUp.setHoldUpDate(row.getCell(4).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                     holdUp.setDays(row.getCell(5).getStringCellValue());
                     holdUp.setCount((int) row.getCell(6).getNumericCellValue());
+
+                    DateTimeFormatter monthformatter = DateTimeFormatter.ofPattern("MMM");
+                    holdUp.setMonth(monthformatter.format(holdUp.getHoldUpDate()));
+                    DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("dd");
+                    holdUp.setDay(dayFormatter.format(holdUp.getHoldUpDate()));
 
                     holdUpRepository.save(holdUp);
                 }

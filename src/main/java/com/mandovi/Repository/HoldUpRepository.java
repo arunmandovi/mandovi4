@@ -22,33 +22,33 @@ public interface HoldUpRepository extends JpaRepository<HoldUp, Integer> {
     @Modifying
     @Transactional
     @Query(value =
-            "INSERT INTO hold_up_summary (city, branch, service, hold_up_summary_date, count) " +
-                    "SELECT city, branch, 'Bodyshop', hold_up_date, SUM(count) " +
+            "INSERT INTO hold_up_summary (city, branch, service, hold_up_summary_date, month, day, count) " +
+                    "SELECT city, branch, 'Bodyshop', hold_up_date, month, day, SUM(count) " +
                     "FROM hold_up " +
                     "WHERE service = 'Bodyshop' " +
-                    "GROUP BY city, branch, hold_up_date",
+                    "GROUP BY city, branch, hold_up_date, month, day",
             nativeQuery = true)
     void insertBodyShopSummary();
 
     @Modifying
     @Transactional
     @Query(value =
-            "INSERT INTO hold_up_summary (city, branch, service, hold_up_summary_date, count) " +
-                    "SELECT city, branch, 'Service', hold_up_date, SUM(count) " +
+            "INSERT INTO hold_up_summary (city, branch, service, hold_up_summary_date, month, day, count) " +
+                    "SELECT city, branch, 'Service', hold_up_date, month, day, SUM(count) " +
                     "FROM hold_up " +
                     "WHERE service = 'Service' " +
-                    "GROUP BY city, branch, hold_up_date",
+                    "GROUP BY city, branch, hold_up_date, month, day",
             nativeQuery = true)
     void insertServiceSummary();
 
     @Modifying
     @Transactional
     @Query(value =
-            "INSERT INTO hold_up_summary (city, branch, service, hold_up_summary_date, count) " +
-                    "SELECT city, branch, 'PMS', hold_up_date, SUM(count) " +
+            "INSERT INTO hold_up_summary (city, branch, service, hold_up_summary_date, month, day, count) " +
+                    "SELECT city, branch, 'PMS', hold_up_date, month, day, SUM(count) " +
                     "FROM hold_up " +
                     "WHERE service_type = 'PMS' " +
-                    "GROUP BY city, branch, hold_up_date",
+                    "GROUP BY city, branch, hold_up_date, month, day",
             nativeQuery = true)
     void insertPMSSummary();
 }

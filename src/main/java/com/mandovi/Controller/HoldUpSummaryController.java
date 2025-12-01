@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,9 +21,10 @@ public class HoldUpSummaryController {
 
     @GetMapping("/hold_up_summary")
     ResponseEntity<?> getHoldUpSummaryCityWise (
-            @RequestParam (required = false) List<LocalDate> holdUpSummaryDate ){
+            @RequestParam String month,
+            @RequestParam String day ){
         try {
-            List<HoldUpSummaryDTO> listHoldUpSummaryCityWise = holdUpSummaryService.getHoldUpSummaryCityWise(holdUpSummaryDate);
+            List<HoldUpSummaryDTO> listHoldUpSummaryCityWise = holdUpSummaryService.getHoldUpSummaryCityWise(month, day);
             if (listHoldUpSummaryCityWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -34,11 +34,13 @@ public class HoldUpSummaryController {
         }
     }
 
-    @GetMapping("/hold_up_summary_branch")
+    @GetMapping("/hold_up_branch_summary")
     ResponseEntity<?> getHoldUpSummaryBranchWise (
-            @RequestParam (required = false) List<LocalDate> holdUpSummaryDate ){
+            @RequestParam String month,
+            @RequestParam String day,
+            @RequestParam (required = false) List<String> cities){
         try {
-            List<HoldUpSummaryDTO> listHoldUpSummaryBranchWise = holdUpSummaryService.getHoldUpSummaryBranchWise(holdUpSummaryDate);
+            List<HoldUpSummaryDTO> listHoldUpSummaryBranchWise = holdUpSummaryService.getHoldUpSummaryBranchWise( month, day, cities );
             if (listHoldUpSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

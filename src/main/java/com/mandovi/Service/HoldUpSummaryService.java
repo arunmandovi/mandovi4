@@ -2,12 +2,12 @@ package com.mandovi.Service;
 
 import com.mandovi.DTO.HoldUpSummaryDTO;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface HoldUpSummaryService {
 
-    List<HoldUpSummaryDTO> getHoldUpSummaryCityWise (List<LocalDate> holdUpSummaryDate);
+    List<HoldUpSummaryDTO> getHoldUpSummaryCityWise (String month, String day);
 
-    List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise (List<LocalDate> holdUpSummaryDate);
+    List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise (String month, String day, List<String> cities);
+
 }
