@@ -34,6 +34,9 @@ public class HoldUp {
     @Column (name = "day")
     private String day;
 
+    @Column (name = "year")
+    private String year;
+
     @Column (name = "days")
     private String days;
 
@@ -43,7 +46,7 @@ public class HoldUp {
     public HoldUp() {
     }
 
-    public HoldUp(Integer holdUpSINo, String city, String branch, String serviceType, String service, LocalDate holdUpDate, String month, String day, String days, int count) {
+    public HoldUp(Integer holdUpSINo, String city, String branch, String serviceType, String service, LocalDate holdUpDate, String month, String day, String year, String days, int count) {
         this.holdUpSINo = holdUpSINo;
         this.city = city;
         this.branch = branch;
@@ -52,6 +55,7 @@ public class HoldUp {
         this.holdUpDate = holdUpDate;
         this.month = month;
         this.day = day;
+        this.year = year;
         this.days = days;
         this.count = count;
     }
@@ -120,6 +124,14 @@ public class HoldUp {
         this.day = day;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     public String getDays() {
         return days;
     }
@@ -147,6 +159,7 @@ public class HoldUp {
                 ", holdUpDate=" + holdUpDate +
                 ", month='" + month + '\'' +
                 ", day='" + day + '\'' +
+                ", year='" + year + '\'' +
                 ", days='" + days + '\'' +
                 ", count=" + count +
                 '}';

@@ -1,12 +1,10 @@
 package com.mandovi.Controller;
 
 import com.mandovi.DTO.HoldUpSummaryDTO;
+import com.mandovi.Entity.HoldUpSummary;
 import com.mandovi.Service.HoldUpSummaryService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,6 +15,34 @@ public class HoldUpSummaryController {
 
     public HoldUpSummaryController(HoldUpSummaryService holdUpSummaryService) {
         this.holdUpSummaryService = holdUpSummaryService;
+    }
+
+    @GetMapping("/getallhold_up")
+    public ResponseEntity<?> getAllHoldUp (){
+        try {
+            List<HoldUpSummary> holdUpSummaryList = holdUpSummaryService.getAllHoldUp();
+            if (holdUpSummaryList.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(holdUpSummaryList);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(" ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/gethold_up")
+    public ResponseEntity<?> getHoldUpByMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<HoldUpSummary> holdUpSummaryListByMonthYear = holdUpSummaryService.getHoldUpByMonthYear(months, years);
+            if (holdUpSummaryListByMonthYear.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(holdUpSummaryListByMonthYear);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(" ERROR : "+e.getMessage());
+        }
     }
 
     @GetMapping("/hold_up_summary")
@@ -49,4 +75,15 @@ public class HoldUpSummaryController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete_all")
+    ResponseEntity<?> deleteAllHoldUp (){
+        try {
+            holdUpSummaryService.deleteHodUpAll();
+            return ResponseEntity.ok("Deleted Hold Up Summary");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error : "+e.getMessage());
+        }
+    }
+
 }

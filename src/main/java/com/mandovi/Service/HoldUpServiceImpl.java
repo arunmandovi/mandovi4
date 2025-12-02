@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.HoldUpDTO;
 import com.mandovi.Entity.HoldUp;
 import com.mandovi.Repository.HoldUpRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -11,6 +12,7 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class HoldUpServiceImpl implements  HoldUpService{
@@ -57,10 +59,13 @@ public class HoldUpServiceImpl implements  HoldUpService{
                     holdUp.setDays(row.getCell(5).getStringCellValue());
                     holdUp.setCount((int) row.getCell(6).getNumericCellValue());
 
-                    DateTimeFormatter monthformatter = DateTimeFormatter.ofPattern("MMM");
-                    holdUp.setMonth(monthformatter.format(holdUp.getHoldUpDate()));
+                    DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMM");
+                    holdUp.setMonth(monthFormatter.format(holdUp.getHoldUpDate()));
                     DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("dd");
                     holdUp.setDay(dayFormatter.format(holdUp.getHoldUpDate()));
+                    DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("YYYY");
+                    holdUp.setYear(yearFormatter.format(holdUp.getHoldUpDate()));
+
 
                     holdUpRepository.save(holdUp);
                 }
@@ -72,5 +77,15 @@ public class HoldUpServiceImpl implements  HoldUpService{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<HoldUpDTO> getHoldUpDTOCityWise() {
+        return holdUpRepository.getHoldUpDTOCityWise();
+    }
+
+    @Override
+    public List<HoldUpDTO> getHoldUpDTOBranchWise(List<String> cities) {
+        return holdUpRepository.getHoldUpDTOBranchWise(cities);
     }
 }

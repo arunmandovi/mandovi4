@@ -2,7 +2,9 @@ package com.mandovi.Repository;
 
 import com.mandovi.DTO.HoldUpSummaryDTO;
 import com.mandovi.Entity.HoldUpSummary;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -10,6 +12,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface HoldUpSummaryRepository extends JpaRepository<HoldUpSummary, Integer> {
+
+    @Transactional
+    @Query("""
+            SELECT h FROM HoldUpSummary h
+            WHERE (:months IS NULL OR h.month IN (:months))
+            AND (:years IS NULL OR h.year IN (:years))
+            """)
+    List<HoldUpSummary> getHoldUpByMonthYear (
+            @Param("months") List<String> months,
+            @Param("years") List<String> years );
+
     //Group By city
     @Query("""
             SELECT new com.mandovi.DTO.HoldUpSummaryDTO(
@@ -47,4 +60,9 @@ public interface HoldUpSummaryRepository extends JpaRepository<HoldUpSummary, In
             @Param("month") String month,
             @Param( "day") String day,
             @Param("cities") List<String> cities );
+
+    @Modifying
+    @Transactional
+    @Query(value = "TRUNCATE TABLE mandovi.hold_up_summary;", nativeQuery = true)
+    void deleteHoldUpAll ();
 }
