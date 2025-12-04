@@ -27,7 +27,7 @@ public interface HoldUpRepository extends JpaRepository<HoldUp, Integer> {
                     "SELECT city, branch, 'Bodyshop', hold_up_date, month, day, year, SUM(count) " +
                     "FROM hold_up " +
                     "WHERE service = 'Bodyshop' " +
-                    "GROUP BY city, branch, hold_up_date, month, day, year,",
+                    "GROUP BY city, branch, hold_up_date, month, day, year",
             nativeQuery = true)
     void insertBodyShopSummary();
 
@@ -38,7 +38,7 @@ public interface HoldUpRepository extends JpaRepository<HoldUp, Integer> {
                     "SELECT city, branch, 'Service', hold_up_date, month, day, year, SUM(count) " +
                     "FROM hold_up " +
                     "WHERE service = 'Service' " +
-                    "GROUP BY city, branch, hold_up_date, month, day, year,",
+                    "GROUP BY city, branch, hold_up_date, month, day, year",
             nativeQuery = true)
     void insertServiceSummary();
 
@@ -49,7 +49,7 @@ public interface HoldUpRepository extends JpaRepository<HoldUp, Integer> {
                     "SELECT city, branch, 'PMS', hold_up_date, month, day, year, SUM(count) " +
                     "FROM hold_up " +
                     "WHERE service_type = 'PMS' " +
-                    "GROUP BY city, branch, hold_up_date, month, day, year,",
+                    "GROUP BY city, branch, hold_up_date, month, day, year",
             nativeQuery = true)
     void insertPMSSummary();
 
