@@ -8,9 +8,9 @@ public class OilSummaryDTO {
     private Double fullAndSemiSyntheticQty;
     private Double mineralQTY;
     private Double grandTotal;
-    private Double percentageFullSyntheticQTY;
-    private Double percentageSemiSyntheticQTY;
-    private Double percentageFullSemiSyntheticQTY;
+    private Double qtyFullSynthetic;
+    private Double qtySemiSynthetic;
+    private Double qtyFullSemiSynthetic;
     private Double fullSyntheticProfit;
     private Double semiSyntheticProfit;
     private Double fullSemiSyntheticProfit;
@@ -20,7 +20,7 @@ public class OilSummaryDTO {
     public OilSummaryDTO() {
     }
 
-    public OilSummaryDTO(String city, String branch, Double fullSyntheticQTY, Double semiSyntheticQTY, Double fullAndSemiSyntheticQty, Double mineralQTY, Double grandTotal, Double percentageFullSyntheticQTY, Double percentageSemiSyntheticQTY, Double percentageFullSemiSyntheticQTY, Double fullSyntheticProfit, Double semiSyntheticProfit, Double fullSemiSyntheticProfit, Double mineralProfit, Double profitTotal) {
+    public OilSummaryDTO(String city, String branch, Double fullSyntheticQTY, Double semiSyntheticQTY, Double fullAndSemiSyntheticQty, Double mineralQTY, Double grandTotal, Double qtyFullSynthetic, Double qtySemiSynthetic, Double qtyFullSemiSynthetic, Double fullSyntheticProfit, Double semiSyntheticProfit, Double fullSemiSyntheticProfit, Double mineralProfit, Double profitTotal) {
         this.city = city;
         this.branch = branch;
         this.fullSyntheticQTY = fullSyntheticQTY;
@@ -28,9 +28,9 @@ public class OilSummaryDTO {
         this.fullAndSemiSyntheticQty = fullAndSemiSyntheticQty;
         this.mineralQTY = mineralQTY;
         this.grandTotal = grandTotal;
-        this.percentageFullSyntheticQTY = percentageFullSyntheticQTY;
-        this.percentageSemiSyntheticQTY = percentageSemiSyntheticQTY;
-        this.percentageFullSemiSyntheticQTY = percentageFullSemiSyntheticQTY;
+        this.qtyFullSynthetic = qtyFullSynthetic;
+        this.qtySemiSynthetic = qtySemiSynthetic;
+        this.qtyFullSemiSynthetic = qtyFullSemiSynthetic;
         this.fullSyntheticProfit = fullSyntheticProfit;
         this.semiSyntheticProfit = semiSyntheticProfit;
         this.fullSemiSyntheticProfit = fullSemiSyntheticProfit;
@@ -94,28 +94,28 @@ public class OilSummaryDTO {
         this.grandTotal = grandTotal;
     }
 
-    public Double getPercentageFullSyntheticQTY() {
-        return percentageFullSyntheticQTY;
+    public Double getQtyFullSynthetic() {
+        return qtyFullSynthetic;
     }
 
-    public void setPercentageFullSyntheticQTY(Double percentageFullSyntheticQTY) {
-        this.percentageFullSyntheticQTY = percentageFullSyntheticQTY;
+    public void setQtyFullSynthetic(Double qtyFullSynthetic) {
+        this.qtyFullSynthetic = qtyFullSynthetic;
     }
 
-    public Double getPercentageSemiSyntheticQTY() {
-        return percentageSemiSyntheticQTY;
+    public Double getQtySemiSynthetic() {
+        return qtySemiSynthetic;
     }
 
-    public void setPercentageSemiSyntheticQTY(Double percentageSemiSyntheticQTY) {
-        this.percentageSemiSyntheticQTY = percentageSemiSyntheticQTY;
+    public void setQtySemiSynthetic(Double qtySemiSynthetic) {
+        this.qtySemiSynthetic = qtySemiSynthetic;
     }
 
-    public Double getPercentageFullSemiSyntheticQTY() {
-        return percentageFullSemiSyntheticQTY;
+    public Double getQtyFullSemiSynthetic() {
+        return qtyFullSemiSynthetic;
     }
 
-    public void setPercentageFullSemiSyntheticQTY(Double percentageFullSemiSyntheticQTY) {
-        this.percentageFullSemiSyntheticQTY = percentageFullSemiSyntheticQTY;
+    public void setQtyFullSemiSynthetic(Double qtyFullSemiSynthetic) {
+        this.qtyFullSemiSynthetic = qtyFullSemiSynthetic;
     }
 
     public Double getFullSyntheticProfit() {
@@ -168,9 +168,9 @@ public class OilSummaryDTO {
                 ", fullAndSemiSyntheticQty=" + fullAndSemiSyntheticQty +
                 ", mineralQTY=" + mineralQTY +
                 ", grandTotal=" + grandTotal +
-                ", percentageFullSyntheticQTY=" + percentageFullSyntheticQTY +
-                ", percentageSemiSyntheticQTY=" + percentageSemiSyntheticQTY +
-                ", percentageFullSemiSyntheticQTY=" + percentageFullSemiSyntheticQTY +
+                ", qtyFullSynthetic=" + qtyFullSynthetic +
+                ", qtySemiSynthetic=" + qtySemiSynthetic +
+                ", qtyFullSemiSynthetic=" + qtyFullSemiSynthetic +
                 ", fullSyntheticProfit=" + fullSyntheticProfit +
                 ", semiSyntheticProfit=" + semiSyntheticProfit +
                 ", fullSemiSyntheticProfit=" + fullSemiSyntheticProfit +

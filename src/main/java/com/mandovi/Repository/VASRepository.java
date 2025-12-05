@@ -143,141 +143,96 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
         CAST((SELECT SUM(l.serviceLoad)
               FROM Loadd l
               WHERE l.loadType = 'PMS' AND l.branch = v.branch AND l.financialYear = '2025-2026'
-              AND (:months IS NULL OR l.month IN (:months))
-              AND (:cities IS NULL OR l.city IN (:cities))
-              AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-              AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double),
+              AND (:months IS NULL OR l.month IN (:months))) AS double),
         SUM(CASE WHEN v.vas = 'DIAGNOSTIC CHARGES' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'DIAGNOSTIC CHARGES' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'DIAGNOSTIC CHARGES' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.loadType = 'PMS' AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         CAST((SELECT SUM(l.serviceLoad)
               FROM Loadd l
               WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-              AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double),
+              AND (:months IS NULL OR l.month IN (:months))) AS double),
         SUM(CASE WHEN v.vas = 'Wheel Alignment' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Wheel Alignment' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'Wheel Alignment' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         CAST((SELECT SUM(l.serviceLoad)
-                     FROM Loadd l
-                     WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double),
+              FROM Loadd l
+              WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
+              AND (:months IS NULL OR l.month IN (:months))) AS double),
         SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.basicAmt ELSE 0 END) AS double),
-        (((SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.jobCardNo ELSE 0 END) / 4) * 100.0) /
+        ((SUM(CASE WHEN v.vas = 'Wheel Balancing' THEN v.jobCardNo ELSE 0 END) / 4) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0) / 4),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         CAST((SELECT SUM(l.serviceLoad)
               FROM Loadd l
               WHERE l.loadType IN ('FREE SERVICE','RR','BODYSHOP','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-              AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double),
+              AND (:months IS NULL OR l.month IN (:months))) AS double),
         SUM(CASE WHEN v.vas = 'Exterior Cleaning' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Exterior Cleaning' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'Exterior Cleaning' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.loadType IN ('FREE SERVICE','RR','BODYSHOP','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         SUM(CASE WHEN v.vas = 'Interior Cleaning' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Interior Cleaning' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'Interior Cleaning' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.loadType IN ('FREE SERVICE','RR','BODYSHOP','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         SUM(CASE WHEN v.vas = 'Underbody Coating' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Underbody Coating' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'Underbody Coating' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         SUM(CASE WHEN v.vas = 'Top Body Coating' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Top Body Coating' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'Top Body Coating' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         SUM(CASE WHEN v.vas = 'RAT MESH' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'RAT MESH' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'RAT MESH' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         SUM(CASE WHEN v.vas = 'Evaporator Cleaning' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Evaporator Cleaning' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'Evaporator Cleaning' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         SUM(CASE WHEN v.vas = 'A/C Vent Cleaning' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'A/C Vent Cleaning' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'A/C Vent Cleaning' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0),
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0),
         SUM(CASE WHEN v.vas = 'Plastic Repair' THEN v.jobCardNo ELSE 0 END),
         CAST(SUM(CASE WHEN v.vas = 'Plastic Repair' THEN v.basicAmt ELSE 0 END) AS double),
         (SUM(CASE WHEN v.vas = 'Plastic Repair' THEN v.jobCardNo ELSE 0 END) * 100.0) /
         NULLIF(CAST((SELECT SUM(l.serviceLoad)
                      FROM Loadd l
                      WHERE l.serviceTypeCode IN ('FR3','PMS') AND l.branch = v.branch AND l.financialYear = '2025-2026'
-                     AND (:months IS NULL OR l.month IN (:months))
-                     AND (:cities IS NULL OR l.city IN (:cities))
-                     AND (:qtrWise IS NULL OR l.qtrWise IN (:qtrWise))
-                     AND (:halfYear IS NULL OR l.halfYear IN (:halfYear))) AS double), 0)
+                     AND (:months IS NULL OR l.month IN (:months))) AS double), 0)
             )
     FROM VAS v
     WHERE (:months IS NULL OR v.month IN (:months))

@@ -55,7 +55,7 @@ public class VASServiceImpl implements VASService {
                         vas.setWheels(num);
                     }
                 } else if (labourType.toUpperCase().contains("DYNAMIC BALANCING")) {
-                    String wheelsDynamic = "4";
+                    String wheelsDynamic = "5";
                     int numDynamic = Integer.parseInt(wheelsDynamic);
                     vas.setWheels(numDynamic);
                 } else {
@@ -80,8 +80,8 @@ public class VASServiceImpl implements VASService {
                     }
                 }
 
-                int number = (int)row.getCell(6).getNumericCellValue();
-                vas.setJobCardNo(number * vas.getWheels());
+                vas.setExcelJobCardNo((int)row.getCell(6).getNumericCellValue());
+                vas.setJobCardNo(vas.getExcelJobCardNo() * vas.getWheels());
                 vas.setBasicAmt(round2Decimals(row.getCell(7).getNumericCellValue()));
 
                 switch (vas.getMonth().trim().toUpperCase()){

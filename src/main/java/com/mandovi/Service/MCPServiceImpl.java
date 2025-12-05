@@ -114,7 +114,10 @@ public class MCPServiceImpl implements MCPService {
                     case "YESHWANTPUR - SRV" ->   mcp.setBranch("Yeshwanthpur WS");
                     case "NEXA SERVICE KOLAR" ->   mcp.setBranch("Kolar Nexa");
                     case "KOLLEGAL-3S(RO)" ->   mcp.setBranch("Kollegal");
-
+                    case "SURATHKAL-SRV" -> mcp.setBranch("Surathkal");
+                    case "MANGALORE-2S(NEXA)" -> mcp.setBranch("Nexa Service");
+                    case "BASAVANAGUDI-SOW" -> mcp.setBranch("Basavanagudi-SOW");
+                    case "B.H ROAD-R(3S)" -> mcp.setBranch("Gowribidanur");
                 }
 
                 //Updating first day of month which mentioned in month column

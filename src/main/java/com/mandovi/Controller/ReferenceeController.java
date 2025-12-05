@@ -1,6 +1,7 @@
 package com.mandovi.Controller;
 
 import com.mandovi.DTO.ReferenceeSummaryDTO;
+import com.mandovi.DTO.ReferenceeTableDTO;
 import com.mandovi.Entity.Referencee;
 import com.mandovi.Service.ReferenceeService;
 import org.springframework.http.ResponseEntity;
@@ -96,6 +97,21 @@ public class ReferenceeController {
             return ResponseEntity.ok().body("All data deleted from Referencee");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
+        }
+    }
+
+    @GetMapping("/referencee_table_summary")
+    public ResponseEntity<?> getReferenceeTableCityWise (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> cities ){
+        try {
+            List<ReferenceeTableDTO> listReferenceeTableCityWise = referenceeService.getReferenceeTable(months, cities);
+            if (listReferenceeTableCityWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listReferenceeTableCityWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.mandovi.Service;
 
 import com.mandovi.DTO.ReferenceeSummaryDTO;
+import com.mandovi.DTO.ReferenceeTableDTO;
 import com.mandovi.Entity.Referencee;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,4 +19,6 @@ public interface ReferenceeService {
     public List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
 
     void deleteReferenceeAll ();
+
+    public List<ReferenceeTableDTO> getReferenceeTable (List<String> months, List<String> cities);
 }

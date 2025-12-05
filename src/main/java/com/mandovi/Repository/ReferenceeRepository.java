@@ -1,6 +1,7 @@
 package com.mandovi.Repository;
 
 import com.mandovi.DTO.ReferenceeSummaryDTO;
+import com.mandovi.DTO.ReferenceeTableDTO;
 import com.mandovi.Entity.Referencee;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -78,4 +79,23 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
     @Transactional
     @Query(value = "TRUNCATE TABLE mandovi.referencee;", nativeQuery = true)
     void deleteReferenceeAll ();
+
+    //Table Summary Group By groupDesignation
+    @Query("""
+        SELECT new com.mandovi.DTO.ReferenceeTableDTO(
+            r.groupDesignation,
+            SUM(r.referencee),
+            SUM(r.enquiry),
+            SUM(r.booking),
+            SUM(r.enquiry)
+        )
+        FROM Referencee r
+        WHERE (:months IS NULL OR r.month IN (:months))
+          AND (:cities IS NULL OR r.city IN (:cities))
+        GROUP BY r.groupDesignation
+        """)
+    List<ReferenceeTableDTO> getReferenceeTableCityWise(
+            @Param("months") List<String> months,
+            @Param("cities") List<String> cities
+    );
 }

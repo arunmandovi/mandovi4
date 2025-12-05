@@ -1,6 +1,7 @@
 package com.mandovi.Service;
 
 import com.mandovi.DTO.ReferenceeSummaryDTO;
+import com.mandovi.DTO.ReferenceeTableDTO;
 import com.mandovi.Entity.Referencee;
 import com.mandovi.Repository.ReferenceeRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -106,5 +107,10 @@ public class ReferenceeServiceImpl implements ReferenceeService {
     @Override
     public void deleteReferenceeAll() {
         referenceeRepository.deleteReferenceeAll();
+    }
+
+    @Override
+    public List<ReferenceeTableDTO> getReferenceeTable(List<String> months, List<String> cities) {
+        return referenceeRepository.getReferenceeTableCityWise(months, cities);
     }
 }

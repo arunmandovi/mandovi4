@@ -32,6 +32,9 @@ public class VAS {
     @Column(name = "year")
     private String year;
 
+    @Column (name = "excel_job_card_no")
+    private Integer excelJobCardNo;
+
     @Column(name = "job_card_no")
     private Integer jobCardNo;
 
@@ -47,7 +50,7 @@ public class VAS {
     public VAS() {
     }
 
-    public VAS(Integer vasSINo, String city, String branch, String labourType, Integer wheels, String vas, String month, String year, Integer jobCardNo, Double basicAmt, String qtrWise, String halfYear) {
+    public VAS(Integer vasSINo, String city, String branch, String labourType, Integer wheels, String vas, String month, String year, Integer excelJobCardNo, Integer jobCardNo, Double basicAmt, String qtrWise, String halfYear) {
         this.vasSINo = vasSINo;
         this.city = city;
         this.branch = branch;
@@ -56,6 +59,7 @@ public class VAS {
         this.vas = vas;
         this.month = month;
         this.year = year;
+        this.excelJobCardNo = excelJobCardNo;
         this.jobCardNo = jobCardNo;
         this.basicAmt = basicAmt;
         this.qtrWise = qtrWise;
@@ -126,6 +130,14 @@ public class VAS {
         this.year = year;
     }
 
+    public Integer getExcelJobCardNo() {
+        return excelJobCardNo;
+    }
+
+    public void setExcelJobCardNo(Integer excelJobCardNo) {
+        this.excelJobCardNo = excelJobCardNo;
+    }
+
     public Integer getJobCardNo() {
         return jobCardNo;
     }
@@ -169,6 +181,7 @@ public class VAS {
                 ", vas='" + vas + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", excelJobCardNo=" + excelJobCardNo +
                 ", jobCardNo=" + jobCardNo +
                 ", basicAmt=" + basicAmt +
                 ", qtrWise='" + qtrWise + '\'' +
