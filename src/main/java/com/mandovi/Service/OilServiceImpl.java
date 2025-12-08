@@ -37,7 +37,7 @@ public class OilServiceImpl implements OilService {
 
             Row firstRow = sheet.getRow(1);
             if (firstRow == null)
-                throw new RuntimeException("No Data found in Excel");
+                throw new RuntimeException("No Data found in Excel") ;
 
             String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
             oilRepository.deleteByMonth(uploadMonth);
