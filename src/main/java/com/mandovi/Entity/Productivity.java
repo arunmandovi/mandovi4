@@ -22,15 +22,23 @@ public class Productivity {
     @Column (name = "bodyshop_utilized_bay")
     private Integer bodyShopUtilizedBay;
 
+    @Column (name = "month")
+    private String month;
+
+    @Column (name = "worked_days")
+    private Integer workedDays;
+
     public Productivity() {
     }
 
-    public Productivity(Integer productivitySINo, String city, String branch, Integer serviceUtilizedBay, Integer bodyShopUtilizedBay) {
+    public Productivity(Integer productivitySINo, String city, String branch, Integer serviceUtilizedBay, Integer bodyShopUtilizedBay, String month, Integer workedDays) {
         this.productivitySINo = productivitySINo;
         this.city = city;
         this.branch = branch;
         this.serviceUtilizedBay = serviceUtilizedBay;
         this.bodyShopUtilizedBay = bodyShopUtilizedBay;
+        this.month = month;
+        this.workedDays = workedDays;
     }
 
     public Integer getProductivitySINo() {
@@ -73,6 +81,22 @@ public class Productivity {
         this.bodyShopUtilizedBay = bodyShopUtilizedBay;
     }
 
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public Integer getWorkedDays() {
+        return workedDays;
+    }
+
+    public void setWorkedDays(Integer workedDays) {
+        this.workedDays = workedDays;
+    }
+
     @Override
     public String toString() {
         return "Productivity{" +
@@ -81,6 +105,8 @@ public class Productivity {
                 ", branch='" + branch + '\'' +
                 ", serviceUtilizedBay=" + serviceUtilizedBay +
                 ", bodyShopUtilizedBay=" + bodyShopUtilizedBay +
+                ", month='" + month + '\'' +
+                ", workedDays=" + workedDays +
                 '}';
     }
 }

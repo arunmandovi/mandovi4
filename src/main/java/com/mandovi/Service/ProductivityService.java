@@ -18,4 +18,6 @@ public interface ProductivityService {
     public List<ProductivitySummaryDTO> getProductivitySummaryCityWise (List<String> months, List<String> years);
 
     public List<ProductivitySummaryDTO> getProductivitySummaryBranchWise (List<String> months, List<String> years, List<String> cities );
+
+    public int updateWorkingDays (String month, Integer workingDays);
 }

@@ -4,6 +4,74 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+@SqlResultSetMapping(
+        name = "ProductSummaryCityWiseMapping",
+        classes = @ConstructorResult(
+                targetClass = com.mandovi.DTO.ProductivitySummaryDTO.class,
+                columns = {
+                        @ColumnResult(name = "city", type = String.class),
+                        @ColumnResult(name = "month_name", type = String.class),
+                        @ColumnResult(name = "total_service_bay_utilized", type = Double.class),
+                        @ColumnResult(name = "total_records", type = Double.class),
+                        @ColumnResult(name = "free_percentage", type = Double.class),
+                        @ColumnResult(name = "free_count", type = Double.class),
+                        @ColumnResult(name = "pms_percentage", type = Double.class),
+                        @ColumnResult(name = "pms_count", type = Double.class),
+                        @ColumnResult(name = "rr_percentage", type = Double.class),
+                        @ColumnResult(name = "rr_count", type = Double.class),
+                        @ColumnResult(name = "others_percentage", type = Double.class),
+                        @ColumnResult(name = "others_count", type = Double.class),
+                        @ColumnResult(name = "total_bodyshop_bay_utilized", type = Double.class),
+                        @ColumnResult(name = "bodyshop_count", type = Double.class),
+                        @ColumnResult(name = "bodyshop_percentage", type = Double.class)
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "Loadd.getProductSummaryCityWise",
+        query = """
+               SELECT 
+                   l.city AS city,
+                   NULL AS month_name,
+                   (SELECT SUM(p.service_utilized_bay)
+                      FROM productivity p
+                      WHERE p.city = l.city) AS total_service_bay_utilized,
+
+                   SUM(CASE WHEN l.load_type IN ('FREE SERVICE','PMS','RR','OTHERS') 
+                            THEN l.service_load ELSE 0 END) AS total_records,
+
+                   0.0 AS free_percentage,
+                   SUM(CASE WHEN l.load_type = 'FREE SERVICE' 
+                            THEN l.service_load ELSE 0 END) AS free_count,
+
+                   0.0 AS pms_percentage,
+                   SUM(CASE WHEN l.load_type = 'PMS' 
+                            THEN l.service_load ELSE 0 END) AS pms_count,
+
+                   0.0 AS rr_percentage,
+                   SUM(CASE WHEN l.load_type = 'RR' 
+                            THEN l.service_load ELSE 0 END) AS rr_count,
+
+                   0.0 AS others_percentage,
+                   SUM(CASE WHEN l.load_type = 'OTHERS' 
+                            THEN l.service_load ELSE 0 END) AS others_count,
+
+                   (SELECT SUM(p.body_shop_utilized_bay)
+                      FROM productivity p
+                      WHERE p.city = l.city) AS total_bodyshop_bay_utilized,
+
+                   SUM(CASE WHEN l.load_type = 'BODYSHOP' 
+                            THEN l.service_load ELSE 0 END) AS bodyshop_count,
+
+                   0.0 AS bodyshop_percentage
+               FROM loadd l
+               WHERE (:months IS NULL OR l.month IN (:months))
+                 AND (:years IS NULL OR l.year IN (:years))
+               GROUP BY l.city
+               """,
+        resultSetMapping = "ProductSummaryCityWiseMapping"
+)
+
 @Entity
 @Table(name = "loadd")
 public class Loadd {

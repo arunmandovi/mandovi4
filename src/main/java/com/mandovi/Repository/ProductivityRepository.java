@@ -35,18 +35,21 @@ public interface ProductivityRepository extends JpaRepository<Productivity, Inte
             FROM Productivity p
             WHERE p.city = l.city),
            SUM(CASE WHEN l.loadType IN ('FREE SERVICE','PMS','RR','OTHERS') THEN l.serviceLoad ELSE 0 END),
-           (SUM(CASE WHEN l.loadType IN ('FREE SERVICE','PMS','RR','OTHERS') THEN l.serviceLoad ELSE 0 END) * 1.0) /
-            NULLIF((SELECT SUM(p.serviceUtilizedBay)
-                    FROM Productivity p
-                    WHERE p.city = l.city), 0) / 26,
+           0.0,
+           SUM(CASE WHEN l.loadType = 'FREE SERVICE' THEN l.serviceLoad ELSE 0 END),
+           0.0,
+           SUM(CASE WHEN l.loadType = 'PMS' THEN l.serviceLoad ELSE 0 END),
+           0.0,
+           SUM(CASE WHEN l.loadType = 'RR' THEN l.serviceLoad ELSE 0 END),
+           0.0,
+           SUM(CASE WHEN l.loadType = 'OTHERS' THEN l.serviceLoad ELSE 0 END),
+           0.0,
            (SELECT SUM(p.bodyShopUtilizedBay)
             FROM Productivity p
             WHERE p.city = l.city),
            SUM(CASE WHEN l.loadType = 'BODYSHOP' THEN l.serviceLoad ELSE 0 END),
-           (SUM(CASE WHEN l.loadType = 'BODYSHOP' THEN l.serviceLoad ELSE 0 END) * 1.0) /
-            NULLIF((SELECT SUM(p.bodyShopUtilizedBay)
-                    FROM Productivity p
-                    WHERE p.city = l.city), 0)
+           0.0,
+           1
            )
            FROM Loadd l
            WHERE (:months IS NULL OR l.month IN :months)
@@ -57,6 +60,9 @@ public interface ProductivityRepository extends JpaRepository<Productivity, Inte
             @Param("months") List<String> months,
             @Param("years") List<String> years);
 
+
+
+
     //Group By Branch
     @Query("""
            SELECT NEW com.mandovi.DTO.ProductivitySummaryDTO(
@@ -66,18 +72,21 @@ public interface ProductivityRepository extends JpaRepository<Productivity, Inte
             FROM Productivity p
             WHERE p.branch = l.branch ),
            SUM(CASE WHEN l.loadType IN ('FREE SERVICE','PMS','RR','OTHERS') THEN l.serviceLoad ELSE 0 END),
-           (SUM(CASE WHEN l.loadType IN ('FREE SERVICE','PMS','RR','OTHERS') THEN l.serviceLoad ELSE 0 END) * 1.0) /
-            NULLIF((SELECT SUM(p.serviceUtilizedBay)
-                    FROM Productivity p
-                    WHERE p.branch = l.branch ), 0) / 26,
+           0.0,
+           SUM(CASE WHEN l.loadType = 'FREE SERVICE' THEN l.serviceLoad ELSE 0 END),
+           0.0,
+           SUM(CASE WHEN l.loadType = 'PMS' THEN l.serviceLoad ELSE 0 END),
+           0.0,
+           SUM(CASE WHEN l.loadType = 'RR' THEN l.serviceLoad ELSE 0 END),
+           0.0,
+           SUM(CASE WHEN l.loadType = 'OTHERS' THEN l.serviceLoad ELSE 0 END),
+           0.0,
            (SELECT SUM(p.bodyShopUtilizedBay)
             FROM Productivity p
             WHERE p.branch = l.branch ),
            SUM(CASE WHEN l.loadType = 'BODYSHOP' THEN l.serviceLoad ELSE 0 END),
-           (SUM(CASE WHEN l.loadType = 'BODYSHOP' THEN l.serviceLoad ELSE 0 END) * 1.0) /
-            NULLIF((SELECT SUM(p.bodyShopUtilizedBay)
-                    FROM Productivity p
-                    WHERE p.branch = l.branch ), 0)
+           0.0,
+           1
            )
            FROM Loadd l
            WHERE (:months IS NULL OR l.month IN :months)
@@ -89,6 +98,13 @@ public interface ProductivityRepository extends JpaRepository<Productivity, Inte
             @Param("months") List<String> months,
             @Param("years") List<String> years,
             @Param("cities") List<String> cities );
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE mandovi.productivity SET worked_days = :workingDays WHERE month = :month", nativeQuery = true)
+    public int updateWorkingDays(
+            @Param("month") String month,
+            @Param("workingDays") Integer workingDays);
 
 
 }

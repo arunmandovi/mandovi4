@@ -76,6 +76,22 @@ public class ProductivityController {
         }
     }
 
+    @PutMapping("/update_working_days")
+    public ResponseEntity<?> updateWorkingDays (
+            @RequestParam String month,
+            @RequestParam Integer workingDays ){
+        try {
+            int rowsUpdated = productivityService.updateWorkingDays(month.trim(), workingDays );
+            if (rowsUpdated == 0) {
+                return ResponseEntity.badRequest().body("No branch found matching: " + month);
+            }
+            String result = "For month "+ month+ " Service Utilized bay updated to "+workingDays;
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
     @GetMapping("/productivity_summary")
     public ResponseEntity<?> getProductSummaryCityWise (
             @RequestParam (required = false) List<String> months,
