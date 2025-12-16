@@ -19,6 +19,9 @@ public class HoldUp {
     @Column (name = "branch")
     private String branch;
 
+    @Column (name = "reg_no")
+    private String regNo;
+
     @Column (name = "service_type")
     private String serviceType;
 
@@ -46,10 +49,11 @@ public class HoldUp {
     public HoldUp() {
     }
 
-    public HoldUp(Integer holdUpSINo, String city, String branch, String serviceType, String service, LocalDate holdUpDate, String month, String day, String year, String days, int count) {
+    public HoldUp(Integer holdUpSINo, String city, String branch, String regNo, String serviceType, String service, LocalDate holdUpDate, String month, String day, String year, String days, int count) {
         this.holdUpSINo = holdUpSINo;
         this.city = city;
         this.branch = branch;
+        this.regNo = regNo;
         this.serviceType = serviceType;
         this.service = service;
         this.holdUpDate = holdUpDate;
@@ -82,6 +86,14 @@ public class HoldUp {
 
     public void setBranch(String branch) {
         this.branch = branch;
+    }
+
+    public String getRegNo() {
+        return regNo;
+    }
+
+    public void setRegNo(String regNo) {
+        this.regNo = regNo;
     }
 
     public String getServiceType() {
@@ -154,6 +166,7 @@ public class HoldUp {
                 "holdUpSINo=" + holdUpSINo +
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
+                ", regNo='" + regNo + '\'' +
                 ", serviceType='" + serviceType + '\'' +
                 ", service='" + service + '\'' +
                 ", holdUpDate=" + holdUpDate +

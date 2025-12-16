@@ -14,6 +14,7 @@ public class ProfitLossSummaryDTO {
     private Double Jul_25;
     private Double Aug_25;
     private Double Sep_25;
+    private Double Oct_25;
     private Double FY_2025_26;
     private Double load_Apr;
     private Double load_May;
@@ -21,6 +22,7 @@ public class ProfitLossSummaryDTO {
     private Double load_Jul;
     private Double load_Aug;
     private Double load_Sep;
+    private Double load_Oct;
     private Double load_Total;
     private Double Apr25_per_100k;
     private Double May25_per_100k;
@@ -28,12 +30,13 @@ public class ProfitLossSummaryDTO {
     private Double Jul25_per_100k;
     private Double Aug25_per_100k;
     private Double Sep25_per_100k;
+    private Double Oct25_per_100k;
     private Double Total25_per_100k;
 
     public ProfitLossSummaryDTO() {
     }
 
-    public ProfitLossSummaryDTO(String city, String branch, Double apr_24, Double may_24, Double jun_24, Double jul_24, Double total_24, Double apr_25, Double may_25, Double jun_25, Double jul_25, Double aug_25, Double sep_25, Double FY_2025_26, Double load_Apr, Double load_May, Double load_Jun, Double load_Jul, Double load_Aug, Double load_Sep, Double load_Total, Double apr25_per_100k, Double may25_per_100k, Double jun25_per_100k, Double jul25_per_100k, Double aug25_per_100k, Double sep25_per_100k, Double total25_per_100k) {
+    public ProfitLossSummaryDTO(String city, String branch, Double apr_24, Double may_24, Double jun_24, Double jul_24, Double total_24, Double apr_25, Double may_25, Double jun_25, Double jul_25, Double aug_25, Double sep_25, Double oct_25, Double FY_2025_26, Double load_Apr, Double load_May, Double load_Jun, Double load_Jul, Double load_Aug, Double load_Sep, Double load_Oct, Double load_Total, Double apr25_per_100k, Double may25_per_100k, Double jun25_per_100k, Double jul25_per_100k, Double aug25_per_100k, Double sep25_per_100k, Double oct25_per_100k, Double total25_per_100k) {
         this.city = city;
         this.branch = branch;
         Apr_24 = apr_24;
@@ -47,6 +50,7 @@ public class ProfitLossSummaryDTO {
         Jul_25 = jul_25;
         Aug_25 = aug_25;
         Sep_25 = sep_25;
+        Oct_25 = oct_25;
         this.FY_2025_26 = FY_2025_26;
         this.load_Apr = load_Apr;
         this.load_May = load_May;
@@ -54,6 +58,7 @@ public class ProfitLossSummaryDTO {
         this.load_Jul = load_Jul;
         this.load_Aug = load_Aug;
         this.load_Sep = load_Sep;
+        this.load_Oct = load_Oct;
         this.load_Total = load_Total;
         Apr25_per_100k = apr25_per_100k;
         May25_per_100k = may25_per_100k;
@@ -61,6 +66,7 @@ public class ProfitLossSummaryDTO {
         Jul25_per_100k = jul25_per_100k;
         Aug25_per_100k = aug25_per_100k;
         Sep25_per_100k = sep25_per_100k;
+        Oct25_per_100k = oct25_per_100k;
         Total25_per_100k = total25_per_100k;
     }
 
@@ -168,6 +174,14 @@ public class ProfitLossSummaryDTO {
         Sep_25 = sep_25;
     }
 
+    public Double getOct_25() {
+        return Oct_25;
+    }
+
+    public void setOct_25(Double oct_25) {
+        Oct_25 = oct_25;
+    }
+
     public Double getFY_2025_26() {
         return FY_2025_26;
     }
@@ -222,6 +236,14 @@ public class ProfitLossSummaryDTO {
 
     public void setLoad_Sep(Double load_Sep) {
         this.load_Sep = load_Sep;
+    }
+
+    public Double getLoad_Oct() {
+        return load_Oct;
+    }
+
+    public void setLoad_Oct(Double load_Oct) {
+        this.load_Oct = load_Oct;
     }
 
     public Double getLoad_Total() {
@@ -280,6 +302,14 @@ public class ProfitLossSummaryDTO {
         Sep25_per_100k = sep25_per_100k;
     }
 
+    public Double getOct25_per_100k() {
+        return Oct25_per_100k;
+    }
+
+    public void setOct25_per_100k(Double oct25_per_100k) {
+        Oct25_per_100k = oct25_per_100k;
+    }
+
     public Double getTotal25_per_100k() {
         return Total25_per_100k;
     }
@@ -304,6 +334,7 @@ public class ProfitLossSummaryDTO {
                 ", Jul_25=" + Jul_25 +
                 ", Aug_25=" + Aug_25 +
                 ", Sep_25=" + Sep_25 +
+                ", Oct_25=" + Oct_25 +
                 ", FY_2025_26=" + FY_2025_26 +
                 ", load_Apr=" + load_Apr +
                 ", load_May=" + load_May +
@@ -311,6 +342,7 @@ public class ProfitLossSummaryDTO {
                 ", load_Jul=" + load_Jul +
                 ", load_Aug=" + load_Aug +
                 ", load_Sep=" + load_Sep +
+                ", load_Oct=" + load_Oct +
                 ", load_Total=" + load_Total +
                 ", Apr25_per_100k=" + Apr25_per_100k +
                 ", May25_per_100k=" + May25_per_100k +
@@ -318,6 +350,7 @@ public class ProfitLossSummaryDTO {
                 ", Jul25_per_100k=" + Jul25_per_100k +
                 ", Aug25_per_100k=" + Aug25_per_100k +
                 ", Sep25_per_100k=" + Sep25_per_100k +
+                ", Oct25_per_100k=" + Oct25_per_100k +
                 ", Total25_per_100k=" + Total25_per_100k +
                 '}';
     }

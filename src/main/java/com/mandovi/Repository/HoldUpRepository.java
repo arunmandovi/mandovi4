@@ -115,4 +115,9 @@ public interface HoldUpRepository extends JpaRepository<HoldUp, Integer> {
             GROUP BY h.city, h.branch
             """)
     List<HoldUpDTO> getHoldUpDTOBranchWise (@Param("cities") List<String> cities );
+
+    @Query("""
+            SELECT h.city, h.branch, h.service, h.regNo FROM HoldUp h
+            """)
+    List<String> getRegNo();
 }

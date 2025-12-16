@@ -11,4 +11,6 @@ public interface HoldUpService {
     List<HoldUpDTO> getHoldUpDTOCityWise ();
 
     List<HoldUpDTO> getHoldUpDTOBranchWise (List<String> cities);
+
+    List<String> getAllOldRegNo ();
 }

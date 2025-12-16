@@ -63,6 +63,6 @@ public interface HoldUpSummaryRepository extends JpaRepository<HoldUpSummary, In
 
     @Modifying
     @Transactional
-    @Query(value = "TRUNCATE TABLE mandovi.hold_up_summary;", nativeQuery = true)
+    @Query(value = "TRUNCATE TABLE mandovi.hold_up;", nativeQuery = true)
     void deleteHoldUpAll ();
 }

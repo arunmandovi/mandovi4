@@ -55,4 +55,17 @@ public class HoldUpController {
             return ResponseEntity.internalServerError().body(" ERROR : "+e.getMessage());
         }
     }
+
+    @GetMapping("/reg_no")
+    ResponseEntity<?> getRegNo (){
+        try {
+            List<String> list = holdUpService.getAllOldRegNo();
+            if (list.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
 }
