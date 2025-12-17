@@ -37,7 +37,7 @@ import jakarta.persistence.*;
             ROUND((t.`Jul-25` / NULLIF(t.load_Jul, 0)) * 100000, 3) AS Jul25_per_100k,
             ROUND((t.`Aug-25` / NULLIF(t.load_Aug, 0)) * 100000, 3) AS Aug25_per_100k,
             ROUND((t.`Sep-25` / NULLIF(t.load_Sep, 0)) * 100000, 3) AS Sep25_per_100k,
-            ROUND((t.`Sep-25` / NULLIF(t.load_Oct, 0)) * 100000, 3) AS Oct25_per_100k,
+            ROUND((t.`Oct-25` / NULLIF(t.load_Oct, 0)) * 100000, 3) AS Oct25_per_100k,
             ROUND((t.`Total_25` / NULLIF(t.load_Total, 0)) * 100000, 3) AS Total25_per_100k
         FROM (
             SELECT
