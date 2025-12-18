@@ -1,7 +1,6 @@
 package com.mandovi.Service;
 
 import com.mandovi.DTO.HoldUpDayDTO;
-import com.mandovi.Entity.HoldUpDay;
 import com.mandovi.Repository.HoldUpDayRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +22,10 @@ public class HoldUpDayServiceImpl implements HoldUpDayService {
     @Override
     public List<HoldUpDayDTO> getHoldUpDayByCity() {
         return holdUpDayRepository.getHoldUpDayCityWise();
+    }
+
+    @Override
+    public List<HoldUpDayDTO> getHoldUpByBranch(List<String> cities) {
+        return holdUpDayRepository.getHoldUpDayBranchWise(cities);
     }
 }

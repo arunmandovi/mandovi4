@@ -49,5 +49,27 @@ public interface HoldUpDayRepository extends JpaRepository<HoldUpDay, Integer> {
             """)
     List<HoldUpDayDTO> getHoldUpDayCityWise ();
 
+    @Query("""
+            SELECT new com.mandovi.DTO.HoldUpDayDTO(
+            h.city,
+            h.branch,
+            SUM(CASE WHEN h.service = 'Service' THEN h.tillPreviousDay ELSE 0 END),
+            SUM(CASE WHEN h.service = 'Service' THEN h.clearedPreviousDay ELSE 0 END),
+            SUM(CASE WHEN h.service = 'Service' THEN h.tillPreviousDay ELSE 0 END) - SUM(CASE WHEN h.service = 'Service' THEN h.clearedPreviousDay ELSE 0 END),
+            SUM(CASE WHEN h.service = 'Service' THEN h.addedToday ELSE 0 END),
+            (SUM(CASE WHEN h.service = 'Service' THEN h.tillPreviousDay ELSE 0 END) - SUM(CASE WHEN h.service = 'Service' THEN h.clearedPreviousDay ELSE 0 END)) +
+            SUM(CASE WHEN h.service = 'Service' THEN h.addedToday ELSE 0 END),
+            SUM(CASE WHEN h.service = 'Bodyshop' THEN h.tillPreviousDay ELSE 0 END),
+            SUM(CASE WHEN h.service = 'Bodyshop' THEN h.clearedPreviousDay ELSE 0 END),
+            SUM(CASE WHEN h.service = 'Bodyshop' THEN h.tillPreviousDay ELSE 0 END) - SUM(CASE WHEN h.service = 'Bodyshop' THEN h.clearedPreviousDay ELSE 0 END),
+            SUM(CASE WHEN h.service = 'Bodyshop' THEN h.addedToday ELSE 0 END),
+            (SUM(CASE WHEN h.service = 'Bodyshop' THEN h.tillPreviousDay ELSE 0 END) - SUM(CASE WHEN h.service = 'Bodyshop' THEN h.clearedPreviousDay ELSE 0 END)) +
+            SUM(CASE WHEN h.service = 'Bodyshop' THEN h.addedToday ELSE 0 END)
+            )
+            FROM HoldUpDay h
+            WHERE (:cities IS NULL OR h.city IN (:cities))
+            GROUP BY h.city, h.branch
+            """)
+    List<HoldUpDayDTO> getHoldUpDayBranchWise (@Param("cities") List<String> cities);
 
 }

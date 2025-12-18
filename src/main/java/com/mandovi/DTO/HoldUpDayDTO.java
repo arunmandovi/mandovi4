@@ -6,29 +6,29 @@ public class HoldUpDayDTO {
     private Long serviceTillYesterday;
     private Long serviceClearedYesterday;
     private Long serviceBalance;
-    private Long serviceAddedToday;
+    private Long serviceAddedYesterday;
     private Long serviceTodayOpening;
     private Long bodyShopTillYesterday;
     private Long bodyShopClearedYesterday;
     private Long bodyShopBalance;
-    private Long bodyShopAddedToady;
+    private Long bodyShopAddedYesterday;
     private Long bodyShopTodayOpening;
 
     public HoldUpDayDTO() {
     }
 
-    public HoldUpDayDTO(String city, String branch, Long serviceTillYesterday, Long serviceClearedYesterday, Long serviceBalance, Long serviceAddedToday, Long serviceTodayOpening, Long bodyShopTillYesterday, Long bodyShopClearedYesterday, Long bodyShopBalance, Long bodyShopAddedToady, Long bodyShopTodayOpening) {
+    public HoldUpDayDTO(String city, String branch, Long serviceTillYesterday, Long serviceClearedYesterday, Long serviceBalance, Long serviceAddedYesterday, Long serviceTodayOpening, Long bodyShopTillYesterday, Long bodyShopClearedYesterday, Long bodyShopBalance, Long bodyShopAddedYesterday, Long bodyShopTodayOpening) {
         this.city = city;
         this.branch = branch;
         this.serviceTillYesterday = serviceTillYesterday;
         this.serviceClearedYesterday = serviceClearedYesterday;
         this.serviceBalance = serviceBalance;
-        this.serviceAddedToday = serviceAddedToday;
+        this.serviceAddedYesterday = serviceAddedYesterday;
         this.serviceTodayOpening = serviceTodayOpening;
         this.bodyShopTillYesterday = bodyShopTillYesterday;
         this.bodyShopClearedYesterday = bodyShopClearedYesterday;
         this.bodyShopBalance = bodyShopBalance;
-        this.bodyShopAddedToady = bodyShopAddedToady;
+        this.bodyShopAddedYesterday = bodyShopAddedYesterday;
         this.bodyShopTodayOpening = bodyShopTodayOpening;
     }
 
@@ -72,12 +72,12 @@ public class HoldUpDayDTO {
         this.serviceBalance = serviceBalance;
     }
 
-    public Long getServiceAddedToday() {
-        return serviceAddedToday;
+    public Long getServiceAddedYesterday() {
+        return serviceAddedYesterday;
     }
 
-    public void setServiceAddedToday(Long serviceAddedToday) {
-        this.serviceAddedToday = serviceAddedToday;
+    public void setServiceAddedYesterday(Long serviceAddedYesterday) {
+        this.serviceAddedYesterday = serviceAddedYesterday;
     }
 
     public Long getServiceTodayOpening() {
@@ -112,12 +112,12 @@ public class HoldUpDayDTO {
         this.bodyShopBalance = bodyShopBalance;
     }
 
-    public Long getBodyShopAddedToady() {
-        return bodyShopAddedToady;
+    public Long getBodyShopAddedYesterday() {
+        return bodyShopAddedYesterday;
     }
 
-    public void setBodyShopAddedToady(Long bodyShopAddedToady) {
-        this.bodyShopAddedToady = bodyShopAddedToady;
+    public void setBodyShopAddedYesterday(Long bodyShopAddedYesterday) {
+        this.bodyShopAddedYesterday = bodyShopAddedYesterday;
     }
 
     public Long getBodyShopTodayOpening() {
@@ -136,12 +136,12 @@ public class HoldUpDayDTO {
                 ", serviceTillYesterday=" + serviceTillYesterday +
                 ", serviceClearedYesterday=" + serviceClearedYesterday +
                 ", serviceBalance=" + serviceBalance +
-                ", serviceAddedToday=" + serviceAddedToday +
+                ", serviceAddedYesterday=" + serviceAddedYesterday +
                 ", serviceTodayOpening=" + serviceTodayOpening +
                 ", bodyShopTillYesterday=" + bodyShopTillYesterday +
                 ", bodyShopClearedYesterday=" + bodyShopClearedYesterday +
                 ", bodyShopBalance=" + bodyShopBalance +
-                ", bodyShopAddedToady=" + bodyShopAddedToady +
+                ", bodyShopAddedYesterday=" + bodyShopAddedYesterday +
                 ", bodyShopTodayOpening=" + bodyShopTodayOpening +
                 '}';
     }

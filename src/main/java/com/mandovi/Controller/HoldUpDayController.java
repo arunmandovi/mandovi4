@@ -5,6 +5,7 @@ import com.mandovi.Service.HoldUpDayService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -32,13 +33,26 @@ public class HoldUpDayController {
     }
 
     @GetMapping("/hold_up_day_summary")
-    ResponseEntity<?> getHoldUpDaySummary (){
+    ResponseEntity<?> getHoldUpDayCityWise (){
         try {
             List<HoldUpDayDTO> listHoldUpDayCityWise = holdUpDayService.getHoldUpDayByCity();
             if (listHoldUpDayCityWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(listHoldUpDayCityWise);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/hold_up_day_branch_summary")
+    ResponseEntity<?> getHoldUpDayBranchWise (@RequestParam (required = false) List<String> cities){
+        try {
+            List<HoldUpDayDTO> listHoldUpDayBranchWise = holdUpDayService.getHoldUpByBranch(cities);
+            if (listHoldUpDayBranchWise.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listHoldUpDayBranchWise);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
