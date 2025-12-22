@@ -80,6 +80,10 @@ public interface HoldUpRepository extends JpaRepository<HoldUp, Integer> {
             SUM(h.count)
             )
             FROM HoldUp h
+            WHERE h.holdUpDate = (
+                    SELECT MAX(h2.holdUpDate)
+                    FROM HoldUp h2
+              )
             GROUP BY h.city
             """)
     List<HoldUpDTO> getHoldUpDTOCityWise ();
@@ -112,6 +116,11 @@ public interface HoldUpRepository extends JpaRepository<HoldUp, Integer> {
             )
             FROM HoldUp h
             WHERE (:cities IS NULL OR h.city IN (:cities))
+            AND h.holdUpDate = (
+                    SELECT MAX(h2.holdUpDate)
+                    FROM HoldUp h2
+                    WHERE (:cities IS NULL OR h2.city IN (:cities))
+              )
             GROUP BY h.city, h.branch
             """)
     List<HoldUpDTO> getHoldUpDTOBranchWise (@Param("cities") List<String> cities );

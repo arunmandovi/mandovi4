@@ -40,16 +40,16 @@ public class Outstanding {
     private Integer dueSince;
 
     @Column (name = "upto_seven")
-    private Integer upToSeven;
+    private Double upToSeven;
 
     @Column (name = "eight_to_thirty")
-    private Integer eightToThirty;
+    private Double eightToThirty;
 
     @Column (name = "thirtyone_to_ninty")
-    private Integer thirtyOneToNinty;
+    private Double thirtyOneToNinty;
 
     @Column (name = "more_than_ninty")
-    private Integer moreThanNinty;
+    private Double moreThanNinty;
 
     @Column (name = "sales_man")
     private String salesMan;
@@ -57,7 +57,7 @@ public class Outstanding {
     public Outstanding() {
     }
 
-    public Outstanding(Integer outstandingSINo, String segment, String ledgerGroupName, String partyName, LocalDate outstandingDate, String billNo, Double billAmt, Double paidAmt, Double balanceAmt, Integer dueSince, Integer upToSeven, Integer eightToThirty, Integer thirtyOneToNinty, Integer moreThanNinty, String salesMan) {
+    public Outstanding(Integer outstandingSINo, String segment, String ledgerGroupName, String partyName, LocalDate outstandingDate, String billNo, Double billAmt, Double paidAmt, Double balanceAmt, Integer dueSince, Double upToSeven, Double eightToThirty, Double thirtyOneToNinty, Double moreThanNinty, String salesMan) {
         this.outstandingSINo = outstandingSINo;
         this.segment = segment;
         this.ledgerGroupName = ledgerGroupName;
@@ -155,35 +155,35 @@ public class Outstanding {
         this.dueSince = dueSince;
     }
 
-    public Integer getUpToSeven() {
+    public Double getUpToSeven() {
         return upToSeven;
     }
 
-    public void setUpToSeven(Integer upToSeven) {
+    public void setUpToSeven(Double upToSeven) {
         this.upToSeven = upToSeven;
     }
 
-    public Integer getEightToThirty() {
+    public Double getEightToThirty() {
         return eightToThirty;
     }
 
-    public void setEightToThirty(Integer eightToThirty) {
+    public void setEightToThirty(Double eightToThirty) {
         this.eightToThirty = eightToThirty;
     }
 
-    public Integer getThirtyOneToNinty() {
+    public Double getThirtyOneToNinty() {
         return thirtyOneToNinty;
     }
 
-    public void setThirtyOneToNinty(Integer thirtyOneToNinty) {
+    public void setThirtyOneToNinty(Double thirtyOneToNinty) {
         this.thirtyOneToNinty = thirtyOneToNinty;
     }
 
-    public Integer getMoreThanNinty() {
+    public Double getMoreThanNinty() {
         return moreThanNinty;
     }
 
-    public void setMoreThanNinty(Integer moreThanNinty) {
+    public void setMoreThanNinty(Double moreThanNinty) {
         this.moreThanNinty = moreThanNinty;
     }
 

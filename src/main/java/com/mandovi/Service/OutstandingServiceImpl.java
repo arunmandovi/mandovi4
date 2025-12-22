@@ -63,11 +63,12 @@ public class OutstandingServiceImpl implements OutstandingService {
                             "LIJUKUMAR - 1724588196 - KL24N8080",
                             "MERLIN MASCARENHAS - 1726373034 - KA19P1982",
                             "NEETHASHREE - 2355129051 - KA19MP3154",
-                            "ROYAL SUNDARAM GENERAL INSURANCE CO.   LIMITED - 03-11 - KA21N8996",
+                            "ROYAL SUNDARAM GENERAL INSURANCE CO.  LIMITED - 03-11 - KA21N8996",
                             "SBI GENERAL INSURANCE CO LTD - 25-74 - KA19MM4251",
                             "SHAHID HUSSAIN(KA03MY7368)",
                             "JOSEPH K F KA21Z4650",
-                            "AMITHA DHANANJAYA - 2249862266 - KA19MN2566"
+                            "AMITHA DHANANJAYA - 2249862266 - KA19MN2566",
+                            "TARA J BHANDARY - 2461496242 - KA21MA4966"
                     )
                     .map(s -> s.trim().toLowerCase())
                     .collect(Collectors.toUnmodifiableSet());
@@ -108,6 +109,38 @@ public class OutstandingServiceImpl implements OutstandingService {
         } catch (Exception e) {
             throw new RuntimeException("Excel upload failed", e);
         }
+    }
+
+    @Override
+    public List<Outstanding> getOutstandingAll() {
+        return outstandingRepository.findAll();
+    }
+
+    @Override
+    public List<Outstanding> getDifferentOutstanding(List<String> types) {
+
+        if (types == null || types.isEmpty()) {
+            return outstandingRepository.findAll();
+        }
+
+        List<Outstanding> result = new ArrayList<>();
+
+        for (String type : types) {
+            switch (type.toUpperCase().trim()) {
+                case "CASH" -> result.addAll(outstandingRepository.getCashOutstanding());
+                case "INVOICE" -> result.addAll(outstandingRepository.getInvoiceOutstanding());
+                case "INSURANCE" -> result.addAll(outstandingRepository.getInsuranceOutstanding());
+                case "OTHERS" -> result.addAll(outstandingRepository.getOthersOutstanding());
+                default -> throw new RuntimeException("Invalid type: " + type);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public void deleteOutstandingAll() {
+        outstandingRepository.deleteOutstandingAll();
     }
 
     // ============================
@@ -162,19 +195,22 @@ public class OutstandingServiceImpl implements OutstandingService {
             o.setOutstandingDate(getDate(row, 3));
             o.setBillNo(getString(row, 4));
 
-            // ONLY THESE 3 ARE DOUBLE
             o.setBillAmt(getDouble(row, 5));
             o.setPaidAmt(getDouble(row, 6));
             o.setBalanceAmt(getDouble(row, 7));
 
-            // REMAIN INTEGER
             o.setDueSince(getInt(row, 8));
-            o.setUpToSeven(getInt(row, 9));
-            o.setEightToThirty(getInt(row, 10));
-            o.setThirtyOneToNinty(getInt(row, 11));
-            o.setMoreThanNinty(getInt(row, 12));
+            o.setUpToSeven(getDouble(row, 9));
+            o.setEightToThirty(getDouble(row, 10));
+            o.setThirtyOneToNinty(getDouble(row, 11));
+            o.setMoreThanNinty(getDouble(row, 12));
 
-            o.setSalesMan(getString(row, 13));
+            String salesMan = row.getCell(13).getStringCellValue();
+            if (salesMan != null && salesMan.contains("_1")) {
+                salesMan = salesMan.substring(0, salesMan.indexOf("_1"));
+            }
+
+            o.setSalesMan(salesMan);
 
             return Optional.of(o);
 
@@ -345,7 +381,11 @@ public class OutstandingServiceImpl implements OutstandingService {
         consolidated.setOutstandingDate(latest.getOutstandingDate());
         consolidated.setBillNo(latest.getBillNo());
         consolidated.setBalanceAmt(finalBalance);
-        consolidated.setSalesMan(latest.getSalesMan());
+        String salesMann = latest.getSalesMan();
+        if (salesMann != null && salesMann.contains("_")) {
+            salesMann = salesMann.substring(0, salesMann.indexOf("_"));
+        }
+        consolidated.setSalesMan(salesMann);
 
         List<Integer> ids = rows.stream()
                 .map(Outstanding::getOutstandingSINo)
