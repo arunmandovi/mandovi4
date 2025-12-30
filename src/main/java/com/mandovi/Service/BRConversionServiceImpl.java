@@ -39,7 +39,6 @@ public class BRConversionServiceImpl implements BRConversionService {
         try (InputStream inputStream = file.getInputStream()) {
             Workbook workbook = WorkbookFactory.create(inputStream);
             DataFormatter dataFormatter = new DataFormatter();
-            FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
             Sheet sheet = workbook.getSheetAt(0);
 
             Row firstDataRow = sheet.getRow(1);

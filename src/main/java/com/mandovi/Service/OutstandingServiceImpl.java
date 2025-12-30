@@ -25,10 +25,6 @@ public class OutstandingServiceImpl implements OutstandingService {
 
     private final OutstandingRepository outstandingRepository;
 
-    // ============================
-    // INVALID MASTER DATA
-    // ============================
-
     private static final Set<String> INVALID_LEDGER_GROUPS = Set.of(
             "company s/r & b/r bill",
             "debtors control account",
@@ -68,7 +64,8 @@ public class OutstandingServiceImpl implements OutstandingService {
                             "SHAHID HUSSAIN(KA03MY7368)",
                             "JOSEPH K F KA21Z4650",
                             "AMITHA DHANANJAYA - 2249862266 - KA19MN2566",
-                            "TARA J BHANDARY - 2461496242 - KA21MA4966"
+                            "TARA J BHANDARY - 2461496242 - KA21MA4966",
+                            "RADHAKRISHNA - 1623386203 - KA51MS5565"
                     )
                     .map(s -> s.trim().toLowerCase())
                     .collect(Collectors.toUnmodifiableSet());
@@ -77,9 +74,6 @@ public class OutstandingServiceImpl implements OutstandingService {
         this.outstandingRepository = outstandingRepository;
     }
 
-    // ============================
-    // EXCEL UPLOAD
-    // ============================
     @Override
     @Transactional
     public void saveOutstandingFromExcel(MultipartFile file) {
@@ -143,9 +137,6 @@ public class OutstandingServiceImpl implements OutstandingService {
         outstandingRepository.deleteOutstandingAll();
     }
 
-    // ============================
-    // FILTER RULES
-    // ============================
     private boolean passesBusinessFilters(Outstanding o) {
 
         String ledger = normalize(o.getLedgerGroupName());
@@ -170,8 +161,18 @@ public class OutstandingServiceImpl implements OutstandingService {
                     o.getOutstandingDate().getYear() != 2025) return false;
         }
 
-        if ((billNo.contains("ad") || billNo.contains("ew")) &&
-                (segment.contains("naravi") || segment.contains("kadaba"))) return false;
+        if ((billNo.contains("ew") || billNo.contains("ad")) &&
+                (segment.contains("naravi") || segment.contains("kadaba"))) {
+            if (billNo.contains("ew")) {
+                return false; // ew logic as it was
+            }
+        }
+
+        if (billNo.contains("ad") &&
+                (segment.contains("kadaba") || segment.contains("naravi")) &&
+                o.getBalanceAmt() != null && o.getBalanceAmt() > 1000) {
+            return false;
+        }
 
         return true;
     }
@@ -180,9 +181,6 @@ public class OutstandingServiceImpl implements OutstandingService {
         return value == null ? "" : value.trim().toLowerCase();
     }
 
-    // ============================
-    // ROW PARSER
-    // ============================
     private Optional<Outstanding> parseRow(Row row, int rowNumber) {
 
         try {
@@ -273,9 +271,6 @@ public class OutstandingServiceImpl implements OutstandingService {
         }
     }
 
-    // ============================
-    // CONSOLIDATION LOGIC
-    // ============================
     @Transactional
     public void consolidateOutstandingData() {
 
@@ -333,9 +328,6 @@ public class OutstandingServiceImpl implements OutstandingService {
         }
     }
 
-    // ============================
-    // FINAL CONSOLIDATION RULES
-    // ============================
     private void consolidateAndReplace(List<Outstanding> rows) {
 
         List<Integer> zeroIds = rows.stream()
