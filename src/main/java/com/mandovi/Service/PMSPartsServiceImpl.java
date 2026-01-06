@@ -10,8 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Service
@@ -21,6 +24,39 @@ public class PMSPartsServiceImpl implements PMSPartsService {
     public PMSPartsServiceImpl(PMSPartsRepository pmsPartsRepository) {
         this.pmsPartsRepository = pmsPartsRepository;
     }
+
+    private static LocalDate getPeriodFromCell(Cell cell) {
+        if (cell == null) return null;
+
+        // Case 1: Excel numeric date
+        if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
+            return cell.getDateCellValue()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()
+                    .withDayOfMonth(1);
+        }
+
+        // Case 2: Month-Year stored as STRING (e.g. "Apr 2025")
+        if (cell.getCellType() == CellType.STRING) {
+            String value = cell.getStringCellValue().trim();
+
+            DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                    .parseCaseInsensitive()
+                    .appendPattern("MMM yyyy")
+                    .toFormatter(Locale.ENGLISH);
+
+            try {
+                YearMonth ym = YearMonth.parse(value, formatter);
+                return ym.atDay(1); // 01-MM-YYYY
+            } catch (DateTimeParseException e) {
+                return null;
+            }
+        }
+
+        return null;
+    }
+
 
     @Override
     public void savePMSPartsFromExcel(MultipartFile file) {
@@ -34,7 +70,14 @@ public class PMSPartsServiceImpl implements PMSPartsService {
             if (firstRow ==  null)
                 throw new RuntimeException("No Data found in Excel");
 
-            LocalDate uploadPeriod = firstRow.getCell(2).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            Cell uploadPeriodCell =
+                    firstRow.getCell(2, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+
+            LocalDate uploadPeriod = getPeriodFromCell(uploadPeriodCell);
+
+            if (uploadPeriod == null) {
+                throw new RuntimeException("Invalid upload period in Excel");
+            }
             pmsPartsRepository.deleteByMonth(uploadPeriod);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
@@ -56,7 +99,10 @@ public class PMSPartsServiceImpl implements PMSPartsService {
 
                 pmsParts.setParent(row.getCell(0).getStringCellValue());
                 pmsParts.setLocationCode(row.getCell(1).getStringCellValue());
-                pmsParts.setPeriod(row.getCell(2).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+
+                Cell periodCell = row.getCell(2, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                pmsParts.setPeriod(getPeriodFromCell(periodCell));
+
                 pmsParts.setPartGroup(row.getCell(3).getStringCellValue());
                 pmsParts.setRequired((int)row.getCell(4).getNumericCellValue());
                 pmsParts.setChanged((int)row.getCell(5).getNumericCellValue());
@@ -133,7 +179,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                 LocalDate date = pmsParts.getPeriod();
                 DateTimeFormatter sdf = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
                 pmsParts.setMonth(sdf.format(pmsParts.getPeriod()));
-                DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("YYYY");
+                DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("yyyy");
                 pmsParts.setYear(yearFormatter.format(pmsParts.getPeriod()));
 
                 switch (pmsParts.getMonth().trim().toUpperCase()) {

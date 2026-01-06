@@ -40,7 +40,6 @@ public class SparesServiceImpl implements SparesService{
         try{
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
-            DataFormatter dataFormatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
 
             Row firstRow = sheet.getRow(1);
@@ -57,13 +56,13 @@ public class SparesServiceImpl implements SparesService{
 
                 Spares spares = new Spares();
 
-                spares.setCity(row.getCell(1).getStringCellValue());
-                spares.setMonth(row.getCell(2).getStringCellValue());
-
                 //Converting Integer cell's year Column's value into string
                 int num_year = (int)  row.getCell(0).getNumericCellValue();
                 String year = String.valueOf(num_year);
                 spares.setYear(year);
+
+                spares.setCity(row.getCell(1).getStringCellValue());
+                spares.setMonth(row.getCell(2).getStringCellValue());
 
                 //Updating the column period by concating the columns month & year
                 spares.setPeriod(spares.getMonth()+"-"+spares.getYear());

@@ -41,31 +41,19 @@ public class OutstandingServiceImpl implements OutstandingService {
 
     private static final Set<String> INVALID_PARTY_NAMES =
             Stream.of(
-                            "ABDUL RAHMAN RASHEED",
-                            "APPANNA M S (KA12Z4118)",
-                            "HARIPRASAD K.S - I105164277 - KA21M9721",
-                            "RANJITH N M KA19ME3761",
-                            "M PRAKASH HEGDE - 2249418425 - KA19MN0577",
-                            "UNIVERSAL SOMPO GIC LTD - 22-35 - KA19MC9116",
-                            "VIJAYA K - 2039090839 - KA21Z3306",
-                            "NEELAPPA GOWDA (KA21P9296)",
-                            "SHEETHAL SHETTY S KA19ML0270",
-                            "NATIONAL INSURANCE COMPANY LIMITED - 01-295 - KA21Z3306",
-                            "SHASHI A AMIN - 1829321489 - KA19MJ9555",
-                            "FATHIMATH SAFIKA - 1831587144 - KA21P9362",
-                            "JOHNSON ANTONY RAJ - 1518032731 - KA19MF9391",
-                            "K MOHAN KAMATH - 1829105820 - KA19MJ3161",
-                            "K P BOJANNA - 1621292104 - KA19MG3440",
-                            "LIJUKUMAR - 1724588196 - KL24N8080",
-                            "MERLIN MASCARENHAS - 1726373034 - KA19P1982",
-                            "NEETHASHREE - 2355129051 - KA19MP3154",
-                            "ROYAL SUNDARAM GENERAL INSURANCE CO.  LIMITED - 03-11 - KA21N8996",
-                            "SBI GENERAL INSURANCE CO LTD - 25-74 - KA19MM4251",
-                            "SHAHID HUSSAIN(KA03MY7368)",
-                            "JOSEPH K F KA21Z4650",
-                            "AMITHA DHANANJAYA - 2249862266 - KA19MN2566",
-                            "TARA J BHANDARY - 2461496242 - KA21MA4966",
-                            "RADHAKRISHNA - 1623386203 - KA51MS5565"
+                            "ABDUL RAHMAN RASHEED", "APPANNA M S (KA12Z4118)", "HARIPRASAD K.S - I105164277 - KA21M9721",
+                            "RANJITH N M KA19ME3761", "M PRAKASH HEGDE - 2249418425 - KA19MN0577", "UNIVERSAL SOMPO GIC LTD - 22-35 - KA19MC9116",
+                            "VIJAYA K - 2039090839 - KA21Z3306", "NEELAPPA GOWDA (KA21P9296)", "SHEETHAL SHETTY S KA19ML0270",
+                            "NATIONAL INSURANCE COMPANY LIMITED - 01-295 - KA21Z3306", "SHASHI A AMIN - 1829321489 - KA19MJ9555",
+                            "FATHIMATH SAFIKA - 1831587144 - KA21P9362", "JOHNSON ANTONY RAJ - 1518032731 - KA19MF9391",
+                            "K MOHAN KAMATH - 1829105820 - KA19MJ3161", "K P BOJANNA - 1621292104 - KA19MG3440",
+                            "LIJUKUMAR - 1724588196 - KL24N8080", "MERLIN MASCARENHAS - 1726373034 - KA19P1982",
+                            "NEETHASHREE - 2355129051 - KA19MP3154", "ROYAL SUNDARAM GENERAL INSURANCE CO.  LIMITED - 03-11 - KA21N8996",
+                            "SBI GENERAL INSURANCE CO LTD - 25-74 - KA19MM4251", "SHAHID HUSSAIN(KA03MY7368)",
+                            "JOSEPH K F KA21Z4650", "AMITHA DHANANJAYA - 2249862266 - KA19MN2566", "TARA J BHANDARY - 2461496242 - KA21MA4966",
+                            "RADHAKRISHNA - 1623386203 - KA51MS5565", "JOHNSON ANTONY RAJ - 1518032731 - KA19MF9391",
+                            "MANDOVI TRUE VALUE - 2140997773", "MERLIN MASCARENHAS - 1726373034 - KA19P1982",
+                            "SANDEEP KUMAR MN - 2355097821 - KA19MM2814","Universal Sompo GIC Ltd - 22-35 - KA21P4026", "YANITH  KUMAR - 2461490260 - KA21C9025"
                     )
                     .map(s -> s.trim().toLowerCase())
                     .collect(Collectors.toUnmodifiableSet());
@@ -315,7 +303,7 @@ public class OutstandingServiceImpl implements OutstandingService {
                             )
                     );
 
-                    if (daysDiff <= 7) {
+                    if (daysDiff <= 30) {
                         group.add(next);
                         processed[j] = true;
                     }
