@@ -28,7 +28,7 @@ public interface SalesRepository extends JpaRepository<Sales, Integer> {
 
     @Query("""
             SELECT new com.mandovi.DTO.SalesSummaryDTO(
-            s.city,
+            null,
             s.branch,
             COUNT(s.invDate))
             FROM Sales s
@@ -36,7 +36,7 @@ public interface SalesRepository extends JpaRepository<Sales, Integer> {
              AND (:months IS NULL OR s.month IN (:months))
              AND (:cities IS NULL OR s.city IN (:cities))
              AND (:channels IS NULL OR s.channel IN (:channels))
-            Group BY s.city, s.branch
+            Group BY s.branch
             """)
     public List<SalesSummaryDTO> getSalesSummaryBranchWise (
             @Param("years") List<String> years,

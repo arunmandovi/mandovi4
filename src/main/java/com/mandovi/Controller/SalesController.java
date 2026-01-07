@@ -45,6 +45,7 @@ public class SalesController {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }
     }
+
     @GetMapping("/sales_branch_summary")
     ResponseEntity<?> getSalesSummaryBranchWise (
             @RequestParam (required = false) List<String> years,
