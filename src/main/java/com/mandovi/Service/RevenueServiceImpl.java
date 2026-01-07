@@ -37,7 +37,6 @@ public class RevenueServiceImpl implements RevenueService {
         try{
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
-            DataFormatter formatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
 
             Row firstRow = sheet.getRow(1);
