@@ -1,6 +1,7 @@
 package com.mandovi.Controller;
 
 import com.mandovi.DTO.SalesSummaryDTO;
+import com.mandovi.Entity.Sales;
 import com.mandovi.Service.SalesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,34 @@ public class SalesController {
             return ResponseEntity.ok("Sales Data Uploaded Successfully");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/getallsales")
+    ResponseEntity<?> getAllSales (){
+        try {
+            List<Sales> listAllSales = salesService.getAllSales();
+            if (listAllSales.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listAllSales);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(" ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping ("getsales")
+    ResponseEntity<?> getSalesByMonthYear (
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<Sales> listSalesByMonthYear = salesService.getAllSalesByMonthYear(months, years);
+            if (listSalesByMonthYear.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listSalesByMonthYear);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(" ERROR : "+e.getMessage());
         }
     }
 

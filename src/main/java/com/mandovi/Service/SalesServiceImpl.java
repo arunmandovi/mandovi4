@@ -113,6 +113,7 @@ public class SalesServiceImpl implements SalesService {
                         case "VLA":
                         case "VI1": sales.setBranch("Vittla"); break;
                         case "KDB": sales.setBranch("Kadaba"); break;
+                        case "MNL":
                         case "MGA": sales.setBranch("Nexa"); break;
                         case "UPA":
                         case "UPP": sales.setBranch("Uppinangady"); break;
@@ -123,7 +124,6 @@ public class SalesServiceImpl implements SalesService {
                         case "SLL": sales.setBranch("Sullia"); break;
                         case "AYR": sales.setBranch("Adyar"); break;
                         case "YEY": sales.setBranch("Yeyyadi BR"); break;
-                        case "MNL": sales.setBranch("Nexa Service"); break;
                         case "SJH": sales.setBranch("Sujith Bagh Lane"); break;
                         case "SYG": sales.setBranch("Naravi"); break;
                         case "BKH": sales.setBranch("NS Palya"); break;
@@ -222,6 +222,16 @@ public class SalesServiceImpl implements SalesService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to save sales data from Excel", e);
         }
+    }
+
+    @Override
+    public List<Sales> getAllSales() {
+        return salesRepository.findAll();
+    }
+
+    @Override
+    public List<Sales> getAllSalesByMonthYear(List<String> months, List<String> years) {
+        return salesRepository.getAllSalesByMonthYear(months, years);
     }
 
     @Override

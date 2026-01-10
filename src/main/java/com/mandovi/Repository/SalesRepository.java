@@ -11,6 +11,15 @@ import java.util.List;
 public interface SalesRepository extends JpaRepository<Sales, Integer> {
 
     @Query("""
+            SELECT s FROM Sales s
+            WHERE (:months IS NULL OR s.month IN (:months))
+             AND (:years IS NULL OR s.year IN (:years))
+            """)
+    public List<Sales> getAllSalesByMonthYear (
+            @Param("months") List<String> months,
+            @Param("years") List<String> years );
+
+    @Query("""
             SELECT new com.mandovi.DTO.SalesSummaryDTO(
             s.city,
             null,

@@ -1,12 +1,17 @@
 package com.mandovi.Service;
 
 import com.mandovi.DTO.SalesSummaryDTO;
+import com.mandovi.Entity.Sales;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface SalesService {
     void saveSalesFromExcel (MultipartFile file);
+
+    public List<Sales> getAllSales ();
+
+    public List<Sales> getAllSalesByMonthYear (List<String> months, List<String> years);
 
     public List<SalesSummaryDTO> getSalesSummaryCityWise (List<String> years, List<String> months, List<String> channels);
 
