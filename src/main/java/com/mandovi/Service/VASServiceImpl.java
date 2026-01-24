@@ -32,7 +32,7 @@ public class VASServiceImpl implements VASService {
             if (firstRow == null)
                 throw new RuntimeException("No Data found in Excel");
 
-            String uploadMonth = firstRow.getCell(4).getStringCellValue().trim();
+            String uploadMonth = firstRow.getCell(5).getStringCellValue().trim();
 
             vasRepository.deleteByMonth(uploadMonth);
 
@@ -63,22 +63,22 @@ public class VASServiceImpl implements VASService {
                 }
 
                 vas.setVas(row.getCell(3).getStringCellValue());
-                vas.setMonth(row.getCell(4).getStringCellValue());
 
                 //Converting Integer year to String
-                Cell cell = row.getCell(5);
+                Cell cell = row.getCell(4);
                 String year = "UNKNOWN";
                 if(cell != null){
                     switch (cell.getCellType()){
                         case STRING:
-                            vas.setYear(row.getCell(5).getStringCellValue());
+                            vas.setYear(row.getCell(4).getStringCellValue());
                             break;
                         case NUMERIC:
-                            year = String.valueOf((int)row.getCell(5).getNumericCellValue());
+                            year = String.valueOf((int)row.getCell(4).getNumericCellValue());
                             vas.setYear(year);
                             break;
                     }
                 }
+                vas.setMonth(row.getCell(5).getStringCellValue());
 
                 vas.setExcelJobCardNo((int)row.getCell(6).getNumericCellValue());
                 vas.setJobCardNo(vas.getExcelJobCardNo() * vas.getWheels());
