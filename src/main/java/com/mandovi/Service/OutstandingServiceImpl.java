@@ -39,24 +39,45 @@ public class OutstandingServiceImpl implements OutstandingService {
             "sundry debtors - w.g.spares"
     );
 
-    private static final Set<String> INVALID_PARTY_NAMES =
-            Stream.of(
-                            "ABDUL RAHMAN RASHEED", "APPANNA M S (KA12Z4118)", "HARIPRASAD K.S - I105164277 - KA21M9721",
-                            "RANJITH N M KA19ME3761", "M PRAKASH HEGDE - 2249418425 - KA19MN0577", "UNIVERSAL SOMPO GIC LTD - 22-35 - KA19MC9116",
-                            "VIJAYA K - 2039090839 - KA21Z3306", "NEELAPPA GOWDA (KA21P9296)", "SHEETHAL SHETTY S KA19ML0270",
-                            "NATIONAL INSURANCE COMPANY LIMITED - 01-295 - KA21Z3306", "SHASHI A AMIN - 1829321489 - KA19MJ9555",
-                            "FATHIMATH SAFIKA - 1831587144 - KA21P9362", "JOHNSON ANTONY RAJ - 1518032731 - KA19MF9391",
-                            "K MOHAN KAMATH - 1829105820 - KA19MJ3161", "K P BOJANNA - 1621292104 - KA19MG3440",
-                            "LIJUKUMAR - 1724588196 - KL24N8080", "MERLIN MASCARENHAS - 1726373034 - KA19P1982",
-                            "NEETHASHREE - 2355129051 - KA19MP3154", "ROYAL SUNDARAM GENERAL INSURANCE CO.  LIMITED - 03-11 - KA21N8996",
-                            "SBI GENERAL INSURANCE CO LTD - 25-74 - KA19MM4251", "SHAHID HUSSAIN(KA03MY7368)",
-                            "JOSEPH K F KA21Z4650", "AMITHA DHANANJAYA - 2249862266 - KA19MN2566", "TARA J BHANDARY - 2461496242 - KA21MA4966",
-                            "RADHAKRISHNA - 1623386203 - KA51MS5565", "JOHNSON ANTONY RAJ - 1518032731 - KA19MF9391",
-                            "MANDOVI TRUE VALUE - 2140997773", "MERLIN MASCARENHAS - 1726373034 - KA19P1982",
-                            "SANDEEP KUMAR MN - 2355097821 - KA19MM2814","Universal Sompo GIC Ltd - 22-35 - KA21P4026", "YANITH  KUMAR - 2461490260 - KA21C9025"
-                    )
-                    .map(s -> s.trim().toLowerCase())
-                    .collect(Collectors.toUnmodifiableSet());
+    private static final Map<String, Set<Double>> INVALID_PARTY_BALANCE_MAP =
+            Map.ofEntries(
+                    Map.entry("hariprasad k.s - i105164277 - ka21m9721", Set.of(1970.0)),
+                    Map.entry("danial john tauro - 1621454166", Set.of(354.0)),
+                    Map.entry("director - i118277515 - ka19mc4335", Set.of(797.0)),
+                    Map.entry("fathimath safika - 1831587144 - ka21p9362", Set.of(90.0)),
+                    Map.entry("fisher  paykel healthcare india pvt ltd - 1621907044 - ka50p6247", Set.of(600.0)),
+                    Map.entry("johnson antony raj - 1518032731 - ka19mf9391", Set.of(30.0)),
+                    Map.entry("k mohan kamath - 1829105820 - ka19mj3161", Set.of(1327.0)),
+                    Map.entry("k p bojanna - 1621292104 - ka19mg3440", Set.of(164.0)),
+                    Map.entry("lijukumar - 1724588196 - kl24n8080", Set.of(772.0)),
+                    Map.entry("m prakash hegde - 2249418425 - ka19mn0577", Set.of(1217.0)),
+                    Map.entry("mandovi true value - 2140997773", Set.of(82.0)),
+                    Map.entry("merlin mascarenhas - 1726373034 - ka19p1982", Set.of(29.0)),
+                    Map.entry("mohammed chayabba abdul majee - 2456826699", Set.of(826.0)),
+                    Map.entry("national insurance company limited - 01-295 - ka19mh4249", Set.of(312.0)),
+                    Map.entry("national insurance company limited - 01-295 - ka21z3306", Set.of(1000.0)),
+                    Map.entry("neethashree - 2355129051 - ka19mp3154", Set.of(442.0)),
+                    Map.entry("royal sundaram general insurance co.  limited - 03-11 - ka21n8996", Set.of(3778.0)),
+                    Map.entry("sanjiven - 1312108549 - tn74m8739", Set.of(100.0)),
+                    Map.entry("sbi general insurance co ltd - 25-74 - ka19mm4251", Set.of(1941.93)),
+                    Map.entry("shashi a amin - 1829321489 - ka19mj9555", Set.of(123.0)),
+                    Map.entry("sudheesh - 2565208978", Set.of(590.0)),
+                    Map.entry("the new india assurance co ltd - 04-115 - kl60h321", Set.of(0.3)),
+                    Map.entry("universal sompo gic ltd - 22-35 - ka19mc9116", Set.of(1000.0)),
+                    Map.entry("vijaya k - 2039090839 - ka21z3306", Set.of(999.0)),
+                    Map.entry("neelappa gowda (ka21p9296)", Set.of(665.0)),
+                    Map.entry("shahid hussain(ka03my7368)", Set.of(611.0)),
+                    Map.entry("ranjith n m ka19me3761", Set.of(100.0)),
+                    Map.entry("abdul rahman rasheed", Set.of(1000.0)),
+                    Map.entry("appanna m s (ka12z4118)", Set.of(1655.0)),
+                    Map.entry("joseph k f ka21z4650", Set.of(1000.0)),
+                    Map.entry("reliance general insurance company limited - 11-09 - ka21ma2202", Set.of(497.0)),
+                    Map.entry("kushalraj - 2353756490 - ka27n8942", Set.of(204.0)),
+                    Map.entry("universal sompo gic ltd - 22-35 - ka21p4026", Set.of(610.0))
+            );
+
+
+
 
     public OutstandingServiceImpl(OutstandingRepository outstandingRepository) {
         this.outstandingRepository = outstandingRepository;
@@ -134,19 +155,29 @@ public class OutstandingServiceImpl implements OutstandingService {
 
         if (INVALID_LEDGER_GROUPS.contains(ledger)) return false;
 
-        if (INVALID_PARTY_NAMES.contains(party)) {
-            log.debug("Filtered invalid party: {}", o.getPartyName());
+        Double balance = o.getBalanceAmt();
+
+        if (party != null
+                && balance != null
+                && INVALID_PARTY_BALANCE_MAP.containsKey(party)
+                && INVALID_PARTY_BALANCE_MAP.get(party).contains(balance)) {
+
+            log.debug("Filtered party with matching balance: {}, balance={}",
+                    o.getPartyName(), balance);
             return false;
         }
 
+
+
+
         if (party.contains("msil - (extended warranty claim recoverable)")) return false;
 
-        if (billNo.contains("rs") || billNo.contains("op")
+        if (billNo.contains("rs/") || billNo.contains("op")
                 || billNo.contains("csi") || billNo.contains("tv")) return false;
 
         if (billNo.contains("mcp")) {
             if (o.getOutstandingDate() == null ||
-                    o.getOutstandingDate().getYear() != 2025) return false;
+                    o.getOutstandingDate().getYear() != 2026) return false;
         }
 
         if ((billNo.contains("ew") || billNo.contains("ad")) &&
