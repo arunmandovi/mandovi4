@@ -128,6 +128,7 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                         case "YLH": mgaProfit.setBranch("Yelahanka"); break;
                         case "YPR": mgaProfit.setBranch("Yeshwanthpur WS"); break;
                         case "KLG": mgaProfit.setBranch("Kollegal"); break;
+                        case "MNY": mgaProfit.setBranch("Mandya Nexa"); break;
                         default: mgaProfit.setBranch("Unknown"); break;
                     }
                 }

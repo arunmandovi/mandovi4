@@ -38,7 +38,7 @@ public class LabourServiceImpl implements LabourService {
             ));
             Set<String> mysoreBranches = new HashSet<>(Arrays.asList(
                     "Bannur","ChamrajNagar","Gonikoppa","Hunsur Road","Krishnarajapet","KRS Road","Kushalnagar","Maddur",
-                    "Mandya","Mysore Nexa","Nagamangala","Narasipura","Somvarpet","Kollegal","Kollegala"
+                    "Mandya","Mysore Nexa","Nagamangala","Narasipura","Somvarpet","Kollegal","Kollegala", "Mandya Nexa"
 
             ));
             Set<String> mangaloreBranches = new HashSet<>(Arrays.asList(

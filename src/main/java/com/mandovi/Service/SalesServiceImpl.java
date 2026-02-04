@@ -158,6 +158,7 @@ public class SalesServiceImpl implements SalesService {
                         case "YLH": sales.setBranch("Yelahanka"); break;
                         case "YPR": sales.setBranch("Yeshwanthpur WS"); break;
                         case "KLG": sales.setBranch("Kollegal"); break;
+                        case "MNY": sales.setBranch("Mandya Nexa"); break;
                         default: sales.setBranch("Unknown"); break;
                     }
                 }

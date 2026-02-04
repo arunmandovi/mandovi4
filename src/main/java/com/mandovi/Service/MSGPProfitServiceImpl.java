@@ -134,6 +134,7 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
                         case "YLH": msgpProfit.setBranch("Yelahanka"); break;
                         case "YPR": msgpProfit.setBranch("Yeshwanthpur WS"); break;
                         case "KLG": msgpProfit.setBranch("Kollegal"); break;
+                        case "MNY" : msgpProfit.setBranch("Mandya Nexa"); break;
                         default: msgpProfit.setBranch("Unknown"); break;
                     }
                 }
