@@ -44,6 +44,17 @@ public class MGAServiceImpl implements MGAService {
             "YELAHANKA","TIRUPATHI ROAD-2S(NEXA)","MYSORE-2S(NEXA)","NEXA SERVICE"
     ));
 
+    private String getStingFromCell (Row row, int cellIndex){
+        if (row.getCell(cellIndex) == null)
+            return null;
+
+        return switch (row.getCell(cellIndex).getCellType()){
+            case NUMERIC -> String.valueOf((int) row.getCell(cellIndex).getNumericCellValue());
+            case STRING -> row.getCell(cellIndex).getStringCellValue();
+            default -> null;
+        };
+    }
+
     @Override
     @Transactional
     public void saveMGAFromExcel(MultipartFile file) {
@@ -82,10 +93,10 @@ public class MGAServiceImpl implements MGAService {
 
                 mga.setMgaDate(localDate);
 
-                mga.setDealerCode(row.getCell(1).getStringCellValue());
-                mga.setForCode(row.getCell(2).getStringCellValue());
-                mga.setOutletCode(row.getCell(3).getStringCellValue());
-                mga.setDealerForOutletCode(row.getCell(4).getStringCellValue());
+                mga.setDealerCode(getStingFromCell(row,1));
+                mga.setForCode(getStingFromCell(row,2));
+                mga.setOutletCode(getStingFromCell(row,3));
+                mga.setDealerForOutletCode(mga.getDealerCode()+"-"+mga.getForCode()+"-"+mga.getOutletCode());
                 mga.setCity(row.getCell(5).getStringCellValue());
                 mga.setLocation(row.getCell(6).getStringCellValue());
                 mga.setDealerName(row.getCell(7).getStringCellValue());
@@ -96,7 +107,11 @@ public class MGAServiceImpl implements MGAService {
                     case NUMERIC -> mga.setLoadd((int)row.getCell(10).getNumericCellValue());
                     default -> mga.setLoadd(0);
                 }
-                mga.setMgaLoad(row.getCell(11).getNumericCellValue());
+                if (mga.getLoadd() == 0){
+                    mga.setMgaLoad(0.0);
+                } else {
+                    mga.setMgaLoad(mga.getConsumption()/mga.getLoadd());
+                }
 
                 if (mga.getLocation() != null) {
                     switch (mga.getLocation().trim().toUpperCase()) {
