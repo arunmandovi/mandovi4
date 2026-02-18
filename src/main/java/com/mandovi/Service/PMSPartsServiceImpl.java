@@ -91,7 +91,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                 ));
                 Set<String> mysoreBranches = new HashSet<>(Arrays.asList(
                         "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH",
-                        "KSN","MSE","NGL","SOM","TNR","KLG"
+                        "KSN","MSE","NGL","SOM","TNR","KLG", "MNY"
                 ));
                 Set<String> mangaloreLocations = new HashSet<>(Arrays.asList(
                         "BMR","BTL","VLA","KDB","UPA","SKL","SLL","AYR","YEY","MNL","SJH","SYG"

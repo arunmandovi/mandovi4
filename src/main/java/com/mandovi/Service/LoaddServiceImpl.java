@@ -41,7 +41,7 @@ public class LoaddServiceImpl implements LoaddService {
                     "RJN","VDR","VJN","WGR","YLH","YPR"
             ));
             Set<String> mysoreLocations = new HashSet<>(Arrays.asList(
-                    "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH","KSN","MSE","NGL","SOM","TNR","KLG"
+                    "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH","KSN","MSE","NGL","SOM","TNR","KLG", "MNY"
             ));
             Set<String> mangaloreLocations = new HashSet<>(Arrays.asList(
                     "BMR","BTL","VLA","KDB","UPA","SKL","SLL","AYR","YEY","MNL","SJH","SYG"

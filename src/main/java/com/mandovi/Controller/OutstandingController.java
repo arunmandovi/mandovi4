@@ -1,5 +1,7 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.*;
+import com.mandovi.Entity.InsuranceDifference;
 import com.mandovi.Entity.Outstanding;
 import com.mandovi.Service.OutstandingService;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +63,239 @@ public class OutstandingController {
         try {
             outstandingService.deleteOutstandingAll();
             return ResponseEntity.ok("Outstanding deleted completely");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    //Total Outstanding API
+    @GetMapping("/total_branch_outstanding")
+    ResponseEntity<?> getTotalOutstandingBranchWise (
+            @RequestParam (required = false) List<String> segments ){
+        try {
+            List<TotalOutstandingDTO> listTotalOutstanding = outstandingService.getTotalOutstandingBranchWise(segments);
+            if (listTotalOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listTotalOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/total_sa_outstanding")
+    ResponseEntity<?> getTotalOutstandingSAWise (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans ){
+        try {
+            List<TotalOutstandingDTO> listTotalOutstanding = outstandingService.getTotalOutstandingSAWise(segments, salesMans);
+            if (listTotalOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listTotalOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/total_party_outstanding")
+    ResponseEntity<?> getTotalOutstandingPartyNameWise (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans,
+            @RequestParam (required = false) String party ){
+        try {
+            List<TotalOutstandingDTO> listTotalOutstanding = outstandingService.getTotalOutstandingPartyWise(segments, salesMans, party);
+            if (listTotalOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listTotalOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    //Cash Outstanding API
+    @GetMapping("/cash_branch_outstanding")
+    ResponseEntity<?> getCashOutstandingBranchWise (
+            @RequestParam (required = false) List<String> segments ){
+        try {
+            List<TotalOutstandingDTO> listCashOutstanding = outstandingService.getCashOutstandingBranchWise(segments);
+            if (listCashOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listCashOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/cash_sa_outstanding")
+    ResponseEntity<?> getCashOutstandingSAWise (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans ){
+        try {
+            List<TotalOutstandingDTO> listCashOutstanding = outstandingService.getCashOutstandingSAWise(segments, salesMans);
+            if (listCashOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listCashOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/cash_party_outstanding")
+    ResponseEntity<?> getCashOutstandingPartyWise (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans,
+            @RequestParam (required = false) String party){
+        try {
+            List<TotalOutstandingDTO> listCashOutstanding = outstandingService.getCashOutstandingPartyWise(segments, salesMans, party);
+            if (listCashOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listCashOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    //Invoice Outstanding API
+    @GetMapping("/invoice_branch_outstanding")
+    ResponseEntity<?> getInvoiceOutstandingBranchWise (
+            @RequestParam (required = false) List<String> segments ){
+        try {
+            List<TotalOutstandingDTO> listInvoiceOutstanding = outstandingService.getInvoiceOutstandingBranchWise(segments);
+            if (listInvoiceOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listInvoiceOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/invoice_sa_outstanding")
+    ResponseEntity<?> getInvoiceOutstanding (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans ){
+        try {
+            List<TotalOutstandingDTO> listInvoiceOutstanding = outstandingService.getInvoiceOutstandingSAWise(segments, salesMans);
+            if (listInvoiceOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listInvoiceOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/invoice_party_outstanding")
+    ResponseEntity<?> getInvoiceOutstandingPartyWise (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans,
+            @RequestParam (required = false) String party){
+        try {
+            List<TotalOutstandingDTO> listCashOutstanding = outstandingService.getInvoiceOutstandingPartyWise(segments, salesMans, party);
+            if (listCashOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listCashOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    //Insurance Outstanding API
+    @GetMapping("/insurance_branch_outstanding")
+    ResponseEntity<?> getInsuranceOutstandingBranchWise (
+            @RequestParam (required = false) List<String> segments ){
+        try {
+            List<TotalOutstandingDTO> listInsuranceOutstanding = outstandingService.getInsuranceOutstandingBranchWise(segments);
+            if (listInsuranceOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listInsuranceOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/insurance_sa_outstanding")
+    ResponseEntity<?> getInsuranceOutstandingSAWise (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans ){
+        try {
+            List<TotalOutstandingDTO> listInsuranceOutstanding = outstandingService.getInsuranceOutstandingSAWise(segments, salesMans);
+            if (listInsuranceOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listInsuranceOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/insurance_party_outstanding")
+    ResponseEntity<?> getInsuranceOutstandingPartyWise (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans,
+            @RequestParam (required = false) String party){
+        try {
+            List<TotalOutstandingDTO> listCashOutstanding = outstandingService.getInsuranceOutstandingPartyWise(segments, salesMans, party);
+            if (listCashOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listCashOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    //Others Outstanding API
+    @GetMapping("/others_branch_outstanding")
+    ResponseEntity<?> getOthersOutstandingBranchWise (
+            @RequestParam (required = false) List<String> segments ){
+        try {
+            List<TotalOutstandingDTO> listInsuranceOutstanding = outstandingService.getOthersOutstandingBranchWise(segments);
+            if (listInsuranceOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listInsuranceOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/others_sa_outstanding")
+    ResponseEntity<?> getOthersOutstanding (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans ){
+        try {
+            List<TotalOutstandingDTO> listInsuranceOutstanding = outstandingService.getOthersOutstandingSAWise(segments, salesMans);
+            if (listInsuranceOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listInsuranceOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+    @GetMapping("/others_party_outstanding")
+    ResponseEntity<?> getOthersOutstandingPartyWise (
+            @RequestParam (required = false) List<String> segments,
+            @RequestParam (required = false) List<String> salesMans,
+            @RequestParam (required = false) String party){
+        try {
+            List<TotalOutstandingDTO> listCashOutstanding = outstandingService.getOthersOutstandingPartyWise(segments, salesMans, party);
+            if (listCashOutstanding.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listCashOutstanding);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/getallinsurancedifference")
+    ResponseEntity<?> getAllInsuranceDifference (){
+        try {
+            List<InsuranceDifference> insuranceDifferenceRecords = outstandingService.getAllInsuranceDifference();
+            if (insuranceDifferenceRecords.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(insuranceDifferenceRecords);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }

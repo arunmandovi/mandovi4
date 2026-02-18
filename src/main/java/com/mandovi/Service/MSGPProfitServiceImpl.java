@@ -30,7 +30,7 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
             "MLU","NXS","RJN","VDR","VJN","WGR","YLH","YPR"
     ));
     Set<String> mysoreBranches = new HashSet<>(Arrays.asList(
-            "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH","KSN","MSE","NGL","SOM","TNR","KLG"
+            "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH","KSN","MSE","NGL","SOM","TNR","KLG", "MNY"
     ));
     Set<String> mangaloreBranches = new HashSet<>(Arrays.asList(
             "BMR","BTL","VLA","KDB","UPA","SKL","SLL","AYR","YEY","MNL","SJH","SYG"

@@ -1,6 +1,9 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.*;
+import com.mandovi.Entity.InsuranceDifference;
 import com.mandovi.Entity.Outstanding;
+import com.mandovi.Repository.InsuranceDifferenceRepository;
 import com.mandovi.Repository.OutstandingRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
@@ -12,10 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class OutstandingServiceImpl implements OutstandingService {
@@ -24,6 +27,7 @@ public class OutstandingServiceImpl implements OutstandingService {
             LoggerFactory.getLogger(OutstandingServiceImpl.class);
 
     private final OutstandingRepository outstandingRepository;
+    private final InsuranceDifferenceRepository insuranceDifferenceRepository;
 
     private static final Set<String> INVALID_LEDGER_GROUPS = Set.of(
             "company s/r & b/r bill",
@@ -76,11 +80,9 @@ public class OutstandingServiceImpl implements OutstandingService {
                     Map.entry("universal sompo gic ltd - 22-35 - ka21p4026", Set.of(610.0))
             );
 
-
-
-
-    public OutstandingServiceImpl(OutstandingRepository outstandingRepository) {
+    public OutstandingServiceImpl(OutstandingRepository outstandingRepository, InsuranceDifferenceRepository insuranceDifferenceRepository) {
         this.outstandingRepository = outstandingRepository;
+        this.insuranceDifferenceRepository = insuranceDifferenceRepository;
     }
 
     @Override
@@ -108,6 +110,8 @@ public class OutstandingServiceImpl implements OutstandingService {
 
             // Remove negative and zero balances
             outstandingRepository.deleteByBalanceAmtLessThanEqual(0.0);
+            insuranceDifferenceRepository.deleteInsuranceDifferenceAll();
+            insuranceDifferenceRepository.insertInsuranceDifferenceFromOutstanding();
 
         } catch (Exception e) {
             throw new RuntimeException("Excel upload failed", e);
@@ -130,10 +134,10 @@ public class OutstandingServiceImpl implements OutstandingService {
 
         for (String type : types) {
             switch (type.toUpperCase().trim()) {
-                case "CASH" -> result.addAll(outstandingRepository.getCashOutstanding());
+                case "CASH" -> result.addAll(outstandingRepository.getCashOutstandingSAWise());
                 case "INVOICE" -> result.addAll(outstandingRepository.getInvoiceOutstanding());
                 case "INSURANCE" -> result.addAll(outstandingRepository.getInsuranceOutstanding());
-                case "OTHERS" -> result.addAll(outstandingRepository.getOthersOutstanding());
+                case "OTHERS" -> result.addAll(outstandingRepository.getOthersOutstandingSAWise());
                 default -> throw new RuntimeException("Invalid type: " + type);
             }
         }
@@ -144,6 +148,91 @@ public class OutstandingServiceImpl implements OutstandingService {
     @Override
     public void deleteOutstandingAll() {
         outstandingRepository.deleteOutstandingAll();
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getTotalOutstandingSAWise(List<String> segments, List<String> salesMans) {
+        return outstandingRepository.getTotalOutstandingSAWise(segments, salesMans);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getTotalOutstandingPartyWise(List<String> segments, List<String> salesMans, String party) {
+        return outstandingRepository.getTotalOutstandingPartyNameWise(segments, salesMans, party );
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getCashOutstandingBranchWise(List<String> segments) {
+        return outstandingRepository.getCashOutstandingBranchWise(segments);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getTotalOutstandingBranchWise(List<String> segments) {
+        return outstandingRepository.getTotalOutstandingBranchWise(segments);
+    }
+
+    @Override
+    public void deleteInsuranceDifferenceAll() {
+        insuranceDifferenceRepository.deleteInsuranceDifferenceAll();
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getCashOutstandingSAWise(List<String> segments, List<String> salesMans) {
+        return outstandingRepository.getCashOutstandingSAWise(segments, salesMans);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getCashOutstandingPartyWise(List<String> segments, List<String> salesMans, String party) {
+        return outstandingRepository.getCashOutstandingPartyWise(segments, salesMans,party );
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getInvoiceOutstandingBranchWise(List<String> segments) {
+        return outstandingRepository.getInvoiceOutstandingBranchWise(segments);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getInvoiceOutstandingSAWise(List<String> segments, List<String> salesMans) {
+        return outstandingRepository.getInvoiceOutstandingSAWise(segments, salesMans);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getInvoiceOutstandingPartyWise(List<String> segments, List<String> salesMans, String party) {
+        return outstandingRepository.getInvoiceOutstandingPartyWise(segments, salesMans, party);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getInsuranceOutstandingBranchWise(List<String> segments) {
+        return outstandingRepository.getInsuranceOutstandingBranchWise(segments);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getInsuranceOutstandingSAWise(List<String> segments, List<String> salesMans) {
+        return outstandingRepository.getInsuranceOutstandingSAWise(segments, salesMans);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getInsuranceOutstandingPartyWise(List<String> segments, List<String> salesMans, String party) {
+        return outstandingRepository.getInsuranceOutstandingPartyWise(segments, salesMans, party);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getOthersOutstandingBranchWise(List<String> segments) {
+        return outstandingRepository.getOthersOutstandingBranchWise(segments);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getOthersOutstandingSAWise(List<String> segments, List<String> salesMans) {
+        return outstandingRepository.getOthersOutstandingSAWise(segments, salesMans);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getOthersOutstandingPartyWise(List<String> segments, List<String> salesMans, String party) {
+        return outstandingRepository.getOthersOutstandingPartyWise(segments, salesMans, party);
+    }
+
+    @Override
+    public List<InsuranceDifference> getAllInsuranceDifference() {
+        return insuranceDifferenceRepository.findAll();
     }
 
     private boolean passesBusinessFilters(Outstanding o) {
@@ -167,23 +256,30 @@ public class OutstandingServiceImpl implements OutstandingService {
             return false;
         }
 
-
-
-
         if (party.contains("msil - (extended warranty claim recoverable)")) return false;
 
         if (billNo.contains("rs/") || billNo.contains("op")
                 || billNo.contains("csi") || billNo.contains("tv")) return false;
 
         if (billNo.contains("mcp")) {
-            if (o.getOutstandingDate() == null ||
-                    o.getOutstandingDate().getYear() != 2026) return false;
+
+            if (o.getOutstandingDate() == null) return false;
+
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate date = LocalDate.parse(o.getOutstandingDate(), formatter);
+
+                if (date.getYear() != 2026) return false;
+
+            } catch (Exception e) {
+                return false; // invalid date format
+            }
         }
 
         if ((billNo.contains("ew") || billNo.contains("ad")) &&
                 (segment.contains("naravi") || segment.contains("kadaba"))) {
             if (billNo.contains("ew")) {
-                return false; // ew logic as it was
+                return false;
             }
         }
 
@@ -206,11 +302,47 @@ public class OutstandingServiceImpl implements OutstandingService {
             if (row == null) return Optional.empty();
 
             Outstanding o = new Outstanding();
-            o.setSegment(getString(row, 0));
+
+            String segmentBranch = getString(row, 0);
+            String segment = segmentBranch.split("\\s+")[0];
+            o.setSegment(segment);
+
             o.setLedgerGroupName(getString(row, 1));
-            o.setPartyName(getString(row, 2));
-            o.setOutstandingDate(getDate(row, 3));
-            o.setBillNo(getString(row, 4));
+
+            String party = getString(row, 2);
+            LocalDate outstandingDate = getDate(row, 3);
+            String billNo = getString(row, 4);
+
+            // ✅ PARTY NAME FIX FOR BI ROWS
+            if (billNo != null && billNo.trim().toUpperCase().contains("BI")) {
+
+                Map<String, String> companyMap = Map.of(
+                        "GO DIGIT", "GO DIGIT",
+                        "INDUSIND", "INDUSIND",
+                        "TATA AIG", "TATA AIG",
+                        "THE NEW INDIA", "NEW INDIA",
+                        "THE ORIENTAL", "ORIENTAL",
+                        "GENERALI CENTRAL", "GENERALI CENTRAL"
+                );
+
+                String partyUpper = party == null ? "" : party.toUpperCase();
+
+                party = companyMap.entrySet().stream()
+                        .filter(e -> partyUpper.contains(e.getKey()))
+                        .map(Map.Entry::getValue)
+                        .findFirst()
+                        .orElse(partyUpper.split("\\s+")[0].trim());
+            }
+
+            o.setPartyName(getString(row,2));
+
+
+            String formattedDate = outstandingDate == null
+                    ? null
+                    : outstandingDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+            o.setOutstandingDate(formattedDate);
+            o.setBillNo(billNo);
 
             o.setBillAmt(getDouble(row, 5));
             o.setPaidAmt(getDouble(row, 6));
@@ -223,8 +355,37 @@ public class OutstandingServiceImpl implements OutstandingService {
             o.setMoreThanNinty(getDouble(row, 12));
 
             String salesMan = row.getCell(13).getStringCellValue();
-            if (salesMan != null && salesMan.contains("_1")) {
-                salesMan = salesMan.substring(0, salesMan.indexOf("_1"));
+
+            if (salesMan != null) {
+
+                if (salesMan.contains("_1")) {
+                    salesMan = salesMan.substring(0, salesMan.indexOf("_1"));
+                }
+
+                if (salesMan.contains("-")) {
+                    salesMan = salesMan.substring(salesMan.indexOf("-") + 1).trim();
+                }
+
+                String[] words = salesMan.split("\\s+");
+
+                if (words.length > 0) {
+
+                    if (words[0].startsWith("MM")) {
+                        words[0] = words[0].substring(2);
+                    }
+
+                    int startIndex = 0;
+                    if (words[0].matches("\\d+")) {
+                        startIndex = 1;
+                    }
+
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = startIndex; i < words.length; i++) {
+                        sb.append(words[i]).append(" ");
+                    }
+
+                    salesMan = sb.toString().trim();
+                }
             }
 
             o.setSalesMan(salesMan);
@@ -327,16 +488,24 @@ public class OutstandingServiceImpl implements OutstandingService {
                     if (base.getOutstandingDate() == null || next.getOutstandingDate() == null)
                         continue;
 
-                    long daysDiff = Math.abs(
-                            ChronoUnit.DAYS.between(
-                                    base.getOutstandingDate(),
-                                    next.getOutstandingDate()
-                            )
-                    );
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-                    if (daysDiff <= 30) {
-                        group.add(next);
-                        processed[j] = true;
+                    if (base.getOutstandingDate() == null || next.getOutstandingDate() == null)
+                        continue;
+
+                    try {
+                        LocalDate baseDate = LocalDate.parse(base.getOutstandingDate(), formatter);
+                        LocalDate nextDate = LocalDate.parse(next.getOutstandingDate(), formatter);
+
+                        long daysDiff = Math.abs(ChronoUnit.DAYS.between(baseDate, nextDate));
+
+                        if (daysDiff <= 30) {
+                            group.add(next);
+                            processed[j] = true;
+                        }
+
+                    } catch (Exception e) {
+                        continue; // skip invalid date format rows
                     }
                 }
 
@@ -367,9 +536,27 @@ public class OutstandingServiceImpl implements OutstandingService {
 
         if (allPositive) return;
 
-        double finalBalance = rows.stream()
-                .mapToDouble(r -> r.getBalanceAmt() == null ? 0.0 : r.getBalanceAmt())
-                .sum();
+        double finalBalance = 0.0;
+        double finalUpToSeven = 0.0;
+        double finalEightToThirty = 0.0;
+        double finalThirtyOneToNinty = 0.0;
+        double finalMoreThanNinty = 0.0;
+
+        for (Outstanding r : rows) {
+
+            double bal = r.getBalanceAmt() == null ? 0.0 : r.getBalanceAmt();
+            finalBalance += bal;
+
+            if (r.getUpToSeven() != null && r.getUpToSeven() != 0.0) {
+                finalUpToSeven += bal;
+            } else if (r.getEightToThirty() != null && r.getEightToThirty() != 0.0) {
+                finalEightToThirty += bal;
+            } else if (r.getThirtyOneToNinty() != null && r.getThirtyOneToNinty() != 0.0) {
+                finalThirtyOneToNinty += bal;
+            } else if (r.getMoreThanNinty() != null && r.getMoreThanNinty() != 0.0) {
+                finalMoreThanNinty += bal;
+            }
+        }
 
         if (finalBalance == 0.0) {
             List<Integer> ids = rows.stream()
@@ -386,12 +573,20 @@ public class OutstandingServiceImpl implements OutstandingService {
                 .orElseThrow();
 
         Outstanding consolidated = new Outstanding();
+
+        // PartyName is already corrected in parseRow()
         consolidated.setPartyName(latest.getPartyName());
+
         consolidated.setSegment(latest.getSegment());
         consolidated.setLedgerGroupName(latest.getLedgerGroupName());
         consolidated.setOutstandingDate(latest.getOutstandingDate());
         consolidated.setBillNo(latest.getBillNo());
         consolidated.setBalanceAmt(finalBalance);
+        consolidated.setUpToSeven(finalUpToSeven);
+        consolidated.setEightToThirty(finalEightToThirty);
+        consolidated.setThirtyOneToNinty(finalThirtyOneToNinty);
+        consolidated.setMoreThanNinty(finalMoreThanNinty);
+
         String salesMann = latest.getSalesMan();
         if (salesMann != null && salesMann.contains("_")) {
             salesMann = salesMann.substring(0, salesMann.indexOf("_"));
@@ -404,6 +599,9 @@ public class OutstandingServiceImpl implements OutstandingService {
                 .toList();
 
         outstandingRepository.deleteAllById(ids);
+
         outstandingRepository.save(consolidated);
+
     }
+
 }

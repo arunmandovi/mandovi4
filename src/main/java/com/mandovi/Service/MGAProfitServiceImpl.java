@@ -35,7 +35,7 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                     "KDH","MAF","MLU","NXS","RJN","VDR","VJN","WGR","YLH","YPR" ));
             Set<String> mysoreLocations = new HashSet<>(Arrays.asList(
                     "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH",
-                    "KSN","MSE","NGL","SOM","TNR","KLG" ));
+                    "KSN","MSE","NGL","SOM","TNR","KLG", "MNY" ));
             Set<String> mangaloreLocations = new HashSet<>(Arrays.asList(
                     "BMR","BTL","VLA","KDB","UPA","SKL","SLL","AYR","YEY","MNL","SJH","SYG" ));
 

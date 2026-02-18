@@ -2,27 +2,25 @@ package com.mandovi.Entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-
 @Entity
-@Table (name = "outstanding")
-public class Outstanding {
+@Table(name = "insurance_difference")
+public class InsuranceDifference {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "outstandingSINo")
-    private Integer outstandingSINo;
+    @Column (name = "insurance_differenceSINo")
+    private Integer insuranceDifferenceSINo;
 
     @Column (name = "segment")
     private String segment;
 
-    @Column (name = "ledger_group_name")
-    private String ledgerGroupName;
+    @Column (name = "ledger_name")
+    private String ledgerName;
 
     @Column (name = "party_name")
     private String partyName;
 
-    @Column (name = "outstanding_date")
-    private String outstandingDate;
+    @Column (name = "insurance_difference_date")
+    private String insuranceDifferenceDate;
 
     @Column (name = "bill_no")
     private String billNo;
@@ -36,11 +34,17 @@ public class Outstanding {
     @Column (name = "balance_amt")
     private Double balanceAmt;
 
+    @Column (name = "insurance_amt")
+    private Double insuranceAmt;
+
+    @Column (name = "difference_amt")
+    private Double differenceAmt;
+
     @Column (name = "due_since")
     private Integer dueSince;
 
     @Column (name = "upto_seven")
-    private Double upToSeven;
+    private Double up_To_seven;
 
     @Column (name = "eight_to_thirty")
     private Double eightToThirty;
@@ -54,33 +58,35 @@ public class Outstanding {
     @Column (name = "sales_man")
     private String salesMan;
 
-    public Outstanding() {
+    public InsuranceDifference() {
     }
 
-    public Outstanding(Integer outstandingSINo, String segment, String ledgerGroupName, String partyName, String outstandingDate, String billNo, Double billAmt, Double paidAmt, Double balanceAmt, Integer dueSince, Double upToSeven, Double eightToThirty, Double thirtyOneToNinty, Double moreThanNinty, String salesMan) {
-        this.outstandingSINo = outstandingSINo;
+    public InsuranceDifference(Integer insuranceDifferenceSINo, String segment, String ledgerName, String partyName, String insuranceDifferenceDate, String billNo, Double billAmt, Double paidAmt, Double balanceAmt, Double insuranceAmt, Double differenceAmt, Integer dueSince, Double up_To_seven, Double eightToThirty, Double thirtyOneToNinty, Double moreThanNinty, String salesMan) {
+        this.insuranceDifferenceSINo = insuranceDifferenceSINo;
         this.segment = segment;
-        this.ledgerGroupName = ledgerGroupName;
+        this.ledgerName = ledgerName;
         this.partyName = partyName;
-        this.outstandingDate = outstandingDate;
+        this.insuranceDifferenceDate = insuranceDifferenceDate;
         this.billNo = billNo;
         this.billAmt = billAmt;
         this.paidAmt = paidAmt;
         this.balanceAmt = balanceAmt;
+        this.insuranceAmt = insuranceAmt;
+        this.differenceAmt = differenceAmt;
         this.dueSince = dueSince;
-        this.upToSeven = upToSeven;
+        this.up_To_seven = up_To_seven;
         this.eightToThirty = eightToThirty;
         this.thirtyOneToNinty = thirtyOneToNinty;
         this.moreThanNinty = moreThanNinty;
         this.salesMan = salesMan;
     }
 
-    public Integer getOutstandingSINo() {
-        return outstandingSINo;
+    public Integer getInsuranceDifferenceSINo() {
+        return insuranceDifferenceSINo;
     }
 
-    public void setOutstandingSINo(Integer outstandingSINo) {
-        this.outstandingSINo = outstandingSINo;
+    public void setInsuranceDifferenceSINo(Integer insuranceDifferenceSINo) {
+        this.insuranceDifferenceSINo = insuranceDifferenceSINo;
     }
 
     public String getSegment() {
@@ -91,12 +97,12 @@ public class Outstanding {
         this.segment = segment;
     }
 
-    public String getLedgerGroupName() {
-        return ledgerGroupName;
+    public String getLedgerName() {
+        return ledgerName;
     }
 
-    public void setLedgerGroupName(String ledgerGroupName) {
-        this.ledgerGroupName = ledgerGroupName;
+    public void setLedgerName(String ledgerName) {
+        this.ledgerName = ledgerName;
     }
 
     public String getPartyName() {
@@ -107,12 +113,12 @@ public class Outstanding {
         this.partyName = partyName;
     }
 
-    public String getOutstandingDate() {
-        return outstandingDate;
+    public String getInsuranceDifferenceDate() {
+        return insuranceDifferenceDate;
     }
 
-    public void setOutstandingDate(String outstandingDate) {
-        this.outstandingDate = outstandingDate;
+    public void setInsuranceDifferenceDate(String insuranceDifferenceDate) {
+        this.insuranceDifferenceDate = insuranceDifferenceDate;
     }
 
     public String getBillNo() {
@@ -147,6 +153,22 @@ public class Outstanding {
         this.balanceAmt = balanceAmt;
     }
 
+    public Double getInsuranceAmt() {
+        return insuranceAmt;
+    }
+
+    public void setInsuranceAmt(Double insuranceAmt) {
+        this.insuranceAmt = insuranceAmt;
+    }
+
+    public Double getDifferenceAmt() {
+        return differenceAmt;
+    }
+
+    public void setDifferenceAmt(Double differenceAmt) {
+        this.differenceAmt = differenceAmt;
+    }
+
     public Integer getDueSince() {
         return dueSince;
     }
@@ -155,12 +177,12 @@ public class Outstanding {
         this.dueSince = dueSince;
     }
 
-    public Double getUpToSeven() {
-        return upToSeven;
+    public Double getUp_To_seven() {
+        return up_To_seven;
     }
 
-    public void setUpToSeven(Double upToSeven) {
-        this.upToSeven = upToSeven;
+    public void setUp_To_seven(Double up_To_seven) {
+        this.up_To_seven = up_To_seven;
     }
 
     public Double getEightToThirty() {
@@ -197,18 +219,20 @@ public class Outstanding {
 
     @Override
     public String toString() {
-        return "Outstanding{" +
-                "outstandingSINo=" + outstandingSINo +
+        return "InsuranceDifference{" +
+                "insuranceDifferenceSINo=" + insuranceDifferenceSINo +
                 ", segment='" + segment + '\'' +
-                ", ledgerGroupName='" + ledgerGroupName + '\'' +
+                ", ledgerName='" + ledgerName + '\'' +
                 ", partyName='" + partyName + '\'' +
-                ", outstandingDate='" + outstandingDate + '\'' +
+                ", insuranceDifferenceDate='" + insuranceDifferenceDate + '\'' +
                 ", billNo='" + billNo + '\'' +
                 ", billAmt=" + billAmt +
                 ", paidAmt=" + paidAmt +
                 ", balanceAmt=" + balanceAmt +
+                ", insuranceAmt=" + insuranceAmt +
+                ", differenceAmt=" + differenceAmt +
                 ", dueSince=" + dueSince +
-                ", upToSeven=" + upToSeven +
+                ", up_To_seven=" + up_To_seven +
                 ", eightToThirty=" + eightToThirty +
                 ", thirtyOneToNinty=" + thirtyOneToNinty +
                 ", moreThanNinty=" + moreThanNinty +
