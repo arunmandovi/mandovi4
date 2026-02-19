@@ -34,7 +34,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
     //TotalOutstanding Queries
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, null, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, null, null, SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE (:segments is NULL OR o.segment IN (:segments))
@@ -44,7 +44,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("segments") List<String> segments );
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, o.salesMan, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, o.salesMan, null, SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE (:segments is NULL OR o.segment IN (:segments))
@@ -56,7 +56,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("salesMans") List<String> salesMans );
     @Query("""
         SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-        o.segment, o.salesMan, o.partyName, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+        o.segment, o.salesMan, o.partyName, SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
         SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
         FROM Outstanding o
         WHERE (:segments is NULL OR o.segment IN (:segments))
@@ -72,7 +72,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
     //CashOutstanding Queries
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, null, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, null, null, SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo LIKE '%BC%'
@@ -83,7 +83,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("segments") List<String> segments );
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, o.salesMan, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, o.salesMan, null, SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo LIKE '%BC%'
@@ -96,7 +96,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("salesMans") List<String> salesMans );
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, o.salesMan, o.partyName, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, o.salesMan, o.partyName, SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo LIKE '%BC%'
@@ -113,7 +113,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
     //InvoiceOutstanding Queries
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, null, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, null, null, SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo LIKE '%BR%'
@@ -124,7 +124,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("segments") List<String> segments );
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, o.salesMan, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, o.salesMan, null,SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo LIKE '%BR%'
@@ -137,7 +137,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("salesMans") List<String> salesMans );
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, o.salesMan, o.partyName, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, o.salesMan, o.partyName,SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo LIKE '%BR%'
@@ -154,7 +154,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
     //InsuranceOutstanding Queries
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, null, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, null, null,SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo LIKE '%BI%'
@@ -165,7 +165,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("segments") List<String> segments );
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, o.salesMan, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, o.salesMan, null,SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo LIKE '%BI%'
@@ -178,7 +178,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("salesMans") List<String> salesMans );
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, o.salesMan, o.partyName, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, o.salesMan, o.partyName,SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo LIKE '%BI%'
@@ -195,7 +195,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
     //OthersOutstanding Queries
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, null, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, null, null,SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo NOT LIKE '%BC/%'
@@ -208,7 +208,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("segments") List<String> segments );
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, o.salesMan, null, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, o.salesMan, null,SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo NOT LIKE '%BC/%'
@@ -223,7 +223,7 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             @Param("salesMans") List<String> salesMans );
     @Query("""
             SELECT new com.mandovi.DTO.TotalOutstandingDTO(
-            o.segment, o.salesMan, o.partyName, SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
+            o.segment, o.salesMan, o.partyName,SUM(o.billAmt), SUM(o.balanceAmt), SUM(o.upToSeven), SUM(o.eightToThirty),
             SUM(o.thirtyOneToNinty), SUM(o.moreThanNinty))
             FROM Outstanding o
             WHERE o.billNo NOT LIKE '%BC/%'
