@@ -15,56 +15,73 @@ public interface InsuranceDifferenceRepository extends JpaRepository<InsuranceDi
     @Modifying
     @Transactional
     @Query(value = """
-    INSERT INTO insurance_difference
-    (
-        segment,
-        ledger_name,
-        party_name,
-        insurance_difference_date,
-        bill_no,
-        bill_amt,
-        paid_amt,
-        balance_amt,
-        insurance_amt,
-        difference_amt,
-        due_since,
-        upto_seven,
-        eight_to_thirty,
-        thirtyone_to_ninty,
-        more_than_ninty,
-        sales_man
-    )
-    SELECT
-        o.segment,
-        o.ledger_group_name,
-        o.party_name,
-        o.outstanding_date,
-        o.bill_no,
-        o.bill_amt,
-        o.paid_amt,
-        o.balance_amt,
+INSERT INTO insurance_difference
+(
+    segment,
+    ledger_name,
+    party_name,
+    insurance_party,
+    insurance_difference_date,
+    bill_no,
+    bill_amt,
+    paid_amt,
+    balance_amt,
+    insurance_amt,
+    difference_amt,
+    due_since,
+    upto_seven,
+    eight_to_thirty,
+    thirtyone_to_ninty,
+    more_than_ninty,
+    sales_man
+)
+SELECT
+    o.segment,
+    o.ledger_group_name,
+    o.party_name,
 
-        CASE
-            WHEN (COALESCE(o.bill_amt,0) / 2) >= COALESCE(o.paid_amt,0)
-            THEN (COALESCE(o.bill_amt,0) - COALESCE(o.paid_amt,0))
-            ELSE 0.0
-        END AS insurance_amt,
+    CASE
+        WHEN UPPER(o.party_name) LIKE '%GO DIGIT%' THEN 'GO DIGIT'
+        WHEN UPPER(o.party_name) LIKE '%INDUSIND%' THEN 'INDUSIND'
+        WHEN UPPER(o.party_name) LIKE '%TATA AIG%' THEN 'TATA AIG'
+        WHEN UPPER(o.party_name) LIKE '%THE NEW INDIA%' THEN 'NEW INDIA'
+        WHEN UPPER(o.party_name) LIKE '%THE ORIENTAL%' THEN 'ORIENTAL'
+        WHEN UPPER(o.party_name) LIKE '%GENERALI CENTRAL%' THEN 'GENERALI CENTRAL'
+        ELSE TRIM(SUBSTRING_INDEX(COALESCE(o.party_name,''), ' ', 1))
+    END,
 
-        CASE
-            WHEN (COALESCE(o.bill_amt,0) / 2) < COALESCE(o.paid_amt,0)
-            THEN (COALESCE(o.bill_amt,0) - COALESCE(o.paid_amt,0))
-            ELSE 0.0
-        END AS difference_amt,
+    o.outstanding_date,
+    o.bill_no,
+    o.bill_amt,
+    o.paid_amt,
+    o.balance_amt,
 
-        o.due_since,
-        o.upto_seven,
-        o.eight_to_thirty,
-        o.thirtyone_to_ninty,
-        o.more_than_ninty,
-        o.sales_man
+    CASE
+        WHEN (COALESCE(o.bill_amt,0) / 2) >= COALESCE(o.paid_amt,0)
+        THEN (COALESCE(o.bill_amt,0) - COALESCE(o.paid_amt,0))
+        ELSE 0.0
+    END,
 
-    FROM outstanding o
-    WHERE UPPER(o.bill_no) LIKE '%BI/%'
+    CASE
+        WHEN (COALESCE(o.bill_amt,0) / 2) < COALESCE(o.paid_amt,0)
+        THEN (COALESCE(o.bill_amt,0) - COALESCE(o.paid_amt,0))
+        ELSE 0.0
+    END,
+
+    o.due_since,
+    o.upto_seven,
+    o.eight_to_thirty,
+    o.thirtyone_to_ninty,
+    o.more_than_ninty,
+    o.sales_man
+
+FROM outstanding o
+WHERE UPPER(o.bill_no) LIKE '%BI%'
+AND NOT EXISTS (
+    SELECT 1
+    FROM insurance_difference id
+    WHERE UPPER(TRIM(id.bill_no)) = UPPER(TRIM(o.bill_no))
+)
 """, nativeQuery = true)
     void insertInsuranceDifferenceFromOutstanding();
 }

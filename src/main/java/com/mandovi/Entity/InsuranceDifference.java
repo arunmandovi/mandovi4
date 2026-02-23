@@ -19,6 +19,9 @@ public class InsuranceDifference {
     @Column (name = "party_name")
     private String partyName;
 
+    @Column (name = "insurance_party")
+    private String insuranceParty;
+
     @Column (name = "insurance_difference_date")
     private String insuranceDifferenceDate;
 
@@ -44,7 +47,7 @@ public class InsuranceDifference {
     private Integer dueSince;
 
     @Column (name = "upto_seven")
-    private Double up_To_seven;
+    private Double upToSeven;
 
     @Column (name = "eight_to_thirty")
     private Double eightToThirty;
@@ -61,11 +64,12 @@ public class InsuranceDifference {
     public InsuranceDifference() {
     }
 
-    public InsuranceDifference(Integer insuranceDifferenceSINo, String segment, String ledgerName, String partyName, String insuranceDifferenceDate, String billNo, Double billAmt, Double paidAmt, Double balanceAmt, Double insuranceAmt, Double differenceAmt, Integer dueSince, Double up_To_seven, Double eightToThirty, Double thirtyOneToNinty, Double moreThanNinty, String salesMan) {
+    public InsuranceDifference(Integer insuranceDifferenceSINo, String segment, String ledgerName, String partyName, String insuranceParty, String insuranceDifferenceDate, String billNo, Double billAmt, Double paidAmt, Double balanceAmt, Double insuranceAmt, Double differenceAmt, Integer dueSince, Double upToSeven, Double eightToThirty, Double thirtyOneToNinty, Double moreThanNinty, String salesMan) {
         this.insuranceDifferenceSINo = insuranceDifferenceSINo;
         this.segment = segment;
         this.ledgerName = ledgerName;
         this.partyName = partyName;
+        this.insuranceParty = insuranceParty;
         this.insuranceDifferenceDate = insuranceDifferenceDate;
         this.billNo = billNo;
         this.billAmt = billAmt;
@@ -74,7 +78,7 @@ public class InsuranceDifference {
         this.insuranceAmt = insuranceAmt;
         this.differenceAmt = differenceAmt;
         this.dueSince = dueSince;
-        this.up_To_seven = up_To_seven;
+        this.upToSeven = upToSeven;
         this.eightToThirty = eightToThirty;
         this.thirtyOneToNinty = thirtyOneToNinty;
         this.moreThanNinty = moreThanNinty;
@@ -111,6 +115,14 @@ public class InsuranceDifference {
 
     public void setPartyName(String partyName) {
         this.partyName = partyName;
+    }
+
+    public String getInsuranceParty() {
+        return insuranceParty;
+    }
+
+    public void setInsuranceParty(String insuranceParty) {
+        this.insuranceParty = insuranceParty;
     }
 
     public String getInsuranceDifferenceDate() {
@@ -177,12 +189,12 @@ public class InsuranceDifference {
         this.dueSince = dueSince;
     }
 
-    public Double getUp_To_seven() {
-        return up_To_seven;
+    public Double getUpToSeven() {
+        return upToSeven;
     }
 
-    public void setUp_To_seven(Double up_To_seven) {
-        this.up_To_seven = up_To_seven;
+    public void setUpToSeven(Double upToSeven) {
+        this.upToSeven = upToSeven;
     }
 
     public Double getEightToThirty() {
@@ -224,6 +236,7 @@ public class InsuranceDifference {
                 ", segment='" + segment + '\'' +
                 ", ledgerName='" + ledgerName + '\'' +
                 ", partyName='" + partyName + '\'' +
+                ", insuranceParty='" + insuranceParty + '\'' +
                 ", insuranceDifferenceDate='" + insuranceDifferenceDate + '\'' +
                 ", billNo='" + billNo + '\'' +
                 ", billAmt=" + billAmt +
@@ -232,7 +245,7 @@ public class InsuranceDifference {
                 ", insuranceAmt=" + insuranceAmt +
                 ", differenceAmt=" + differenceAmt +
                 ", dueSince=" + dueSince +
-                ", up_To_seven=" + up_To_seven +
+                ", upToSeven=" + upToSeven +
                 ", eightToThirty=" + eightToThirty +
                 ", thirtyOneToNinty=" + thirtyOneToNinty +
                 ", moreThanNinty=" + moreThanNinty +

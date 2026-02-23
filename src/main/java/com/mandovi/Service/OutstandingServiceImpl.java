@@ -39,7 +39,6 @@ public class OutstandingServiceImpl implements OutstandingService {
             "sundry debtors - fsc",
             "sundry debtors - insurance",
             "sundry debtors - legacy",
-            "sundry debtors - spares",
             "sundry debtors - w.g.spares"
     );
 
@@ -76,6 +75,7 @@ public class OutstandingServiceImpl implements OutstandingService {
                     Map.entry("appanna m s (ka12z4118)", Set.of(1655.0)),
                     Map.entry("joseph k f ka21z4650", Set.of(1000.0)),
                     Map.entry("reliance general insurance company limited - 11-09 - ka21ma2202", Set.of(497.0)),
+                    Map.entry("universal sompo gic ltd - 22-35 - ka19mp2249", Set.of(-1426.0)),
                     Map.entry("kushalraj - 2353756490 - ka27n8942", Set.of(204.0)),
                     Map.entry("universal sompo gic ltd - 22-35 - ka21p4026", Set.of(610.0))
             );
@@ -200,20 +200,20 @@ public class OutstandingServiceImpl implements OutstandingService {
         return outstandingRepository.getInvoiceOutstandingPartyWise(segments, salesMans, party);
     }
 
-    @Override
-    public List<TotalOutstandingDTO> getInsuranceOutstandingBranchWise(List<String> segments) {
-        return outstandingRepository.getInsuranceOutstandingBranchWise(segments);
-    }
-
-    @Override
-    public List<TotalOutstandingDTO> getInsuranceOutstandingSAWise(List<String> segments, List<String> salesMans) {
-        return outstandingRepository.getInsuranceOutstandingSAWise(segments, salesMans);
-    }
-
-    @Override
-    public List<TotalOutstandingDTO> getInsuranceOutstandingPartyWise(List<String> segments, List<String> salesMans, String party) {
-        return outstandingRepository.getInsuranceOutstandingPartyWise(segments, salesMans, party);
-    }
+//    @Override
+//    public List<TotalOutstandingDTO> getInsuranceOutstandingBranchWise(List<String> segments) {
+//        return outstandingRepository.getIDOutstandingBranchWise(segments);
+//    }
+//
+//    @Override
+//    public List<TotalOutstandingDTO> getInsuranceOutstandingSAWise(List<String> segments, List<String> salesMans) {
+//        return outstandingRepository.getInsuranceOutstandingSAWise(segments, salesMans);
+//    }
+//
+//    @Override
+//    public List<TotalOutstandingDTO> getInsuranceOutstandingPartyWise(List<String> segments, List<String> salesMans, String party) {
+//        return outstandingRepository.getInsuranceOutstandingPartyWise(segments, salesMans, party);
+//    }
 
     @Override
     public List<TotalOutstandingDTO> getOthersOutstandingBranchWise(List<String> segments) {
@@ -233,6 +233,21 @@ public class OutstandingServiceImpl implements OutstandingService {
     @Override
     public List<InsuranceDifference> getAllInsuranceDifference() {
         return insuranceDifferenceRepository.findAll();
+    }
+
+    @Override
+    public List<IDOutstandingDTO> getIDOutstandingBranchWise(List<String> segments) {
+        return outstandingRepository.getIDOutstandingBranchWise(segments);
+    }
+
+    @Override
+    public List<IDOutstandingDTO> getIDOutstandingSAWise(List<String> segments, List<String> insuranceParties) {
+        return outstandingRepository.getIDOutstandingSAWise(segments, insuranceParties);
+    }
+
+    @Override
+    public List<IDOutstandingDTO> getIDOutstandingPartyWise(List<String> segments, List<String> insuranceParties, String party) {
+        return outstandingRepository.getIDOutstandingPartyWise(segments, insuranceParties, party);
     }
 
     private boolean passesBusinessFilters(Outstanding o) {
@@ -258,8 +273,7 @@ public class OutstandingServiceImpl implements OutstandingService {
 
         if (party.contains("msil - (extended warranty claim recoverable)")) return false;
 
-        if (billNo.contains("rs/") || billNo.contains("op")
-                || billNo.contains("csi") || billNo.contains("tv")) return false;
+        if ( billNo.contains("op") || billNo.contains("tv")) return false;
 
         if (billNo.contains("mcp")) {
 
@@ -312,6 +326,13 @@ public class OutstandingServiceImpl implements OutstandingService {
             String party = getString(row, 2);
             LocalDate outstandingDate = getDate(row, 3);
             String billNo = getString(row, 4);
+
+            if (billNo != null) {
+                String normalizedBill = billNo.trim();
+                if (normalizedBill.matches("(?i).*/(rs|csi)/.*")) {
+                    o.setSegment("Spares");
+                }
+            }
 
             // ✅ PARTY NAME FIX FOR BI ROWS
             if (billNo != null && billNo.trim().toUpperCase().contains("BI")) {
@@ -576,8 +597,10 @@ public class OutstandingServiceImpl implements OutstandingService {
 
         // PartyName is already corrected in parseRow()
         consolidated.setPartyName(latest.getPartyName());
-
         consolidated.setSegment(latest.getSegment());
+
+
+
         consolidated.setLedgerGroupName(latest.getLedgerGroupName());
         consolidated.setOutstandingDate(latest.getOutstandingDate());
         consolidated.setBillNo(latest.getBillNo());
