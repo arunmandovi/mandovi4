@@ -4,6 +4,7 @@ public class TotalOutstandingDTO {
     private String segment;
     private String salesMan;
     private String partyName;
+    private String billNo;
     private Double billAmt;
     private Double balanceAmt;
     private Double upToSeven;
@@ -14,10 +15,11 @@ public class TotalOutstandingDTO {
     public TotalOutstandingDTO() {
     }
 
-    public TotalOutstandingDTO(String segment, String salesMan, String partyName, Double billAmt, Double balanceAmt, Double upToSeven, Double eightToThirty, Double thirtyOneToNinty, Double grtNinty) {
+    public TotalOutstandingDTO(String segment, String salesMan, String partyName, String billNo, Double billAmt, Double balanceAmt, Double upToSeven, Double eightToThirty, Double thirtyOneToNinty, Double grtNinty) {
         this.segment = segment;
         this.salesMan = salesMan;
         this.partyName = partyName;
+        this.billNo = billNo;
         this.billAmt = billAmt;
         this.balanceAmt = balanceAmt;
         this.upToSeven = upToSeven;
@@ -48,6 +50,14 @@ public class TotalOutstandingDTO {
 
     public void setPartyName(String partyName) {
         this.partyName = partyName;
+    }
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
     }
 
     public Double getBillAmt() {
@@ -104,6 +114,7 @@ public class TotalOutstandingDTO {
                 "segment='" + segment + '\'' +
                 ", salesMan='" + salesMan + '\'' +
                 ", partyName='" + partyName + '\'' +
+                ", billNo='" + billNo + '\'' +
                 ", billAmt=" + billAmt +
                 ", balanceAmt=" + balanceAmt +
                 ", upToSeven=" + upToSeven +

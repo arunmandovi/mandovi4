@@ -200,21 +200,6 @@ public class OutstandingServiceImpl implements OutstandingService {
         return outstandingRepository.getInvoiceOutstandingPartyWise(segments, salesMans, party);
     }
 
-//    @Override
-//    public List<TotalOutstandingDTO> getInsuranceOutstandingBranchWise(List<String> segments) {
-//        return outstandingRepository.getIDOutstandingBranchWise(segments);
-//    }
-//
-//    @Override
-//    public List<TotalOutstandingDTO> getInsuranceOutstandingSAWise(List<String> segments, List<String> salesMans) {
-//        return outstandingRepository.getInsuranceOutstandingSAWise(segments, salesMans);
-//    }
-//
-//    @Override
-//    public List<TotalOutstandingDTO> getInsuranceOutstandingPartyWise(List<String> segments, List<String> salesMans, String party) {
-//        return outstandingRepository.getInsuranceOutstandingPartyWise(segments, salesMans, party);
-//    }
-
     @Override
     public List<TotalOutstandingDTO> getOthersOutstandingBranchWise(List<String> segments) {
         return outstandingRepository.getOthersOutstandingBranchWise(segments);
@@ -248,6 +233,21 @@ public class OutstandingServiceImpl implements OutstandingService {
     @Override
     public List<IDOutstandingDTO> getIDOutstandingPartyWise(List<String> segments, List<String> insuranceParties, String party) {
         return outstandingRepository.getIDOutstandingPartyWise(segments, insuranceParties, party);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getCustomerCollectOutstandingBranchWise(List<String> segments) {
+        return outstandingRepository.getCustomerCollectOutstandingBranchWise(segments);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getCustomerCollectOutstandingSAWise(List<String> segments, List<String> salesMans) {
+        return outstandingRepository.getCustomerCollectOutstandingSAWise(segments, salesMans);
+    }
+
+    @Override
+    public List<TotalOutstandingDTO> getCustomerCollectOutstandingPartyWise(List<String> segments, List<String> salesMans, String party) {
+        return outstandingRepository.getCustomerCollectOutstandingPartyWise(segments, salesMans, party);
     }
 
     private boolean passesBusinessFilters(Outstanding o) {

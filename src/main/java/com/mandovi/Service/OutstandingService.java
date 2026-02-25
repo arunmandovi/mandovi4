@@ -31,10 +31,6 @@ public interface OutstandingService {
     public List<TotalOutstandingDTO> getInvoiceOutstandingSAWise(List<String> segments, List<String> salesMans);
     public List<TotalOutstandingDTO> getInvoiceOutstandingPartyWise(List<String> segments, List<String> salesMans, String party );
 
-//    public List<TotalOutstandingDTO> getInsuranceOutstandingBranchWise (List<String> segments );
-//    public List<TotalOutstandingDTO> getInsuranceOutstandingSAWise(List<String> segments, List<String> salesMans);
-//    public List<TotalOutstandingDTO> getInsuranceOutstandingPartyWise (List<String> segments, List<String> salesMans, String party );
-
     public List<TotalOutstandingDTO> getOthersOutstandingBranchWise (List<String> segments );
     public List<TotalOutstandingDTO> getOthersOutstandingSAWise(List<String> segments, List<String> salesMans);
     public List<TotalOutstandingDTO> getOthersOutstandingPartyWise (List<String> segments, List<String> salesMans, String party);
@@ -44,4 +40,8 @@ public interface OutstandingService {
     public List<IDOutstandingDTO> getIDOutstandingBranchWise (List<String> segments);
     public List<IDOutstandingDTO> getIDOutstandingSAWise (List<String> segments, List<String> insuranceParties);
     public List<IDOutstandingDTO> getIDOutstandingPartyWise (List<String> segments, List<String> insuranceParties, String party);
+
+    public List<TotalOutstandingDTO> getCustomerCollectOutstandingBranchWise(List<String> segments );
+    public List<TotalOutstandingDTO> getCustomerCollectOutstandingSAWise(List<String> segments, List<String> salesMans );
+    public List<TotalOutstandingDTO> getCustomerCollectOutstandingPartyWise (List<String> segments, List<String> salesMans, String party );
 }
