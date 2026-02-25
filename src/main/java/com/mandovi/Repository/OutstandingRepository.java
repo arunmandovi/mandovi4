@@ -253,8 +253,8 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             WHERE o.billNo NOT LIKE '%RS/%'
              AND o.billNo NOT LIKE '%CSI/%'
              AND (
-                   o.billNo NOT LIKE 'BI/%'
-                   OR (o.billNo LIKE 'BI/%' AND (o.billAmt / 2) < o.paidAmt)
+                   o.billNo NOT LIKE '%BI/%'
+                   OR (o.billNo LIKE '%BI/%' AND (o.billAmt / 2) < o.paidAmt)
                  )
              AND (:segments is NULL OR o.segment IN (:segments))
             GROUP BY o.segment
@@ -269,8 +269,8 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             WHERE o.billNo NOT LIKE '%RS/%'
              AND o.billNo NOT LIKE '%CSI/%'
              AND (
-                   o.billNo NOT LIKE 'BI/%'
-                   OR (o.billNo LIKE 'BI/%' AND (o.billAmt / 2) < o.paidAmt)
+                   o.billNo NOT LIKE '%BI/%'
+                   OR (o.billNo LIKE '%BI/%' AND (o.billAmt / 2) < o.paidAmt)
                  )
              AND (:segments is NULL OR o.segment IN (:segments))
              AND (:salesMans IS NULL OR o.salesMan IN (:salesMans))
@@ -287,8 +287,8 @@ public interface OutstandingRepository extends JpaRepository<Outstanding, Intege
             WHERE o.billNo NOT LIKE '%RS/%'
              AND o.billNo NOT LIKE '%CSI/%'
              AND (
-                   o.billNo NOT LIKE 'BI/%'
-                   OR (o.billNo LIKE 'BI/%' AND (o.billAmt / 2) < o.paidAmt)
+                   o.billNo NOT LIKE '%BI/%'
+                   OR (o.billNo LIKE '%BI/%' AND (o.billAmt / 2) < o.paidAmt)
                  )
              AND (:segments is NULL OR o.segment IN (:segments))
              AND (:salesMans IS NULL OR o.salesMan IN (:salesMans))

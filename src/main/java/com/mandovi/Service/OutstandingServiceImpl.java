@@ -75,6 +75,7 @@ public class OutstandingServiceImpl implements OutstandingService {
                     Map.entry("appanna m s (ka12z4118)", Set.of(1655.0)),
                     Map.entry("joseph k f ka21z4650", Set.of(1000.0)),
                     Map.entry("reliance general insurance company limited - 11-09 - ka21ma2202", Set.of(497.0)),
+                    Map.entry("the new india assurance co ltd - 04-115 - ka21p2495", Set.of(924.0)),
                     Map.entry("universal sompo gic ltd - 22-35 - ka19mp2249", Set.of(-1426.0)),
                     Map.entry("kushalraj - 2353756490 - ka27n8942", Set.of(204.0)),
                     Map.entry("universal sompo gic ltd - 22-35 - ka21p4026", Set.of(610.0))
