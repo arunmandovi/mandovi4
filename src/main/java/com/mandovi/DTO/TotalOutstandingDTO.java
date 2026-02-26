@@ -5,6 +5,7 @@ public class TotalOutstandingDTO {
     private String salesMan;
     private String partyName;
     private String billNo;
+    private Integer dueSince;
     private Double billAmt;
     private Double balanceAmt;
     private Double upToSeven;
@@ -15,11 +16,12 @@ public class TotalOutstandingDTO {
     public TotalOutstandingDTO() {
     }
 
-    public TotalOutstandingDTO(String segment, String salesMan, String partyName, String billNo, Double billAmt, Double balanceAmt, Double upToSeven, Double eightToThirty, Double thirtyOneToNinty, Double grtNinty) {
+    public TotalOutstandingDTO(String segment, String salesMan, String partyName, String billNo, Integer dueSince, Double billAmt, Double balanceAmt, Double upToSeven, Double eightToThirty, Double thirtyOneToNinty, Double grtNinty) {
         this.segment = segment;
         this.salesMan = salesMan;
         this.partyName = partyName;
         this.billNo = billNo;
+        this.dueSince = dueSince;
         this.billAmt = billAmt;
         this.balanceAmt = balanceAmt;
         this.upToSeven = upToSeven;
@@ -58,6 +60,14 @@ public class TotalOutstandingDTO {
 
     public void setBillNo(String billNo) {
         this.billNo = billNo;
+    }
+
+    public Integer getDueSince() {
+        return dueSince;
+    }
+
+    public void setDueSince(Integer dueSince) {
+        this.dueSince = dueSince;
     }
 
     public Double getBillAmt() {
@@ -115,6 +125,7 @@ public class TotalOutstandingDTO {
                 ", salesMan='" + salesMan + '\'' +
                 ", partyName='" + partyName + '\'' +
                 ", billNo='" + billNo + '\'' +
+                ", dueSince=" + dueSince +
                 ", billAmt=" + billAmt +
                 ", balanceAmt=" + balanceAmt +
                 ", upToSeven=" + upToSeven +

@@ -6,6 +6,7 @@ public class IDOutstandingDTO {
     private String partyName;
     private String salesMan;
     private String billNo;
+    private Integer dueSince;
     private Double billAmt;
     private Double balanceAmt;
     private Double insuranceAmt;
@@ -18,12 +19,13 @@ public class IDOutstandingDTO {
     public IDOutstandingDTO() {
     }
 
-    public IDOutstandingDTO(String segment, String insuranceParty, String partyName, String salesMan, String billNo, Double billAmt, Double balanceAmt, Double insuranceAmt, Double differenceAmt, Double upToSeven, Double eightToThirty, Double thirtyOneToNinty, Double grtNinty) {
+    public IDOutstandingDTO(String segment, String insuranceParty, String partyName, String salesMan, String billNo, Integer dueSince, Double billAmt, Double balanceAmt, Double insuranceAmt, Double differenceAmt, Double upToSeven, Double eightToThirty, Double thirtyOneToNinty, Double grtNinty) {
         this.segment = segment;
         this.insuranceParty = insuranceParty;
         this.partyName = partyName;
         this.salesMan = salesMan;
         this.billNo = billNo;
+        this.dueSince = dueSince;
         this.billAmt = billAmt;
         this.balanceAmt = balanceAmt;
         this.insuranceAmt = insuranceAmt;
@@ -72,6 +74,14 @@ public class IDOutstandingDTO {
 
     public void setBillNo(String billNo) {
         this.billNo = billNo;
+    }
+
+    public Integer getDueSince() {
+        return dueSince;
+    }
+
+    public void setDueSince(Integer dueSince) {
+        this.dueSince = dueSince;
     }
 
     public Double getBillAmt() {
@@ -146,6 +156,7 @@ public class IDOutstandingDTO {
                 ", partyName='" + partyName + '\'' +
                 ", salesMan='" + salesMan + '\'' +
                 ", billNo='" + billNo + '\'' +
+                ", dueSince=" + dueSince +
                 ", billAmt=" + billAmt +
                 ", balanceAmt=" + balanceAmt +
                 ", insuranceAmt=" + insuranceAmt +
