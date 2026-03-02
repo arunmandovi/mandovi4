@@ -13,7 +13,7 @@ RUN mvn clean package -DskipTests
 
 # ====== Run Stage ======
 # Use lightweight JDK to run the jar
-FROM eclipse-temurin:21-jdk-alpine
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
 # Copy the built jar from the build stage
@@ -23,4 +23,4 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 
 # Start the Spring Boot application
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+ENTRYPOINT ["sh","-c","java -Dserver.port=$PORT -jar /app/app.jar"]
