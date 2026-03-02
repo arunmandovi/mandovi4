@@ -75,8 +75,10 @@ public class OutstandingServiceImpl implements OutstandingService {
                     Map.entry("appanna m s (ka12z4118)", Set.of(1655.0)),
                     Map.entry("joseph k f ka21z4650", Set.of(1000.0)),
                     Map.entry("reliance general insurance company limited - 11-09 - ka21ma2202", Set.of(497.0)),
+                    Map.entry("sbi general insurance co ltd - 25-74 - ka12mc1350", Set.of(-327.47)),
                     Map.entry("the new india assurance co ltd - 04-115 - ka21p2495", Set.of(924.0)),
                     Map.entry("universal sompo gic ltd - 22-35 - ka19mp2249", Set.of(-1426.0)),
+                    Map.entry("bajaj general insurance limited - 02-02 - ka21ma6193", Set.of(-934.0)),
                     Map.entry("kushalraj - 2353756490 - ka27n8942", Set.of(204.0)),
                     Map.entry("universal sompo gic ltd - 22-35 - ka21p4026", Set.of(610.0))
             );
@@ -521,7 +523,7 @@ public class OutstandingServiceImpl implements OutstandingService {
 
                         long daysDiff = Math.abs(ChronoUnit.DAYS.between(baseDate, nextDate));
 
-                        if (daysDiff <= 30) {
+                        if (daysDiff <= 62) {
                             group.add(next);
                             processed[j] = true;
                         }
@@ -590,8 +592,22 @@ public class OutstandingServiceImpl implements OutstandingService {
             return;
         }
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+//        Outstanding latest = rows.stream()
+//                .max(Comparator.comparing(o -> {
+//                    try {
+//                        return LocalDate.parse(o.getOutstandingDate(), formatter);
+//                    } catch (Exception e) {
+//                        return LocalDate.MIN;
+//                    }
+//                }))
+//                .orElseThrow();
+
         Outstanding latest = rows.stream()
-                .max(Comparator.comparing(Outstanding::getOutstandingDate))
+                .max(Comparator.comparing(
+                        r -> r.getBalanceAmt() == null ? 0.0 : r.getBalanceAmt()
+                ))
                 .orElseThrow();
 
         Outstanding consolidated = new Outstanding();
