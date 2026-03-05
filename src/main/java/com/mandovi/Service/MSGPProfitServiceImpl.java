@@ -49,8 +49,13 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
                 throw new RuntimeException("No Data found in Excel");
 
             String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
+            Cell yearCell = firstRow.getCell(3);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue()
+                    : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
 
-            msgpProfitRepository.deleteByMonth(uploadMonth);
+            msgpProfitRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
@@ -61,21 +66,17 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
                 msgpProfit.setLocationCode(row.getCell(1).getStringCellValue());
                 msgpProfit.setMonth(row.getCell(2).getStringCellValue());
 
-                //Convert Numeric Cell's year column's value to String
-                int num_year = (int) row.getCell(3).getNumericCellValue();
-                String year = String.valueOf(num_year);
-                msgpProfit.setYear(year);
+                Cell cell = row.getCell(3);
+
+                int num_year = (cell.getCellType() == CellType.NUMERIC)
+                        ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
+                msgpProfit.setYear(String.valueOf(num_year));
+
                 msgpProfit.setNetRetailDDL(round2Decimal(row.getCell(4).getNumericCellValue()));
                 msgpProfit.setNetRetailSelling(round2Decimal(row.getCell(5).getNumericCellValue()));
-
-                //Updating Sum of net retails value by dividing the net retails values from 100000
                 msgpProfit.setSumOfNetRetailDDL(round2Decimal(msgpProfit.getNetRetailDDL()/100000));
                 msgpProfit.setSumOfNetRetailSelling(round2Decimal(msgpProfit.getNetRetailSelling()/100000));
 
-                //Updating date column by as the first day of respective month mentioned in month column
-                msgpProfit.setDate("1-"+msgpProfit.getMonth());
-
-                //Updating city column by checking location code
                 String location_code = msgpProfit.getLocationCode();
                 if (bangaloreBranches.contains(location_code)) {
                     msgpProfit.setCity("Bangalore");
@@ -87,7 +88,6 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
                     msgpProfit.setCity("UNKNOWN");
                 }
 
-                //Updating branch based on location_code
                 if(location_code!= null){
                     switch (location_code) {
                         case "BMR": msgpProfit.setBranch("Balmatta"); break;
@@ -139,7 +139,6 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
                     }
                 }
 
-                //Updating qtr_wise & half_year column based on month
                 String month = msgpProfit.getMonth().trim().toUpperCase();
                 switch (month) {
                     case "APR", "MAY", "JUN" ->{ msgpProfit.setQtrWise("Qtr1"); msgpProfit.setHalfYear("H1");}
@@ -147,10 +146,7 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
                     case "OCT", "NOV", "DEC" ->{ msgpProfit.setQtrWise("Qtr3"); msgpProfit.setHalfYear("H2");}
                     case "JAN", "FEB", "MAR" ->{ msgpProfit.setQtrWise("Qtr4"); msgpProfit.setHalfYear("H2");}
                 }
-
                 msgpProfitRepository.save(msgpProfit);
-
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

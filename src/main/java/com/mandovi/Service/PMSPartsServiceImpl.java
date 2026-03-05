@@ -28,7 +28,6 @@ public class PMSPartsServiceImpl implements PMSPartsService {
     private static LocalDate getPeriodFromCell(Cell cell) {
         if (cell == null) return null;
 
-        // Case 1: Excel numeric date
         if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
             return cell.getDateCellValue()
                     .toInstant()
@@ -37,7 +36,6 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                     .withDayOfMonth(1);
         }
 
-        // Case 2: Month-Year stored as STRING (e.g. "Apr 2025")
         if (cell.getCellType() == CellType.STRING) {
             String value = cell.getStringCellValue().trim();
 
@@ -78,7 +76,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
             if (uploadPeriod == null) {
                 throw new RuntimeException("Invalid upload period in Excel");
             }
-            pmsPartsRepository.deleteByMonth(uploadPeriod);
+            pmsPartsRepository.deleteByPeriod(uploadPeriod);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
@@ -107,12 +105,10 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                 pmsParts.setRequired((int)row.getCell(4).getNumericCellValue());
                 pmsParts.setChanged((int)row.getCell(5).getNumericCellValue());
 
-                //Updating Double data type pms value from Intger required & changed column's values
                 Double required = Double.valueOf(pmsParts.getRequired());
                 Double changed = Double.valueOf(pmsParts.getChanged());
                 pmsParts.setPms(changed/required*100);
 
-                //Updating branch column using values from column location code
                 String locationCode = pmsParts.getLocationCode();
                 switch (locationCode.trim().toUpperCase()){
                     case "BMR": pmsParts.setBranch("Balmatta"); break;
@@ -163,7 +159,6 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                     default: pmsParts.setBranch("Unknown"); break;
                 }
 
-                // Auto update city based on location
                 String location = pmsParts.getLocationCode();
 
                 if (bangaloreBranches.contains(location)) {
@@ -176,7 +171,6 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                     pmsParts.setCity("Unknown");
                 }
 
-                //Updating month column using the value stored in date column
                 LocalDate date = pmsParts.getPeriod();
                 DateTimeFormatter sdf = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
                 pmsParts.setMonth(sdf.format(pmsParts.getPeriod()));

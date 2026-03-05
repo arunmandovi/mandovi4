@@ -23,7 +23,7 @@ public interface SalesRepository extends JpaRepository<Sales, Integer> {
             SELECT new com.mandovi.DTO.SalesSummaryDTO(
             s.city,
             null,
-            COUNT(s.invDate))
+            SUM(s.vin))
             FROM Sales s
             WHERE (:years IS NULL OR s.year IN (:years))
              AND (:months IS NULL OR s.month IN (:months))
@@ -39,7 +39,7 @@ public interface SalesRepository extends JpaRepository<Sales, Integer> {
             SELECT new com.mandovi.DTO.SalesSummaryDTO(
             null,
             s.branch,
-            COUNT(s.invDate))
+            SUM(s.vin))
             FROM Sales s
             WHERE (:years IS NULL OR s.year IN (:years))
              AND (:months IS NULL OR s.month IN (:months))

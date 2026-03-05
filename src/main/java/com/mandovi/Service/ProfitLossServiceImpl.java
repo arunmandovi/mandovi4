@@ -34,12 +34,14 @@ public class ProfitLossServiceImpl implements ProfitLossService {
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
-            // 1️⃣ Read header row
             Row headerRow = sheet.getRow(0);
             List<String> originalColumns = new ArrayList<>();
 
+            DataFormatter formatter = new DataFormatter();
+
             for (Cell cell : headerRow) {
-                originalColumns.add(cell.getStringCellValue().trim());
+                String headerValue = formatter.formatCellValue(cell).trim();
+                originalColumns.add(headerValue);
             }
 
             // 2️⃣ Build column index lookup

@@ -78,6 +78,7 @@ public class OutstandingServiceImpl implements OutstandingService {
                     Map.entry("sbi general insurance co ltd - 25-74 - ka12mc1350", Set.of(-327.47)),
                     Map.entry("the new india assurance co ltd - 04-115 - ka21p2495", Set.of(924.0)),
                     Map.entry("universal sompo gic ltd - 22-35 - ka19mp2249", Set.of(-1426.0)),
+                    Map.entry("sourabh y jain - 1934183546 - ka19mk3678", Set.of(-715.0)),
                     Map.entry("bajaj general insurance limited - 02-02 - ka21ma6193", Set.of(-934.0)),
                     Map.entry("kushalraj - 2353756490 - ka27n8942", Set.of(204.0)),
                     Map.entry("universal sompo gic ltd - 22-35 - ka21p4026", Set.of(610.0))
@@ -113,6 +114,7 @@ public class OutstandingServiceImpl implements OutstandingService {
 
             // Remove negative and zero balances
             outstandingRepository.deleteByBalanceAmtLessThanEqual(0.0);
+
             insuranceDifferenceRepository.deleteInsuranceDifferenceAll();
             insuranceDifferenceRepository.insertInsuranceDifferenceFromOutstanding();
 
@@ -289,7 +291,7 @@ public class OutstandingServiceImpl implements OutstandingService {
                 if (date.getYear() != 2026) return false;
 
             } catch (Exception e) {
-                return false; // invalid date format
+                return false;
             }
         }
 
@@ -337,7 +339,6 @@ public class OutstandingServiceImpl implements OutstandingService {
                 }
             }
 
-            // ✅ PARTY NAME FIX FOR BI ROWS
             if (billNo != null && billNo.trim().toUpperCase().contains("BI")) {
 
                 Map<String, String> companyMap = Map.of(
@@ -529,7 +530,6 @@ public class OutstandingServiceImpl implements OutstandingService {
                         }
 
                     } catch (Exception e) {
-                        continue; // skip invalid date format rows
                     }
                 }
 
@@ -592,18 +592,6 @@ public class OutstandingServiceImpl implements OutstandingService {
             return;
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-//        Outstanding latest = rows.stream()
-//                .max(Comparator.comparing(o -> {
-//                    try {
-//                        return LocalDate.parse(o.getOutstandingDate(), formatter);
-//                    } catch (Exception e) {
-//                        return LocalDate.MIN;
-//                    }
-//                }))
-//                .orElseThrow();
-
         Outstanding latest = rows.stream()
                 .max(Comparator.comparing(
                         r -> r.getBalanceAmt() == null ? 0.0 : r.getBalanceAmt()
@@ -612,7 +600,6 @@ public class OutstandingServiceImpl implements OutstandingService {
 
         Outstanding consolidated = new Outstanding();
 
-        // PartyName is already corrected in parseRow()
         consolidated.setPartyName(latest.getPartyName());
         consolidated.setSegment(latest.getSegment());
 

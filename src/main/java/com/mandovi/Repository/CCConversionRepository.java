@@ -11,6 +11,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CCConversionRepository extends JpaRepository<CCConversion, Integer> {
+
+    @Transactional
+    @Modifying
+    @Query ("DELETE FROM CCConversion c WHERE  c.month = :month AND c.year = :year")
+    void  deleteByMonthYear (@Param("month") String month, @Param("year") String year );
+
     @Query("""
             SELECT new com.mandovi.DTO.CCConversionDTO(
             c.branch,

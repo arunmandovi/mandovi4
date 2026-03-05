@@ -34,9 +34,6 @@ public class MSGP {
     @Column(name = "branch")
     private String branch;
 
-    @Column(name = "period")
-    private String period;
-
     @Column(name = "load_type")
     private String loadType;
 
@@ -52,7 +49,7 @@ public class MSGP {
     public MSGP() {
     }
 
-    public MSGP(Integer msgpSINo, String city, String locationCode, String year, String month, String serviceDescription, Double netRetailDDL, Double sumOfNetRetailDDL, String branch, String period, String loadType, String qtrWise, String halfYear, String financialYear) {
+    public MSGP(Integer msgpSINo, String city, String locationCode, String year, String month, String serviceDescription, Double netRetailDDL, Double sumOfNetRetailDDL, String branch, String loadType, String qtrWise, String halfYear, String financialYear) {
         this.msgpSINo = msgpSINo;
         this.city = city;
         this.locationCode = locationCode;
@@ -62,7 +59,6 @@ public class MSGP {
         this.netRetailDDL = netRetailDDL;
         this.sumOfNetRetailDDL = sumOfNetRetailDDL;
         this.branch = branch;
-        this.period = period;
         this.loadType = loadType;
         this.qtrWise = qtrWise;
         this.halfYear = halfYear;
@@ -85,21 +81,13 @@ public class MSGP {
         this.city = city;
     }
 
-    public String getLocationCode() { return locationCode; }
+    public String getLocationCode() {
+        return locationCode;
+    }
 
-    public void setLocationCode(String locationCode) { this.locationCode = locationCode; }
-
-    public String getServiceDescription() { return serviceDescription; }
-
-    public void setServiceDescription(String serviceDescription) { this.serviceDescription = serviceDescription; }
-
-    public Double getNetRetailDDL() { return netRetailDDL; }
-
-    public void setNetRetailDDL(Double netRetailDDL) { this.netRetailDDL = netRetailDDL; }
-
-    public Double getSumOfNetRetailDDL() { return sumOfNetRetailDDL; }
-
-    public void setSumOfNetRetailDDL(Double sumOfNetRetailDDL) { this.sumOfNetRetailDDL = sumOfNetRetailDDL; }
+    public void setLocationCode(String locationCode) {
+        this.locationCode = locationCode;
+    }
 
     public String getYear() {
         return year;
@@ -117,6 +105,30 @@ public class MSGP {
         this.month = month;
     }
 
+    public String getServiceDescription() {
+        return serviceDescription;
+    }
+
+    public void setServiceDescription(String serviceDescription) {
+        this.serviceDescription = serviceDescription;
+    }
+
+    public Double getNetRetailDDL() {
+        return netRetailDDL;
+    }
+
+    public void setNetRetailDDL(Double netRetailDDL) {
+        this.netRetailDDL = netRetailDDL;
+    }
+
+    public Double getSumOfNetRetailDDL() {
+        return sumOfNetRetailDDL;
+    }
+
+    public void setSumOfNetRetailDDL(Double sumOfNetRetailDDL) {
+        this.sumOfNetRetailDDL = sumOfNetRetailDDL;
+    }
+
     public String getBranch() {
         return branch;
     }
@@ -125,29 +137,37 @@ public class MSGP {
         this.branch = branch;
     }
 
-    public String getPeriod() {
-        return period;
+    public String getLoadType() {
+        return loadType;
     }
 
-    public void setPeriod(String period) {
-        this.period = period;
+    public void setLoadType(String loadType) {
+        this.loadType = loadType;
     }
 
-    public String getLoadType() { return loadType; }
+    public String getQtrWise() {
+        return qtrWise;
+    }
 
-    public void setLoadType(String loadType) { this.loadType = loadType; }
+    public void setQtrWise(String qtrWise) {
+        this.qtrWise = qtrWise;
+    }
 
-    public String getQtrWise() { return qtrWise; }
+    public String getHalfYear() {
+        return halfYear;
+    }
 
-    public void setQtrWise(String qtrWise) { this.qtrWise = qtrWise; }
+    public void setHalfYear(String halfYear) {
+        this.halfYear = halfYear;
+    }
 
-    public String getHalfYear() { return halfYear; }
+    public String getFinancialYear() {
+        return financialYear;
+    }
 
-    public void setHalfYear(String halfYear) { this.halfYear = halfYear; }
-
-    public String getFinancialYear() { return financialYear; }
-
-    public void setFinancialYear(String financialYear) { this.financialYear = financialYear; }
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
+    }
 
     @Override
     public String toString() {
@@ -159,10 +179,9 @@ public class MSGP {
                 ", month='" + month + '\'' +
                 ", serviceDescription='" + serviceDescription + '\'' +
                 ", netRetailDDL=" + netRetailDDL +
-                ", sumOfNetRetail_DDL=" + sumOfNetRetailDDL +
+                ", sumOfNetRetailDDL=" + sumOfNetRetailDDL +
                 ", branch='" + branch + '\'' +
-                ", period='" + period + '\'' +
-                ", loadType=" + loadType + '\'' +
+                ", loadType='" + loadType + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +
                 ", halfYear='" + halfYear + '\'' +
                 ", financialYear='" + financialYear + '\'' +

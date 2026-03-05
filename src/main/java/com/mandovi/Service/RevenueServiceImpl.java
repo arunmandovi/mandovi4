@@ -44,21 +44,25 @@ public class RevenueServiceImpl implements RevenueService {
                 throw new RuntimeException("No Data found in Excel");
 
             String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
-            revenueRepository.deleteByMonth(uploadMonth);
+            Cell yearCell = firstRow.getCell(0);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+
+            revenueRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
 
                 Revenue revenue = new Revenue();
 
+                Cell cell = row.getCell(0);
+                int num_year = (cell.getCellType() == CellType.NUMERIC)
+                        ? (int) cell.getNumericCellValue() : Integer.valueOf(cell.getStringCellValue());
+                revenue.setYear(String.valueOf(num_year));
+
                 revenue.setCity(row.getCell(1).getStringCellValue());
                 revenue.setMonth(row.getCell(2).getStringCellValue());
-                int year = (int) row.getCell(0).getNumericCellValue();
-                revenue.setYear(String.valueOf(year));
-
-                //Updating period column by concating columns month & year
-                revenue.setPeriod(revenue.getMonth()+"-"+revenue.getYear());
-
                 revenue.setBranchSINo((int)row.getCell(4).getNumericCellValue());
                 revenue.setBranch(row.getCell(5).getStringCellValue());
 
@@ -78,7 +82,6 @@ public class RevenueServiceImpl implements RevenueService {
                 revenue.setSrAndBrTotalLastYear(revenue.getSrLabourLastYear()+revenue.getBrLabourLastYear()+revenue.getSrSparesLastYear()+revenue.getBrSparesLastYear());
                 revenue.setSrAndBrTotalCurrentYear(revenue.getSrLabourCurrentYear()+revenue.getBrLabourCurrentYear()+revenue.getSrSparesCurrentYear()+revenue.getBrSparesCurrentYear());
 
-                //Updating ALlGrowth columns by calculating the values from last & current year columns
                 revenue.setSrLabourGrowth(growth(revenue.getSrLabourLastYear(), revenue.getSrLabourCurrentYear()));
                 revenue.setBrLabourGrowth(growth(revenue.getBrLabourLastYear(), revenue.getBrLabourCurrentYear()));
                 revenue.setSrAndBrLabourGrowth(growth(revenue.getSrAndBrLabourLastYear(), revenue.getSrAndBrLabourCurrentYear()));
@@ -87,7 +90,6 @@ public class RevenueServiceImpl implements RevenueService {
                 revenue.setSrAndBrSparesGrowth(growth(revenue.getSrAndBrSparesLastYear(), revenue.getSrAndBrSparesCurrentYear()));
                 revenue.setSrAndBrTotalGrowth(growth(revenue.getSrAndBrTotalLastYear(), revenue.getSrAndBrTotalCurrentYear()));
 
-                //Updating qtr_wise & half_year column by checking month
                 switch (revenue.getMonth().trim().toUpperCase()){
                     case "APR", "MAY", "JUN" -> { revenue.setQtrWise("Qtr1"); revenue.setHalfYear("H1"); }
                     case "JUL", "AUG", "SEP" -> { revenue.setQtrWise("Qtr2"); revenue.setHalfYear("H1"); }

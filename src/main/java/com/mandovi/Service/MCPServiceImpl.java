@@ -57,7 +57,11 @@ public class MCPServiceImpl implements MCPService {
                 throw new RuntimeException("No Data found in Excel ");
 
             String uploadMonth = firstRow.getCell(3).getStringCellValue().trim();
-            mcpRepository.deleteByMonth(uploadMonth);
+            Cell yearCell = firstRow.getCell(4);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+            mcpRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
@@ -69,19 +73,14 @@ public class MCPServiceImpl implements MCPService {
                 mcp.setModel(row.getCell(2).getStringCellValue());
                 mcp.setMonth(row.getCell(3).getStringCellValue());
 
-                //Updating value for year column from Integer cell
-                switch (row.getCell(4).getCellType()){
-                    case NUMERIC : int num_year = (int) row.getCell(4).getNumericCellValue();
-                    mcp.setYear(String.valueOf(num_year));
-                    break;
-                    case STRING: mcp.setYear(row.getCell(4).getStringCellValue());
-                    default: mcp.setYear("");
-                }
+                Cell cell = row.getCell(4);
+                int num_year = (cell.getCellType() == CellType.NUMERIC)
+                        ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
+                mcp.setYear(String.valueOf(num_year));
 
                 mcp.setMcpQuantity((int) row.getCell(5).getNumericCellValue());
                 mcp.setAmountCollected(row.getCell(6).getNumericCellValue());
 
-                //Updating the branch column based on location
                 String location = mcp.getLocation().trim().toUpperCase();
                 switch (location) {
                     case "BALMATTA WORKSHOP" -> mcp.setBranch("Balmatta");
@@ -121,10 +120,6 @@ public class MCPServiceImpl implements MCPService {
                     case "B.H ROAD-R(3S)" -> mcp.setBranch("Gowribidanur");
                 }
 
-                //Updating first day of month which mentioned in month column
-                mcp.setDate("1-"+mcp.getMonth());
-
-                //Updating the channel based on model
                 String model = mcp.getModel();
                 if (arenaModels.contains(model)) {
                     mcp.setChannel("ARENA");
@@ -134,7 +129,6 @@ public class MCPServiceImpl implements MCPService {
                     mcp.setChannel("UNKNOWN");
                 }
 
-                //Updating the qtr_wise & half_year column based on month
                 String month = mcp.getMonth().trim().toUpperCase();
                 switch (month) {
                     case "APR", "MAY", "JUN" ->{ mcp.setQtrWise("Qtr1"); mcp.setHalfYear("H1");}

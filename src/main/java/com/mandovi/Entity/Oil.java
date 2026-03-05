@@ -34,9 +34,6 @@ public class Oil {
     @Column(name = "net_retail_selling")
     private Double netRetailSelling;
 
-    @Column(name = "period")
-    private String period;
-
     @Column(name = "qtr_wise")
     private String qtrWise;
 
@@ -46,7 +43,7 @@ public class Oil {
     public Oil() {
     }
 
-    public Oil(Integer oilSINo, String city, String branch, String month, String year, String oilType, Double netRetailQty, Double netRetailDDL, Double netRetailSelling, String period, String qtrWise, String halfYear) {
+    public Oil(Integer oilSINo, String city, String branch, String month, String year, String oilType, Double netRetailQty, Double netRetailDDL, Double netRetailSelling, String qtrWise, String halfYear) {
         this.oilSINo = oilSINo;
         this.city = city;
         this.branch = branch;
@@ -56,7 +53,6 @@ public class Oil {
         this.netRetailQty = netRetailQty;
         this.netRetailDDL = netRetailDDL;
         this.netRetailSelling = netRetailSelling;
-        this.period = period;
         this.qtrWise = qtrWise;
         this.halfYear = halfYear;
     }
@@ -133,14 +129,6 @@ public class Oil {
         this.netRetailSelling = netRetailSelling;
     }
 
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
     public String getQtrWise() {
         return qtrWise;
     }
@@ -169,7 +157,6 @@ public class Oil {
                 ", netRetailQty=" + netRetailQty +
                 ", netRetailDDL=" + netRetailDDL +
                 ", netRetailSelling=" + netRetailSelling +
-                ", period='" + period + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +
                 ", halfYear='" + halfYear + '\'' +
                 '}';

@@ -21,8 +21,8 @@ public interface TATRepository extends JpaRepository<TAT,Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM TAT t WHERE t.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM TAT t WHERE t.month = :month AND t.year = :year")
+    void deleteByMonthYear(@Param("month") String month, @Param("year") String year );
 
     @Modifying
     @Transactional

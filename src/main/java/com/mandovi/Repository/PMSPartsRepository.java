@@ -24,7 +24,7 @@ public interface PMSPartsRepository extends JpaRepository<PMSParts, Integer> {
     @Transactional
     @Modifying
     @Query("DELETE FROM PMSParts p WHERE p.period = :period")
-    void deleteByMonth(@Param("period") LocalDate period);
+    void deleteByPeriod(@Param("period") LocalDate period);
 
     //Group  By city
     @Query("""

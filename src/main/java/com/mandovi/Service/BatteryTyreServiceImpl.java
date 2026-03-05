@@ -32,7 +32,12 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
                 throw new RuntimeException("No Data found in Excel");
 
             String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
-            batteryTyreRepository.deleteByMonth(uploadMonth);
+            Cell yearCell = firstRow.getCell(3);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+
+            batteryTyreRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
@@ -44,23 +49,16 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
                 batteryTyre.setBranch(row.getCell(1).getStringCellValue());
                 batteryTyre.setMonth(row.getCell(2).getStringCellValue());
 
-                //Converting Integer cell's year into String
-                switch (row.getCell(3).getCellType()){
-                    case NUMERIC -> batteryTyre.setYear(String.valueOf((int) row.getCell(3).getNumericCellValue()));
-                    case STRING -> batteryTyre.setYear(row.getCell(3).getStringCellValue());
-                    default -> batteryTyre.setYear("UNKNOWN");
-                }
-                batteryTyre.setOilType(row.getCell(4).getStringCellValue());
+                Cell cell = row.getCell(3);
+                int num_year = (cell.getCellType() == CellType.NUMERIC)
+                        ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
+                batteryTyre.setYear(String.valueOf(num_year));
 
+                batteryTyre.setOilType(row.getCell(4).getStringCellValue());
                 batteryTyre.setSumOfNetRetailQTY((int)   row.getCell(5).getNumericCellValue());
                 batteryTyre.setSumOfNetRetailDDL(row.getCell(6).getNumericCellValue());
                 batteryTyre.setSumOfNetRetailSelling(row.getCell(7).getNumericCellValue());
 
-                //Updating the column period from Concating columns Month & Year
-                batteryTyre.setPeriod(batteryTyre.getMonth()+"-"+batteryTyre.getYear());
-
-
-                //Updating the column Qtr_Wise & half-Year by comparing the values from month column
                 String month = batteryTyre.getMonth();
                 switch (month){
                     case "Apr", "May", "Jun" -> { batteryTyre.setQtrWise("Qtr1"); batteryTyre.setHalfYear("H1"); }

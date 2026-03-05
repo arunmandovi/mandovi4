@@ -25,8 +25,9 @@ public interface LabourRepository extends JpaRepository<Labour, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Labour l WHERE l.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM Labour l WHERE l.month = :month AND l.year = :year")
+    void deleteByMonthYear(@Param("month") String month,
+                           @Param("year") String year );
 
     //Group by city
     @Query("""

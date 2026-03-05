@@ -68,7 +68,7 @@ public class MGAServiceImpl implements MGAService {
                 throw new RuntimeException("No Data found in Excel");
 
             LocalDate uploadDate = firstRow.getCell(0).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            mgaRepository.deleteByMonth(uploadDate);
+            mgaRepository.deleteByDate(uploadDate);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);

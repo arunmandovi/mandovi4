@@ -22,8 +22,8 @@ public interface SparesRepository extends JpaRepository<Spares, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Spares s WHERE s.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM Spares s WHERE s.month = :month AND s.year = :year")
+    void deleteByMonthYear(@Param("month") String month, @Param("year") String year );
 
     //Group by city
     @Query("""

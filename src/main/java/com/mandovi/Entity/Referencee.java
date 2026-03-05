@@ -25,9 +25,6 @@ public class Referencee {
     @Column(name = "year")
     private String year;
 
-    @Column(name = "period")
-    private String period;
-
     @Column(name = "channel")
     private String channel;
 
@@ -55,14 +52,13 @@ public class Referencee {
     public Referencee() {
     }
 
-    public Referencee(Integer referenceSINO, String city, String branch, String groupDesignation, String month, String year, String period, String channel, Integer referencee, Integer enquiry, Integer booking, Integer invoice, String financialYear, String qtrWise, String halfYear) {
+    public Referencee(Integer referenceSINO, String city, String branch, String groupDesignation, String month, String year, String channel, Integer referencee, Integer enquiry, Integer booking, Integer invoice, String financialYear, String qtrWise, String halfYear) {
         this.referenceSINO = referenceSINO;
         this.city = city;
         this.branch = branch;
         this.groupDesignation = groupDesignation;
         this.month = month;
         this.year = year;
-        this.period = period;
         this.channel = channel;
         this.referencee = referencee;
         this.enquiry = enquiry;
@@ -119,14 +115,6 @@ public class Referencee {
 
     public void setYear(String year) {
         this.year = year;
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
     }
 
     public String getChannel() {
@@ -202,7 +190,6 @@ public class Referencee {
                 ", groupDesignation='" + groupDesignation + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
-                ", period='" + period + '\'' +
                 ", channel='" + channel + '\'' +
                 ", referencee=" + referencee +
                 ", enquiry=" + enquiry +

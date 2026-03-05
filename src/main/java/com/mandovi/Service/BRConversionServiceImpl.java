@@ -9,10 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class BRConversionServiceImpl implements BRConversionService {
@@ -46,8 +43,15 @@ public class BRConversionServiceImpl implements BRConversionService {
                 throw new RuntimeException("No data found in Excel");
 
             String uploadMonth = firstDataRow.getCell(2).getStringCellValue().trim();
+            Cell yearCell = firstDataRow.getCell(3);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) firstDataRow.getCell(3).getNumericCellValue()
+                    : Integer.parseInt(yearCell.getStringCellValue().trim());
+            String uploadYear = String.valueOf(numYear);
 
-            brConversionRepository.deleteByMonth(uploadMonth);
+            brConversionRepository.deleteByMonthYear(uploadMonth, uploadYear);
+
+
             System.out.println("Deleted existing records for: " + uploadMonth );
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
@@ -60,19 +64,10 @@ public class BRConversionServiceImpl implements BRConversionService {
                 brConversion.setBranch(row.getCell(1).getStringCellValue());
                 brConversion.setMonth(row.getCell(2).getStringCellValue());
 
-                //Checking the year column has string value ot numeric value
-                switch (row.getCell(3).getCellType()){
-                    case NUMERIC :
-                        int num_year = (int)row.getCell(3).getNumericCellValue();
-                        brConversion.setYear(String.valueOf(num_year));
-                        break;
-                    case STRING:
-                        brConversion.setYear(row.getCell(3).getStringCellValue());
-                        break;
-                    default:
-                        brConversion.setYear("");
-                        break;
-                }
+                Cell cell = row.getCell(3);
+                int numberYear = (cell.getCellType() == CellType.NUMERIC)
+                        ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
+                brConversion.setYear(String.valueOf(numberYear));
 
                 brConversion.setChannel(row.getCell(4).getStringCellValue());
                 brConversion.setLabourAmt(row.getCell(5).getNumericCellValue());
@@ -85,7 +80,6 @@ public class BRConversionServiceImpl implements BRConversionService {
                 brConversion.setGrandTotal(brConversion.getNo() + brConversion.getBrConversion());
 
 
-                //Updating the columns period,Qtr_wise and Half_Year Columns Using the value from month column
                 String month = brConversion.getMonth();
                 String period = "1-"+month;
                 brConversion.setPeriod(period);

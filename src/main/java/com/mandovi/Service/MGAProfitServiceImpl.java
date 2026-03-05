@@ -29,7 +29,6 @@ public class MGAProfitServiceImpl implements MGAProfitService{
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
-            // Define location Codes for respective Cities
             Set<String> bangaloreLocations = new HashSet<>(Arrays.asList(
                     "BKH","BNG","BSN","CDE","CMJ","GRB","HNR","JPN",
                     "KDH","MAF","MLU","NXS","RJN","VDR","VJN","WGR","YLH","YPR" ));
@@ -44,7 +43,12 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                 throw new RuntimeException("No Data found in Excel");
 
             String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
-            mgaProfitRepository.deleteByMonth(uploadMonth);
+            Cell yearCell = firstRow.getCell(3);
+            int numberYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numberYear);
+
+            mgaProfitRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i=1; i<= sheet.getLastRowNum(); i++){
                 Row row = sheet.getRow(i);
@@ -57,14 +61,10 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                 mgaProfit.setMonth(row.getCell(2).getStringCellValue());
 
                 Cell cell = row.getCell(3);
-                switch (cell.getCellType()){
-                    case STRING -> mgaProfit.setYear(row.getCell(3).getStringCellValue());
-                    case NUMERIC -> {
-                        int numYear = (int) row.getCell(3).getNumericCellValue();
-                        String year = String.valueOf((Integer.parseInt(String.valueOf(numYear))));
-                        mgaProfit.setYear(year);
-                    }
-                }
+                int numYear = (cell.getCellType() == CellType.NUMERIC)
+                        ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
+                mgaProfit.setYear(String.valueOf(numYear));
+
                 mgaProfit.setNetRetailDD(row.getCell(4).getNumericCellValue());
                 mgaProfit.setNetRetailSell(row.getCell(5).getNumericCellValue());
                 mgaProfit.setNetRetailDDL(mgaProfit.getNetRetailDD()/100000);

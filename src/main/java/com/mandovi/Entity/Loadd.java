@@ -98,9 +98,6 @@ public class Loadd {
     @Column(name = "service_load")
     private Integer serviceLoad;
 
-    @Column(name = "jc_bill_date")
-    private LocalDate jcBillDate;
-
     @Column(name = "channel")
     private String channel;
 
@@ -125,7 +122,7 @@ public class Loadd {
     public Loadd() {
     }
 
-    public Loadd(Integer loadSINo, String location, String serviceTypeCode, String year, String month, String modelChannel, Integer serviceLoad, LocalDate jcBillDate, String channel, String city, String branch, String financialYear, String loadType, String qtrWise, String halfYear) {
+    public Loadd(Integer loadSINo, String location, String serviceTypeCode, String year, String month, String modelChannel, Integer serviceLoad, String channel, String city, String branch, String financialYear, String loadType, String qtrWise, String halfYear) {
         this.loadSINo = loadSINo;
         this.location = location;
         this.serviceTypeCode = serviceTypeCode;
@@ -133,7 +130,6 @@ public class Loadd {
         this.month = month;
         this.modelChannel = modelChannel;
         this.serviceLoad = serviceLoad;
-        this.jcBillDate = jcBillDate;
         this.channel = channel;
         this.city = city;
         this.branch = branch;
@@ -197,14 +193,6 @@ public class Loadd {
 
     public void setServiceLoad(Integer serviceLoad) {
         this.serviceLoad = serviceLoad;
-    }
-
-    public LocalDate getJcBillDate() {
-        return jcBillDate;
-    }
-
-    public void setJcBillDate(LocalDate jcBillDate) {
-        this.jcBillDate = jcBillDate;
     }
 
     public String getChannel() {
@@ -273,7 +261,6 @@ public class Loadd {
                 ", month='" + month + '\'' +
                 ", modelChannel='" + modelChannel + '\'' +
                 ", serviceLoad=" + serviceLoad +
-                ", jcBillDate=" + jcBillDate +
                 ", channel='" + channel + '\'' +
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +

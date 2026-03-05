@@ -42,6 +42,7 @@ public class CCConversionServiceImpl implements CCConversionService {
                     Map.entry("GAYATHRI", LocalDate.of(2025, 4, 16)),
                     Map.entry("VISHAKA", LocalDate.of(2025, 4, 16)),
                     Map.entry("SOUJANYA", LocalDate.of(2025, 6, 16)),
+                    Map.entry("VIDHYASHREE", LocalDate.of(2026, 1, 21)),
                     Map.entry("NAMITHA", LocalDate.of(2025, 7, 28))
             )),
 
@@ -115,48 +116,46 @@ public class CCConversionServiceImpl implements CCConversionService {
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
+            Row firstRow = sheet.getRow(1);
+            String uploadMonth = firstRow.getCell(2).getStringCellValue();
+            Cell yearCell = firstRow.getCell(3);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+
+            ccConversionRepository.deleteByMonthYear(uploadMonth, uploadYear);
+
             for (int i = 1; i <= sheet.getLastRowNum(); i++){
                 Row row = sheet.getRow(i);
                 if (row == null)continue;
 
                 CCConversion ccConversion = new CCConversion();
-                Cell cell = row.getCell(0);
-                LocalDate localDate = null;
 
-                if (cell != null) {
-                    if (cell.getCellType() == CellType.NUMERIC) {
-                        Date date = cell.getDateCellValue();
-                        localDate = date.toInstant()
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDate();
-                    } else if (cell.getCellType() == CellType.STRING) {
-                        String dateStr = cell.getStringCellValue();
-                        localDate = LocalDate.parse(dateStr);
-                    }
-                }
-                ccConversion.setCcConversionDate(localDate);
-                DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMM");
-                ccConversion.setMonth(monthFormatter.format(ccConversion.getCcConversionDate()));
-
-                ccConversion.setBranch(row.getCell(1).getStringCellValue());
-                ccConversion.setCceName(row.getCell(2).getStringCellValue());
+                ccConversion.setBranch(row.getCell(0).getStringCellValue());
+                ccConversion.setCceName(row.getCell(1).getStringCellValue());
                 LocalDate doj = DOJ_MAP
                         .getOrDefault(ccConversion.getBranch(), Map.of())
                         .get(ccConversion.getCceName());
-
                 if (doj != null) {
                     ccConversion.setDateOfJoin(doj);
                 }
 
-                ccConversion.setPmsAppt((int)row.getCell(3).getNumericCellValue());
-                ccConversion.setPmsConversion((int)row.getCell(4).getNumericCellValue());
+                ccConversion.setMonth(row.getCell(2).getStringCellValue());
+
+                Cell year_cell = row.getCell(3);
+                int num_year = (year_cell.getCellType() == CellType.NUMERIC)
+                        ? (int) yearCell.getNumericCellValue() : Integer.parseInt(year_cell.getStringCellValue());
+                ccConversion.setYear(String.valueOf(num_year));
+
+                ccConversion.setPmsAppt((int)row.getCell(4).getNumericCellValue());
+                ccConversion.setPmsConversion((int)row.getCell(5).getNumericCellValue());
                 Double percentagePMS = 0.0;
                 if (ccConversion.getPmsAppt() != null && ccConversion.getPmsAppt() > 0){
                     percentagePMS = ccConversion.getPmsConversion() * 1.0 / ccConversion.getPmsAppt() * 100;
                 }
                 ccConversion.setPercentagePMSConversion(percentagePMS);
-                ccConversion.setFrsAppt((int)row.getCell(6).getNumericCellValue());
-                ccConversion.setFrsConversion((int)row.getCell(7).getNumericCellValue());
+                ccConversion.setFrsAppt((int)row.getCell(7).getNumericCellValue());
+                ccConversion.setFrsConversion((int)row.getCell(8).getNumericCellValue());
                 Double percentageFRS = 0.0;
                 if (ccConversion.getFrsAppt() != null && ccConversion.getFrsAppt() > 0){
                     percentageFRS = ccConversion.getFrsConversion() * 1.0 / ccConversion.getFrsAppt() / 100;

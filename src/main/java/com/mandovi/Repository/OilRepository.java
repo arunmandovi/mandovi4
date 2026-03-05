@@ -22,8 +22,8 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Oil o WHERE o.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM Oil o WHERE o.month = :month AND o.year = :year")
+    void deleteByMonthYear(@Param("month") String month, @Param("year") String year );
 
     //Group by city
     @Query("""

@@ -37,7 +37,12 @@ public class TATServiceImpl implements TATService {
                 throw new RuntimeException("No Data found in Excel");
 
             String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
-            tatRepository.deleteByMonth(uploadMonth);
+            Cell yearCell = firstRow.getCell(3);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+
+            tatRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
@@ -48,27 +53,23 @@ public class TATServiceImpl implements TATService {
                 tat.setCity(row.getCell(0).getStringCellValue());
                 tat.setBranch(row.getCell(1).getStringCellValue());
                 tat.setMonth(row.getCell(2).getStringCellValue());
-                //Converting Integer cell's  year into String
-                int num_year = (int) row.getCell(3).getNumericCellValue();
-                String year = String.valueOf(num_year);
-                tat.setYear(year);
+
+                Cell year_cell = row.getCell(3);
+                int num_year = (year_cell.getCellType() == CellType.NUMERIC)
+                        ? (int) year_cell.getNumericCellValue() : Integer.parseInt(year_cell.getStringCellValue());
+                tat.setYear(String.valueOf(num_year));
+
                 tat.setLinkServiceType(row.getCell(4).getStringCellValue());
 
                 Cell cell = row.getCell(5);
                 DataFormatter formatter = new DataFormatter();
-                String raw = formatter.formatCellValue(cell); // ALWAYS STRING
+                String raw = formatter.formatCellValue(cell);
 
                 if(raw != null && !raw.isBlank()){
-                    String timeFormatted = raw.replace(".", ":"); // 100.05.02 -> 100:05:02
+                    String timeFormatted = raw.replace(".", ":");
                     tat.setAverageOfOpenToClose(timeFormatted);
                 }
 
-
-                //Updating the column period by concating the columns month & year and "-" in between
-                String period = tat.getMonth()+"-"+tat.getYear();
-                tat.setPeriod(period);
-
-                //Updating the column Qtr_Wise & Half-Year by comparing the values from colum Month
                 String month = tat.getMonth().trim().toUpperCase();
                 switch (month) {
                     case "APR", "MAY", "JUN" -> { tat.setQtrWise("Qtr1"); tat.setHalfYear("H1"); }

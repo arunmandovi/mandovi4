@@ -19,6 +19,9 @@ public class ServiceLoad {
     @Column (name = "service_type")
     private String serviceType;
 
+    @Column (name = "service_main_type")
+    private String serviceMainType;
+
     @Column (name = "service_sub_type")
     private String serviceSubType;
 
@@ -40,11 +43,12 @@ public class ServiceLoad {
     public ServiceLoad() {
     }
 
-    public ServiceLoad(Integer serviceLoadSINo, String city, String branch, String serviceType, String serviceSubType, String month, String year, String financialYear, String channel, Integer serviceLoad) {
+    public ServiceLoad(Integer serviceLoadSINo, String city, String branch, String serviceType, String serviceMainType, String serviceSubType, String month, String year, String financialYear, String channel, Integer serviceLoad) {
         this.serviceLoadSINo = serviceLoadSINo;
         this.city = city;
         this.branch = branch;
         this.serviceType = serviceType;
+        this.serviceMainType = serviceMainType;
         this.serviceSubType = serviceSubType;
         this.month = month;
         this.year = year;
@@ -83,6 +87,14 @@ public class ServiceLoad {
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType;
+    }
+
+    public String getServiceMainType() {
+        return serviceMainType;
+    }
+
+    public void setServiceMainType(String serviceMainType) {
+        this.serviceMainType = serviceMainType;
     }
 
     public String getServiceSubType() {
@@ -140,6 +152,7 @@ public class ServiceLoad {
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
                 ", serviceType='" + serviceType + '\'' +
+                ", serviceMainType='" + serviceMainType + '\'' +
                 ", serviceSubType='" + serviceSubType + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +

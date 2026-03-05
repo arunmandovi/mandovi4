@@ -34,9 +34,6 @@ public class MCP {
     @Column(name = "branch")
     private String branch;
 
-    @Column(name = "date")
-    private String date;
-
     @Column(name = "channel")
     private String channel;
 
@@ -49,7 +46,7 @@ public class MCP {
     public MCP() {
     }
 
-    public MCP(Integer mcpSINo, String city, String location, String model, String month, String year, Integer mcpQuantity, Double amountCollected, String branch, String date, String channel, String qtrWise, String halfYear) {
+    public MCP(Integer mcpSINo, String city, String location, String model, String month, String year, Integer mcpQuantity, Double amountCollected, String branch, String channel, String qtrWise, String halfYear) {
         this.mcpSINo = mcpSINo;
         this.city = city;
         this.location = location;
@@ -59,7 +56,6 @@ public class MCP {
         this.mcpQuantity = mcpQuantity;
         this.amountCollected = amountCollected;
         this.branch = branch;
-        this.date = date;
         this.channel = channel;
         this.qtrWise = qtrWise;
         this.halfYear = halfYear;
@@ -137,14 +133,6 @@ public class MCP {
         this.branch = branch;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getChannel() {
         return channel;
     }
@@ -181,7 +169,6 @@ public class MCP {
                 ", mcpQuantity=" + mcpQuantity +
                 ", amountCollected=" + amountCollected +
                 ", branch='" + branch + '\'' +
-                ", date='" + date + '\'' +
                 ", channel='" + channel + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +
                 ", halfYear='" + halfYear + '\'' +

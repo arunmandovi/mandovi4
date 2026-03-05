@@ -24,8 +24,9 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM BRConversion b WHERE b.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM BRConversion b WHERE b.month = :month AND b.year = :year")
+    void deleteByMonthYear(@Param("month") String month,
+                           @Param("year") String year );
 
     // Group by city
     @Query("""

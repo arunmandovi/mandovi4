@@ -1,7 +1,6 @@
 package com.mandovi.Repository;
 
 import com.mandovi.DTO.MSGPProfitSummaryDTO;
-import com.mandovi.DTO.MSGPSummaryDTO;
 import com.mandovi.Entity.MSGPProfit;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,8 +22,8 @@ public interface MSGPProfitRepository extends JpaRepository<MSGPProfit, Integer>
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM MSGPProfit m WHERE m.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM MSGPProfit m WHERE m.month = :month and m.year = :year")
+    void deleteByMonthYear(@Param("month") String month, @Param("year") String year );
 
     //Group by city
     @Query("""

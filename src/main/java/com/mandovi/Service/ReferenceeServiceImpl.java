@@ -40,20 +40,12 @@ public class ReferenceeServiceImpl implements ReferenceeService {
                     reference.setGroupDesignation(row.getCell(2).getStringCellValue());
                     reference.setYear(row.getCell(3).getStringCellValue());
                     reference.setMonth(row.getCell(4).getStringCellValue());
-
-                    //Updating column period from concating columns month and year respectively
-                    reference.setPeriod(reference.getMonth()+"-"+reference.getYear());
-
                     reference.setChannel(row.getCell(5).getStringCellValue());
-
-
                     reference.setReferencee(row.getCell(6) == null ? 0 : (int) row.getCell(6).getNumericCellValue());
                     reference.setEnquiry(row.getCell(7) == null ? 0 : (int) row.getCell(7).getNumericCellValue());
                     reference.setBooking(row.getCell(8) == null ? 0 : (int) row.getCell(8).getNumericCellValue());
                     reference.setInvoice(row.getCell(9) == null ? 0 : (int) row.getCell(9).getNumericCellValue());
 
-
-                    //Updating the financial year by checking month & year column
                     String month = reference.getMonth();
                     int year = Integer.parseInt(reference.getYear().trim());
                     switch (month){

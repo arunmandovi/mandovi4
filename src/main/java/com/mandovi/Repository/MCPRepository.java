@@ -1,6 +1,5 @@
 package com.mandovi.Repository;
 
-import com.mandovi.DTO.LoaddSummaryDTO;
 import com.mandovi.DTO.MCPSummaryDTO;
 import com.mandovi.Entity.MCP;
 import jakarta.transaction.Transactional;
@@ -23,8 +22,8 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM MCP m WHERE m.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM MCP m WHERE m.month = :month AND m.year = :year")
+    void deleteByMonthYear(@Param("month") String month, @Param("year") String year );
 
     //Group by city
     @Query("""

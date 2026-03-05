@@ -1,6 +1,5 @@
 package com.mandovi.Repository;
 
-import com.mandovi.DTO.MCPSummaryDTO;
 import com.mandovi.DTO.MGASummaryDTO;
 import com.mandovi.Entity.MGA;
 import jakarta.transaction.Transactional;
@@ -26,7 +25,7 @@ public interface MGARepository extends JpaRepository<MGA, Integer> {
     @Transactional
     @Modifying
     @Query("DELETE FROM MGA m WHERE m.mgaDate = :mgaDate")
-    void deleteByMonth(@Param("mgaDate") LocalDate mgaDate);
+    void deleteByDate(@Param("mgaDate") LocalDate mgaDate);
 
     //Group by city
     @Query("""

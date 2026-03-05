@@ -35,9 +35,6 @@ public class BatteryTyre {
     @Column(name = "sum_of_net_retail_selling")
     private Double sumOfNetRetailSelling;
 
-    @Column(name = "period")
-    private String period;
-
     @Column(name = "qtr_wise")
     private String qtrWise;
 
@@ -47,7 +44,7 @@ public class BatteryTyre {
     public BatteryTyre() {
     }
 
-    public BatteryTyre(Integer batteryTyreSINo, String city, String branch, String month, String year, String oilType, int sumOfNetRetailQTY, Double sumOfNetRetailDDL, Double sumOfNetRetailSelling, String period, String qtrWise, String halfYear) {
+    public BatteryTyre(Integer batteryTyreSINo, String city, String branch, String month, String year, String oilType, int sumOfNetRetailQTY, Double sumOfNetRetailDDL, Double sumOfNetRetailSelling, String qtrWise, String halfYear) {
         this.batteryTyreSINo = batteryTyreSINo;
         this.city = city;
         this.branch = branch;
@@ -57,7 +54,6 @@ public class BatteryTyre {
         this.sumOfNetRetailQTY = sumOfNetRetailQTY;
         this.sumOfNetRetailDDL = sumOfNetRetailDDL;
         this.sumOfNetRetailSelling = sumOfNetRetailSelling;
-        this.period = period;
         this.qtrWise = qtrWise;
         this.halfYear = halfYear;
     }
@@ -134,14 +130,6 @@ public class BatteryTyre {
         this.sumOfNetRetailSelling = sumOfNetRetailSelling;
     }
 
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
     public String getQtrWise() {
         return qtrWise;
     }
@@ -170,7 +158,6 @@ public class BatteryTyre {
                 ", sumOfNetRetailQTY=" + sumOfNetRetailQTY +
                 ", sumOfNetRetailDDL=" + sumOfNetRetailDDL +
                 ", sumOfNetRetailSelling=" + sumOfNetRetailSelling +
-                ", period='" + period + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +
                 ", halfYear='" + halfYear + '\'' +
                 '}';

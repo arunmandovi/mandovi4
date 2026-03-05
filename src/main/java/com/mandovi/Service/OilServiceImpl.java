@@ -3,10 +3,7 @@ package com.mandovi.Service;
 import com.mandovi.DTO.OilSummaryDTO;
 import com.mandovi.Entity.Oil;
 import com.mandovi.Repository.OilRepository;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +37,12 @@ public class OilServiceImpl implements OilService {
                 throw new RuntimeException("No Data found in Excel") ;
 
             String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
-            oilRepository.deleteByMonth(uploadMonth);
+            Cell yearCell = firstRow.getCell(3);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+
+            oilRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
@@ -52,20 +54,16 @@ public class OilServiceImpl implements OilService {
                 oil.setBranch(row.getCell(1).getStringCellValue());
                 oil.setMonth(row.getCell(2).getStringCellValue());
 
-                //Converting Integer year into String
-                int num_year = (int) row.getCell(3).getNumericCellValue();
-                String year = String.valueOf(num_year);
-                oil.setYear(year);
+                Cell cell = row.getCell(3);
+                int num_year = (cell.getCellType() == CellType.NUMERIC)
+                        ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
+                oil.setYear(String.valueOf(num_year));
 
                 oil.setOilType(row.getCell(4).getStringCellValue());
                 oil.setNetRetailQty(round2Decimals(row.getCell(5).getNumericCellValue()));
                 oil.setNetRetailDDL(round2Decimals(row.getCell(6).getNumericCellValue()));
                 oil.setNetRetailSelling(round2Decimals(row.getCell(7).getNumericCellValue()));
 
-                //Updating period based on month & year
-                oil.setPeriod(oil.getMonth()+"-"+oil.getYear());
-
-                //Updating qtr_wise & half_year based on month
                 String month = oil.getMonth().trim().toUpperCase();
                 switch (month) {
                     case "APR", "MAY", "JUN" ->{ oil.setQtrWise("Qtr1"); oil.setHalfYear("H1");}

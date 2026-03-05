@@ -12,11 +12,11 @@ public class CCConversion {
     @Column (name = "cc_conversionSINo")
     private Integer ccConversionSINo;
 
-    @Column (name = "cc_conversion_date")
-    private LocalDate ccConversionDate;
-
     @Column (name = "month")
     private String month;
+
+    @Column (name = "year")
+    private String year;
 
     @Column (name = "date_of_join")
     private LocalDate dateOfJoin;
@@ -48,10 +48,10 @@ public class CCConversion {
     public CCConversion() {
     }
 
-    public CCConversion(Integer ccConversionSINo, LocalDate ccConversionDate, String month, LocalDate dateOfJoin, String branch, String cceName, Integer pmsAppt, Integer pmsConversion, Double percentagePMSConversion, Integer frsAppt, Integer frsConversion, Double percentageFRSConversion) {
+    public CCConversion(Integer ccConversionSINo, String month, String year, LocalDate dateOfJoin, String branch, String cceName, Integer pmsAppt, Integer pmsConversion, Double percentagePMSConversion, Integer frsAppt, Integer frsConversion, Double percentageFRSConversion) {
         this.ccConversionSINo = ccConversionSINo;
-        this.ccConversionDate = ccConversionDate;
         this.month = month;
+        this.year = year;
         this.dateOfJoin = dateOfJoin;
         this.branch = branch;
         this.cceName = cceName;
@@ -71,20 +71,20 @@ public class CCConversion {
         this.ccConversionSINo = ccConversionSINo;
     }
 
-    public LocalDate getCcConversionDate() {
-        return ccConversionDate;
-    }
-
-    public void setCcConversionDate(LocalDate ccConversionDate) {
-        this.ccConversionDate = ccConversionDate;
-    }
-
     public String getMonth() {
         return month;
     }
 
     public void setMonth(String month) {
         this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public LocalDate getDateOfJoin() {
@@ -163,8 +163,8 @@ public class CCConversion {
     public String toString() {
         return "CCConversion{" +
                 "ccConversionSINo=" + ccConversionSINo +
-                ", ccConversionDate=" + ccConversionDate +
                 ", month='" + month + '\'' +
+                ", year='" + year + '\'' +
                 ", dateOfJoin=" + dateOfJoin +
                 ", branch='" + branch + '\'' +
                 ", cceName='" + cceName + '\'' +

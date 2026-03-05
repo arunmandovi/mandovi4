@@ -47,8 +47,13 @@ public class SparesServiceImpl implements SparesService{
                 throw new RemoteException("No Data from Excel");
 
             String uploadMonth = firstRow.getCell(2).getStringCellValue().trim();
+            Cell yearCell = firstRow.getCell(0);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue()
+                    : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
 
-            sparesRepository.deleteByMonth(uploadMonth);
+            sparesRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
@@ -56,17 +61,13 @@ public class SparesServiceImpl implements SparesService{
 
                 Spares spares = new Spares();
 
-                //Converting Integer cell's year Column's value into string
-                int num_year = (int)  row.getCell(0).getNumericCellValue();
-                String year = String.valueOf(num_year);
-                spares.setYear(year);
+                Cell cell = row.getCell(0);
+                int num_year = (cell.getCellType() == CellType.NUMERIC)
+                        ? (int) cell.getNumericCellValue(): Integer.parseInt(cell.getStringCellValue());
+                spares.setYear(String.valueOf(num_year));
 
                 spares.setCity(row.getCell(1).getStringCellValue());
                 spares.setMonth(row.getCell(2).getStringCellValue());
-
-                //Updating the column period by concating the columns month & year
-                spares.setPeriod(spares.getMonth()+"-"+spares.getYear());
-
                 spares.setBranch(row.getCell(4).getStringCellValue());
                 spares.setSrSparesLastYear(getNumericCellValue(row,5));
                 spares.setSrSparesCurrentYear(getNumericCellValue(row, 6));

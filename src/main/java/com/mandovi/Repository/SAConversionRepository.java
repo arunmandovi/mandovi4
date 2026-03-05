@@ -12,6 +12,11 @@ import java.util.List;
 
 public interface SAConversionRepository extends JpaRepository<SAConversion, Integer> {
 
+    @Transactional
+    @Modifying
+    @Query ("DELETE FROM SAConversion s WHERE s.month = :month AND s.year = :year")
+    void deleteByMonthYear (@Param("month") String month, @Param("year") String year );
+
     @Query("""
             SELECT s FROM SAConversion s
             WHERE (:months IS NULL OR s.month IN (:months))

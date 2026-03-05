@@ -1,6 +1,5 @@
 package com.mandovi.Repository;
 
-import com.mandovi.DTO.MGASummaryDTO;
 import com.mandovi.DTO.MSGPSummaryDTO;
 import com.mandovi.Entity.MSGP;
 import jakarta.transaction.Transactional;
@@ -23,8 +22,8 @@ public interface MSGPRepository extends JpaRepository<MSGP, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM MSGP m WHERE m.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM MSGP m WHERE m.month = :month AND m.year = :year")
+    void deleteByMonthYear(@Param("month") String month,@Param("year") String year );
 
     //Group by city
     @Query("""

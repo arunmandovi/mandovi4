@@ -22,8 +22,8 @@ public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Revenue r WHERE r.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM Revenue r WHERE r.month = :month AND r.year = :year ")
+    void deleteByMonthYear(@Param("month") String month, @Param("year") String year );
 
     //Group by city
     @Query("""

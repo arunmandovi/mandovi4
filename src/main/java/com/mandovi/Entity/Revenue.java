@@ -19,9 +19,6 @@ public class Revenue {
     @Column(name = "year")
     private String year;
 
-    @Column(name = "period")
-    private String period;
-
     @Column(name = "branch")
     private String branch;
 
@@ -100,12 +97,11 @@ public class Revenue {
     public Revenue() {
     }
 
-    public Revenue(int revenueSINo, String city, String month, String year, String period, String branch, Integer branchSINo, Double srLabourLastYear, Double srLabourCurrentYear, Double srLabourGrowth, Double brLabourLastYear, Double brLabourCurrentYear, Double brLabourGrowth, Double srAndBrLabourLastYear, Double srAndBrLabourCurrentYear, Double srAndBrLabourGrowth, Double srSparesLastYear, Double srSparesCurrentYear, Double srSparesGrowth, Double brSparesLastYear, Double brSparesCurrentYear, Double brSparesGrowth, Double srAndBrSparesLastYear, Double srAndBrSparesCurrentYear, Double srAndBrSparesGrowth, Double srAndBrTotalLastYear, Double srAndBrTotalCurrentYear, Double srAndBrTotalGrowth, String qtrWise, String halfYear) {
+    public Revenue(int revenueSINo, String city, String month, String year, String branch, Integer branchSINo, Double srLabourLastYear, Double srLabourCurrentYear, Double srLabourGrowth, Double brLabourLastYear, Double brLabourCurrentYear, Double brLabourGrowth, Double srAndBrLabourLastYear, Double srAndBrLabourCurrentYear, Double srAndBrLabourGrowth, Double srSparesLastYear, Double srSparesCurrentYear, Double srSparesGrowth, Double brSparesLastYear, Double brSparesCurrentYear, Double brSparesGrowth, Double srAndBrSparesLastYear, Double srAndBrSparesCurrentYear, Double srAndBrSparesGrowth, Double srAndBrTotalLastYear, Double srAndBrTotalCurrentYear, Double srAndBrTotalGrowth, String qtrWise, String halfYear) {
         this.revenueSINo = revenueSINo;
         this.city = city;
         this.month = month;
         this.year = year;
-        this.period = period;
         this.branch = branch;
         this.branchSINo = branchSINo;
         this.srLabourLastYear = srLabourLastYear;
@@ -163,14 +159,6 @@ public class Revenue {
 
     public void setYear(String year) {
         this.year = year;
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
     }
 
     public String getBranch() {
@@ -380,7 +368,6 @@ public class Revenue {
                 ", city='" + city + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
-                ", period='" + period + '\'' +
                 ", branch='" + branch + '\'' +
                 ", branchSINo=" + branchSINo +
                 ", srLabourLastYear=" + srLabourLastYear +

@@ -55,7 +55,15 @@ public class LabourServiceImpl implements LabourService {
                 throw new RuntimeException("NO Data Found in Excel");
 
             String uploadMonth = firstRow.getCell(3).getStringCellValue().trim();
-            labourRepository.deleteByMonth(uploadMonth);
+            Cell yearCell = firstRow.getCell(2);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) firstRow.getCell(2).getNumericCellValue()
+                    :Integer.parseInt(yearCell.getStringCellValue().trim());
+            String uploadYear = String.valueOf(numYear);
+            String anotherUploadYear = String.valueOf(numYear + 1);
+
+            labourRepository.deleteByMonthYear(uploadMonth, uploadYear);
+            labourRepository.deleteByMonthYear(uploadMonth, anotherUploadYear);
 
 
             for(int i=1;i<=sheet.getLastRowNum();i++){
@@ -71,13 +79,10 @@ public class LabourServiceImpl implements LabourService {
                 labour.setServiceTypeCode(row.getCell(4).getStringCellValue());
                 labour.setSumOfBasicAmt(row.getCell(5).getNumericCellValue());
 
-                //Updating labour column by dividing the sumofbasicamt;s value from 100000
                 labour.setLabour(labour.getSumOfBasicAmt()/100000);
 
-                //Updating column period by concating columns month & year
                 labour.setPeriod(labour.getMonth()+"-"+labour.getYear());
 
-                //Updating the city column by checking value stored in column branch
                 String branch = labour.getBranch();
                 if (bangaloreBranches.contains(branch)) {
                     labour.setCity("Bangalore");
@@ -89,7 +94,6 @@ public class LabourServiceImpl implements LabourService {
                     labour.setCity("Unknown");
                 }
 
-                //Updating Financialyear column by checking the columns month & year
                 int year = Integer.parseInt(labour.getYear());
                 String monthh = labour.getMonth();
                 switch (monthh) {
@@ -99,7 +103,6 @@ public class LabourServiceImpl implements LabourService {
                     case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" -> labour.setFinancialYear((year-1)+"-"+year);
                 }
 
-                //Updating the loadType column by checking the value stored in servicetypecode
                 String serviceTypeCode = labour.getServiceTypeCode();
                 if (othersLoadType.contains(serviceTypeCode)) {
                     labour.setLoadType("OTHERS");

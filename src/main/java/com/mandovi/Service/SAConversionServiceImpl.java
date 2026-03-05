@@ -30,41 +30,38 @@ public class SAConversionServiceImpl implements SAConversionService {
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
 
+            Row firstRow = sheet.getRow(1);
+            String uploadMonth = firstRow.getCell(2).getStringCellValue();
+            Cell yearCell = firstRow.getCell(3);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+
+            saConversionRepository.deleteByMonthYear(uploadMonth, uploadYear);
+
             for (int i = 1; i <= sheet.getLastRowNum(); i++){
                 Row row = sheet.getRow(i);
 
                 SAConversion saConversion = new SAConversion();
-                Cell cell = row.getCell(0);
-                LocalDate localDate = null;
 
-                if (cell != null) {
-                    if (cell.getCellType() == CellType.NUMERIC) {
-                        Date date = cell.getDateCellValue();
-                        localDate = date.toInstant()
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDate();
-                    } else if (cell.getCellType() == CellType.STRING) {
-                        String dateStr = cell.getStringCellValue();
-                        localDate = LocalDate.parse(dateStr);
-                    }
-                }
-                saConversion.setSaConversionDate(localDate);
-                DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMM");
-                saConversion.setMonth(monthFormatter.format(saConversion.getSaConversionDate()));
-                DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("yyyy");
-                saConversion.setYear(yearFormatter.format(saConversion.getSaConversionDate()));
+                saConversion.setBranch(row.getCell(0).getStringCellValue());
+                saConversion.setSaName(row.getCell(1).getStringCellValue());
+                saConversion.setMonth(row.getCell(2).getStringCellValue());
 
-                saConversion.setBranch(row.getCell(1).getStringCellValue());
-                saConversion.setSaName(row.getCell(2).getStringCellValue());
-                saConversion.setPmsAppt((int)row.getCell(3).getNumericCellValue());
-                saConversion.setPmsConversion((int)row.getCell(4).getNumericCellValue());
+                Cell year_cell = row.getCell(3);
+                int num_year = (year_cell.getCellType() == CellType.NUMERIC)
+                        ? (int) year_cell.getNumericCellValue() : Integer.parseInt(year_cell.getStringCellValue());
+                saConversion.setYear(String.valueOf(num_year));
+
+                saConversion.setPmsAppt((int)row.getCell(4).getNumericCellValue());
+                saConversion.setPmsConversion((int)row.getCell(5).getNumericCellValue());
                 if (saConversion.getPmsAppt() == null || Objects.equals(saConversion.getPmsAppt(), 0)) {
                     saConversion.setPercentagePMSConversion(0.0);
                 } else {
                     saConversion.setPercentagePMSConversion(saConversion.getPmsAppt() * 1.0 / saConversion.getPmsAppt() * 100);
                 }
-                saConversion.setFrsAppt((int) row.getCell(6).getNumericCellValue());
-                saConversion.setFrsConversion((int)row.getCell(7).getNumericCellValue());
+                saConversion.setFrsAppt((int) row.getCell(7).getNumericCellValue());
+                saConversion.setFrsConversion((int)row.getCell(8).getNumericCellValue());
                 if (saConversion.getFrsAppt() == null || Objects.equals(saConversion.getFrsAppt(), 0)){
                     saConversion.setPercentageFRSConversion(0.0);
                 }else {

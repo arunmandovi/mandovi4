@@ -23,8 +23,9 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Loadd l WHERE l.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM Loadd l WHERE l.month = :month AND l.year = :year")
+    void deleteByMonthYear(@Param("month") String month,
+                           @Param("year") String year);
 
 
 

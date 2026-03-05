@@ -12,20 +12,17 @@ public class SAConversion {
     @Column (name = "sa_conversionSINo")
     private Integer saConversionSINo;
 
-    @Column (name = "sa_conversion_date")
-    private LocalDate saConversionDate;
+    @Column (name = "branch")
+    private String branch;
+
+    @Column (name = "sa_name")
+    private String saName;
 
     @Column (name = "month")
     private String month;
 
     @Column (name = "year")
     private String year;
-
-    @Column (name = "branch")
-    private String branch;
-
-    @Column (name = "sa_name")
-    private String saName;
 
     @Column (name = "pms_appt")
     private Integer pmsAppt;
@@ -48,13 +45,12 @@ public class SAConversion {
     public SAConversion() {
     }
 
-    public SAConversion(Integer saConversionSINo, LocalDate saConversionDate, String month, String year, String branch, String saName, Integer pmsAppt, Integer pmsConversion, Double percentagePMSConversion, Integer frsAppt, Integer frsConversion, Double percentageFRSConversion) {
+    public SAConversion(Integer saConversionSINo, String branch, String saName, String month, String year, Integer pmsAppt, Integer pmsConversion, Double percentagePMSConversion, Integer frsAppt, Integer frsConversion, Double percentageFRSConversion) {
         this.saConversionSINo = saConversionSINo;
-        this.saConversionDate = saConversionDate;
-        this.month = month;
-        this.year = year;
         this.branch = branch;
         this.saName = saName;
+        this.month = month;
+        this.year = year;
         this.pmsAppt = pmsAppt;
         this.pmsConversion = pmsConversion;
         this.percentagePMSConversion = percentagePMSConversion;
@@ -71,12 +67,20 @@ public class SAConversion {
         this.saConversionSINo = saConversionSINo;
     }
 
-    public LocalDate getSaConversionDate() {
-        return saConversionDate;
+    public String getBranch() {
+        return branch;
     }
 
-    public void setSaConversionDate(LocalDate saConversionDate) {
-        this.saConversionDate = saConversionDate;
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getSaName() {
+        return saName;
+    }
+
+    public void setSaName(String saName) {
+        this.saName = saName;
     }
 
     public String getMonth() {
@@ -93,22 +97,6 @@ public class SAConversion {
 
     public void setYear(String year) {
         this.year = year;
-    }
-
-    public String getBranch() {
-        return branch;
-    }
-
-    public void setBranch(String branch) {
-        this.branch = branch;
-    }
-
-    public String getSaName() {
-        return saName;
-    }
-
-    public void setSaName(String saName) {
-        this.saName = saName;
     }
 
     public Integer getPmsAppt() {
@@ -163,11 +151,10 @@ public class SAConversion {
     public String toString() {
         return "SAConversion{" +
                 "saConversionSINo=" + saConversionSINo +
-                ", saConversionDate=" + saConversionDate +
-                ", month='" + month + '\'' +
-                ", year='" + year + '\'' +
                 ", branch='" + branch + '\'' +
                 ", saName='" + saName + '\'' +
+                ", month='" + month + '\'' +
+                ", year='" + year + '\'' +
                 ", pmsAppt=" + pmsAppt +
                 ", pmsConversion=" + pmsConversion +
                 ", percentagePMSConversion=" + percentagePMSConversion +

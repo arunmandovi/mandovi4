@@ -33,8 +33,13 @@ public class VASServiceImpl implements VASService {
                 throw new RuntimeException("No Data found in Excel");
 
             String uploadMonth = firstRow.getCell(5).getStringCellValue().trim();
+            Cell yearCell = firstRow.getCell(4);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue()
+                    : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
 
-            vasRepository.deleteByMonth(uploadMonth);
+            vasRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);

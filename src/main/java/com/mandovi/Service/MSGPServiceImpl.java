@@ -29,8 +29,15 @@ public class MSGPServiceImpl implements MSGPService {
 
             Row firstRow = sheet.getRow(1);
             String uploadMonth = firstRow.getCell(3).getStringCellValue().trim();
+            Cell yearCell = firstRow.getCell(2);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue()
+                    : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+            String anotherUploadYear = String.valueOf(numYear + 1);
 
-            msgpRepository.deleteByMonth(uploadMonth);
+            msgpRepository.deleteByMonthYear(uploadMonth, uploadYear);
+            msgpRepository.deleteByMonthYear(uploadMonth, anotherUploadYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
@@ -45,10 +52,8 @@ public class MSGPServiceImpl implements MSGPService {
                 msgp.setServiceDescription(row.getCell(4).getStringCellValue());
                 msgp.setNetRetailDDL(row.getCell(5).getNumericCellValue());
 
-                //Updating sum_of_net_retail_ddl column by dividing net reatail_ddl_column's value by 100000
                 msgp.setSumOfNetRetailDDL(msgp.getNetRetailDDL()/100000);
 
-                //Updating branch column by checking the value from column loaction_code
                 if (msgp.getLocationCode() != null){
                     switch (msgp.getLocationCode().trim().toUpperCase()){
                         case "BMR": msgp.setBranch("Balmatta"); break;
@@ -100,10 +105,6 @@ public class MSGPServiceImpl implements MSGPService {
                     }
                 }
 
-                //Updating the column period by concating columns month & year
-                msgp.setPeriod(msgp.getMonth()+"-"+msgp.getYear());
-
-                //Updating the column loadType by checking column serviceDescription
                 switch (msgp.getServiceDescription().trim().toUpperCase()){
                     case "1ST FREE SERVICE", "2ND FREE SERVICE", "3RD FREE SERVICE" -> msgp.setLoadType("FREE SERVICE");
                     case "PAID SERVICE" -> msgp.setLoadType("PMS");
@@ -112,7 +113,6 @@ public class MSGPServiceImpl implements MSGPService {
                     default -> msgp.setLoadType("OTHERS");
                 }
 
-                //Updating qtr_wise & half_year columns by checking month column's values
                 String month = msgp.getMonth();
                 switch (month){
                     case "Apr", "May", "Jun", "APR", "MAY", "JUN" ->{ msgp.setQtrWise("Qtr1"); msgp.setHalfYear("H1");}
@@ -121,7 +121,6 @@ public class MSGPServiceImpl implements MSGPService {
                     case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR" ->{ msgp.setQtrWise("Qtr4"); msgp.setHalfYear("H2");}
                 }
 
-                //Updating the financial_year column by checking the values from month & year
                 int year = Integer.parseInt(msgp.getYear());
                 switch (month.trim().toUpperCase()){
                     case "APR", "MAY", "JUN", "JUL", "AUG",

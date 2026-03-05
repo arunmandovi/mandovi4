@@ -34,9 +34,6 @@ public class MSGPProfit {
     @Column(name = "sum_of_net_retail_selling")
     private Double sumOfNetRetailSelling;
 
-    @Column(name = "date")
-    private String date;
-
     @Column(name = "city")
     private String city;
 
@@ -52,7 +49,7 @@ public class MSGPProfit {
     public MSGPProfit() {
     }
 
-    public MSGPProfit(Integer msgp_profitSINo, String serviceDescription, String locationCode, String month, String year, Double netRetailDDL, Double netRetailSelling, Double sumOfNetRetailDDL, Double sumOfNetRetailSelling, String date, String city, String branch, String qtrWise, String halfYear) {
+    public MSGPProfit(Integer msgp_profitSINo, String serviceDescription, String locationCode, String month, String year, Double netRetailDDL, Double netRetailSelling, Double sumOfNetRetailDDL, Double sumOfNetRetailSelling, String city, String branch, String qtrWise, String halfYear) {
         this.msgp_profitSINo = msgp_profitSINo;
         this.serviceDescription = serviceDescription;
         this.locationCode = locationCode;
@@ -62,7 +59,6 @@ public class MSGPProfit {
         this.netRetailSelling = netRetailSelling;
         this.sumOfNetRetailDDL = sumOfNetRetailDDL;
         this.sumOfNetRetailSelling = sumOfNetRetailSelling;
-        this.date = date;
         this.city = city;
         this.branch = branch;
         this.qtrWise = qtrWise;
@@ -141,14 +137,6 @@ public class MSGPProfit {
         this.sumOfNetRetailSelling = sumOfNetRetailSelling;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getCity() {
         return city;
     }
@@ -193,7 +181,6 @@ public class MSGPProfit {
                 ", netRetailSelling=" + netRetailSelling +
                 ", sumOfNetRetailDDL=" + sumOfNetRetailDDL +
                 ", sumOfNetRetailSelling=" + sumOfNetRetailSelling +
-                ", date='" + date + '\'' +
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +

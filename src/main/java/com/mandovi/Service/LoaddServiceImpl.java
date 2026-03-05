@@ -35,7 +35,6 @@ public class LoaddServiceImpl implements LoaddService {
 
             Sheet sheet = workbook.getSheetAt(0);
 
-            // Location groups
             Set<String> bangaloreLocations = new HashSet<>(Arrays.asList(
                     "BKH","BNG","BSN","CDE","CMJ","GRB","HNR","JPN","KDH","MAF","MLU","NXS",
                     "RJN","VDR","VJN","WGR","YLH","YPR"
@@ -54,7 +53,16 @@ public class LoaddServiceImpl implements LoaddService {
                 throw new RuntimeException("No data found in Excel");
 
             String uploadMonth = firstDataRow.getCell(3).getStringCellValue().trim();
-            loaddRepository.deleteByMonth(uploadMonth);
+            Cell yearCell = firstDataRow.getCell(2);
+            int numYear = (yearCell.getCellType() == CellType.NUMERIC)
+                    ? (int) yearCell.getNumericCellValue()
+                    : Integer.parseInt(yearCell.getStringCellValue().trim());
+
+            String uploadYear = String.valueOf(numYear);
+            String uploadAnotherYear = String.valueOf(numYear + 1);
+
+            loaddRepository.deleteByMonthYear(uploadMonth, uploadYear);
+            loaddRepository.deleteByMonthYear(uploadMonth, uploadAnotherYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 
@@ -68,26 +76,9 @@ public class LoaddServiceImpl implements LoaddService {
                 loadd.setYear(row.getCell(2).getStringCellValue());
                 loadd.setMonth(row.getCell(3).getStringCellValue());
                 loadd.setModelChannel(row.getCell(4).getStringCellValue());
-
-                double numericValue = row.getCell(5).getNumericCellValue();
-                loadd.setServiceLoad((int) numericValue);
-
-                // Auto-update jcBillDate
-                try {
-                    int year = Integer.parseInt(loadd.getYear().trim());
-                    String month = loadd.getMonth().trim();
-
-                    Month m = Month.from(dateTimeFormatter.parse(month));
-                    LocalDate jcBillDate = LocalDate.of(year, m.getValue(), 1);
-                    loadd.setJcBillDate(jcBillDate);
-
-                } catch (Exception e) {
-                    System.out.println("Invalid year/month in row " + i);
-                }
-
+                loadd.setServiceLoad((int) row.getCell(5).getNumericCellValue());
                 loadd.setChannel(loadd.getModelChannel());
 
-                // Branch mapping
                 if (loadd.getLocation() != null) {
                     switch (loadd.getLocation().trim().toUpperCase()) {
                         case "BMR": loadd.setBranch("Balmatta"); break;
@@ -139,14 +130,12 @@ public class LoaddServiceImpl implements LoaddService {
                     }
                 }
 
-                // City mapping
                 String locationCode = loadd.getLocation();
                 if (bangaloreLocations.contains(locationCode)) loadd.setCity("Bangalore");
                 else if (mysoreLocations.contains(locationCode)) loadd.setCity("Mysore");
                 else if (mangaloreLocations.contains(locationCode)) loadd.setCity("Mangalore");
                 else loadd.setCity("Unknown");
 
-                // Financial Year
                 try {
                     int year = Integer.parseInt(loadd.getYear());
                     String charMonth = loadd.getMonth();
@@ -163,7 +152,6 @@ public class LoaddServiceImpl implements LoaddService {
                     System.out.println("Invalid year/month for financial year in row " + i);
                 }
 
-                // Load Type Mapping
                 String serviceTypeCode = loadd.getServiceTypeCode();
                 switch (serviceTypeCode) {
                     case "ACC","BDW","CDS","CVMS","REFF","TV1","TV2","TV3","WASH","WMOS","FR4",
@@ -176,7 +164,6 @@ public class LoaddServiceImpl implements LoaddService {
                     default -> loadd.setLoadType("UNKNOWN");
                 }
 
-                // Quarter / Half-year mapping
                 String month = loadd.getMonth().trim().toUpperCase();
                 switch (month) {
                     case "APR","MAY","JUN" -> { loadd.setQtrWise("Qtr1"); loadd.setHalfYear("H1"); }
@@ -185,7 +172,6 @@ public class LoaddServiceImpl implements LoaddService {
                     case "JAN","FEB","MAR" -> { loadd.setQtrWise("Qtr4"); loadd.setHalfYear("H2"); }
                 }
 
-                // Save row (NO DUPLICATE CHECK NOW)
                 loaddRepository.save(loadd);
             }
 

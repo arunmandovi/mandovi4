@@ -24,8 +24,8 @@ public interface MGAProfitRepository extends JpaRepository<MGAProfit, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM MGAProfit m WHERE m.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM MGAProfit m WHERE m.month = :month AND m.year = :year")
+    void deleteByMonthYear(@Param("month") String month, @Param("year") String year );
 
     @Query("""
             SELECT new com.mandovi.DTO.MGAProfitSummaryDTO(
