@@ -26,67 +26,99 @@ import jakarta.persistence.*;
             t.`Dec-25` AS Dec_25,
             t.`Jan-25` AS Jan_25,
             t.`2025-26` AS FY_2025_26,
-            t.load_Apr AS load_Apr,
-            t.load_May AS load_May,
-            t.load_Jun AS load_Jun,
-            t.load_Jul AS load_Jul,
-            t.load_Aug AS load_Aug,
-            t.load_Sep AS load_Sep,
-            t.load_Oct AS load_Oct,
-            t.load_Nov AS load_Nov,
-            t.load_Dec AS load_Dec,
-            t.load_Jan AS load_Jan,
-            t.load_Total AS load_Total,
-            ROUND((t.`Apr-25` / NULLIF(t.load_Apr, 0)) * 100000, 3) AS Apr25_per_100k,
-            ROUND((t.`May-25` / NULLIF(t.load_May, 0)) * 100000, 3) AS May25_per_100k,
-            ROUND((t.`Jun-25` / NULLIF(t.load_Jun, 0)) * 100000, 3) AS Jun25_per_100k,
-            ROUND((t.`Jul-25` / NULLIF(t.load_Jul, 0)) * 100000, 3) AS Jul25_per_100k,
-            ROUND((t.`Aug-25` / NULLIF(t.load_Aug, 0)) * 100000, 3) AS Aug25_per_100k,
-            ROUND((t.`Sep-25` / NULLIF(t.load_Sep, 0)) * 100000, 3) AS Sep25_per_100k,
-            ROUND((t.`Oct-25` / NULLIF(t.load_Oct, 0)) * 100000, 3) AS Oct25_per_100k,
-            ROUND((t.`Nov-25` / NULLIF(t.load_Nov, 0)) * 100000, 3) AS Nov25_per_100k,
-            ROUND((t.`Dec-25` / NULLIF(t.load_Dec, 0)) * 100000, 3) AS Dec25_per_100k,
-            ROUND((t.`Jan-25` / NULLIF(t.load_Jan, 0)) * 100000, 3) AS Jan25_per_100k,
-            ROUND((t.`Total_25` / NULLIF(t.load_Total, 0)) * 100000, 3) AS Total25_per_100k
+
+            t.load_Apr,
+            t.load_May,
+            t.load_Jun,
+            t.load_Jul,
+            t.load_Aug,
+            t.load_Sep,
+            t.load_Oct,
+            t.load_Nov,
+            t.load_Dec,
+            t.load_Jan,
+            t.load_Total,
+
+            ROUND((t.`Apr-25` / NULLIF(t.load_Apr,0))*100000,3) AS Apr25_per_100k,
+            ROUND((t.`May-25` / NULLIF(t.load_May,0))*100000,3) AS May25_per_100k,
+            ROUND((t.`Jun-25` / NULLIF(t.load_Jun,0))*100000,3) AS Jun25_per_100k,
+            ROUND((t.`Jul-25` / NULLIF(t.load_Jul,0))*100000,3) AS Jul25_per_100k,
+            ROUND((t.`Aug-25` / NULLIF(t.load_Aug,0))*100000,3) AS Aug25_per_100k,
+            ROUND((t.`Sep-25` / NULLIF(t.load_Sep,0))*100000,3) AS Sep25_per_100k,
+            ROUND((t.`Oct-25` / NULLIF(t.load_Oct,0))*100000,3) AS Oct25_per_100k,
+            ROUND((t.`Nov-25` / NULLIF(t.load_Nov,0))*100000,3) AS Nov25_per_100k,
+            ROUND((t.`Dec-25` / NULLIF(t.load_Dec,0))*100000,3) AS Dec25_per_100k,
+            ROUND((t.`Jan-25` / NULLIF(t.load_Jan,0))*100000,3) AS Jan25_per_100k,
+            ROUND((t.`Total_25` / NULLIF(t.load_Total,0))*100000,3) AS Total25_per_100k
+
         FROM (
             SELECT
                 pl.city,
-                null,
-                SUM(pl.`apr_24`) AS `Apr-24`,
-                SUM(pl.`may_24`) AS `May-24`,
-                SUM(pl.`jun_24`) AS `Jun-24`,
-                SUM(pl.`jul_24`) AS `Jul-24`,
-                (SUM(pl.`apr_24`) + SUM(pl.`may_24`) + SUM(pl.`jun_24`) + SUM(pl.`jul_24`)) AS `Total_24`,
-                SUM(pl.`apr_25`) AS `Apr-25`,
-                SUM(pl.`may_25`) AS `May-25`,
-                SUM(pl.`jun_25`) AS `Jun-25`,
-                SUM(pl.`jul_25`) AS `Jul-25`,
-                SUM(pl.`aug_25`) AS `Aug-25`,
-                SUM(pl.`sep_25`) AS `Sep-25`,
-                SUM(pl.`oct_25`) AS `Oct-25`,
-                SUM(pl.`nov_25`) AS `Nov-25`,
-                SUM(pl.`dec_25`) AS `Dec-25`,
-                SUM(pl.`jan_25`) AS `Jan-25`,
-                (SUM(pl.`apr_25`) + SUM(pl.`may_25`) + SUM(pl.`jun_25`) + SUM(pl.`jul_25`) +
-                SUM(pl.`aug_25`) + SUM(pl.`sep_25`) +SUM(pl.`oct_25`) + SUM(pl.`nov_25`) +
-                SUM(pl.`dec_25`) + SUM(pl.`jan_25`)) AS `Total_25`,
+
+                SUM(pl.apr_24) AS `Apr-24`,
+                SUM(pl.may_24) AS `May-24`,
+                SUM(pl.jun_24) AS `Jun-24`,
+                SUM(pl.jul_24) AS `Jul-24`,
+                (SUM(pl.apr_24)+SUM(pl.may_24)+SUM(pl.jun_24)+SUM(pl.jul_24)) AS `Total_24`,
+
+                SUM(pl.apr_25) AS `Apr-25`,
+                SUM(pl.may_25) AS `May-25`,
+                SUM(pl.jun_25) AS `Jun-25`,
+                SUM(pl.jul_25) AS `Jul-25`,
+                SUM(pl.aug_25) AS `Aug-25`,
+                SUM(pl.sep_25) AS `Sep-25`,
+                SUM(pl.oct_25) AS `Oct-25`,
+                SUM(pl.nov_25) AS `Nov-25`,
+                SUM(pl.dec_25) AS `Dec-25`,
+                SUM(pl.jan_25) AS `Jan-25`,
+
+                (SUM(pl.apr_25)+SUM(pl.may_25)+SUM(pl.jun_25)+SUM(pl.jul_25)+
+                 SUM(pl.aug_25)+SUM(pl.sep_25)+SUM(pl.oct_25)+SUM(pl.nov_25)+
+                 SUM(pl.dec_25)+SUM(pl.jan_25)) AS `Total_25`,
+
                 SUM(pl.`2025_26`) AS `2025-26`,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Apr' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Apr,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'May' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_May,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Jun' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Jun,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Jul' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Jul,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Aug' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Aug,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Sep' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Sep,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Oct' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Oct,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Nov' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Nov,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Dec' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Dec,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month = 'Jan' AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Jan,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l WHERE l.city = pl.city AND l.month IN ('Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan') AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Total
+
+                MAX(COALESCE(l.load_Apr,0)) AS load_Apr,
+                MAX(COALESCE(l.load_May,0)) AS load_May,
+                MAX(COALESCE(l.load_Jun,0)) AS load_Jun,
+                MAX(COALESCE(l.load_Jul,0)) AS load_Jul,
+                MAX(COALESCE(l.load_Aug,0)) AS load_Aug,
+                MAX(COALESCE(l.load_Sep,0)) AS load_Sep,
+                MAX(COALESCE(l.load_Oct,0)) AS load_Oct,
+                MAX(COALESCE(l.load_Nov,0)) AS load_Nov,
+                MAX(COALESCE(l.load_Dec,0)) AS load_Dec,
+                MAX(COALESCE(l.load_Jan,0)) AS load_Jan,
+                MAX(COALESCE(l.load_Total,0)) AS load_Total
+
             FROM mandovi.profit_loss pl
-            WHERE pl.city IN ('Bangalore', 'Mysore', 'Mangalore')
+
+            LEFT JOIN (
+                SELECT
+                    city,
+
+                    SUM(CASE WHEN month='Apr' THEN service_load END) AS load_Apr,
+                    SUM(CASE WHEN month='May' THEN service_load END) AS load_May,
+                    SUM(CASE WHEN month='Jun' THEN service_load END) AS load_Jun,
+                    SUM(CASE WHEN month='Jul' THEN service_load END) AS load_Jul,
+                    SUM(CASE WHEN month='Aug' THEN service_load END) AS load_Aug,
+                    SUM(CASE WHEN month='Sep' THEN service_load END) AS load_Sep,
+                    SUM(CASE WHEN month='Oct' THEN service_load END) AS load_Oct,
+                    SUM(CASE WHEN month='Nov' THEN service_load END) AS load_Nov,
+                    SUM(CASE WHEN month='Dec' THEN service_load END) AS load_Dec,
+                    SUM(CASE WHEN month='Jan' THEN service_load END) AS load_Jan,
+
+                    SUM(service_load) AS load_Total
+
+                FROM mandovi.loadd
+                WHERE year='2025'
+                AND load_type NOT IN ('NO')
+                GROUP BY city
+            ) l ON l.city = pl.city
+
+            WHERE pl.city IN ('Bangalore','Mysore','Mangalore')
             GROUP BY pl.city
         ) t
-    """,
+        """,
         resultSetMapping = "ProfitLossSummaryMapping"
 )
 @SqlResultSetMapping(
@@ -158,89 +190,100 @@ import jakarta.persistence.*;
             t.`Dec-25` AS Dec_25,
             t.`Jan-25` AS Jan_25,
             t.`2025-26` AS FY_2025_26,
-            t.load_Apr AS load_Apr,
-            t.load_May AS load_May,
-            t.load_Jun AS load_Jun,
-            t.load_Jul AS load_Jul,
-            t.load_Aug AS load_Aug,
-            t.load_Sep AS load_Sep,
-            t.load_Oct AS load_Oct,
-            t.load_Nov AS load_Nov,
-            t.load_Dec AS load_Dec,
-            t.load_Jan AS load_Jan,
-            t.load_Total AS load_Total,
-            ROUND((t.`Apr-25` / NULLIF(t.load_Apr, 0)) * 100000, 3) AS Apr25_per_100k,
-            ROUND((t.`May-25` / NULLIF(t.load_May, 0)) * 100000, 3) AS May25_per_100k,
-            ROUND((t.`Jun-25` / NULLIF(t.load_Jun, 0)) * 100000, 3) AS Jun25_per_100k,
-            ROUND((t.`Jul-25` / NULLIF(t.load_Jul, 0)) * 100000, 3) AS Jul25_per_100k,
-            ROUND((t.`Aug-25` / NULLIF(t.load_Aug, 0)) * 100000, 3) AS Aug25_per_100k,
-            ROUND((t.`Sep-25` / NULLIF(t.load_Sep, 0)) * 100000, 3) AS Sep25_per_100k,
-            ROUND((t.`Oct-25` / NULLIF(t.load_Oct, 0)) * 100000, 3) AS Oct25_per_100k,
-            ROUND((t.`Nov-25` / NULLIF(t.load_Nov, 0)) * 100000, 3) AS Nov25_per_100k,
-            ROUND((t.`Dec-25` / NULLIF(t.load_Dec, 0)) * 100000, 3) AS Dec25_per_100k,
-            ROUND((t.`Jan-25` / NULLIF(t.load_Jan, 0)) * 100000, 3) AS Jan25_per_100k,
-            ROUND((t.`Total_25` / NULLIF(t.load_Total, 0)) * 100000, 3) AS Total25_per_100k
+
+            t.load_Apr,
+            t.load_May,
+            t.load_Jun,
+            t.load_Jul,
+            t.load_Aug,
+            t.load_Sep,
+            t.load_Oct,
+            t.load_Nov,
+            t.load_Dec,
+            t.load_Jan,
+            t.load_Total,
+
+            ROUND((t.`Apr-25` / NULLIF(t.load_Apr,0))*100000,3) AS Apr25_per_100k,
+            ROUND((t.`May-25` / NULLIF(t.load_May,0))*100000,3) AS May25_per_100k,
+            ROUND((t.`Jun-25` / NULLIF(t.load_Jun,0))*100000,3) AS Jun25_per_100k,
+            ROUND((t.`Jul-25` / NULLIF(t.load_Jul,0))*100000,3) AS Jul25_per_100k,
+            ROUND((t.`Aug-25` / NULLIF(t.load_Aug,0))*100000,3) AS Aug25_per_100k,
+            ROUND((t.`Sep-25` / NULLIF(t.load_Sep,0))*100000,3) AS Sep25_per_100k,
+            ROUND((t.`Oct-25` / NULLIF(t.load_Oct,0))*100000,3) AS Oct25_per_100k,
+            ROUND((t.`Nov-25` / NULLIF(t.load_Nov,0))*100000,3) AS Nov25_per_100k,
+            ROUND((t.`Dec-25` / NULLIF(t.load_Dec,0))*100000,3) AS Dec25_per_100k,
+            ROUND((t.`Jan-25` / NULLIF(t.load_Jan,0))*100000,3) AS Jan25_per_100k,
+            ROUND((t.`Total_25` / NULLIF(t.load_Total,0))*100000,3) AS Total25_per_100k
+
         FROM (
             SELECT
                 pl.city,
                 pl.branch,
-                SUM(pl.`apr_24`) AS `Apr-24`,
-                SUM(pl.`may_24`) AS `May-24`,
-                SUM(pl.`Jun_24`) AS `Jun-24`,
-                SUM(pl.`Jul_24`) AS `Jul-24`,
-                (SUM(pl.`apr_24`) + SUM(pl.`may_24`) + SUM(pl.`jun_24`) + SUM(pl.`jul_24`)) AS `Total_24`,
-                SUM(pl.`apr_25`) AS `Apr-25`,
-                SUM(pl.`may_25`) AS `May-25`,
-                SUM(pl.`jun_25`) AS `Jun-25`,
-                SUM(pl.`jul_25`) AS `Jul-25`,
-                SUM(pl.`aug_25`) AS `Aug-25`,
-                SUM(pl.`sep_25`) AS `Sep-25`,
-                SUM(pl.`oct_25`) AS `Oct-25`,
-                SUM(pl.`nov_25`) AS `Nov-25`,
-                SUM(pl.`dec_25`) AS `Dec-25`,
-                SUM(pl.`jan_25`) AS `Jan-25`,
-                (SUM(pl.`apr_25`) + SUM(pl.`may_25`) + SUM(pl.`jun_25`) + SUM(pl.`jul_25`) +
-                SUM(pl.`aug_25`) + SUM(pl.`sep_25`) + SUM(pl.`oct_25`) + SUM(pl.`nov_25`) +
-                SUM(pl.`dec_25`) + SUM(pl.`jan_25`)) AS `Total_25`,
+
+                SUM(pl.apr_24) AS `Apr-24`,
+                SUM(pl.may_24) AS `May-24`,
+                SUM(pl.jun_24) AS `Jun-24`,
+                SUM(pl.jul_24) AS `Jul-24`,
+                (SUM(pl.apr_24)+SUM(pl.may_24)+SUM(pl.jun_24)+SUM(pl.jul_24)) AS `Total_24`,
+
+                SUM(pl.apr_25) AS `Apr-25`,
+                SUM(pl.may_25) AS `May-25`,
+                SUM(pl.jun_25) AS `Jun-25`,
+                SUM(pl.jul_25) AS `Jul-25`,
+                SUM(pl.aug_25) AS `Aug-25`,
+                SUM(pl.sep_25) AS `Sep-25`,
+                SUM(pl.oct_25) AS `Oct-25`,
+                SUM(pl.nov_25) AS `Nov-25`,
+                SUM(pl.dec_25) AS `Dec-25`,
+                SUM(pl.jan_25) AS `Jan-25`,
+
+                (SUM(pl.apr_25)+SUM(pl.may_25)+SUM(pl.jun_25)+SUM(pl.jul_25)+
+                 SUM(pl.aug_25)+SUM(pl.sep_25)+SUM(pl.oct_25)+SUM(pl.nov_25)+
+                 SUM(pl.dec_25)+SUM(pl.jan_25)) AS `Total_25`,
+
                 SUM(pl.`2025_26`) AS `2025-26`,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'Apr' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_Apr,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'May' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_May,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'Jun' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_Jun,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'Jul' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_Jul,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'Aug' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_Aug,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'Sep' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_Sep,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'Oct' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_Oct,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'Nov' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_Nov,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'Dec' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_Dec,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month = 'Jan' AND l.year = '2025'
-                          AND l.load_type NOT IN ('NO')), 0) AS load_Jan,
-                COALESCE((SELECT SUM(l.service_load) FROM mandovi.loadd l
-                          WHERE l.branch = pl.branch AND l.month IN ('Apr','May','Jun','Jul','Aug','Sep', 'Oct', 'Nov', 'Dec', 'Jan')
-                          AND l.year = '2025' AND l.load_type NOT IN ('NO')), 0) AS load_Total
+
+                MAX(COALESCE(l.load_Apr,0)) AS load_Apr,
+                MAX(COALESCE(l.load_May,0)) AS load_May,
+                MAX(COALESCE(l.load_Jun,0)) AS load_Jun,
+                MAX(COALESCE(l.load_Jul,0)) AS load_Jul,
+                MAX(COALESCE(l.load_Aug,0)) AS load_Aug,
+                MAX(COALESCE(l.load_Sep,0)) AS load_Sep,
+                MAX(COALESCE(l.load_Oct,0)) AS load_Oct,
+                MAX(COALESCE(l.load_Nov,0)) AS load_Nov,
+                MAX(COALESCE(l.load_Dec,0)) AS load_Dec,
+                MAX(COALESCE(l.load_Jan,0)) AS load_Jan,
+                MAX(COALESCE(l.load_Total,0)) AS load_Total
+
             FROM mandovi.profit_loss pl
+
+            LEFT JOIN (
+                SELECT
+                    branch,
+
+                    SUM(CASE WHEN month='Apr' THEN service_load END) AS load_Apr,
+                    SUM(CASE WHEN month='May' THEN service_load END) AS load_May,
+                    SUM(CASE WHEN month='Jun' THEN service_load END) AS load_Jun,
+                    SUM(CASE WHEN month='Jul' THEN service_load END) AS load_Jul,
+                    SUM(CASE WHEN month='Aug' THEN service_load END) AS load_Aug,
+                    SUM(CASE WHEN month='Sep' THEN service_load END) AS load_Sep,
+                    SUM(CASE WHEN month='Oct' THEN service_load END) AS load_Oct,
+                    SUM(CASE WHEN month='Nov' THEN service_load END) AS load_Nov,
+                    SUM(CASE WHEN month='Dec' THEN service_load END) AS load_Dec,
+                    SUM(CASE WHEN month='Jan' THEN service_load END) AS load_Jan,
+
+                    SUM(service_load) AS load_Total
+
+                FROM mandovi.loadd
+                WHERE year='2025'
+                AND load_type NOT IN ('NO')
+                GROUP BY branch
+            ) l ON l.branch = pl.branch
+
             WHERE (:cities IS NULL OR pl.city IN (:cities))
             GROUP BY pl.city, pl.branch
         ) t
-    """,
+        """,
         resultSetMapping = "ProfitLossSummaryByCityBranchMapping"
 )
 

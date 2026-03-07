@@ -30,69 +30,79 @@ public class ServiceeServiceImpl implements ServiceeService{
                 Row row = sheet.getRow(i);
                 if (row == null)continue;
 
+                Row firstRow = sheet.getRow(1);
+                String uploadMonth = firstRow.getCell(2).getStringCellValue();
+                Cell yearCell = firstRow.getCell(3);
+                int numYear = yearCell.getCellType() == CellType.NUMERIC
+                        ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+                String uploadYear = String.valueOf(numYear);
+
+                serviceRepository.deleteByMonthYear(uploadMonth, uploadYear);
+
                 Servicee servicee = new Servicee();
 
                 servicee.setCity(row.getCell(0).getStringCellValue());
-                String locationCode = row.getCell(1).getStringCellValue();
-                switch (locationCode.toUpperCase().trim()){
-                    case "BNG" : servicee.setBranch("Sarjapura");break;
-                    case "BSN" : servicee.setBranch("Basaveshwarnagar");break;
-                    case "CDE" : servicee.setBranch("Kolar Nexa");break;
-                    case "CMJ" : servicee.setBranch("Basavangudi");break;
-                    case "GRB" : servicee.setBranch("Gowribidanur");break;
-                    case "HNR" : servicee.setBranch("Hennur");break;
-                    case "JPN" : servicee.setBranch("JP Nagar");break;
-                    case "KDH" : servicee.setBranch("Kolar");break;
-                    case "MAF" : servicee.setBranch("Basavanagudi-SOW");break;
-                    case "MLU" : servicee.setBranch("Malur SOW");break;
-                    case "NXS" : servicee.setBranch("Maluru WS");break;
-                    case "RJN" : servicee.setBranch("Uttarahali Kengeri");break;
-                    case "VDR" : servicee.setBranch("Vidyarannapura");break;
-                    case "VJN" : servicee.setBranch("Vijayanagar");break;
-                    case "WGR" : servicee.setBranch("Wilson Garden");break;
-                    case "YLH" : servicee.setBranch("Yelahanka");break;
-                    case "YPR" : servicee.setBranch("Yeshwanthpur WS");break;
-                    case "BNR" : servicee.setBranch("Bannur");break;
-                    case "CMR" : servicee.setBranch("ChamrajNagar");break;
-                    case "HSR" : servicee.setBranch("Hunsur Road");break;
-                    case "JVR" : servicee.setBranch("Maddur");break;
-                    case "KIV" : servicee.setBranch("Gonikoppa");break;
-                    case "KKE" : servicee.setBranch("Mandya");break;
-                    case "KLG" : servicee.setBranch("Kollegal");break;
-                    case "MNY" : servicee.setBranch("Mandya Nexa"); break;
-                    case "KRS" : servicee.setBranch("KRS Road");break;
-                    case "KSH" : servicee.setBranch("Kushalnagar");break;
-                    case "KSN" : servicee.setBranch("Krishnarajapet");break;
-                    case "MSE" : servicee.setBranch("Mysore Nexa");break;
-                    case "NGL" : servicee.setBranch("Nagamangala");break;
-                    case "SOM" : servicee.setBranch("Somvarpet");break;
-                    case "TNR" : servicee.setBranch("Narasipura");break;
-                    case "BMR" : servicee.setBranch("Balmatta");break;
-                    case "BTL" : servicee.setBranch("Bantwal");break;
-                    case "VLA" : servicee.setBranch("Vittla");break;
-                    case "KDB" : servicee.setBranch("Kadaba");break;
-                    case "UPA" : servicee.setBranch("Uppinangady");break;
-                    case "SKL" : servicee.setBranch("Surathkal");break;
-                    case "SLL" : servicee.setBranch("Sullia");break;
-                    case "AYR" : servicee.setBranch("Adyar");break;
-                    case "YEY" : servicee.setBranch("Yeyyadi BR");break;
-                    case "MNL" : servicee.setBranch("Nexa Service");break;
-                    case "SJH" : servicee.setBranch("Sujith Bagh Lane");break;
-                    case "SYG" : servicee.setBranch("Naravi");break;
-                    case "BAA" : servicee.setBranch("ShivajiNagar SRV");break;
-                    case "BRE" : servicee.setBranch("CV RamanNagar SRV");break;
-                    default: servicee.setBranch("UNKNOWN");
-                }
-                CellType cellType = row.getCell(2).getCellType();
-                switch (cellType){
-                    case NUMERIC -> {
-                        int yearNum = (int) row.getCell(2).getNumericCellValue();
-                        String year = String.valueOf(yearNum);
-                        servicee.setYear(year);
-                    }
-                    case STRING -> servicee.setYear(row.getCell(2).getStringCellValue());
-                }
-                servicee.setMonth(row.getCell(3).getStringCellValue());
+                servicee.setBranch(row.getCell(1).getStringCellValue());
+
+//                String locationCode = row.getCell(1).getStringCellValue();
+//                switch (locationCode.toUpperCase().trim()){
+//                    case "BNG" : servicee.setBranch("Sarjapura");break;
+//                    case "BSN" : servicee.setBranch("Basaveshwarnagar");break;
+//                    case "CDE" : servicee.setBranch("Kolar Nexa");break;
+//                    case "CMJ" : servicee.setBranch("Basavangudi");break;
+//                    case "GRB" : servicee.setBranch("Gowribidanur");break;
+//                    case "HNR" : servicee.setBranch("Hennur");break;
+//                    case "JPN" : servicee.setBranch("JP Nagar");break;
+//                    case "KDH" : servicee.setBranch("Kolar");break;
+//                    case "MAF" : servicee.setBranch("Basavanagudi-SOW");break;
+//                    case "MLU" : servicee.setBranch("Malur SOW");break;
+//                    case "NXS" : servicee.setBranch("Maluru WS");break;
+//                    case "RJN" : servicee.setBranch("Uttarahali Kengeri");break;
+//                    case "VDR" : servicee.setBranch("Vidyarannapura");break;
+//                    case "VJN" : servicee.setBranch("Vijayanagar");break;
+//                    case "WGR" : servicee.setBranch("Wilson Garden");break;
+//                    case "YLH" : servicee.setBranch("Yelahanka");break;
+//                    case "YPR" : servicee.setBranch("Yeshwanthpur WS");break;
+//                    case "BNR" : servicee.setBranch("Bannur");break;
+//                    case "CMR" : servicee.setBranch("ChamrajNagar");break;
+//                    case "HSR" : servicee.setBranch("Hunsur Road");break;
+//                    case "JVR" : servicee.setBranch("Maddur");break;
+//                    case "KIV" : servicee.setBranch("Gonikoppa");break;
+//                    case "KKE" : servicee.setBranch("Mandya");break;
+//                    case "KLG" : servicee.setBranch("Kollegal");break;
+//                    case "MNY" : servicee.setBranch("Mandya Nexa"); break;
+//                    case "KRS" : servicee.setBranch("KRS Road");break;
+//                    case "KSH" : servicee.setBranch("Kushalnagar");break;
+//                    case "KSN" : servicee.setBranch("Krishnarajapet");break;
+//                    case "MSE" : servicee.setBranch("Mysore Nexa");break;
+//                    case "NGL" : servicee.setBranch("Nagamangala");break;
+//                    case "SOM" : servicee.setBranch("Somvarpet");break;
+//                    case "TNR" : servicee.setBranch("Narasipura");break;
+//                    case "BMR" : servicee.setBranch("Balmatta");break;
+//                    case "BTL" : servicee.setBranch("Bantwal");break;
+//                    case "VLA" : servicee.setBranch("Vittla");break;
+//                    case "KDB" : servicee.setBranch("Kadaba");break;
+//                    case "UPA" : servicee.setBranch("Uppinangady");break;
+//                    case "SKL" : servicee.setBranch("Surathkal");break;
+//                    case "SLL" : servicee.setBranch("Sullia");break;
+//                    case "AYR" : servicee.setBranch("Adyar");break;
+//                    case "YEY" : servicee.setBranch("Yeyyadi BR");break;
+//                    case "MNL" : servicee.setBranch("Nexa Service");break;
+//                    case "SJH" : servicee.setBranch("Sujith Bagh Lane");break;
+//                    case "SYG" : servicee.setBranch("Naravi");break;
+//                    case "BAA" : servicee.setBranch("ShivajiNagar SRV");break;
+//                    case "BRE" : servicee.setBranch("CV RamanNagar SRV");break;
+//                    default: servicee.setBranch("UNKNOWN");
+//                }
+
+                servicee.setMonth(row.getCell(2).getStringCellValue());
+
+                Cell year_cell = row.getCell(3);
+                int num_year = year_cell.getCellType() == CellType.NUMERIC
+                        ? (int) year_cell.getNumericCellValue() : Integer.parseInt(year_cell.getStringCellValue());
+                servicee.setYear(String.valueOf(num_year));
+
+
                 String serviceCodes = row.getCell(4).getStringCellValue();
                 switch (serviceCodes.toUpperCase().trim()){
                     case "PMS2": servicee.setServiceCode("PMS20");break;

@@ -9,11 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +33,7 @@ public class CCConversionServiceImpl implements CCConversionService {
                     Map.entry("RESHMA", LocalDate.of(2023, 11, 20)),
                     Map.entry("TEENA", LocalDate.of(2024, 7, 8)),
                     Map.entry("SMRITI", LocalDate.of(2024, 8, 5)),
+                    Map.entry("SMRITHI", LocalDate.of(2024, 8, 5)),
                     Map.entry("ASHWINI", LocalDate.of(2024, 8, 5)),
                     Map.entry("BINDHIYA", LocalDate.of(2024, 9, 2)),
                     Map.entry("ANITHA", LocalDate.of(2024, 10, 14)),
@@ -60,11 +58,13 @@ public class CCConversionServiceImpl implements CCConversionService {
 
             Map.entry("KADABA", Map.of(
                     "DIVYASHREE", LocalDate.of(2020, 2, 10),
+                    "SOUJANYA", LocalDate.of(2025, 6, 16),
                     "CHAITHANYA", LocalDate.of(2024, 6, 3)
             )),
 
             Map.entry("NARAVI", Map.of(
                     "SURAKSHA", LocalDate.of(2023, 6, 12),
+                    "SOUJANYA", LocalDate.of(2025, 6, 16),
                     "RASHMI", LocalDate.of(2024, 4, 8)
             )),
 
@@ -204,8 +204,6 @@ public class CCConversionServiceImpl implements CCConversionService {
             } else {
                 dto.setExperienceDays(null);
             }
-
-
 
             dto.setPmsAppointment(dbDto.getPmsAppointment());
             dto.setPmsConversion(dbDto.getPmsConversion());
