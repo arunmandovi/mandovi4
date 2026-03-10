@@ -2,10 +2,7 @@ package com.mandovi.Service;
 
 import com.mandovi.Entity.ServiceLoad;
 import com.mandovi.Repository.ServiceLoadRepository;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 
 @Service
@@ -31,6 +29,15 @@ public class ServiceLoadServiceImpl implements ServiceLoadService{
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
             DateTimeFormatter date = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
+
+            Row firstRow = sheet.getRow(1);
+            String uploadMonth = firstRow.getCell(4).getStringCellValue();
+            Cell yearCell = firstRow.getCell(5);
+            int numYear =  yearCell.getCellType() == CellType.NUMERIC
+                    ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+
+            serviceLoadRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i = 1; i<= sheet.getLastRowNum(); i++){
                 Row row = sheet.getRow(i);
@@ -55,13 +62,10 @@ public class ServiceLoadServiceImpl implements ServiceLoadService{
                 serviceLoad.setYear(row.getCell(5).getStringCellValue());
                 try {
                     int year = Integer.parseInt(serviceLoad.getYear());
-                    String month = serviceLoad.getMonth();
-                    Month m = Month.from(date.parse(month));
-                    int monthNum = m.getValue();
-                    if (monthNum >= 4)
-                        serviceLoad.setFinancialYear(year+"-"+year+1);
-                    else
-                        serviceLoad.setFinancialYear(year-1+"-"+year);
+                    int monthNum = Month.from(date.parse(serviceLoad.getMonth())).getValue();
+
+                    int fyStart = (monthNum >= 4) ? year : year - 1;
+                    serviceLoad.setFinancialYear(fyStart + "-" + (fyStart + 1));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -72,5 +76,20 @@ public class ServiceLoadServiceImpl implements ServiceLoadService{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<ServiceLoad> getServiceLoadAll() {
+        return serviceLoadRepository.findAll();
+    }
+
+    @Override
+    public List<ServiceLoad> getServiceLoadByMonthYear(List<String> months, List<String> years) {
+        return serviceLoadRepository.getServiceLoadByMonthYear(months, years);
+    }
+
+    @Override
+    public void deleteServiceLoadAll() {
+        serviceLoadRepository.deleteServiceLoadAll();
     }
 }

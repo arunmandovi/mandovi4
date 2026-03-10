@@ -92,9 +92,6 @@ public class Loadd {
     @Column(name = "month")
     private String month;
 
-    @Column(name = "model_channel")
-    private String modelChannel;
-
     @Column(name = "service_load")
     private Integer serviceLoad;
 
@@ -122,13 +119,12 @@ public class Loadd {
     public Loadd() {
     }
 
-    public Loadd(Integer loadSINo, String location, String serviceTypeCode, String year, String month, String modelChannel, Integer serviceLoad, String channel, String city, String branch, String financialYear, String loadType, String qtrWise, String halfYear) {
+    public Loadd(Integer loadSINo, String location, String serviceTypeCode, String year, String month, Integer serviceLoad, String channel, String city, String branch, String financialYear, String loadType, String qtrWise, String halfYear) {
         this.loadSINo = loadSINo;
         this.location = location;
         this.serviceTypeCode = serviceTypeCode;
         this.year = year;
         this.month = month;
-        this.modelChannel = modelChannel;
         this.serviceLoad = serviceLoad;
         this.channel = channel;
         this.city = city;
@@ -177,14 +173,6 @@ public class Loadd {
 
     public void setMonth(String month) {
         this.month = month;
-    }
-
-    public String getModelChannel() {
-        return modelChannel;
-    }
-
-    public void setModelChannel(String modelChannel) {
-        this.modelChannel = modelChannel;
     }
 
     public Integer getServiceLoad() {
@@ -259,7 +247,6 @@ public class Loadd {
                 ", serviceTypeCode='" + serviceTypeCode + '\'' +
                 ", year='" + year + '\'' +
                 ", month='" + month + '\'' +
-                ", modelChannel='" + modelChannel + '\'' +
                 ", serviceLoad=" + serviceLoad +
                 ", channel='" + channel + '\'' +
                 ", city='" + city + '\'' +

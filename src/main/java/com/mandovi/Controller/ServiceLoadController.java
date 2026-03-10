@@ -1,11 +1,12 @@
 package com.mandovi.Controller;
 
+import com.mandovi.Entity.ServiceLoad;
 import com.mandovi.Service.ServiceLoadService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/service_load")
@@ -24,6 +25,44 @@ public class ServiceLoadController {
             }
             serviceLoadService.saveServiceLoad(file);
             return ResponseEntity.ok("ServiceLoad File uploaded");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/getallservice_load")
+    public ResponseEntity<?> getServiceLoadAll (){
+        try {
+            List<ServiceLoad> listAllServiceLoad = serviceLoadService.getServiceLoadAll();
+            if (listAllServiceLoad.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listAllServiceLoad);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/getservice_load")
+    public ResponseEntity<?> getServiceLoadByMonthYear(
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> years ){
+        try {
+            List<ServiceLoad> listServiceLoad = serviceLoadService.getServiceLoadByMonthYear(months, years);
+            if (listServiceLoad.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(listServiceLoad);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @DeleteMapping("delete_all")
+    public ResponseEntity<?> deleteServiceLoadAll (){
+        try {
+            serviceLoadService.deleteServiceLoadAll();
+            return ResponseEntity.ok("ServiceLoadd ALL deleted");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
         }

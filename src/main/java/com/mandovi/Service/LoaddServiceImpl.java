@@ -75,9 +75,8 @@ public class LoaddServiceImpl implements LoaddService {
                 loadd.setServiceTypeCode(row.getCell(1).getStringCellValue());
                 loadd.setYear(row.getCell(2).getStringCellValue());
                 loadd.setMonth(row.getCell(3).getStringCellValue());
-                loadd.setModelChannel(row.getCell(4).getStringCellValue());
+                loadd.setChannel(row.getCell(4).getStringCellValue());
                 loadd.setServiceLoad((int) row.getCell(5).getNumericCellValue());
-                loadd.setChannel(loadd.getModelChannel());
 
                 if (loadd.getLocation() != null) {
                     switch (loadd.getLocation().trim().toUpperCase()) {
