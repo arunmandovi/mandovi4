@@ -147,15 +147,15 @@ public class CCConversionServiceImpl implements CCConversionService {
                         ? (int) yearCell.getNumericCellValue() : Integer.parseInt(year_cell.getStringCellValue());
                 ccConversion.setYear(String.valueOf(num_year));
 
-                ccConversion.setPmsAppt((int)row.getCell(4).getNumericCellValue());
-                ccConversion.setPmsConversion((int)row.getCell(5).getNumericCellValue());
+                ccConversion.setPmsAppt(row.getCell(4) != null ? (int) row.getCell(4).getNumericCellValue() : 0);
+                ccConversion.setPmsConversion(row.getCell(5) != null ? (int) row.getCell(5).getNumericCellValue() : 0);
                 Double percentagePMS = 0.0;
                 if (ccConversion.getPmsAppt() != null && ccConversion.getPmsAppt() > 0){
                     percentagePMS = ccConversion.getPmsConversion() * 1.0 / ccConversion.getPmsAppt() * 100;
                 }
                 ccConversion.setPercentagePMSConversion(percentagePMS);
-                ccConversion.setFrsAppt((int)row.getCell(7).getNumericCellValue());
-                ccConversion.setFrsConversion((int)row.getCell(8).getNumericCellValue());
+                ccConversion.setFrsAppt(row.getCell(7) != null ? (int) row.getCell(7).getNumericCellValue() : 0);
+                ccConversion.setFrsConversion(row.getCell(8) != null ? (int) row.getCell(8).getNumericCellValue() : 0);
                 Double percentageFRS = 0.0;
                 if (ccConversion.getFrsAppt() != null && ccConversion.getFrsAppt() > 0){
                     percentageFRS = ccConversion.getFrsConversion() * 1.0 / ccConversion.getFrsAppt() / 100;

@@ -57,7 +57,6 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                 MGAProfit mgaProfit = new MGAProfit();
 
                 mgaProfit.setServiceDescription(row.getCell(0).getStringCellValue());
-                mgaProfit.setLocationCode(row.getCell(1).getStringCellValue());
                 mgaProfit.setMonth(row.getCell(2).getStringCellValue());
 
                 Cell cell = row.getCell(3);
@@ -70,8 +69,7 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                 mgaProfit.setNetRetailDDL(mgaProfit.getNetRetailDD()/100000);
                 mgaProfit.setNetRetailSelling(mgaProfit.getNetRetailSell()/100000);
 
-                mgaProfit.setServiceType(mgaProfit.getServiceDescription());
-                String locationCode = mgaProfit.getLocationCode();
+                String locationCode = row.getCell(1).getStringCellValue().toUpperCase();
                 if (bangaloreLocations.contains(locationCode)){
                     mgaProfit.setCity("Bangalore");
                 } else if (mysoreLocations.contains(locationCode)){
@@ -82,8 +80,8 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                     mgaProfit.setCity("UNKNOWN");
                 }
 
-                if (mgaProfit.getLocationCode() != null) {
-                    switch (mgaProfit.getLocationCode().trim().toUpperCase()) {
+                if (row.getCell(1).getStringCellValue() != null) {
+                    switch (row.getCell(1).getStringCellValue().trim().toUpperCase()) {
                         case "BMR": mgaProfit.setBranch("Balmatta"); break;
                         case "BTL": mgaProfit.setBranch("Bantwal"); break;
                         case "VLA": mgaProfit.setBranch("Vittla"); break;

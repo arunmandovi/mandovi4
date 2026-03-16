@@ -71,15 +71,14 @@ public class LoaddServiceImpl implements LoaddService {
 
                 Loadd loadd = new Loadd();
 
-                loadd.setLocation(row.getCell(0).getStringCellValue());
                 loadd.setServiceTypeCode(row.getCell(1).getStringCellValue());
                 loadd.setYear(row.getCell(2).getStringCellValue());
                 loadd.setMonth(row.getCell(3).getStringCellValue());
                 loadd.setChannel(row.getCell(4).getStringCellValue());
                 loadd.setServiceLoad((int) row.getCell(5).getNumericCellValue());
 
-                if (loadd.getLocation() != null) {
-                    switch (loadd.getLocation().trim().toUpperCase()) {
+                if (row.getCell(0).getStringCellValue() != null) {
+                    switch (row.getCell(0).getStringCellValue().toUpperCase()) {
                         case "BMR": loadd.setBranch("Balmatta"); break;
                         case "BTL": loadd.setBranch("Bantwal"); break;
                         case "VLA": loadd.setBranch("Vittla"); break;
@@ -129,7 +128,7 @@ public class LoaddServiceImpl implements LoaddService {
                     }
                 }
 
-                String locationCode = loadd.getLocation();
+                String locationCode = row.getCell(0).getStringCellValue().toUpperCase();
                 if (bangaloreLocations.contains(locationCode)) loadd.setCity("Bangalore");
                 else if (mysoreLocations.contains(locationCode)) loadd.setCity("Mysore");
                 else if (mangaloreLocations.contains(locationCode)) loadd.setCity("Mangalore");
@@ -154,7 +153,7 @@ public class LoaddServiceImpl implements LoaddService {
                 String serviceTypeCode = loadd.getServiceTypeCode();
                 switch (serviceTypeCode) {
                     case "ACC","BDW","CDS","CVMS","REFF","TV1","TV2","TV3","WASH","WMOS","FR4",
-                         "PMSTV","TRN","FR","RJ","IFC" -> loadd.setLoadType("OTHERS");
+                         "PMSTV","TRN","FR","RJ","IFC", "IPC" -> loadd.setLoadType("OTHERS");
                     case "FR1","FR2","FR3" -> loadd.setLoadType("FREE SERVICE");
                     case "SC","CCP" -> loadd.setLoadType("NO");
                     case "BANDP" -> loadd.setLoadType("BODYSHOP");

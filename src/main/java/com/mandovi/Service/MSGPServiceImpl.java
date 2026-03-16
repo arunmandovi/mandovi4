@@ -46,7 +46,6 @@ public class MSGPServiceImpl implements MSGPService {
                 MSGP msgp = new MSGP();
 
                 msgp.setCity(row.getCell(0).getStringCellValue());
-                msgp.setLocationCode(row.getCell(1).getStringCellValue());
                 msgp.setYear(row.getCell(2).getStringCellValue());
                 msgp.setMonth(row.getCell(3).getStringCellValue());
                 msgp.setServiceDescription(row.getCell(4).getStringCellValue());
@@ -54,8 +53,8 @@ public class MSGPServiceImpl implements MSGPService {
 
                 msgp.setSumOfNetRetailDDL(msgp.getNetRetailDDL()/100000);
 
-                if (msgp.getLocationCode() != null){
-                    switch (msgp.getLocationCode().trim().toUpperCase()){
+                if (row.getCell(1).getStringCellValue() != null){
+                    switch (row.getCell(1).getStringCellValue().toUpperCase()){
                         case "BMR": msgp.setBranch("Balmatta"); break;
                         case "BTL": msgp.setBranch("Bantwal"); break;
                         case "VLA": msgp.setBranch("Vittla"); break;

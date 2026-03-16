@@ -53,15 +53,15 @@ public class SAConversionServiceImpl implements SAConversionService {
                         ? (int) year_cell.getNumericCellValue() : Integer.parseInt(year_cell.getStringCellValue());
                 saConversion.setYear(String.valueOf(num_year));
 
-                saConversion.setPmsAppt((int)row.getCell(4).getNumericCellValue());
-                saConversion.setPmsConversion((int)row.getCell(5).getNumericCellValue());
+                saConversion.setPmsAppt(row.getCell(4).getCellType() != null ? (int) row.getCell(4).getNumericCellValue() : 0 );
+                saConversion.setPmsConversion(row.getCell(5).getCellType() != null ? (int) row.getCell(5).getNumericCellValue() : 0);
                 if (saConversion.getPmsAppt() == null || Objects.equals(saConversion.getPmsAppt(), 0)) {
                     saConversion.setPercentagePMSConversion(0.0);
                 } else {
                     saConversion.setPercentagePMSConversion(saConversion.getPmsAppt() * 1.0 / saConversion.getPmsAppt() * 100);
                 }
-                saConversion.setFrsAppt((int) row.getCell(7).getNumericCellValue());
-                saConversion.setFrsConversion((int)row.getCell(8).getNumericCellValue());
+                saConversion.setFrsAppt(row.getCell(7).getCellType() != null ? (int) row.getCell(7).getNumericCellValue() : 0);
+                saConversion.setFrsConversion(row.getCell(8).getCellType() != null ? (int) row.getCell(8).getNumericCellValue() : 0);
                 if (saConversion.getFrsAppt() == null || Objects.equals(saConversion.getFrsAppt(), 0)){
                     saConversion.setPercentageFRSConversion(0.0);
                 }else {

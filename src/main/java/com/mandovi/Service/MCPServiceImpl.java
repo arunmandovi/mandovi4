@@ -22,27 +22,11 @@ public class MCPServiceImpl implements MCPService {
         this.mcpRepository = mcpRepository;
     }
     Set<String> arenaModels = new HashSet<>(Arrays.asList(
-            "ALTO","ALTO 800","ALTO 800 CNG","ALTO K10","Alto K10 CNG","ALTO K10C","A-STAR","BREZZA S-CNG",
-            "CELERIO","CELERIO CNG","CELERIO DIESEL","DAZZLING NEW DZIRE","DAZZLING NEW DZIRE CNG","Dzire CNG",
-            "DZIRE TOUR DIESEL","EECO","EECO CNG K12N 2022","EECO K12N 2022","EPIC NEW SWIFT","EPIC NEW SWIFT CNG",
-            "ERTIGA CNG","ERTIGA DIESEL","ERTIGA DIESEL 1.5L","ERTIGA PETROL","ESTEEM","GRAND VITARA CNG K15C",
-            "GYPSY","KIZASHI","M 800","MARUTI EECO CNG","MARUTI EECO PETROL","NEW BREZZA","NEW CELERIO 2021",
-            "NEW CELERIO CNG 2021","New Dzire Diesel","New Dzire Petrol","NEW ERTIGA DIESEL","NEW ERTIGA PETROL",
-            "NEW SWIFT CNG","NEW SWIFT DIESEL","NEW SWIFT DZIRE TOUR S PETROL","NEW SWIFT PE","NEW SWIFT PETROL","NEW ERTIGA",
-            "NEW WAGON R 1.2L PETROL","NEW WAGON R 1L CNG","NEW WAGON R 1L PETROL","Next-Gen ERTIGA CNG","OMNI",
-            "RITZ","RITZ DIESEL","S-PRESSO","S-PRESSO BIFUEL CNG","SUPER CARRY","SUPER CARRY CNG","ERTIGA","VITARA BREZZA",
-            "SUPER CARRY PETROL","SWIFT","SWIFT DIESEL","SWIFT DZIRE","SWIFT NEW / D","SWIFT NEW / DZIRE NEW PETROL",
-            "SWIFT NEW/  D","SWIFT NEW/  DZIRE NEW DIESEL","SX4","SX4 DIESEL","TOUR S (CNG)","VERSA","VITARA","DZIRE",
-            "VITARA BREZZA 1.3D","VITARA BREZZA K15B BS-VI","WAGON R","WAGON-R NEW","ZEN","ZEN ESTILO","NEW WAGON R",
-            "NEW CELERIO","New Dzire Petro","EECO CNG K12", "NEW WAGON-R","NEW SWIFT", "NEW SWIFT DZIRE","NEW A-STAR"
+            "ALTO","A-STAR","VITARA BREZZA","VICTORIS","CELERIO","DZIRE","EECO","SWIFT","ESTEEM","GYPSY","KIZASHI","M 800",
+            "OMNI","RITZ","S-PRESSO","SUPER CARRY","ERTIGA","SX4","TOUR S (CNG)","VERSA","WAGON R","ZEN","BREZZA","GRAND VITARA CNG K15C"
     ));
     Set<String> nexaModels = new HashSet<>(Arrays.asList(
-            "INVICTO","BALENO","XL6","Baleno RS","CIAZ DIESEL","CIAZ PETROL","FRONX CNG","Fronx Domestic",
-            "Fronx Domestic P74","Fronx Turbo Smart Hybrid Domestic P74","IGNIS-DIESEL","IGNIS-PETROL",
-            "Jimny 5 Door Domestic P74","MARUTI BALENO","MARUTI BALENO DIESEL","MARUTI BALENO PETROL",
-            "MARUTI GRAND VITARA Smart Hybrid","MARUTI GRAND VITARA Strong Hybrid","MARUTI S-CRO",
-            "MARUTI S-CROSS SMART HYBRID 1.5L","NEW BALENO CNG","NEW CIAZ DIESEL","NEW CIAZ PETROL",
-            "S-CROSS (D13)","S-CROSS (D16)","XL6 CNG","NEW CIAZ PETR"
+            "INVICTO","BALENO","XL6","CIAZ","FRONX","IGNIS","JIMNY","GRAND VITARA","MARUTI S-CRO","S-CROSS (D13)"
     ));
 
     @Override
@@ -69,8 +53,6 @@ public class MCPServiceImpl implements MCPService {
                 MCP mcp = new MCP();
 
                 mcp.setCity(row.getCell(0).getStringCellValue());
-                mcp.setLocation(row.getCell(1).getStringCellValue());
-                mcp.setModel(row.getCell(2).getStringCellValue());
                 mcp.setMonth(row.getCell(3).getStringCellValue());
 
                 Cell cell = row.getCell(4);
@@ -81,8 +63,7 @@ public class MCPServiceImpl implements MCPService {
                 mcp.setMcpQuantity((int) row.getCell(5).getNumericCellValue());
                 mcp.setAmountCollected(row.getCell(6).getNumericCellValue());
 
-                String location = mcp.getLocation().trim().toUpperCase();
-                switch (location) {
+                switch (row.getCell(1).getStringCellValue().toUpperCase()) {
                     case "BALMATTA WORKSHOP" -> mcp.setBranch("Balmatta");
                     case "BANGALORE EAST TALUK-SRV" ->mcp.setBranch("Sarjapura");
                     case "BANNUR ROAD-SRV" -> mcp.setBranch("Bannur");
@@ -120,10 +101,10 @@ public class MCPServiceImpl implements MCPService {
                     case "B.H ROAD-R(3S)" -> mcp.setBranch("Gowribidanur");
                 }
 
-                String model = mcp.getModel();
-                if (arenaModels.contains(model)) {
+                String model = row.getCell(2).getStringCellValue().toUpperCase();
+                if (arenaModels.stream().anyMatch(model::contains)) {
                     mcp.setChannel("ARENA");
-                } else if (nexaModels.contains(model)) {
+                } else if (nexaModels.stream().anyMatch(model::contains)) {
                     mcp.setChannel("NEXA");
                 }else {
                     mcp.setChannel("UNKNOWN");

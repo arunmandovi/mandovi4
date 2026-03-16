@@ -13,12 +13,6 @@ public class PMSParts {
     @Column(name = "pms_partsSINo")
     private Integer pms_partsSINo;
 
-    @Column(name = "parent")
-    private String parent;
-
-    @Column(name = "location_code")
-    private String locationCode;
-
     @Column(name = "period")
     private LocalDate period;
 
@@ -55,10 +49,8 @@ public class PMSParts {
     public PMSParts() {
     }
 
-    public PMSParts(Integer pms_partsSINo, String parent, String locationCode, LocalDate period, String partGroup, Integer required, Integer changed, Double pms, String branch, String city, String month, String year, String qtrWise, String halfYear) {
+    public PMSParts(Integer pms_partsSINo, LocalDate period, String partGroup, Integer required, Integer changed, Double pms, String branch, String city, String month, String year, String qtrWise, String halfYear) {
         this.pms_partsSINo = pms_partsSINo;
-        this.parent = parent;
-        this.locationCode = locationCode;
         this.period = period;
         this.partGroup = partGroup;
         this.required = required;
@@ -78,22 +70,6 @@ public class PMSParts {
 
     public void setPms_partsSINo(Integer pms_partsSINo) {
         this.pms_partsSINo = pms_partsSINo;
-    }
-
-    public String getParent() {
-        return parent;
-    }
-
-    public void setParent(String parent) {
-        this.parent = parent;
-    }
-
-    public String getLocationCode() {
-        return locationCode;
-    }
-
-    public void setLocationCode(String locationCode) {
-        this.locationCode = locationCode;
     }
 
     public LocalDate getPeriod() {
@@ -188,8 +164,6 @@ public class PMSParts {
     public String toString() {
         return "PMSParts{" +
                 "pms_partsSINo=" + pms_partsSINo +
-                ", parent='" + parent + '\'' +
-                ", locationCode='" + locationCode + '\'' +
                 ", period=" + period +
                 ", partGroup='" + partGroup + '\'' +
                 ", required=" + required +

@@ -63,7 +63,6 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
                 MSGPProfit msgpProfit = new MSGPProfit();
 
                 msgpProfit.setServiceDescription(row.getCell(0).getStringCellValue());
-                msgpProfit.setLocationCode(row.getCell(1).getStringCellValue());
                 msgpProfit.setMonth(row.getCell(2).getStringCellValue());
 
                 Cell cell = row.getCell(3);
@@ -77,7 +76,7 @@ public class MSGPProfitServiceImpl implements MSGPProfitService {
                 msgpProfit.setSumOfNetRetailDDL(round2Decimal(msgpProfit.getNetRetailDDL()/100000));
                 msgpProfit.setSumOfNetRetailSelling(round2Decimal(msgpProfit.getNetRetailSelling()/100000));
 
-                String location_code = msgpProfit.getLocationCode();
+                String location_code = row.getCell(1).getStringCellValue().toUpperCase();
                 if (bangaloreBranches.contains(location_code)) {
                     msgpProfit.setCity("Bangalore");
                 } else if (mysoreBranches.contains(location_code)) {

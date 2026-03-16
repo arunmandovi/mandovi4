@@ -81,8 +81,6 @@ public class LabourServiceImpl implements LabourService {
 
                 labour.setLabour(labour.getSumOfBasicAmt()/100000);
 
-                labour.setPeriod(labour.getMonth()+"-"+labour.getYear());
-
                 String branch = labour.getBranch();
                 if (bangaloreBranches.contains(branch)) {
                     labour.setCity("Bangalore");

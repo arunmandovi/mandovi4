@@ -30,7 +30,7 @@ import java.time.LocalDate;
 @NamedNativeQuery(
         name = "Loadd.getProductSummaryCityWise",
         query = """
-               SELECT 
+               SELECT
                    l.city AS city,
                    NULL AS month_name,
                    (SELECT SUM(p.service_utilized_bay)
@@ -80,9 +80,6 @@ public class Loadd {
     @Column(name = "loadSINo")
     private Integer loadSINo;
 
-    @Column(name = "location")
-    private String location;
-
     @Column(name = "service_type_code")
     private String serviceTypeCode;
 
@@ -119,9 +116,8 @@ public class Loadd {
     public Loadd() {
     }
 
-    public Loadd(Integer loadSINo, String location, String serviceTypeCode, String year, String month, Integer serviceLoad, String channel, String city, String branch, String financialYear, String loadType, String qtrWise, String halfYear) {
+    public Loadd(Integer loadSINo, String serviceTypeCode, String year, String month, Integer serviceLoad, String channel, String city, String branch, String financialYear, String loadType, String qtrWise, String halfYear) {
         this.loadSINo = loadSINo;
-        this.location = location;
         this.serviceTypeCode = serviceTypeCode;
         this.year = year;
         this.month = month;
@@ -141,14 +137,6 @@ public class Loadd {
 
     public void setLoadSINo(Integer loadSINo) {
         this.loadSINo = loadSINo;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getServiceTypeCode() {
@@ -243,7 +231,6 @@ public class Loadd {
     public String toString() {
         return "Loadd{" +
                 "loadSINo=" + loadSINo +
-                ", location='" + location + '\'' +
                 ", serviceTypeCode='" + serviceTypeCode + '\'' +
                 ", year='" + year + '\'' +
                 ", month='" + month + '\'' +

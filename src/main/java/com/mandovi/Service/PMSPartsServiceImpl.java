@@ -95,9 +95,6 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                         "BMR","BTL","VLA","KDB","UPA","SKL","SLL","AYR","YEY","MNL","SJH","SYG"
                 ));
 
-                pmsParts.setParent(row.getCell(0).getStringCellValue());
-                pmsParts.setLocationCode(row.getCell(1).getStringCellValue());
-
                 Cell periodCell = row.getCell(2, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
                 pmsParts.setPeriod(getPeriodFromCell(periodCell));
 
@@ -109,7 +106,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                 Double changed = Double.valueOf(pmsParts.getChanged());
                 pmsParts.setPms(changed/required*100);
 
-                String locationCode = pmsParts.getLocationCode();
+                String locationCode = row.getCell(1).getStringCellValue().toUpperCase();
                 switch (locationCode.trim().toUpperCase()){
                     case "BMR": pmsParts.setBranch("Balmatta"); break;
                     case "BTL": pmsParts.setBranch("Bantwal"); break;
@@ -159,13 +156,11 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                     default: pmsParts.setBranch("Unknown"); break;
                 }
 
-                String location = pmsParts.getLocationCode();
-
-                if (bangaloreBranches.contains(location)) {
+                if (bangaloreBranches.contains(locationCode)) {
                     pmsParts.setCity("Bangalore");
-                } else if (mysoreBranches.contains(location)) {
+                } else if (mysoreBranches.contains(locationCode)) {
                     pmsParts.setCity("Mysore");
-                } else if (mangaloreLocations.contains(location)) {
+                } else if (mangaloreLocations.contains(locationCode)) {
                     pmsParts.setCity("Mangalore");
                 } else {
                     pmsParts.setCity("Unknown");

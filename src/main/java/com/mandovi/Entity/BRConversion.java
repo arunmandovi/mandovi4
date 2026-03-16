@@ -43,9 +43,6 @@ public class BRConversion {
     @Column(name = "grand_total")
     private int grandTotal;
 
-    @Column(name = "period")
-    private String period;
-
     @Column(name = "qtr_wise")
     private String qtrWise;
 
@@ -55,7 +52,7 @@ public class BRConversion {
     public BRConversion() {
     }
 
-    public BRConversion(Integer br_conversionSINo, String city, String branch, String month, String year, String channel, Double labourAmt, Double partAmount, Double billAmount, int no, int brConversion, int grandTotal, String period, String qtrWise, String halfYear) {
+    public BRConversion(Integer br_conversionSINo, String city, String branch, String month, String year, String channel, Double labourAmt, Double partAmount, Double billAmount, int no, int brConversion, int grandTotal, String qtrWise, String halfYear) {
         this.br_conversionSINo = br_conversionSINo;
         this.city = city;
         this.branch = branch;
@@ -68,7 +65,6 @@ public class BRConversion {
         this.no = no;
         this.brConversion = brConversion;
         this.grandTotal = grandTotal;
-        this.period = period;
         this.qtrWise = qtrWise;
         this.halfYear = halfYear;
     }
@@ -169,14 +165,6 @@ public class BRConversion {
         this.grandTotal = grandTotal;
     }
 
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
     public String getQtrWise() {
         return qtrWise;
     }
@@ -195,7 +183,7 @@ public class BRConversion {
 
     @Override
     public String toString() {
-        return "BR_Conversion{" +
+        return "BRConversion{" +
                 "br_conversionSINo=" + br_conversionSINo +
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
@@ -208,7 +196,6 @@ public class BRConversion {
                 ", no=" + no +
                 ", brConversion=" + brConversion +
                 ", grandTotal=" + grandTotal +
-                ", period='" + period + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +
                 ", halfYear='" + halfYear + '\'' +
                 '}';

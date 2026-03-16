@@ -14,20 +14,8 @@ public class MGA {
     private Integer mgaSINo;
     @Column(name = "mga_date")
     private LocalDate mgaDate;
-    @Column(name = "dealer_code")
-    private String dealerCode;
-    @Column(name = "for_code")
-    private String forCode;
-    @Column(name = "outlet_code")
-    private String outletCode;
-    @Column(name = "dealer_for_outlet_code")
-    private String dealerForOutletCode;
     @Column(name = "city")
     private String city;
-    @Column(name = "location")
-    private String location;
-    @Column(name = "dealer_name")
-    private String dealerName;
     @Column(name = "service_advisor")
     private String serviceAdvisor;
     @Column(name = "consumption")
@@ -52,16 +40,10 @@ public class MGA {
     public MGA() {
     }
 
-    public MGA(Integer mgaSINo, LocalDate mgaDate, String dealerCode, String forCode, String outletCode, String dealerForOutletCode, String city, String location, String dealerName, String serviceAdvisor, Double consumption, Integer loadd, Double mgaLoad, String branch, String month, String year, String channel, String qtrWise, String halfYear) {
+    public MGA(Integer mgaSINo, LocalDate mgaDate, String city, String serviceAdvisor, Double consumption, Integer loadd, Double mgaLoad, String branch, String month, String year, String channel, String qtrWise, String halfYear) {
         this.mgaSINo = mgaSINo;
         this.mgaDate = mgaDate;
-        this.dealerCode = dealerCode;
-        this.forCode = forCode;
-        this.outletCode = outletCode;
-        this.dealerForOutletCode = dealerForOutletCode;
         this.city = city;
-        this.location = location;
-        this.dealerName = dealerName;
         this.serviceAdvisor = serviceAdvisor;
         this.consumption = consumption;
         this.loadd = loadd;
@@ -90,60 +72,12 @@ public class MGA {
         this.mgaDate = mgaDate;
     }
 
-    public String getDealerCode() {
-        return dealerCode;
-    }
-
-    public void setDealerCode(String dealerCode) {
-        this.dealerCode = dealerCode;
-    }
-
-    public String getForCode() {
-        return forCode;
-    }
-
-    public void setForCode(String forCode) {
-        this.forCode = forCode;
-    }
-
-    public String getOutletCode() {
-        return outletCode;
-    }
-
-    public void setOutletCode(String outletCode) {
-        this.outletCode = outletCode;
-    }
-
-    public String getDealerForOutletCode() {
-        return dealerForOutletCode;
-    }
-
-    public void setDealerForOutletCode(String dealerForOutletCode) {
-        this.dealerForOutletCode = dealerForOutletCode;
-    }
-
     public String getCity() {
         return city;
     }
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getDealerName() {
-        return dealerName;
-    }
-
-    public void setDealerName(String dealerName) {
-        this.dealerName = dealerName;
     }
 
     public String getServiceAdvisor() {
@@ -231,13 +165,7 @@ public class MGA {
         return "MGA{" +
                 "mgaSINo=" + mgaSINo +
                 ", mgaDate=" + mgaDate +
-                ", dealerCode='" + dealerCode + '\'' +
-                ", forCode='" + forCode + '\'' +
-                ", outletCode='" + outletCode + '\'' +
-                ", dealerForOutletCode='" + dealerForOutletCode + '\'' +
                 ", city='" + city + '\'' +
-                ", location='" + location + '\'' +
-                ", dealerName='" + dealerName + '\'' +
                 ", serviceAdvisor='" + serviceAdvisor + '\'' +
                 ", consumption=" + consumption +
                 ", loadd=" + loadd +

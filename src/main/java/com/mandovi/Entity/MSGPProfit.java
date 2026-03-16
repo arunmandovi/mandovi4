@@ -13,9 +13,6 @@ public class MSGPProfit {
     @Column(name = "service_description")
     private String serviceDescription;
 
-    @Column(name = "location_code")
-    private String locationCode;
-
     @Column(name = "month")
     private String month;
 
@@ -49,10 +46,9 @@ public class MSGPProfit {
     public MSGPProfit() {
     }
 
-    public MSGPProfit(Integer msgp_profitSINo, String serviceDescription, String locationCode, String month, String year, Double netRetailDDL, Double netRetailSelling, Double sumOfNetRetailDDL, Double sumOfNetRetailSelling, String city, String branch, String qtrWise, String halfYear) {
+    public MSGPProfit(Integer msgp_profitSINo, String serviceDescription, String month, String year, Double netRetailDDL, Double netRetailSelling, Double sumOfNetRetailDDL, Double sumOfNetRetailSelling, String city, String branch, String qtrWise, String halfYear) {
         this.msgp_profitSINo = msgp_profitSINo;
         this.serviceDescription = serviceDescription;
-        this.locationCode = locationCode;
         this.month = month;
         this.year = year;
         this.netRetailDDL = netRetailDDL;
@@ -79,14 +75,6 @@ public class MSGPProfit {
 
     public void setServiceDescription(String serviceDescription) {
         this.serviceDescription = serviceDescription;
-    }
-
-    public String getLocationCode() {
-        return locationCode;
-    }
-
-    public void setLocationCode(String locationCode) {
-        this.locationCode = locationCode;
     }
 
     public String getMonth() {
@@ -174,7 +162,6 @@ public class MSGPProfit {
         return "MSGPProfit{" +
                 "msgp_profitSINo=" + msgp_profitSINo +
                 ", serviceDescription='" + serviceDescription + '\'' +
-                ", locationCode='" + locationCode + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
                 ", netRetailDDL=" + netRetailDDL +

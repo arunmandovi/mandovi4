@@ -32,9 +32,6 @@ public class Labour {
     @Column(name = "labour")
     private Double labour;
 
-    @Column(name = "period")
-    private String period;
-
     @Column(name = "city")
     private String city;
 
@@ -53,7 +50,7 @@ public class Labour {
     public Labour() {
     }
 
-    public Labour(Integer labourSINo, String branch, String channel, String year, String month, String serviceTypeCode, Double sumOfBasicAmt, Double labour, String period, String city, String financialYear, String loadType, String qtrWise, String halfYear) {
+    public Labour(Integer labourSINo, String branch, String channel, String year, String month, String serviceTypeCode, Double sumOfBasicAmt, Double labour, String city, String financialYear, String loadType, String qtrWise, String halfYear) {
         this.labourSINo = labourSINo;
         this.branch = branch;
         this.channel = channel;
@@ -62,7 +59,6 @@ public class Labour {
         this.serviceTypeCode = serviceTypeCode;
         this.sumOfBasicAmt = sumOfBasicAmt;
         this.labour = labour;
-        this.period = period;
         this.city = city;
         this.branch = branch;
         this.financialYear = financialYear;
@@ -135,14 +131,6 @@ public class Labour {
         this.labour = labour;
     }
 
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
     public String getCity() {
         return city;
     }
@@ -194,7 +182,6 @@ public class Labour {
                 ", serviceTypeCode='" + serviceTypeCode + '\'' +
                 ", sumOfBasicAmt=" + sumOfBasicAmt +
                 ", labour=" + labour +
-                ", period='" + period + '\'' +
                 ", city='" + city + '\'' +
                 ", financialYear='" + financialYear + '\'' +
                 ", loadType='" + loadType + '\'' +

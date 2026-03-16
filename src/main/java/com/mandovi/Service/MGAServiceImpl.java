@@ -22,23 +22,14 @@ public class MGAServiceImpl implements MGAService {
     public MGAServiceImpl(MGARepository mgaRepository) {
         this.mgaRepository = mgaRepository;
     }
-    private String getStringCell(Row row, int index) {
-        Cell cell = row.getCell(index);
-        if (cell == null) return null;
-        if (cell.getCellType() == CellType.STRING) {
-            return cell.getStringCellValue().trim();
-        } else if (cell.getCellType() == CellType.NUMERIC) {
-            return String.valueOf((long) cell.getNumericCellValue()); // for numeric codes
-        }
-        return null;
-    }
+
     Set<String> arenaChannel = new HashSet<String>(Arrays.asList(
             "WILSON GARDEN","VIJAYANAGAR","JP NAGAR","YESHWANTHPUR WS","BASAVESHWARNAGAR","HENNUR","SARJAPURA","KOLAR","GAURIBIDNUR",
             "UTTARAHALI KENGERI ROAD","VIDYARANYAPURA-2S","MALUR-SOW","BASAVANGUDI","BASAVANAGUDI-SOW","CHOKKANDAHALLI","KRS ROAD",
             "HUNSUR ROAD","BANNUR","MANDYA","GONIKOPPA","KUSHAL NAGAR","CHAMRAJNAGAR","KRISHNARAJAPET-RO(2S)","SOMVARPET-3S(RO)","MADDUR",
             "NAGAMANGALA-3S(RO)","T NARSAIPURA-3S(RO)","BALMATTA W/S","BANTWAL","UPPINANGADY","KADABA","VITTLA","SURATHKAL","SULLIA","ADYAR",
-            "YEYYADI BR","SUJITH BAGH LANE","NARAVI-3S(RO)","CHOKKANDAHALLI-SRV","UTTARAHALI KENGERI ROAD-SRV","NEAR SANJAY THEATRE-2S(RO)"
-
+            "YEYYADI BR","SUJITH BAGH LANE","NARAVI-3S(RO)","CHOKKANDAHALLI-SRV","UTTARAHALI KENGERI ROAD-SRV","NEAR SANJAY THEATRE-2S(RO)",
+            "KOLLEGAL-3S(RO)","MANDYA-2S(STUDIO)"
     ));
     Set<String> nexaChannel = new HashSet<>(Arrays.asList(
             "YELAHANKA","TIRUPATHI ROAD-2S(NEXA)","MYSORE-2S(NEXA)","NEXA SERVICE"
@@ -93,13 +84,7 @@ public class MGAServiceImpl implements MGAService {
 
                 mga.setMgaDate(localDate);
 
-                mga.setDealerCode(getStingFromCell(row,1));
-                mga.setForCode(getStingFromCell(row,2));
-                mga.setOutletCode(getStingFromCell(row,3));
-                mga.setDealerForOutletCode(mga.getDealerCode()+"-"+mga.getForCode()+"-"+mga.getOutletCode());
                 mga.setCity(row.getCell(5).getStringCellValue());
-                mga.setLocation(row.getCell(6).getStringCellValue());
-                mga.setDealerName(row.getCell(7).getStringCellValue());
                 mga.setServiceAdvisor(row.getCell(8).getStringCellValue());
                 mga.setConsumption(row.getCell(9).getNumericCellValue());
 
@@ -113,8 +98,8 @@ public class MGAServiceImpl implements MGAService {
                     mga.setMgaLoad(mga.getConsumption()/mga.getLoadd());
                 }
 
-                if (mga.getLocation() != null) {
-                    switch (mga.getLocation().trim().toUpperCase()) {
+                if (row.getCell(6).getStringCellValue() != null) {
+                    switch (row.getCell(6).getStringCellValue().trim().toUpperCase()) {
                         case "WILSON GARDEN" -> mga.setBranch("Wilson Garden");
                         case "VIJAYANAGAR" -> mga.setBranch("Vijayanagar");
                         case "BANTWAL" -> mga.setBranch("Bantwal");
@@ -168,10 +153,9 @@ public class MGAServiceImpl implements MGAService {
                 DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("YYYY");
                 mga.setYear(yearFormatter.format(mga.getMgaDate()));
 
-                String location = mga.getLocation().trim().toUpperCase();
-                if (arenaChannel.contains(location)) {
+                if (arenaChannel.contains(row.getCell(6).getStringCellValue().toUpperCase())) {
                     mga.setChannel("ARENA");
-                } else if (nexaChannel.contains(location)) {
+                } else if (nexaChannel.contains(row.getCell(6).getStringCellValue().toUpperCase())) {
                     mga.setChannel("NEXA");
                 }else {
                     mga.setChannel("UNKNOWN");

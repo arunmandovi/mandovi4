@@ -13,12 +13,6 @@ public class MCP {
     @Column(name = "city")
     private String city;
 
-    @Column(name = "location")
-    private String location;
-
-    @Column(name = "model")
-    private String model;
-
     @Column(name = "month")
     private String month;
 
@@ -46,11 +40,9 @@ public class MCP {
     public MCP() {
     }
 
-    public MCP(Integer mcpSINo, String city, String location, String model, String month, String year, Integer mcpQuantity, Double amountCollected, String branch, String channel, String qtrWise, String halfYear) {
+    public MCP(Integer mcpSINo, String city, String month, String year, Integer mcpQuantity, Double amountCollected, String branch, String channel, String qtrWise, String halfYear) {
         this.mcpSINo = mcpSINo;
         this.city = city;
-        this.location = location;
-        this.model = model;
         this.month = month;
         this.year = year;
         this.mcpQuantity = mcpQuantity;
@@ -75,22 +67,6 @@ public class MCP {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public String getMonth() {
@@ -162,8 +138,6 @@ public class MCP {
         return "MCP{" +
                 "mcpSINo=" + mcpSINo +
                 ", city='" + city + '\'' +
-                ", location='" + location + '\'' +
-                ", model='" + model + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
                 ", mcpQuantity=" + mcpQuantity +

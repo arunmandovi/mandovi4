@@ -13,9 +13,6 @@ public class MGAProfit {
     @Column (name = "service_description")
     private String serviceDescription;
 
-    @Column (name = "location_code")
-    private String locationCode;
-
     @Column (name = "month")
     private String month;
 
@@ -34,9 +31,6 @@ public class MGAProfit {
     @Column (name = "net_retail_selling")
     private Double netRetailSelling;
 
-    @Column (name = "service_type")
-    private String serviceType;
-
     @Column (name = "city")
     private String city;
 
@@ -52,17 +46,15 @@ public class MGAProfit {
     public MGAProfit() {
     }
 
-    public MGAProfit(Integer magProfitSINo, String serviceDescription, String locationCode, String month, String year, Double netRetailDD, Double netRetailSell, Double netRetailDDL, Double netRetailSelling, String serviceType, String city, String branch, String qtrWise, String halfYear) {
+    public MGAProfit(Integer magProfitSINo, String serviceDescription, String month, String year, Double netRetailDD, Double netRetailSell, Double netRetailDDL, Double netRetailSelling, String city, String branch, String qtrWise, String halfYear) {
         this.magProfitSINo = magProfitSINo;
         this.serviceDescription = serviceDescription;
-        this.locationCode = locationCode;
         this.month = month;
         this.year = year;
         this.netRetailDD = netRetailDD;
         this.netRetailSell = netRetailSell;
         this.netRetailDDL = netRetailDDL;
         this.netRetailSelling = netRetailSelling;
-        this.serviceType = serviceType;
         this.city = city;
         this.branch = branch;
         this.qtrWise = qtrWise;
@@ -83,14 +75,6 @@ public class MGAProfit {
 
     public void setServiceDescription(String serviceDescription) {
         this.serviceDescription = serviceDescription;
-    }
-
-    public String getLocationCode() {
-        return locationCode;
-    }
-
-    public void setLocationCode(String locationCode) {
-        this.locationCode = locationCode;
     }
 
     public String getMonth() {
@@ -141,14 +125,6 @@ public class MGAProfit {
         this.netRetailSelling = netRetailSelling;
     }
 
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
-    }
-
     public String getCity() {
         return city;
     }
@@ -186,14 +162,12 @@ public class MGAProfit {
         return "MGAProfit{" +
                 "magProfitSINo=" + magProfitSINo +
                 ", serviceDescription='" + serviceDescription + '\'' +
-                ", locationCode='" + locationCode + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
                 ", netRetailDD=" + netRetailDD +
                 ", netRetailSell=" + netRetailSell +
                 ", netRetailDDL=" + netRetailDDL +
                 ", netRetailSelling=" + netRetailSelling +
-                ", serviceType='" + serviceType + '\'' +
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +

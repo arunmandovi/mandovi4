@@ -81,8 +81,6 @@ public class BRConversionServiceImpl implements BRConversionService {
 
 
                 String month = brConversion.getMonth();
-                String period = "1-"+month;
-                brConversion.setPeriod(period);
                 switch (month) {
                     case "Apr", "May", "Jun" -> { brConversion.setQtrWise("Qtr1"); brConversion.setHalfYear("H1"); }
                     case "Jul", "Aug", "Sep" -> { brConversion.setQtrWise("Qtr2"); brConversion.setHalfYear("H1"); }

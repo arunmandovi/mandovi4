@@ -58,12 +58,11 @@ public class RevenueServiceImpl implements RevenueService {
 
                 Cell cell = row.getCell(0);
                 int num_year = (cell.getCellType() == CellType.NUMERIC)
-                        ? (int) cell.getNumericCellValue() : Integer.valueOf(cell.getStringCellValue());
+                        ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
                 revenue.setYear(String.valueOf(num_year));
 
                 revenue.setCity(row.getCell(1).getStringCellValue());
                 revenue.setMonth(row.getCell(2).getStringCellValue());
-                revenue.setBranchSINo((int)row.getCell(4).getNumericCellValue());
                 revenue.setBranch(row.getCell(5).getStringCellValue());
 
 

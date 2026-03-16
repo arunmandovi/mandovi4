@@ -13,9 +13,6 @@ public class MSGP {
     @Column(name = "city")
     private String city;
 
-    @Column(name = "location_code")
-    private String locationCode;
-
     @Column(name = "year")
     private String year;
 
@@ -49,10 +46,9 @@ public class MSGP {
     public MSGP() {
     }
 
-    public MSGP(Integer msgpSINo, String city, String locationCode, String year, String month, String serviceDescription, Double netRetailDDL, Double sumOfNetRetailDDL, String branch, String loadType, String qtrWise, String halfYear, String financialYear) {
+    public MSGP(Integer msgpSINo, String city, String year, String month, String serviceDescription, Double netRetailDDL, Double sumOfNetRetailDDL, String branch, String loadType, String qtrWise, String halfYear, String financialYear) {
         this.msgpSINo = msgpSINo;
         this.city = city;
-        this.locationCode = locationCode;
         this.year = year;
         this.month = month;
         this.serviceDescription = serviceDescription;
@@ -79,14 +75,6 @@ public class MSGP {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getLocationCode() {
-        return locationCode;
-    }
-
-    public void setLocationCode(String locationCode) {
-        this.locationCode = locationCode;
     }
 
     public String getYear() {
@@ -174,7 +162,6 @@ public class MSGP {
         return "MSGP{" +
                 "msgpSINo=" + msgpSINo +
                 ", city='" + city + '\'' +
-                ", locationCode='" + locationCode + '\'' +
                 ", year='" + year + '\'' +
                 ", month='" + month + '\'' +
                 ", serviceDescription='" + serviceDescription + '\'' +
