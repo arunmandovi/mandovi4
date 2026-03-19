@@ -70,7 +70,7 @@ public class CCConversionServiceImpl implements CCConversionService {
 
             Map.entry("NEXA", Map.of(
                     "MANVIKA", LocalDate.of(2022, 10, 10),
-                    "THEJASHWINI", LocalDate.of(2022, 12, 5),
+                    "THEJASWINI", LocalDate.of(2022, 12, 5),
                     "AMRITH KIRAN", LocalDate.of(2025, 10, 27)
             )),
 
@@ -89,7 +89,7 @@ public class CCConversionServiceImpl implements CCConversionService {
             Map.entry("SURATHKAL", Map.of(
                     "DHANYA", LocalDate.of(2022, 6, 6),
                     "KRITHIKA", LocalDate.of(2023, 11, 20),
-                    "PRATHIKSHA", LocalDate.of(2024, 6, 3),
+                    "PRATHEEKSHA", LocalDate.of(2024, 6, 3),
                     "HARSHITHA", LocalDate.of(2025, 8, 18)
             )),
 
