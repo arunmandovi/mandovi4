@@ -1,22 +1,26 @@
 # ====== Build Stage ======
+# Use Maven with Java 21 to build the project
 FROM maven:3.9.3-eclipse-temurin-17 AS build
 WORKDIR /app
 
+# Copy only pom.xml first to cache dependencies
 COPY pom.xml .
-RUN mvn dependency:go-offline
-
+# If your project is in a subfolder, copy it accordingly
 COPY src ./src
+
+# Build the jar file, skip tests to speed up build
 RUN mvn clean package -DskipTests
 
 # ====== Run Stage ======
-FROM eclipse-temurin:17-jdk-jammy
+# Use lightweight JDK to run the jar
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
-COPY --from=build /app/target/*jar app.jar
+# Copy the built jar from the build stage
+COPY --from=build /app/target/*.jar app.jar
 
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring
-
+# Expose port (Render will map the correct $PORT)
 EXPOSE 8080
 
-ENTRYPOINT ["sh","-c","java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:+UseStringDeduplication -Dserver.port=$PORT -jar /app/app.jar"]
+# Start the Spring Boot application
+ENTRYPOINT ["sh","-c","java -Dserver.port=$PORT -jar /app/app.jar"]
