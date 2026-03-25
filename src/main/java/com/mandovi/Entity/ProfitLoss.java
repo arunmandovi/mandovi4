@@ -280,7 +280,9 @@ import jakarta.persistence.*;
                 GROUP BY branch
             ) l ON l.branch = pl.branch
 
-            WHERE (:cities IS NULL OR pl.city IN (:cities))
+            WHERE pl.branch IS NOT NULL
+             AND pl.branch <> ''
+             AND (:cities IS NULL OR pl.city IN (:cities))
             GROUP BY pl.city, pl.branch
         ) t
         """,

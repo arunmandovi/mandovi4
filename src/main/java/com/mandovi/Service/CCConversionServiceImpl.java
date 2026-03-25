@@ -40,14 +40,14 @@ public class CCConversionServiceImpl implements CCConversionService {
                     Map.entry("GAYATHRI", LocalDate.of(2025, 4, 16)),
                     Map.entry("VISHAKA", LocalDate.of(2025, 4, 16)),
                     Map.entry("SOUJANYA", LocalDate.of(2025, 6, 16)),
-                    Map.entry("VIDHYASHREE", LocalDate.of(2026, 1, 21)),
-                    Map.entry("NAMITHA", LocalDate.of(2025, 7, 28))
+                    Map.entry("VIDHYASHREE", LocalDate.of(2026, 1, 21))
             )),
 
             Map.entry("ADYAR", Map.of(
                     "KUSUMA", LocalDate.of(2024, 8, 5),
                     "SUSHMA", LocalDate.of(2025, 10, 7),
-                    "KAVITHA", LocalDate.of(2025, 12, 22)
+                    "KAVITHA", LocalDate.of(2025, 12, 22),
+                    "RASHMITHA", LocalDate.of(2024,8,5)
             )),
 
             Map.entry("BANTWAL", Map.of(
@@ -71,12 +71,14 @@ public class CCConversionServiceImpl implements CCConversionService {
             Map.entry("NEXA", Map.of(
                     "MANVIKA", LocalDate.of(2022, 10, 10),
                     "THEJASWINI", LocalDate.of(2022, 12, 5),
-                    "AMRITH KIRAN", LocalDate.of(2025, 10, 27)
+                    "AMRITH KIRAN", LocalDate.of(2025, 10, 27),
+                    "NAMITHA", LocalDate.of(2025, 7, 28)
             )),
 
             Map.entry("SUJITH BAGH", Map.of(
                     "NISHMITHA", LocalDate.of(2017, 12, 12),
-                    "KAVYA", LocalDate.of(2023, 12, 11)
+                    "KAVYA", LocalDate.of(2023, 12, 11),
+                    "SWATHI G", LocalDate.of(2017,2,4)
             )),
 
             Map.entry("SULLIA", Map.of(

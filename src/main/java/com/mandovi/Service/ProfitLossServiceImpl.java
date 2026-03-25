@@ -77,6 +77,8 @@ public class ProfitLossServiceImpl implements ProfitLossService {
             dropAllColumnsExceptCityBranch();
             addMissingColumns(normalizedColumns, colTypes);
 
+            profitlossRepository.deleteProfitLossAll();
+
             // 6️⃣ Process each row
             for (int r = 1; r <= sheet.getLastRowNum(); r++) {
 

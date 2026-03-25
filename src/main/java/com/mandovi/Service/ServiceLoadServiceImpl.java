@@ -46,18 +46,43 @@ public class ServiceLoadServiceImpl implements ServiceLoadService{
                 ServiceLoad serviceLoad = new ServiceLoad();
                 serviceLoad.setCity(row.getCell(0).getStringCellValue());
                 serviceLoad.setBranch(row.getCell(1).getStringCellValue());
-                serviceLoad.setServiceType(row.getCell(2).getStringCellValue());
-                switch (serviceLoad.getServiceType().toUpperCase()){
-                    case "ACC","CDS","FR","FR4","REFF","RJ","TV1","TV2","TV3",
-                         "WASH","WMOS","CVMS","PMSTV","BDW","TRN","IFC","IPC": serviceLoad.setServiceMainType("OTHERS");break;
-                    case "BANDP": serviceLoad.setServiceMainType("BODYSHOP");break;
-                    case "FR1","FR2","FR3": serviceLoad.setServiceMainType("FREE SERVICE");break;
-                    case "CCP","SC": serviceLoad.setServiceMainType("NO");break;
-                    case "PMS": serviceLoad.setServiceMainType("PMS");break;
-                    case "RR" : serviceLoad.setServiceMainType("RR");break;
-                    default:serviceLoad.setServiceMainType("UNKNOWN");break;
+                String serviceSubType = row.getCell(2).getStringCellValue();
+                switch (serviceSubType.toUpperCase()){
+                    case "ACC","CDS","FR","FR4","REFF","RJ","TV1","TV2","TV3","OTHERS",
+                         "WASH","WMOS","CVMS","PMSTV","BDW","TRN","IFC","IPC": serviceLoad.setServiceType("OTHERS");break;
+                    case "BANDP", "BODYSHOP": serviceLoad.setServiceType("BODYSHOP");break;
+                    case "FR1","FR2","FR3","FREE SERVICE": serviceLoad.setServiceType("FREE SERVICE");break;
+                    case "CCP","SC","NO": serviceLoad.setServiceType("NO");break;
+                    case "PMS": serviceLoad.setServiceType("PMS");break;
+                    case "RR" : serviceLoad.setServiceType("RR");break;
+                    default:serviceLoad.setServiceType("UNKNOWN");break;
                 }
-                serviceLoad.setServiceSubType(row.getCell(3).getStringCellValue());
+                String servicePMSType = null;
+
+                if (row.getCell(3) != null) {
+                    servicePMSType = row.getCell(3).getStringCellValue();
+                }
+
+                if (servicePMSType != null) {
+                    String value = servicePMSType.toUpperCase().trim();
+
+                    switch (value) {
+                        case "PMS2": serviceLoad.setServiceSubType("PMS2");break;
+                        case "PMS3": serviceLoad.setServiceSubType("PMS3");break;
+                        case "PMS4": serviceLoad.setServiceSubType("PMS4");break;
+                        case "PMS5": serviceLoad.setServiceSubType("PMS5");break;
+                        default:
+                            if (value.contains("PMS")) {
+                                serviceLoad.setServiceSubType("MORE THAN PMS5");
+                            } else {
+                                serviceLoad.setServiceSubType(null);
+                            }
+                            break;
+                    }
+                } else {
+                    serviceLoad.setServiceSubType(null);
+                }
+
                 serviceLoad.setMonth(row.getCell(4).getStringCellValue());
                 serviceLoad.setYear(row.getCell(5).getStringCellValue());
                 try {
