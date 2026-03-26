@@ -15,8 +15,8 @@ public interface DueDoneRepository extends JpaRepository<DueDone, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM DueDone d WHERE d.month = :month")
-    void deleteByMonth(@Param("month") String month);
+    @Query("DELETE FROM DueDone d WHERE d.month = :month AND d.year = :year")
+    void deleteByMonthYear(@Param("month") String month, @Param("year") String year );
 
     @Transactional
     @Query("""

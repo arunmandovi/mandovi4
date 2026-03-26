@@ -24,7 +24,8 @@ import jakarta.persistence.*;
             t.`Oct-25` AS Oct_25,
             t.`Nov-25` AS Nov_25,
             t.`Dec-25` AS Dec_25,
-            t.`Jan-25` AS Jan_25,
+            t.`Jan-26` AS Jan_26,
+            t.`Feb-26` AS Feb_26,
             t.`2025-26` AS FY_2025_26,
 
             t.load_Apr,
@@ -37,6 +38,7 @@ import jakarta.persistence.*;
             t.load_Nov,
             t.load_Dec,
             t.load_Jan,
+            t.load_Feb,
             t.load_Total,
 
             ROUND((t.`Apr-25` / NULLIF(t.load_Apr,0))*100000,3) AS Apr25_per_100k,
@@ -48,7 +50,8 @@ import jakarta.persistence.*;
             ROUND((t.`Oct-25` / NULLIF(t.load_Oct,0))*100000,3) AS Oct25_per_100k,
             ROUND((t.`Nov-25` / NULLIF(t.load_Nov,0))*100000,3) AS Nov25_per_100k,
             ROUND((t.`Dec-25` / NULLIF(t.load_Dec,0))*100000,3) AS Dec25_per_100k,
-            ROUND((t.`Jan-25` / NULLIF(t.load_Jan,0))*100000,3) AS Jan25_per_100k,
+            ROUND((t.`Jan-26` / NULLIF(t.load_Jan,0))*100000,3) AS Jan26_per_100k,
+            ROUND((t.`Feb-26` / NULLIF(t.load_Feb,0))*100000,3) AS Feb26_per_100k,
             ROUND((t.`Total_25` / NULLIF(t.load_Total,0))*100000,3) AS Total25_per_100k
 
         FROM (
@@ -70,11 +73,12 @@ import jakarta.persistence.*;
                 SUM(pl.oct_25) AS `Oct-25`,
                 SUM(pl.nov_25) AS `Nov-25`,
                 SUM(pl.dec_25) AS `Dec-25`,
-                SUM(pl.jan_25) AS `Jan-25`,
+                SUM(pl.jan_26) AS `Jan-26`,
+                SUM(pl.feb_26) AS `Feb-26`,
 
                 (SUM(pl.apr_25)+SUM(pl.may_25)+SUM(pl.jun_25)+SUM(pl.jul_25)+
                  SUM(pl.aug_25)+SUM(pl.sep_25)+SUM(pl.oct_25)+SUM(pl.nov_25)+
-                 SUM(pl.dec_25)+SUM(pl.jan_25)) AS `Total_25`,
+                 SUM(pl.dec_25)+SUM(pl.jan_26)+SUM(pl.feb_26)) AS `Total_25`,
 
                 SUM(pl.`2025_26`) AS `2025-26`,
 
@@ -88,6 +92,7 @@ import jakarta.persistence.*;
                 MAX(COALESCE(l.load_Nov,0)) AS load_Nov,
                 MAX(COALESCE(l.load_Dec,0)) AS load_Dec,
                 MAX(COALESCE(l.load_Jan,0)) AS load_Jan,
+                MAX(COALESCE(l.load_Feb,0)) AS load_Feb,
                 MAX(COALESCE(l.load_Total,0)) AS load_Total
 
             FROM mandovi.profit_loss pl
@@ -106,6 +111,7 @@ import jakarta.persistence.*;
                     SUM(CASE WHEN month='Nov' THEN service_load END) AS load_Nov,
                     SUM(CASE WHEN month='Dec' THEN service_load END) AS load_Dec,
                     SUM(CASE WHEN month='Jan' THEN service_load END) AS load_Jan,
+                    SUM(CASE WHEN month='Feb' THEN service_load END) AS load_Feb,
 
                     SUM(service_load) AS load_Total
 
@@ -141,7 +147,8 @@ import jakarta.persistence.*;
                         @ColumnResult(name = "Oct_25", type = Double.class),
                         @ColumnResult(name = "Nov_25", type = Double.class),
                         @ColumnResult(name = "Dec_25", type = Double.class),
-                        @ColumnResult(name = "Jan_25", type = Double.class),
+                        @ColumnResult(name = "Jan_26", type = Double.class),
+                        @ColumnResult(name = "Feb_26", type = Double.class),
                         @ColumnResult(name = "FY_2025_26", type = Double.class),
                         @ColumnResult(name = "load_Apr", type = Double.class),
                         @ColumnResult(name = "load_May", type = Double.class),
@@ -153,6 +160,7 @@ import jakarta.persistence.*;
                         @ColumnResult(name = "load_Nov", type = Double.class),
                         @ColumnResult(name = "load_Dec", type = Double.class),
                         @ColumnResult(name = "load_Jan", type = Double.class),
+                        @ColumnResult(name = "load_Feb", type = Double.class),
                         @ColumnResult(name = "load_Total", type = Double.class),
                         @ColumnResult(name = "Apr25_per_100k", type = Double.class),
                         @ColumnResult(name = "May25_per_100k", type = Double.class),
@@ -163,7 +171,8 @@ import jakarta.persistence.*;
                         @ColumnResult(name = "Oct25_per_100k", type = Double.class),
                         @ColumnResult(name = "Nov25_per_100k", type = Double.class),
                         @ColumnResult(name = "Dec25_per_100k", type = Double.class),
-                        @ColumnResult(name = "Jan25_per_100k", type = Double.class),
+                        @ColumnResult(name = "Jan26_per_100k", type = Double.class),
+                        @ColumnResult(name = "Feb26_per_100k", type = Double.class),
                         @ColumnResult(name = "Total25_per_100k", type = Double.class)
                 }
         )
@@ -188,7 +197,8 @@ import jakarta.persistence.*;
             t.`Oct-25` AS Oct_25,
             t.`Nov-25` AS Nov_25,
             t.`Dec-25` AS Dec_25,
-            t.`Jan-25` AS Jan_25,
+            t.`Jan-26` AS Jan_26,
+            t.`Feb-26` AS Feb_26,
             t.`2025-26` AS FY_2025_26,
 
             t.load_Apr,
@@ -201,6 +211,7 @@ import jakarta.persistence.*;
             t.load_Nov,
             t.load_Dec,
             t.load_Jan,
+            t.load_Feb,
             t.load_Total,
 
             ROUND((t.`Apr-25` / NULLIF(t.load_Apr,0))*100000,3) AS Apr25_per_100k,
@@ -212,7 +223,8 @@ import jakarta.persistence.*;
             ROUND((t.`Oct-25` / NULLIF(t.load_Oct,0))*100000,3) AS Oct25_per_100k,
             ROUND((t.`Nov-25` / NULLIF(t.load_Nov,0))*100000,3) AS Nov25_per_100k,
             ROUND((t.`Dec-25` / NULLIF(t.load_Dec,0))*100000,3) AS Dec25_per_100k,
-            ROUND((t.`Jan-25` / NULLIF(t.load_Jan,0))*100000,3) AS Jan25_per_100k,
+            ROUND((t.`Jan-26` / NULLIF(t.load_Jan,0))*100000,3) AS Jan26_per_100k,
+            ROUND((t.`Feb-26` / NULLIF(t.load_Feb,0))*100000,3) AS Feb26_per_100k,
             ROUND((t.`Total_25` / NULLIF(t.load_Total,0))*100000,3) AS Total25_per_100k
 
         FROM (
@@ -235,11 +247,12 @@ import jakarta.persistence.*;
                 SUM(pl.oct_25) AS `Oct-25`,
                 SUM(pl.nov_25) AS `Nov-25`,
                 SUM(pl.dec_25) AS `Dec-25`,
-                SUM(pl.jan_25) AS `Jan-25`,
+                SUM(pl.jan_26) AS `Jan-26`,
+                SUM(pl.feb_26) AS `Feb-26`,
 
                 (SUM(pl.apr_25)+SUM(pl.may_25)+SUM(pl.jun_25)+SUM(pl.jul_25)+
                  SUM(pl.aug_25)+SUM(pl.sep_25)+SUM(pl.oct_25)+SUM(pl.nov_25)+
-                 SUM(pl.dec_25)+SUM(pl.jan_25)) AS `Total_25`,
+                 SUM(pl.dec_25)+SUM(pl.jan_26)+SUM(pl.feb_26)) AS `Total_25`,
 
                 SUM(pl.`2025_26`) AS `2025-26`,
 
@@ -253,6 +266,7 @@ import jakarta.persistence.*;
                 MAX(COALESCE(l.load_Nov,0)) AS load_Nov,
                 MAX(COALESCE(l.load_Dec,0)) AS load_Dec,
                 MAX(COALESCE(l.load_Jan,0)) AS load_Jan,
+                MAX(COALESCE(l.load_Feb,0)) AS load_Feb,
                 MAX(COALESCE(l.load_Total,0)) AS load_Total
 
             FROM mandovi.profit_loss pl
@@ -271,6 +285,7 @@ import jakarta.persistence.*;
                     SUM(CASE WHEN month='Nov' THEN service_load END) AS load_Nov,
                     SUM(CASE WHEN month='Dec' THEN service_load END) AS load_Dec,
                     SUM(CASE WHEN month='Jan' THEN service_load END) AS load_Jan,
+                    SUM(CASE WHEN month='Feb' THEN service_load END) AS load_Feb,
 
                     SUM(service_load) AS load_Total
 
@@ -310,7 +325,8 @@ import jakarta.persistence.*;
                         @ColumnResult(name = "Oct_25", type = Double.class),
                         @ColumnResult(name = "Nov_25", type = Double.class),
                         @ColumnResult(name = "Dec_25", type = Double.class),
-                        @ColumnResult(name = "Jan_25", type = Double.class),
+                        @ColumnResult(name = "Jan_26", type = Double.class),
+                        @ColumnResult(name = "Feb_26", type = Double.class),
                         @ColumnResult(name = "FY_2025_26", type = Double.class),
                         @ColumnResult(name = "load_Apr", type = Double.class),
                         @ColumnResult(name = "load_May", type = Double.class),
@@ -322,6 +338,7 @@ import jakarta.persistence.*;
                         @ColumnResult(name = "load_Nov", type = Double.class),
                         @ColumnResult(name = "load_Dec", type = Double.class),
                         @ColumnResult(name = "load_Jan", type = Double.class),
+                        @ColumnResult(name = "load_Feb", type = Double.class),
                         @ColumnResult(name = "load_Total", type = Double.class),
                         @ColumnResult(name = "Apr25_per_100k", type = Double.class),
                         @ColumnResult(name = "May25_per_100k", type = Double.class),
@@ -332,7 +349,8 @@ import jakarta.persistence.*;
                         @ColumnResult(name = "Oct25_per_100k", type = Double.class),
                         @ColumnResult(name = "Nov25_per_100k", type = Double.class),
                         @ColumnResult(name = "Dec25_per_100k", type = Double.class),
-                        @ColumnResult(name = "Jan25_per_100k", type = Double.class),
+                        @ColumnResult(name = "Jan26_per_100k", type = Double.class),
+                        @ColumnResult(name = "Feb26_per_100k", type = Double.class),
                         @ColumnResult(name = "Total25_per_100k", type = Double.class)
                 }
         )

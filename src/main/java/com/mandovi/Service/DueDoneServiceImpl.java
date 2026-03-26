@@ -31,7 +31,11 @@ public class DueDoneServiceImpl implements  DueDoneService{
                 throw new RuntimeException("No Data found in Excel");
 
             String uploadMonth = firstRow.getCell(4).getStringCellValue().trim();
-            dueDoneRepository.deleteByMonth(uploadMonth);
+            int numYear = firstRow.getCell(3).getCellType() == CellType.NUMERIC
+                    ? (int) firstRow.getCell(3).getNumericCellValue()
+                    : Integer.parseInt(firstRow.getCell(3).getStringCellValue());
+            String uploadYear = String.valueOf(numYear);
+            dueDoneRepository.deleteByMonthYear(uploadMonth, uploadYear);
 
             for (int i=1; i <= sheet.getLastRowNum(); i++){
                 Row row = sheet.getRow(i);
@@ -43,19 +47,11 @@ public class DueDoneServiceImpl implements  DueDoneService{
                 dueDone.setBranch(row.getCell(1).getStringCellValue());
                 dueDone.setChannel(row.getCell(2).getStringCellValue());
 
-                Cell cell = row.getCell(3);
-                if (cell!= null){
-                    CellType cellType = cell.getCellType();
-
-                    switch (cellType){
-                        case STRING -> dueDone.setYear(row.getCell(3).getStringCellValue());
-                        case NUMERIC -> {
-                            int numYear = (int) row.getCell(3).getNumericCellValue();
-                            String year = String.valueOf(numYear);
-                            dueDone.setYear(year);
-                        }default -> dueDone.setYear("UNKNOWN");
-                    }
-                }
+                Cell yearCell = row.getCell(3);
+                int numberYear = yearCell.getCellType() == CellType.NUMERIC
+                        ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
+                String year = String.valueOf(numberYear);
+                dueDone.setYear(year);
 
                 dueDone.setMonth(row.getCell(4).getStringCellValue());
                 dueDone.setTotalDue((int)row.getCell(5).getNumericCellValue());
