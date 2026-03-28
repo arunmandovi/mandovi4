@@ -486,104 +486,104 @@ public class OutstandingServiceImpl implements OutstandingService {
                         .filter(o -> o.getPartyName() != null)
                         .collect(Collectors.groupingBy(Outstanding::getPartyName));
 
-//        for (List<Outstanding> partyRows : groupedByParty.values()) {
-//
-//            partyRows.sort(Comparator.comparing(
-//                    Outstanding::getOutstandingDate,
-//                    Comparator.nullsLast(Comparator.naturalOrder())
-//            ));
-//
-//            boolean[] processed = new boolean[partyRows.size()];
-//
-//            for (int i = 0; i < partyRows.size(); i++) {
-//
-//                if (processed[i]) continue;
-//
-//                Outstanding base = partyRows.get(i);
-//                List<Outstanding> group = new ArrayList<>();
-//                group.add(base);
-//                processed[i] = true;
-//
-//                for (int j = i + 1; j < partyRows.size(); j++) {
-//
-//                    if (processed[j]) continue;
-//                    Outstanding next = partyRows.get(j);
-//
-//                    if (!Objects.equals(base.getSegment(), next.getSegment())) continue;
-//                    if (base.getOutstandingDate() == null || next.getOutstandingDate() == null)
-//                        continue;
-//
-//                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//
-//                    if (base.getOutstandingDate() == null || next.getOutstandingDate() == null)
-//                        continue;
-//
-//                    try {
-//                        LocalDate baseDate = LocalDate.parse(base.getOutstandingDate(), formatter);
-//                        LocalDate nextDate = LocalDate.parse(next.getOutstandingDate(), formatter);
-//
-//                        long daysDiff = Math.abs(ChronoUnit.DAYS.between(baseDate, nextDate));
-//
-//                        if (daysDiff <= 62) {
-//                            group.add(next);
-//                            processed[j] = true;
-//                        }
-//
-//                    } catch (Exception e) {
-//                    }
-//                }
-//
-//                if (group.size() > 1) {
-//                    consolidateAndReplace(group);
-//                }
-//            }
-//        }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         for (List<Outstanding> partyRows : groupedByParty.values()) {
 
-            // 🔹 Step 1: Calculate net balance (including negatives)
-            double netBalance = partyRows.stream()
-                    .mapToDouble(o -> o.getBalanceAmt() == null ? 0.0 : o.getBalanceAmt())
-                    .sum();
+            partyRows.sort(Comparator.comparing(
+                    Outstanding::getOutstandingDate,
+                    Comparator.nullsLast(Comparator.naturalOrder())
+            ));
 
-            // 🔹 Step 2: Delete all rows if net = 0
-            List<Integer> ids = partyRows.stream()
-                    .map(Outstanding::getOutstandingSINo)
-                    .filter(Objects::nonNull)
-                    .toList();
+            boolean[] processed = new boolean[partyRows.size()];
 
-            if (netBalance == 0.0) {
-                outstandingRepository.deleteAllById(ids);
-                continue;
+            for (int i = 0; i < partyRows.size(); i++) {
+
+                if (processed[i]) continue;
+
+                Outstanding base = partyRows.get(i);
+                List<Outstanding> group = new ArrayList<>();
+                group.add(base);
+                processed[i] = true;
+
+                for (int j = i + 1; j < partyRows.size(); j++) {
+
+                    if (processed[j]) continue;
+                    Outstanding next = partyRows.get(j);
+
+                    if (!Objects.equals(base.getSegment(), next.getSegment())) continue;
+                    if (base.getOutstandingDate() == null || next.getOutstandingDate() == null)
+                        continue;
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+                    if (base.getOutstandingDate() == null || next.getOutstandingDate() == null)
+                        continue;
+
+                    try {
+                        LocalDate baseDate = LocalDate.parse(base.getOutstandingDate(), formatter);
+                        LocalDate nextDate = LocalDate.parse(next.getOutstandingDate(), formatter);
+
+                        long daysDiff = Math.abs(ChronoUnit.DAYS.between(baseDate, nextDate));
+
+                        if (daysDiff <= 62) {
+                            group.add(next);
+                            processed[j] = true;
+                        }
+
+                    } catch (Exception e) {
+                    }
+                }
+
+                if (group.size() > 1) {
+                    consolidateAndReplace(group);
+                }
             }
-
-            Outstanding latest = partyRows.get(0);
-
-            // 🔹 Step 4: Create consolidated row
-            Outstanding consolidated = new Outstanding();
-
-            consolidated.setPartyName(latest.getPartyName());
-            consolidated.setSegment(latest.getSegment());
-            consolidated.setLedgerGroupName(latest.getLedgerGroupName());
-            consolidated.setOutstandingDate(latest.getOutstandingDate());
-            consolidated.setBillNo(latest.getBillNo()); // latest bill
-            consolidated.setBalanceAmt(netBalance);
-
-            // Optional: reset ageing buckets
-            consolidated.setUpToSeven(0.0);
-            consolidated.setEightToThirty(0.0);
-            consolidated.setThirtyOneToNinty(0.0);
-            consolidated.setMoreThanNinty(0.0);
-
-            consolidated.setSalesMan(latest.getSalesMan());
-
-            // 🔹 Step 5: Delete old rows
-            outstandingRepository.deleteAllById(ids);
-
-            // 🔹 Step 6: Insert single row
-            outstandingRepository.save(consolidated);
         }
+
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//        for (List<Outstanding> partyRows : groupedByParty.values()) {
+//
+//            // 🔹 Step 1: Calculate net balance (including negatives)
+//            double netBalance = partyRows.stream()
+//                    .mapToDouble(o -> o.getBalanceAmt() == null ? 0.0 : o.getBalanceAmt())
+//                    .sum();
+//
+//            // 🔹 Step 2: Delete all rows if net = 0
+//            List<Integer> ids = partyRows.stream()
+//                    .map(Outstanding::getOutstandingSINo)
+//                    .filter(Objects::nonNull)
+//                    .toList();
+//
+//            if (netBalance == 0.0) {
+//                outstandingRepository.deleteAllById(ids);
+//                continue;
+//            }
+//
+//            Outstanding latest = partyRows.get(0);
+//
+//            // 🔹 Step 4: Create consolidated row
+//            Outstanding consolidated = new Outstanding();
+//
+//            consolidated.setPartyName(latest.getPartyName());
+//            consolidated.setSegment(latest.getSegment());
+//            consolidated.setLedgerGroupName(latest.getLedgerGroupName());
+//            consolidated.setOutstandingDate(latest.getOutstandingDate());
+//            consolidated.setBillNo(latest.getBillNo()); // latest bill
+//            consolidated.setBalanceAmt(netBalance);
+//
+//            // Optional: reset ageing buckets
+//            consolidated.setUpToSeven(0.0);
+//            consolidated.setEightToThirty(0.0);
+//            consolidated.setThirtyOneToNinty(0.0);
+//            consolidated.setMoreThanNinty(0.0);
+//
+//            consolidated.setSalesMan(latest.getSalesMan());
+//
+//            // 🔹 Step 5: Delete old rows
+//            outstandingRepository.deleteAllById(ids);
+//
+//            // 🔹 Step 6: Insert single row
+//            outstandingRepository.save(consolidated);
+//        }
     }
 
     private void consolidateAndReplace(List<Outstanding> rows) {
