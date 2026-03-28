@@ -100,6 +100,7 @@ public class MSGPServiceImpl implements MSGPService {
                         case "YPR": msgp.setBranch("Yeshwanthpur WS"); break;
                         case "KLG": msgp.setBranch("Kollegal"); break;
                         case "MNY": msgp.setBranch("Mandya Nexa"); break;
+                        case "RKV": msgp.setBranch("Gonikoppa Nexa");break;
                         default: msgp.setBranch("Unknown"); break;
                     }
                 }

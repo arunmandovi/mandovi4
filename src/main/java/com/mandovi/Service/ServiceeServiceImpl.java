@@ -71,6 +71,7 @@ public class ServiceeServiceImpl implements ServiceeService{
 //                    case "KKE" : servicee.setBranch("Mandya");break;
 //                    case "KLG" : servicee.setBranch("Kollegal");break;
 //                    case "MNY" : servicee.setBranch("Mandya Nexa"); break;
+//                    case "RKV" : servicee.setBranch("Gonikoppa Nexa");break;
 //                    case "KRS" : servicee.setBranch("KRS Road");break;
 //                    case "KSH" : servicee.setBranch("Kushalnagar");break;
 //                    case "KSN" : servicee.setBranch("Krishnarajapet");break;

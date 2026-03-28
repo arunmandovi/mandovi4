@@ -144,6 +144,7 @@ public class MGAServiceImpl implements MGAService {
                         case "YEYYADI BR" -> mga.setBranch("Yeyadi BR");
                         case "KOLLEGAL-3S(RO)" -> mga.setBranch("Kollegal");
                         case "MANDYA-2S(STUDIO)" -> mga.setBranch("Mandya Nexa");
+                        case "GONIKOPPAL-2S STUDIO" -> mga.setBranch("Gonikoppa Nexa");
                         default -> mga.setBranch("UNKNOWN");
                     }
                 }

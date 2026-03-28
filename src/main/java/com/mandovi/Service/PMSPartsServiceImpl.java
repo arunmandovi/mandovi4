@@ -153,6 +153,7 @@ public class PMSPartsServiceImpl implements PMSPartsService {
                     case "YPR": pmsParts.setBranch("Yeshwanthpur WS"); break;
                     case "KLG": pmsParts.setBranch("Kollegal"); break;
                     case "MNY": pmsParts.setBranch("Mandya Nexa"); break;
+                    case "RKV" : pmsParts.setBranch("Gonikoppa Nexa");break;
                     default: pmsParts.setBranch("Unknown"); break;
                 }
 

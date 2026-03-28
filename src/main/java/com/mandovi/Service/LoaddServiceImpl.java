@@ -124,6 +124,7 @@ public class LoaddServiceImpl implements LoaddService {
                         case "YPR": loadd.setBranch("Yeshwanthpur WS"); break;
                         case "KLG": loadd.setBranch("Kollegal"); break;
                         case "MNY": loadd.setBranch("Mandya Nexa"); break;
+                        case "RKV": loadd.setBranch("Gonikoppa Nexa");break;
                         default: loadd.setBranch("Unknown"); break;
                     }
                 }

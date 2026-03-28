@@ -95,6 +95,7 @@ public class MCPServiceImpl implements MCPService {
                     case "NEXA SERVICE KOLAR" ->   mcp.setBranch("Kolar Nexa");
                     case "KOLLEGAL-3S(RO)" ->   mcp.setBranch("Kollegal");
                     case "MANDYA-2S(STUDIO)" -> mcp.setBranch("Mandya Nexa");
+                    case "GONIKOPPAL-2S STUDIO" -> mcp.setBranch("Gonikoppa Nexa");
                     case "SURATHKAL-SRV" -> mcp.setBranch("Surathkal");
                     case "MANGALORE-2S(NEXA)" -> mcp.setBranch("Nexa Service");
                     case "BASAVANAGUDI-SOW" -> mcp.setBranch("Basavanagudi-SOW");
