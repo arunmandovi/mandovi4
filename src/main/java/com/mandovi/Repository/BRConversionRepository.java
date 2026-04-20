@@ -17,10 +17,12 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
     SELECT b FROM BRConversion b
     WHERE (:months IS NULL OR b.month IN (:months))
     AND (:years IS NULL OR b.year IN (:years))
+    AND (:financialYears IS NULL OR b.financialYear IN (:financialYears))
     """)
     List<BRConversion> getBR_ConversionByMonthYear(
             @Param("months") List<String> months,
-            @Param("years") List<String> years );
+            @Param("years") List<String> years,
+            @Param("financialYears") List<String> financialYears);
 
     @Transactional
     @Modifying
@@ -65,13 +67,14 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
             WHERE (:months IS NULL OR b.month IN (:months))
               AND (:qtrWise IS NULL OR b.qtrWise IN (:qtrWise))
               AND (:halfYear IS NULL OR b.halfYear IN (:halfYear))
+              AND (:financialYears IS NULL OR b.financialYear IN (:financialYears))
             GROUP BY b.city
             """)
     List<BRConversionSummaryDTO> getBRConversionSummaryByCity(
             @Param("months") List<String> month,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear
-    );
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears );
 
     // Group by branch
     @Query("""
@@ -111,13 +114,15 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
              AND (:cities IS NULL OR b.city IN (:cities))
              AND (:qtrWise IS NULL OR b.qtrWise IN (:qtrWise))
              AND (:halfYear IS NULL OR b.halfYear IN (:halfYear))
+             AND (:financialYears IS NULL OR b.financialYear IN (:financialYears))
             GROUP BY b.city, b.branch
             """)
     List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise(
             @Param("months") List<String> months,
             @Param("cities") List<String> cities,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears );
 
     @Modifying
     @Transactional

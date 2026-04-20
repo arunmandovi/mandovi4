@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -40,7 +39,7 @@ public class LoaddServiceImpl implements LoaddService {
                     "RJN","VDR","VJN","WGR","YLH","YPR"
             ));
             Set<String> mysoreLocations = new HashSet<>(Arrays.asList(
-                    "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH","KSN","MSE","NGL","SOM","TNR","KLG", "MNY"
+                    "BNR","CMR","HSR","JVR","KIV","KKE","KRS","KSH","KSN","MSE","NGL","SOM","TNR","KLG", "MNY", "RKV"
             ));
             Set<String> mangaloreLocations = new HashSet<>(Arrays.asList(
                     "BMR","BTL","VLA","KDB","UPA","SKL","SLL","AYR","YEY","MNL","SJH","SYG"
@@ -60,9 +59,11 @@ public class LoaddServiceImpl implements LoaddService {
 
             String uploadYear = String.valueOf(numYear);
             String uploadAnotherYear = String.valueOf(numYear + 1);
+            String deleteAnotherYear = String.valueOf(numYear + 2);
+            String deleteYear = uploadAnotherYear+"-"+deleteAnotherYear;
 
-            loaddRepository.deleteByMonthYear(uploadMonth, uploadYear);
-            loaddRepository.deleteByMonthYear(uploadMonth, uploadAnotherYear);
+            loaddRepository.deleteByMonthYear(uploadMonth, uploadYear, deleteYear);
+            loaddRepository.deleteByMonthYear(uploadMonth, uploadAnotherYear, deleteYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 
@@ -73,6 +74,7 @@ public class LoaddServiceImpl implements LoaddService {
 
                 loadd.setServiceTypeCode(row.getCell(1).getStringCellValue());
                 loadd.setYear(row.getCell(2).getStringCellValue());
+                loadd.setDeleteYear(deleteYear);
                 loadd.setMonth(row.getCell(3).getStringCellValue());
                 loadd.setChannel(row.getCell(4).getStringCellValue());
                 loadd.setServiceLoad((int) row.getCell(5).getNumericCellValue());
@@ -157,7 +159,7 @@ public class LoaddServiceImpl implements LoaddService {
                          "PMSTV","TRN","FR","RJ","IFC", "IPC" -> loadd.setLoadType("OTHERS");
                     case "FR1","FR2","FR3" -> loadd.setLoadType("FREE SERVICE");
                     case "SC","CCP" -> loadd.setLoadType("NO");
-                    case "BANDP" -> loadd.setLoadType("BODYSHOP");
+                    case "BANDP","BDPQR" -> loadd.setLoadType("BODYSHOP");
                     case "RR" -> loadd.setLoadType("RR");
                     case "PMS" -> loadd.setLoadType("PMS");
                     default -> loadd.setLoadType("UNKNOWN");
@@ -187,18 +189,65 @@ public class LoaddServiceImpl implements LoaddService {
     }
 
     @Override
-    public List<Loadd> getLoadByMonthYear(List<String> months, List<String> years) {
-        return loaddRepository.getLoadByMonthYear(months, years);
+    public List<Loadd> getLoadByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return loaddRepository.getLoadByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<LoaddSummaryDTO> getLoaddSummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-     return loaddRepository.getLoaddSummaryByCity(months, channels, qtrWise, halfYear);
+    public List<LoaddSummaryDTO> getLoaddSummary(
+            List<String> months,
+            List<String> channels,
+            List<String> qtrWise,
+            List<String> halfYear,
+            String selectedFinancialYear) {
+
+        String prevYear = getPreviousFinancialYear(selectedFinancialYear);
+
+        return loaddRepository.getLoaddSummaryByCity(
+                months,
+                channels,
+                qtrWise,
+                halfYear,
+                prevYear,
+                selectedFinancialYear   // currYear
+        );
+    }
+
+    private String getPreviousFinancialYear(String year) {
+
+        if (year == null || !year.contains("-")) {
+            throw new IllegalArgumentException("Invalid financial year format: " + year);
+        }
+
+        String[] parts = year.split("-");
+        int start = Integer.parseInt(parts[0]);
+        int end = Integer.parseInt(parts[1]);
+
+        return (start - 1) + "-" + (end - 1);
     }
 
     @Override
-    public List<LoaddSummaryDTO> getLoaddSummaryBranchWise(List<String> months, List<String> cities, List<String> branches, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return loaddRepository.getLoaddSummaryBranchWise(months, cities, branches, channels, qtrWise, halfYear);
+    public List<LoaddSummaryDTO> getLoaddSummaryBranchWise(
+            List<String> months,
+            List<String> cities,
+            List<String> branches,
+            List<String> channels,
+            List<String> qtrWise,
+            List<String> halfYear,
+            String selectedFinancialYear) {
+
+        String prevYear = getPreviousFinancialYear(selectedFinancialYear);
+
+        return loaddRepository.getLoaddSummaryBranchWise(
+                months,
+                cities,
+                branches,
+                channels,
+                qtrWise,
+                halfYear,
+                prevYear,
+                selectedFinancialYear
+        );
     }
 
     @Override

@@ -17,15 +17,19 @@ public interface LoaddRepository extends JpaRepository<Loadd, Integer> {
     SELECT l FROM Loadd l
     WHERE (:months IS NULL OR l.month IN (:months))
      AND (:years IS NULL OR l.year IN (:years))
+     AND (:deleteYear IS NULL OR l.deleteYear IN (:deleteYear))
     """)
     List<Loadd> getLoadByMonthYear(
-            @Param("months") List<String> months, @Param("years") List<String> years);
+            @Param("months") List<String> months,
+            @Param("years") List<String> years,
+            @Param("deleteYear") List<String> deleteYear);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Loadd l WHERE l.month = :month AND l.year = :year")
+    @Query("DELETE FROM Loadd l WHERE l.month = :month AND l.year = :year AND l.deleteYear = :deleteYear")
     void deleteByMonthYear(@Param("month") String month,
-                           @Param("year") String year);
+                           @Param("year") String year,
+                           @Param("deleteYear")String deleteYear );
 
 
 
@@ -35,105 +39,106 @@ SELECT new com.mandovi.DTO.LoaddSummaryDTO(
     ls.city,
     NULL,
 
-    ls.total2024,
-    ls.total2025,
-    (ls.total2025 - ls.total2024) * 100.0 / NULLIF(ls.total2024,0),
+    ls.totalPrev,
+    ls.totalCurr,
+    (ls.totalCurr - ls.totalPrev) * 100.0 / NULLIF(ls.totalPrev,0),
 
-    ls.bodyshop2024,
-    ls.bodyshop2025,
-    (ls.bodyshop2025 - ls.bodyshop2024) * 100.0 / NULLIF(ls.bodyshop2024,0),
+    ls.bodyshopPrev,
+    ls.bodyshopCurr,
+    (ls.bodyshopCurr - ls.bodyshopPrev) * 100.0 / NULLIF(ls.bodyshopPrev,0),
 
-    ls.freeService2024,
-    ls.freeService2025,
-    (ls.freeService2025 - ls.freeService2024) * 100.0 / NULLIF(ls.freeService2024,0),
+    ls.freeServicePrev,
+    ls.freeServiceCurr,
+    (ls.freeServiceCurr - ls.freeServicePrev) * 100.0 / NULLIF(ls.freeServicePrev,0),
 
-    ls.pms2024,
-    ls.pms2025,
-    (ls.pms2025 - ls.pms2024) * 100.0 / NULLIF(ls.pms2024,0),
+    ls.pmsPrev,
+    ls.pmsCurr,
+    (ls.pmsCurr - ls.pmsPrev) * 100.0 / NULLIF(ls.pmsPrev,0),
 
-    ls.general2024,
-    ls.general2025,
-    (ls.general2025 - ls.general2024) * 100.0 / NULLIF(ls.general2024,0),
+    ls.generalPrev,
+    ls.generalCurr,
+    (ls.generalCurr - ls.generalPrev) * 100.0 / NULLIF(ls.generalPrev,0),
 
-    ls.rr2024,
-    ls.rr2025,
-    (ls.rr2025 - ls.rr2024) * 100.0 / NULLIF(ls.rr2024,0),
+    ls.rrPrev,
+    ls.rrCurr,
+    (ls.rrCurr - ls.rrPrev) * 100.0 / NULLIF(ls.rrPrev,0),
 
-    ls.others2024,
-    ls.others2025,
-    (ls.others2025 - ls.others2024) * 100.0 / NULLIF(ls.others2024,0),
+    ls.othersPrev,
+    ls.othersCurr,
+    (ls.othersCurr - ls.othersPrev) * 100.0 / NULLIF(ls.othersPrev,0),
 
-    ls.bodyshop2024 * 100.0 / NULLIF(ls.general2024,0),
-    ls.bodyshop2025 * 100.0 / NULLIF(ls.general2025,0),
+    ls.bodyshopPrev * 100.0 / NULLIF(ls.generalPrev,0),
+    ls.bodyshopCurr * 100.0 / NULLIF(ls.generalCurr,0),
 
-    (ls.bodyshop2025 * 100.0 / NULLIF(ls.general2025,0)) -
-    (ls.bodyshop2024 * 100.0 / NULLIF(ls.general2024,0))
+    (ls.bodyshopCurr * 100.0 / NULLIF(ls.generalCurr,0)) -
+    (ls.bodyshopPrev * 100.0 / NULLIF(ls.generalPrev,0))
 )
-
 FROM (
     SELECT l.city AS city,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
+        SUM(CASE WHEN l.financialYear = :prevYear
             AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR')
-            THEN l.serviceLoad ELSE 0 END) AS total2024,
+            THEN l.serviceLoad ELSE 0 END) AS totalPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
+        SUM(CASE WHEN l.financialYear = :currYear
             AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR')
-            THEN l.serviceLoad ELSE 0 END) AS total2025,
+            THEN l.serviceLoad ELSE 0 END) AS totalCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='BODYSHOP'
-            THEN l.serviceLoad ELSE 0 END) AS bodyshop2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'BODYSHOP'
+            THEN l.serviceLoad ELSE 0 END) AS bodyshopPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='BODYSHOP'
-            THEN l.serviceLoad ELSE 0 END) AS bodyshop2025,
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'BODYSHOP'
+            THEN l.serviceLoad ELSE 0 END) AS bodyshopCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='FREE SERVICE'
-            THEN l.serviceLoad ELSE 0 END) AS freeService2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'FREE SERVICE'
+            THEN l.serviceLoad ELSE 0 END) AS freeServicePrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='FREE SERVICE'
-            THEN l.serviceLoad ELSE 0 END) AS freeService2025,
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'FREE SERVICE'
+            THEN l.serviceLoad ELSE 0 END) AS freeServiceCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='PMS'
-            THEN l.serviceLoad ELSE 0 END) AS pms2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'PMS'
+            THEN l.serviceLoad ELSE 0 END) AS pmsPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='PMS'
-            THEN l.serviceLoad ELSE 0 END) AS pms2025,
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'PMS'
+            THEN l.serviceLoad ELSE 0 END) AS pmsCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
+        SUM(CASE WHEN l.financialYear = :prevYear
             AND l.loadType IN ('FREE SERVICE','PMS','RR')
-            THEN l.serviceLoad ELSE 0 END) AS general2024,
+            THEN l.serviceLoad ELSE 0 END) AS generalPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
+        SUM(CASE WHEN l.financialYear = :currYear
             AND l.loadType IN ('FREE SERVICE','PMS','RR')
-            THEN l.serviceLoad ELSE 0 END) AS general2025,
+            THEN l.serviceLoad ELSE 0 END) AS generalCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='RR'
-            THEN l.serviceLoad ELSE 0 END) AS rr2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'RR'
+            THEN l.serviceLoad ELSE 0 END) AS rrPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='RR'
-            THEN l.serviceLoad ELSE 0 END) AS rr2025,
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'RR'
+            THEN l.serviceLoad ELSE 0 END) AS rrCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='OTHERS'
-            THEN l.serviceLoad ELSE 0 END) AS others2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'OTHERS'
+            THEN l.serviceLoad ELSE 0 END) AS othersPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='OTHERS'
-            THEN l.serviceLoad ELSE 0 END) AS others2025
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'OTHERS'
+            THEN l.serviceLoad ELSE 0 END) AS othersCurr
 
     FROM Loadd l
     WHERE (:months IS NULL OR l.month IN :months)
-    AND (:channels IS NULL OR l.channel IN :channels)
-    AND (:qtrWise IS NULL OR l.qtrWise IN :qtrWise)
-    AND (:halfYear IS NULL OR l.halfYear IN :halfYear)
+      AND (:channels IS NULL OR l.channel IN :channels)
+      AND (:qtrWise IS NULL OR l.qtrWise IN :qtrWise)
+      AND (:halfYear IS NULL OR l.halfYear IN :halfYear)
+      AND l.deleteYear = :currYear
+      AND l.financialYear IN (:prevYear, :currYear)
 
     GROUP BY l.city
 ) ls
@@ -142,7 +147,10 @@ FROM (
             @Param("months") List<String> months,
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear);
+            @Param("halfYear") List<String> halfYear,
+            @Param("prevYear") String prevYear,
+            @Param("currYear") String currYear
+    );
 
     //Group by branch
     @Query("""
@@ -150,110 +158,111 @@ SELECT new com.mandovi.DTO.LoaddSummaryDTO(
     ls.city,
     ls.branch,
 
-    ls.total2024,
-    ls.total2025,
-    (ls.total2025 - ls.total2024) * 100.0 / NULLIF(ls.total2024,0),
+    ls.totalPrev,
+    ls.totalCurr,
+    (ls.totalCurr - ls.totalPrev) * 100.0 / NULLIF(ls.totalPrev,0),
 
-    ls.bodyshop2024,
-    ls.bodyshop2025,
-    (ls.bodyshop2025 - ls.bodyshop2024) * 100.0 / NULLIF(ls.bodyshop2024,0),
+    ls.bodyshopPrev,
+    ls.bodyshopCurr,
+    (ls.bodyshopCurr - ls.bodyshopPrev) * 100.0 / NULLIF(ls.bodyshopPrev,0),
 
-    ls.freeService2024,
-    ls.freeService2025,
-    (ls.freeService2025 - ls.freeService2024) * 100.0 / NULLIF(ls.freeService2024,0),
+    ls.freeServicePrev,
+    ls.freeServiceCurr,
+    (ls.freeServiceCurr - ls.freeServicePrev) * 100.0 / NULLIF(ls.freeServicePrev,0),
 
-    ls.pms2024,
-    ls.pms2025,
-    (ls.pms2025 - ls.pms2024) * 100.0 / NULLIF(ls.pms2024,0),
+    ls.pmsPrev,
+    ls.pmsCurr,
+    (ls.pmsCurr - ls.pmsPrev) * 100.0 / NULLIF(ls.pmsPrev,0),
 
-    ls.general2024,
-    ls.general2025,
-    (ls.general2025 - ls.general2024) * 100.0 / NULLIF(ls.general2024,0),
+    ls.generalPrev,
+    ls.generalCurr,
+    (ls.generalCurr - ls.generalPrev) * 100.0 / NULLIF(ls.generalPrev,0),
 
-    ls.rr2024,
-    ls.rr2025,
-    (ls.rr2025 - ls.rr2024) * 100.0 / NULLIF(ls.rr2024,0),
+    ls.rrPrev,
+    ls.rrCurr,
+    (ls.rrCurr - ls.rrPrev) * 100.0 / NULLIF(ls.rrPrev,0),
 
-    ls.others2024,
-    ls.others2025,
-    (ls.others2025 - ls.others2024) * 100.0 / NULLIF(ls.others2024,0),
+    ls.othersPrev,
+    ls.othersCurr,
+    (ls.othersCurr - ls.othersPrev) * 100.0 / NULLIF(ls.othersPrev,0),
 
-    ls.bodyshop2024 * 100.0 / NULLIF(ls.general2024,0),
-    ls.bodyshop2025 * 100.0 / NULLIF(ls.general2025,0),
+    ls.bodyshopPrev * 100.0 / NULLIF(ls.generalPrev,0),
+    ls.bodyshopCurr * 100.0 / NULLIF(ls.generalCurr,0),
 
-    (ls.bodyshop2025 * 100.0 / NULLIF(ls.general2025,0)) -
-    (ls.bodyshop2024 * 100.0 / NULLIF(ls.general2024,0))
+    (ls.bodyshopCurr * 100.0 / NULLIF(ls.generalCurr,0)) -
+    (ls.bodyshopPrev * 100.0 / NULLIF(ls.generalPrev,0))
 )
 
 FROM (
     SELECT
-           l.city AS city,
-           l.branch AS branch,
+        l.city AS city,
+        l.branch AS branch,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
+        SUM(CASE WHEN l.financialYear = :prevYear
             AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR')
-            THEN l.serviceLoad ELSE 0 END) AS total2024,
+            THEN l.serviceLoad ELSE 0 END) AS totalPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
+        SUM(CASE WHEN l.financialYear = :currYear
             AND l.loadType IN ('OTHERS','FREE SERVICE','PMS','RR')
-            THEN l.serviceLoad ELSE 0 END) AS total2025,
+            THEN l.serviceLoad ELSE 0 END) AS totalCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='BODYSHOP'
-            THEN l.serviceLoad ELSE 0 END) AS bodyshop2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'BODYSHOP'
+            THEN l.serviceLoad ELSE 0 END) AS bodyshopPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='BODYSHOP'
-            THEN l.serviceLoad ELSE 0 END) AS bodyshop2025,
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'BODYSHOP'
+            THEN l.serviceLoad ELSE 0 END) AS bodyshopCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='FREE SERVICE'
-            THEN l.serviceLoad ELSE 0 END) AS freeService2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'FREE SERVICE'
+            THEN l.serviceLoad ELSE 0 END) AS freeServicePrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='FREE SERVICE'
-            THEN l.serviceLoad ELSE 0 END) AS freeService2025,
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'FREE SERVICE'
+            THEN l.serviceLoad ELSE 0 END) AS freeServiceCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='PMS'
-            THEN l.serviceLoad ELSE 0 END) AS pms2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'PMS'
+            THEN l.serviceLoad ELSE 0 END) AS pmsPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='PMS'
-            THEN l.serviceLoad ELSE 0 END) AS pms2025,
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'PMS'
+            THEN l.serviceLoad ELSE 0 END) AS pmsCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
+        SUM(CASE WHEN l.financialYear = :prevYear
             AND l.loadType IN ('FREE SERVICE','PMS','RR')
-            THEN l.serviceLoad ELSE 0 END) AS general2024,
+            THEN l.serviceLoad ELSE 0 END) AS generalPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
+        SUM(CASE WHEN l.financialYear = :currYear
             AND l.loadType IN ('FREE SERVICE','PMS','RR')
-            THEN l.serviceLoad ELSE 0 END) AS general2025,
+            THEN l.serviceLoad ELSE 0 END) AS generalCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='RR'
-            THEN l.serviceLoad ELSE 0 END) AS rr2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'RR'
+            THEN l.serviceLoad ELSE 0 END) AS rrPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='RR'
-            THEN l.serviceLoad ELSE 0 END) AS rr2025,
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'RR'
+            THEN l.serviceLoad ELSE 0 END) AS rrCurr,
 
-        SUM(CASE WHEN l.financialYear='2024-2025'
-            AND l.loadType='OTHERS'
-            THEN l.serviceLoad ELSE 0 END) AS others2024,
+        SUM(CASE WHEN l.financialYear = :prevYear
+            AND l.loadType = 'OTHERS'
+            THEN l.serviceLoad ELSE 0 END) AS othersPrev,
 
-        SUM(CASE WHEN l.financialYear='2025-2026'
-            AND l.loadType='OTHERS'
-            THEN l.serviceLoad ELSE 0 END) AS others2025
+        SUM(CASE WHEN l.financialYear = :currYear
+            AND l.loadType = 'OTHERS'
+            THEN l.serviceLoad ELSE 0 END) AS othersCurr
 
     FROM Loadd l
     WHERE (:months IS NULL OR l.month IN :months)
-    AND (:cities IS NULL OR l.city IN :cities)
-    AND (:branches IS NULL OR l.branch IN (:branches))
-    AND (:channels IS NULL OR l.channel IN :channels)
-    AND (:qtrWise IS NULL OR l.qtrWise IN :qtrWise)
-    AND (:halfYear IS NULL OR l.halfYear IN :halfYear)
-
+      AND (:cities IS NULL OR l.city IN :cities)
+      AND (:branches IS NULL OR l.branch IN :branches)
+      AND (:channels IS NULL OR l.channel IN :channels)
+      AND (:qtrWise IS NULL OR l.qtrWise IN :qtrWise)
+      AND (:halfYear IS NULL OR l.halfYear IN :halfYear)
+      AND l.deleteYear = :currYear
+      AND l.financialYear IN (:prevYear, :currYear)
     GROUP BY l.city, l.branch
 ) ls
 """)
@@ -263,7 +272,10 @@ FROM (
             @Param("branches") List<String> branches,
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @Param("prevYear") String prevYear,
+            @Param("currYear") String currYear
+    );
 
     @Modifying
     @Transactional

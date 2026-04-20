@@ -22,6 +22,9 @@ public class BRConversion {
     @Column(name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column(name = "channel")
     private String channel;
 
@@ -52,12 +55,13 @@ public class BRConversion {
     public BRConversion() {
     }
 
-    public BRConversion(Integer br_conversionSINo, String city, String branch, String month, String year, String channel, Double labourAmt, Double partAmount, Double billAmount, int no, int brConversion, int grandTotal, String qtrWise, String halfYear) {
+    public BRConversion(Integer br_conversionSINo, String city, String branch, String month, String year, String financialYear, String channel, Double labourAmt, Double partAmount, Double billAmount, int no, int brConversion, int grandTotal, String qtrWise, String halfYear) {
         this.br_conversionSINo = br_conversionSINo;
         this.city = city;
         this.branch = branch;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.channel = channel;
         this.labourAmt = labourAmt;
         this.partAmount = partAmount;
@@ -107,6 +111,14 @@ public class BRConversion {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
     }
 
     public String getChannel() {
@@ -189,6 +201,7 @@ public class BRConversion {
                 ", branch='" + branch + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", channel='" + channel + '\'' +
                 ", labourAmt=" + labourAmt +
                 ", partAmount=" + partAmount +

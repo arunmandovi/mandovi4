@@ -1,5 +1,6 @@
 package com.mandovi.Controller;
 
+import com.mandovi.DTO.ServiceLoadSummaryDTO;
 import com.mandovi.Entity.ServiceLoad;
 import com.mandovi.Service.ServiceLoadService;
 import org.springframework.http.ResponseEntity;
@@ -58,13 +59,31 @@ public class ServiceLoadController {
         }
     }
 
-    @DeleteMapping("delete_all")
+    @DeleteMapping("/delete_all")
     public ResponseEntity<?> deleteServiceLoadAll (){
         try {
             serviceLoadService.deleteServiceLoadAll();
             return ResponseEntity.ok("ServiceLoadd ALL deleted");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
+        }
+    }
+
+    @GetMapping("/service_load_summary")
+    public ResponseEntity<?> getServiceLoadSummaryCityWise (
+            @RequestParam(required = false) List<String> cities,
+            @RequestParam (required = false) List<String> months,
+            @RequestParam (required = false) List<String> financialYears,
+            @RequestParam (required = false) List<String> channels,
+            @RequestParam (required = false) List<String> serviceTypes ){
+        try {
+            List<ServiceLoadSummaryDTO> serviceLoadSummaryDTOList = serviceLoadService.getServiceLoadSummaryCityWise(cities, months, financialYears, channels, serviceTypes);
+            if (serviceLoadSummaryDTOList.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(serviceLoadSummaryDTOList);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("ERROR :"+e.getMessage());
         }
     }
 }

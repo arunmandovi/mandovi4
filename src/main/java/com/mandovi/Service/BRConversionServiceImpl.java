@@ -9,7 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class BRConversionServiceImpl implements BRConversionService {
@@ -38,6 +41,8 @@ public class BRConversionServiceImpl implements BRConversionService {
             DataFormatter dataFormatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
 
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
+
             Row firstDataRow = sheet.getRow(1);
             if (firstDataRow == null)
                 throw new RuntimeException("No data found in Excel");
@@ -60,7 +65,13 @@ public class BRConversionServiceImpl implements BRConversionService {
 
                 BRConversion brConversion = new BRConversion();
 
-                brConversion.setCity(row.getCell(0).getStringCellValue());
+                String city = row.getCell(0).getStringCellValue();
+                if (city != null && !city.isEmpty()){
+                    city = city.toLowerCase();
+                    city = city.substring(0,1).toUpperCase() + city.substring(1);
+                }
+
+                brConversion.setCity(city);
                 brConversion.setBranch(row.getCell(1).getStringCellValue());
                 brConversion.setMonth(row.getCell(2).getStringCellValue());
 
@@ -68,6 +79,15 @@ public class BRConversionServiceImpl implements BRConversionService {
                 int numberYear = (cell.getCellType() == CellType.NUMERIC)
                         ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
                 brConversion.setYear(String.valueOf(numberYear));
+
+                String charMonth = brConversion.getMonth();
+                Month m = Month.from(dateTimeFormatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum>=4){
+                    brConversion.setFinancialYear(numberYear + "-" + (numberYear+1));
+                } else {
+                    brConversion.setFinancialYear((numberYear-1)+ "-" + numberYear);
+                }
 
                 brConversion.setChannel(row.getCell(4).getStringCellValue());
                 brConversion.setLabourAmt(row.getCell(5).getNumericCellValue());
@@ -102,18 +122,18 @@ public class BRConversionServiceImpl implements BRConversionService {
     }
 
     @Override
-    public List<BRConversion> getBRConversionByMonthYear(List<String> months, List<String> years) {
-        return brConversionRepository.getBR_ConversionByMonthYear(months, years);
+    public List<BRConversion> getBRConversionByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return brConversionRepository.getBR_ConversionByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<BRConversionSummaryDTO> getBRConversionSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
-        return brConversionRepository.getBRConversionSummaryByCity(months, qtrWise, halfYear);
+    public List<BRConversionSummaryDTO> getBRConversionSummary(List<String> months, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return brConversionRepository.getBRConversionSummaryByCity(months,qtrWise, halfYear, financialYears);
     }
 
     @Override
-    public List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
-        return brConversionRepository.getBRConversionSummaryBranchWise(months, cities, qtrWise, halfYear);
+    public List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return brConversionRepository.getBRConversionSummaryBranchWise(months, cities, qtrWise, halfYear, financialYears);
     }
 
     @Override

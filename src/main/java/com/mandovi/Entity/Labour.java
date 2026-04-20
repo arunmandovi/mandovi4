@@ -20,6 +20,9 @@ public class Labour {
     @Column(name = "year")
     private String year;
 
+    @Column (name = "delete_year")
+    private String deleteYear;
+
     @Column(name = "month")
     private String month;
 
@@ -50,17 +53,17 @@ public class Labour {
     public Labour() {
     }
 
-    public Labour(Integer labourSINo, String branch, String channel, String year, String month, String serviceTypeCode, Double sumOfBasicAmt, Double labour, String city, String financialYear, String loadType, String qtrWise, String halfYear) {
+    public Labour(Integer labourSINo, String branch, String channel, String year, String deleteYear, String month, String serviceTypeCode, Double sumOfBasicAmt, Double labour, String city, String financialYear, String loadType, String qtrWise, String halfYear) {
         this.labourSINo = labourSINo;
         this.branch = branch;
         this.channel = channel;
         this.year = year;
+        this.deleteYear = deleteYear;
         this.month = month;
         this.serviceTypeCode = serviceTypeCode;
         this.sumOfBasicAmt = sumOfBasicAmt;
         this.labour = labour;
         this.city = city;
-        this.branch = branch;
         this.financialYear = financialYear;
         this.loadType = loadType;
         this.qtrWise = qtrWise;
@@ -97,6 +100,14 @@ public class Labour {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getDeleteYear() {
+        return deleteYear;
+    }
+
+    public void setDeleteYear(String deleteYear) {
+        this.deleteYear = deleteYear;
     }
 
     public String getMonth() {
@@ -178,6 +189,7 @@ public class Labour {
                 ", branch='" + branch + '\'' +
                 ", channel='" + channel + '\'' +
                 ", year='" + year + '\'' +
+                ", deleteYear='" + deleteYear + '\'' +
                 ", month='" + month + '\'' +
                 ", serviceTypeCode='" + serviceTypeCode + '\'' +
                 ", sumOfBasicAmt=" + sumOfBasicAmt +

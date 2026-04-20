@@ -39,9 +39,10 @@ public class LabourController {
     @GetMapping("/getlabour")
     public ResponseEntity<?> getLabourByMonthYear(
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<Labour> labourRecords = labourService.getLabourByMonthYear(months, years);
+            List<Labour> labourRecords = labourService.getLabourByMonthYear(months, years, financialYears );
             if (labourRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -56,9 +57,10 @@ public class LabourController {
              @RequestParam (required = false) List<String> months,
              @RequestParam (required = false) List<String> channels,
              @RequestParam (required = false) List<String> qtrWise,
-             @RequestParam (required = false) List<String> halfYear ){
+             @RequestParam (required = false) List<String> halfYear,
+             @RequestParam String selectedFinancialYear ){
         try {
-            List<LabourSummaryDTO> list = labourService.getLabourSummary( months, channels , qtrWise, halfYear);
+            List<LabourSummaryDTO> list = labourService.getLabourSummary( months, channels , qtrWise, halfYear, selectedFinancialYear );
             return ResponseEntity.ok(list);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("ERROR : "+e.getMessage());
@@ -71,9 +73,11 @@ public class LabourController {
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam String selectedFinancialYear ){
         try {
-            List<LabourSummaryDTO> listLabourSummaryBranchWise = labourService.getLabourSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+            List<LabourSummaryDTO> listLabourSummaryBranchWise = labourService.getLabourSummaryBranchWise(months, cities, channels,
+                    qtrWise, halfYear,selectedFinancialYear );
             if (listLabourSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

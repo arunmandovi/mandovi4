@@ -39,9 +39,10 @@ public class BRConversionController {
     @GetMapping ("/getbr_conversion")
     public ResponseEntity<?> getBRConversionMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<BRConversion> brConversionRecords = brConversionService.getBRConversionByMonthYear(months, years);
+            List<BRConversion> brConversionRecords = brConversionService.getBRConversionByMonthYear(months, years, financialYears);
             if (brConversionRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -55,9 +56,11 @@ public class BRConversionController {
     public ResponseEntity<?> getBRConversionSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam(required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<BRConversionSummaryDTO> listBRConversionSummary = brConversionService.getBRConversionSummary(months, qtrWise, halfYear);
+            List<BRConversionSummaryDTO> listBRConversionSummary = brConversionService.getBRConversionSummary(months, qtrWise,
+                    halfYear, financialYears);
             if (listBRConversionSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -72,9 +75,11 @@ public class BRConversionController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<BRConversionSummaryDTO> listBRConversionSummaryBranchWise = brConversionService.getBRConversionSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<BRConversionSummaryDTO> listBRConversionSummaryBranchWise = brConversionService.getBRConversionSummaryBranchWise(months,
+                    cities, qtrWise, halfYear, financialYears );
             if (listBRConversionSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

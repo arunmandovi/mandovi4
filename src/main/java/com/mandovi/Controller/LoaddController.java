@@ -49,9 +49,10 @@ public class LoaddController {
     @GetMapping("/getloadd")
     public ResponseEntity<?> getLoaddMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<Loadd> loaddRecords = loaddService.getLoadByMonthYear(months, years);
+            List<Loadd> loaddRecords = loaddService.getLoadByMonthYear(months, years, financialYears);
             if (loaddRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -66,9 +67,10 @@ public class LoaddController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam String selectedFinancialYear){
         try {
-            List<LoaddSummaryDTO> listLoaddServiceSummary = loaddService.getLoaddSummary(months, channels, qtrWise, halfYear);
+            List<LoaddSummaryDTO> listLoaddServiceSummary = loaddService.getLoaddSummary(months, channels, qtrWise, halfYear, selectedFinancialYear);
             if (listLoaddServiceSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -87,9 +89,11 @@ public class LoaddController {
             @RequestParam (required = false) List<String> branches,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam String selectedFinancialYear){
         try {
-            List<LoaddSummaryDTO> listLoaddSummaryBranchWise = loaddService.getLoaddSummaryBranchWise(months, cities, branches, channels, qtrWise, halfYear);
+            List<LoaddSummaryDTO> listLoaddSummaryBranchWise = loaddService.getLoaddSummaryBranchWise(months, cities, branches,
+                    channels, qtrWise, halfYear,selectedFinancialYear );
             if (listLoaddSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

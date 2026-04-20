@@ -24,7 +24,6 @@ public class ReferenceeServiceImpl implements ReferenceeService {
             {
                 InputStream inputStream = file.getInputStream();
                 Workbook workbook = WorkbookFactory.create(inputStream);
-                DataFormatter dataFormatter = new DataFormatter();
                 Sheet sheet = workbook.getSheetAt(0);
 
                 referenceeRepository.deleteReferenceeAll();

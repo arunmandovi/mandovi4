@@ -86,6 +86,9 @@ public class Loadd {
     @Column(name = "year")
     private String year;
 
+    @Column(name = "delete_year")
+    private String deleteYear;
+
     @Column(name = "month")
     private String month;
 
@@ -116,10 +119,11 @@ public class Loadd {
     public Loadd() {
     }
 
-    public Loadd(Integer loadSINo, String serviceTypeCode, String year, String month, Integer serviceLoad, String channel, String city, String branch, String financialYear, String loadType, String qtrWise, String halfYear) {
+    public Loadd(Integer loadSINo, String serviceTypeCode, String year, String deleteYear, String month, Integer serviceLoad, String channel, String city, String branch, String financialYear, String loadType, String qtrWise, String halfYear) {
         this.loadSINo = loadSINo;
         this.serviceTypeCode = serviceTypeCode;
         this.year = year;
+        this.deleteYear = deleteYear;
         this.month = month;
         this.serviceLoad = serviceLoad;
         this.channel = channel;
@@ -153,6 +157,14 @@ public class Loadd {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getDeleteYear() {
+        return deleteYear;
+    }
+
+    public void setDeleteYear(String deleteYear) {
+        this.deleteYear = deleteYear;
     }
 
     public String getMonth() {
@@ -233,6 +245,7 @@ public class Loadd {
                 "loadSINo=" + loadSINo +
                 ", serviceTypeCode='" + serviceTypeCode + '\'' +
                 ", year='" + year + '\'' +
+                ", deleteYear='" + deleteYear + '\'' +
                 ", month='" + month + '\'' +
                 ", serviceLoad=" + serviceLoad +
                 ", channel='" + channel + '\'' +

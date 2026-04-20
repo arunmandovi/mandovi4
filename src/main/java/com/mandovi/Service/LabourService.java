@@ -11,11 +11,13 @@ public interface LabourService {
 
     public List<Labour> getAllLabour();
 
-    public List<Labour> getLabourByMonthYear(List<String> months, List<String> years);
+    public List<Labour> getLabourByMonthYear(List<String> months, List<String> years, List<String> deleteYears);
 
-    public List<LabourSummaryDTO> getLabourSummary ( List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
+    public List<LabourSummaryDTO> getLabourSummary ( List<String> months, List<String> channels, List<String> qtrWise,
+                                                     List<String> halfYear, String selectedFinancialYear);
 
-    public List<LabourSummaryDTO> getLabourSummaryBranchWise (List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
+    public List<LabourSummaryDTO> getLabourSummaryBranchWise (List<String> months, List<String> cities, List<String> channels,
+                                                              List<String> qtrWise, List<String> halfYear, String selectedFinancialYear);
 
     void deleteLabourAll ();
 

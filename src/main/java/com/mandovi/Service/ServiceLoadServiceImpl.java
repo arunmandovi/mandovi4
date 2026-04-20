@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.ServiceLoadSummaryDTO;
 import com.mandovi.Entity.ServiceLoad;
 import com.mandovi.Repository.ServiceLoadRepository;
 import org.apache.poi.ss.usermodel.*;
@@ -116,5 +117,10 @@ public class ServiceLoadServiceImpl implements ServiceLoadService{
     @Override
     public void deleteServiceLoadAll() {
         serviceLoadRepository.deleteServiceLoadAll();
+    }
+
+    @Override
+    public List<ServiceLoadSummaryDTO> getServiceLoadSummaryCityWise(List<String> cities, List<String> months, List<String> financialYears, List<String> channels, List<String> serviceTypes) {
+        return serviceLoadRepository.getServiceLoadSummaryCityWise(cities, months, financialYears,channels, serviceTypes);
     }
 }

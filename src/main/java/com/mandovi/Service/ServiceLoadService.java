@@ -1,5 +1,6 @@
 package com.mandovi.Service;
 
+import com.mandovi.DTO.ServiceLoadSummaryDTO;
 import com.mandovi.Entity.ServiceLoad;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,4 +14,7 @@ public interface ServiceLoadService {
     public List<ServiceLoad> getServiceLoadByMonthYear(List<String> months, List<String> years);
 
     public void deleteServiceLoadAll ();
+
+    public List<ServiceLoadSummaryDTO> getServiceLoadSummaryCityWise (List<String> cities, List<String> months, List<String> financialYears,
+                                                                      List<String> channels, List<String> serviceTypes);
 }

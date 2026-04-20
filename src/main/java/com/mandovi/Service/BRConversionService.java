@@ -12,11 +12,14 @@ public interface BRConversionService {
 
     public List<BRConversion> getAllBRConversion();
 
-    public List<BRConversion> getBRConversionByMonthYear(List<String> months, List<String> years);
+    public List<BRConversion> getBRConversionByMonthYear(List<String> months, List<String> years, List<String> financialYears);
 
-    public List<BRConversionSummaryDTO> getBRConversionSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
+    public List<BRConversionSummaryDTO> getBRConversionSummary (List<String> months, List<String> qtrWise,
+                                                                List<String> halfYear, List<String> financialYears);
 
-    public List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+
+    public List<BRConversionSummaryDTO> getBRConversionSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise,
+                                                                          List<String> halfYear, List<String> financialYears);
 
     void deleteBRConversionAll ();
 }

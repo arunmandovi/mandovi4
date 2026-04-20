@@ -61,9 +61,11 @@ public class LabourServiceImpl implements LabourService {
                     :Integer.parseInt(yearCell.getStringCellValue().trim());
             String uploadYear = String.valueOf(numYear);
             String anotherUploadYear = String.valueOf(numYear + 1);
+            String deleteAnotherYear = String.valueOf(numYear + 2);
+            String deleteYear = anotherUploadYear + "-" + deleteAnotherYear;
 
-            labourRepository.deleteByMonthYear(uploadMonth, uploadYear);
-            labourRepository.deleteByMonthYear(uploadMonth, anotherUploadYear);
+            labourRepository.deleteByMonthYear(uploadMonth, uploadYear, deleteYear);
+            labourRepository.deleteByMonthYear(uploadMonth, anotherUploadYear, deleteYear);
 
 
             for(int i=1;i<=sheet.getLastRowNum();i++){
@@ -75,6 +77,7 @@ public class LabourServiceImpl implements LabourService {
                 labour.setBranch(row.getCell(0).getStringCellValue());
                 labour.setChannel(row.getCell(1).getStringCellValue());
                 labour.setYear(row.getCell(2).getStringCellValue());
+                labour.setDeleteYear(deleteYear);
                 labour.setMonth(row.getCell(3).getStringCellValue());
                 labour.setServiceTypeCode(row.getCell(4).getStringCellValue());
                 labour.setSumOfBasicAmt(row.getCell(5).getNumericCellValue());
@@ -133,18 +136,37 @@ public class LabourServiceImpl implements LabourService {
     }
 
     @Override
-    public List<Labour> getLabourByMonthYear(List<String> months, List<String> years) {
-        return labourRepository.getLabourByMonthYear(months, years);
+    public List<Labour> getLabourByMonthYear(List<String> months, List<String> years, List<String> deleteYears) {
+        return labourRepository.getLabourByMonthYear(months, years, deleteYears);
     }
 
     @Override
-    public List<LabourSummaryDTO> getLabourSummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return labourRepository.getLabourSummaryByCity(months, channels, qtrWise, halfYear);
+    public List<LabourSummaryDTO> getLabourSummary(
+            List<String> months, List<String> channels, List<String> qtrWise,
+            List<String> halfYear, String selectedFinancialYear) {
+        String prevYear = getPreviousFinancialYear(selectedFinancialYear);
+        return labourRepository.getLabourSummaryByCity(months, channels, qtrWise, halfYear,prevYear, selectedFinancialYear);
+    }
+
+    private String getPreviousFinancialYear(String year) {
+
+        if (year == null || !year.contains("-")) {
+            throw new IllegalArgumentException("Invalid financial year format: " + year);
+        }
+
+        String[] parts = year.split("-");
+        int start = Integer.parseInt(parts[0]);
+        int end = Integer.parseInt(parts[1]);
+
+        return (start - 1) + "-" + (end - 1);
     }
 
     @Override
-    public List<LabourSummaryDTO> getLabourSummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return labourRepository.getLabourSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+    public List<LabourSummaryDTO> getLabourSummaryBranchWise(List<String> months, List<String> cities,
+                                                             List<String> channels, List<String> qtrWise,
+                                                             List<String> halfYear, String selectedFinancialYear) {
+        String prevYear = getPreviousFinancialYear(selectedFinancialYear);
+        return labourRepository.getLabourSummaryBranchWise(months, cities, channels, qtrWise, halfYear, prevYear, selectedFinancialYear);
     }
 
     @Override
