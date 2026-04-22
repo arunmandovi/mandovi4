@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Ref;
 import java.util.List;
 
 @RestController
@@ -41,9 +40,10 @@ public class ReferenceeController {
     @GetMapping("/getreferencee")
     public ResponseEntity<?> getReferenceeByMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<Referencee> referenceeRecords = referenceeService.getReferenceeByMonthYear(months, years);
+            List<Referencee> referenceeRecords = referenceeService.getReferenceeByMonthYear(months, years, financialYears);
             if (referenceeRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -58,9 +58,11 @@ public class ReferenceeController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<ReferenceeSummaryDTO> listReferenceeSummary = referenceeService.getReferenceeSummary(months, channels, qtrWise, halfYear);
+            List<ReferenceeSummaryDTO> listReferenceeSummary = referenceeService.getReferenceeSummary(
+                    months, channels, qtrWise, halfYear, financialYears);
             if (listReferenceeSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -78,9 +80,11 @@ public class ReferenceeController {
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<ReferenceeSummaryDTO> listReferenceeSummaryBranchWise = referenceeService.getReferenceeSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+            List<ReferenceeSummaryDTO> listReferenceeSummaryBranchWise = referenceeService.getReferenceeSummaryBranchWise(
+                    months, cities, channels, qtrWise, halfYear, financialYears);
             if (listReferenceeSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -103,9 +107,10 @@ public class ReferenceeController {
     @GetMapping("/referencee_table_summary")
     public ResponseEntity<?> getReferenceeTableCityWise (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> cities ){
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<ReferenceeTableDTO> listReferenceeTableCityWise = referenceeService.getReferenceeTable(months, cities);
+            List<ReferenceeTableDTO> listReferenceeTableCityWise = referenceeService.getReferenceeTable(months, cities, financialYears);
             if (listReferenceeTableCityWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

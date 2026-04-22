@@ -39,9 +39,10 @@ public class OilController {
     @GetMapping("/getoil")
     public ResponseEntity<?> getOilByMonthYear(
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<Oil> oilRecords = oilService.getOilByMonthYear(months, years);
+            List<Oil> oilRecords = oilService.getOilByMonthYear(months, years, financialYears);
             if (oilRecords.isEmpty()){
                 return ResponseEntity.noContent().build();
             }
@@ -55,9 +56,10 @@ public class OilController {
     public ResponseEntity<?> getOilSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<OilSummaryDTO> listOilQtySummary = oilService.getOilSummary(months, qtrWise, halfYear);
+            List<OilSummaryDTO> listOilQtySummary = oilService.getOilSummary(months, qtrWise, halfYear, financialYears);
             if (listOilQtySummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -72,9 +74,11 @@ public class OilController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<OilSummaryDTO> listOilSummaryBranchWise = oilService.getOilSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<OilSummaryDTO> listOilSummaryBranchWise = oilService.getOilSummaryBranchWise(
+                    months, cities, qtrWise, halfYear, financialYears);
             if (listOilSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

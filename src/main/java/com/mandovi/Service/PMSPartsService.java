@@ -11,11 +11,13 @@ public interface PMSPartsService {
 
     public List<PMSParts> getAllPMS_Parts();
 
-    public List<PMSParts> getPMSPartsByMonthYear(List<String> months, List<String> years);
+    public List<PMSParts> getPMSPartsByMonthYear(List<String> months, List<String> years, List<String> financialYears );
 
-    public List<PMSPartsSummaryDTO> getPMSPartsSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
+    public List<PMSPartsSummaryDTO> getPMSPartsSummary (
+            List<String> months, List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
-    public List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+    public List<PMSPartsSummaryDTO> getPMSPartsSummaryBranchWise (
+            List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
     void deletePMSPartsAll ();
 }

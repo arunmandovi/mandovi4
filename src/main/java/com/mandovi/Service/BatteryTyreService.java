@@ -12,11 +12,13 @@ public interface BatteryTyreService {
 
     public List<BatteryTyre> getAllBattery_Tyre();
 
-    public List<BatteryTyre> getBattery_TyreByMonthYear(List<String> months, List<String> years);
+    public List<BatteryTyre> getBattery_TyreByMonthYear(List<String> months, List<String> years, List<String> financialYears);
 
-    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary (
+            List<String> months, List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
-    public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise (List<String> months, List<String> cities,List<String> qtrWise, List<String> halfYear);
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise (
+            List<String> months, List<String> cities,List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
     void deleteBatteryTyreAll ();
 

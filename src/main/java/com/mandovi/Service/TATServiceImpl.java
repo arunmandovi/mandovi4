@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,8 +31,8 @@ public class TATServiceImpl implements TATService {
         try {
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
-            DataFormatter dataFormatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             if (firstRow == null)
@@ -58,6 +60,15 @@ public class TATServiceImpl implements TATService {
                 int num_year = (year_cell.getCellType() == CellType.NUMERIC)
                         ? (int) year_cell.getNumericCellValue() : Integer.parseInt(year_cell.getStringCellValue());
                 tat.setYear(String.valueOf(num_year));
+
+                String charMonth = tat.getMonth();
+                Month m = Month.from(dateTimeFormatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4) {
+                    tat.setFinancialYear(num_year + "-" + (num_year+1));
+                } else {
+                    tat.setFinancialYear((num_year-1) + "-" + num_year);
+                }
 
                 tat.setLinkServiceType(row.getCell(4).getStringCellValue());
 
@@ -92,12 +103,12 @@ public class TATServiceImpl implements TATService {
     }
 
     @Override
-    public List<TAT> getTATByMonthYear(List<String> months, List<String> years) {
-        return tatRepository.getTATByMonthYear(months, years);
+    public List<TAT> getTATByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return tatRepository.getTATByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<TATSummaryDTO> getTATSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
+    public List<TATSummaryDTO> getTATSummary(List<String> months, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
         List<TAT> allTAT = tatRepository.findAll();
 
         // Apply Filters
@@ -105,6 +116,7 @@ public class TATServiceImpl implements TATService {
                 .filter(tat -> months == null || months.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getMonth())))
                 .filter(tat -> qtrWise == null || qtrWise.stream().anyMatch(q -> q.equalsIgnoreCase(tat.getQtrWise())))
                 .filter(tat -> halfYear == null || halfYear.stream().anyMatch(h -> h.equalsIgnoreCase(tat.getHalfYear())))
+                .filter(tat -> financialYears == null || financialYears.stream().anyMatch(f -> f.equalsIgnoreCase(tat.getFinancialYear())))
                 .toList();
 
         // Group by city
@@ -179,7 +191,7 @@ public class TATServiceImpl implements TATService {
     }
 
     @Override
-    public List<TATSummaryDTO> getTATSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
+    public List<TATSummaryDTO> getTATSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
         List<TAT> allTAT = tatRepository.findAll();
 
         // Apply Filters
@@ -188,6 +200,7 @@ public class TATServiceImpl implements TATService {
                 .filter(tat -> cities == null || cities.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getCity())))
                 .filter(tat -> qtrWise == null || qtrWise.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getQtrWise())))
                 .filter(tat -> halfYear == null || halfYear.stream().anyMatch(m -> m.equalsIgnoreCase(tat.getHalfYear())))
+                .filter(tat -> financialYears == null || financialYears.stream().anyMatch(f -> f.equalsIgnoreCase(tat.getFinancialYear())))
                 .toList();
 
         // Group by CITY then BRANCH

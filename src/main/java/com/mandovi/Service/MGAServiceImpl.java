@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -84,7 +85,12 @@ public class MGAServiceImpl implements MGAService {
 
                 mga.setMgaDate(localDate);
 
-                mga.setCity(row.getCell(5).getStringCellValue());
+                String city = row.getCell(5).getStringCellValue();
+                if (city != null && !city.isEmpty()) {
+                    city = city.toLowerCase();
+                    city = city.substring(0,1).toUpperCase() + city.substring(1).toLowerCase();
+                }
+                mga.setCity(city);
                 mga.setServiceAdvisor(row.getCell(8).getStringCellValue());
                 mga.setConsumption(row.getCell(9).getNumericCellValue());
 
@@ -154,6 +160,16 @@ public class MGAServiceImpl implements MGAService {
                 DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("YYYY");
                 mga.setYear(yearFormatter.format(mga.getMgaDate()));
 
+                String charMonth = mga.getMonth();
+                int year = Integer.parseInt(mga.getYear());
+                Month m = Month.from(formatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4) {
+                    mga.setFinancialYear(year + "-" + (year+1));
+                } else {
+                    mga.setFinancialYear((year-1) + "-" + year);
+                }
+
                 if (arenaChannel.contains(row.getCell(6).getStringCellValue().toUpperCase())) {
                     mga.setChannel("ARENA");
                 } else if (nexaChannel.contains(row.getCell(6).getStringCellValue().toUpperCase())) {
@@ -183,18 +199,21 @@ public class MGAServiceImpl implements MGAService {
     }
 
     @Override
-    public List<MGA> getMGAMonthYear(List<String> months, List<String> years) {
-        return mgaRepository.getMGAMonth(months, years);
+    public List<MGA> getMGAMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return mgaRepository.getMGAMonth(months, years, financialYears);
     }
 
     @Override
-    public List<MGASummaryDTO> getMGASummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return mgaRepository.getMGASummaryByCity(months, channels, qtrWise, halfYear);
+    public List<MGASummaryDTO> getMGASummary(
+            List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return mgaRepository.getMGASummaryByCity(months, channels, qtrWise, halfYear,financialYears);
     }
 
     @Override
-    public List<MGASummaryDTO> getMGASummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return mgaRepository.getMGASummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+    public List<MGASummaryDTO> getMGASummaryBranchWise(
+            List<String> months, List<String> cities, List<String> channels,
+            List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return mgaRepository.getMGASummaryBranchWise(months, cities, channels, qtrWise, halfYear,financialYears);
     }
 
     @Override

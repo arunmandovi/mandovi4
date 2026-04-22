@@ -16,9 +16,10 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
     @Query("""
     SELECT v FROM VAS v
     WHERE (:months IS NULL OR v.month IN (:months))
-    AND (:years IS NULL OR v.year IN (:years))
+    AND (:years IS NULL OR v.year IN (:years)) AND (:financialYears IS NULL OR v.financialYear IN (:financialYears))
     """)
-    public List<VAS> getVASByMonthYear (@Param("months") List<String> months, @Param("years") List<String> years);
+    public List<VAS> getVASByMonthYear (@Param("months") List<String> months, @Param("years") List<String> years,
+                                        @Param("financialYears") List<String> financialYears);
 
     @Transactional
     @Modifying
@@ -86,7 +87,7 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
               SUM(CASE WHEN l.serviceTypeCode IN ('FR3','PMS') THEN l.serviceLoad ELSE 0 END) as fr3PmsLoad,
               SUM(CASE WHEN l.loadType IN ('FREE SERVICE','RR','BODYSHOP','PMS') THEN l.serviceLoad ELSE 0 END) as totalLoad
        FROM Loadd l
-       WHERE l.financialYear='2025-2026'
+       WHERE l.financialYear = :financialYear
        AND (:months IS NULL OR l.month IN (:months))
        GROUP BY l.city
    ) l ON l.city=v.city
@@ -94,12 +95,14 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
    WHERE (:months IS NULL OR v.month IN (:months))
    AND (:qtrWise IS NULL OR v.qtrWise IN (:qtrWise))
    AND (:halfYear IS NULL OR v.halfYear IN (:halfYear))
+   AND v.financialYear = :financialYear
    GROUP BY v.city,l.pmsLoad,l.fr3PmsLoad,l.totalLoad
 """)
     List<VASSummaryDTO> getVASSummaryByCity(
             @Param("months") List<String> months,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYear") String financialYear );
 
     //Group by branch
     @Query("""
@@ -163,7 +166,7 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
             SUM(CASE WHEN l.serviceTypeCode IN ('FR3','PMS') THEN l.serviceLoad ELSE 0 END) as fr3PmsLoad,
             SUM(CASE WHEN l.loadType IN ('FREE SERVICE','RR','BODYSHOP','PMS') THEN l.serviceLoad ELSE 0 END) as totalLoad
         FROM Loadd l
-        WHERE l.financialYear='2025-2026'
+        WHERE (:financialYears IS NULL OR l.financialYear IN (:financialYears))
         AND (:months IS NULL OR l.month IN (:months))
         GROUP BY l.branch
     ) l ON l.branch = v.branch
@@ -171,13 +174,15 @@ public interface VASRepository extends JpaRepository<VAS, Integer> {
     AND (:cities IS NULL OR v.city IN (:cities))
     AND (:qtrWise IS NULL OR v.qtrWise IN (:qtrWise))
     AND (:halfYear IS NULL OR v.halfYear IN (:halfYear))
+    AND (:financialYears IS NULL OR v.financialYear IN (:financialYears))
     GROUP BY v.city,v.branch,l.pmsLoad,l.fr3PmsLoad,l.totalLoad
     """)
     List<VASSummaryDTO> getVASSummaryBranchWise(
            @Param("months") List<String> months,
            @Param("cities") List<String> cities,
            @Param("qtrWise") List<String> qtrWise,
-           @Param("halfYear") List<String> halfYear );
+           @Param("halfYear") List<String> halfYear,
+           @Param("financialYears") List<String> financialYears );
 
     @Modifying
     @Transactional

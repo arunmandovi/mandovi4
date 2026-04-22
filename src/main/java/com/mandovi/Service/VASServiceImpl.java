@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class VASServiceImpl implements VASService {
@@ -27,6 +30,7 @@ public class VASServiceImpl implements VASService {
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             if (firstRow == null)
@@ -70,20 +74,25 @@ public class VASServiceImpl implements VASService {
                 vas.setVas(row.getCell(3).getStringCellValue());
 
                 //Converting Integer year to String
-                Cell cell = row.getCell(4);
-                String year = "UNKNOWN";
-                if(cell != null){
-                    switch (cell.getCellType()){
-                        case STRING:
-                            vas.setYear(row.getCell(4).getStringCellValue());
-                            break;
-                        case NUMERIC:
-                            year = String.valueOf((int)row.getCell(4).getNumericCellValue());
-                            vas.setYear(year);
-                            break;
-                    }
+                int year = row.getCell(4).getCellType() == CellType.NUMERIC ? (int) row.getCell(4).getNumericCellValue()
+                        : Integer.parseInt(row.getCell(4).getStringCellValue());
+                vas.setYear(String.valueOf(year));
+
+                String month = row.getCell(5).getStringCellValue();
+                if (month != null && !month.isEmpty()) {
+                    month = month.toLowerCase();
+                    month = month.substring(0,1).toUpperCase() + month.substring(1);
                 }
-                vas.setMonth(row.getCell(5).getStringCellValue());
+                vas.setMonth(month);
+
+                String charMonth = vas.getMonth();
+                Month m = Month.from(dateTimeFormatter.parse(charMonth));
+                int numMonth = m.getValue();
+                if (numMonth >= 4) {
+                    vas.setFinancialYear(year + "-" + (year+1));
+                } else {
+                    vas.setFinancialYear((year-1) + "-" + year);
+                }
 
                 vas.setExcelJobCardNo((int)row.getCell(6).getNumericCellValue());
                 vas.setJobCardNo(vas.getExcelJobCardNo() * vas.getWheels());
@@ -108,18 +117,18 @@ public class VASServiceImpl implements VASService {
     }
 
     @Override
-    public List<VAS> getVASByMonthYear(List<String> months, List<String> years) {
-        return vasRepository.getVASByMonthYear(months, years);
+    public List<VAS> getVASByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return vasRepository.getVASByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<VASSummaryDTO> getVASSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
-        return vasRepository.getVASSummaryByCity(months, qtrWise, halfYear);
+    public List<VASSummaryDTO> getVASSummary(List<String> months, List<String> qtrWise, List<String> halfYear, String financialYear) {
+        return vasRepository.getVASSummaryByCity(months, qtrWise, halfYear, financialYear);
     }
 
     @Override
-    public List<VASSummaryDTO> getVASSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
-        return vasRepository.getVASSummaryBranchWise(months, cities, qtrWise, halfYear);
+    public List<VASSummaryDTO> getVASSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return vasRepository.getVASSummaryBranchWise(months, cities, qtrWise, halfYear, financialYears);
     }
 
     @Override

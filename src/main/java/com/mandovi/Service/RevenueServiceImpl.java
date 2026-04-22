@@ -9,7 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class RevenueServiceImpl implements RevenueService {
@@ -38,6 +41,7 @@ public class RevenueServiceImpl implements RevenueService {
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             if (firstRow == null)
@@ -62,7 +66,23 @@ public class RevenueServiceImpl implements RevenueService {
                 revenue.setYear(String.valueOf(num_year));
 
                 revenue.setCity(row.getCell(1).getStringCellValue());
-                revenue.setMonth(row.getCell(2).getStringCellValue());
+
+                String month = row.getCell(2).getStringCellValue();
+                if (month != null && !month.isEmpty()) {
+                    month = month.toLowerCase();
+                    month=month.substring(0,1).toUpperCase() + month.substring(1).toLowerCase();
+                }
+                revenue.setMonth(month);
+
+                String charMonth = revenue.getMonth();
+                Month m = Month.from(dateTimeFormatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4) {
+                    revenue.setFinancialYear(num_year + "-" + (num_year+1));
+                } else {
+                    revenue.setFinancialYear((num_year-1) + "-" + num_year );
+                }
+
                 revenue.setBranch(row.getCell(5).getStringCellValue());
 
 
@@ -110,18 +130,20 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public List<Revenue> getRevenueByMonthYear(List<String> months, List<String> years) {
-        return revenueRepository.getRevenueByMonthYear(months, years);
+    public List<Revenue> getRevenueByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return revenueRepository.getRevenueByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<RevenueSummaryDTO> getRevenueSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
-        return revenueRepository.getRevenueSummaryByCity(months, qtrWise, halfYear);
+    public List<RevenueSummaryDTO> getRevenueSummary(List<String> months,
+                                                     List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return revenueRepository.getRevenueSummaryByCity(months, qtrWise, halfYear, financialYears);
     }
 
     @Override
-    public List<RevenueSummaryDTO> getRevenueSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
-        return revenueRepository.getRevenueSummaryBranchWise(months, cities, qtrWise, halfYear);
+    public List<RevenueSummaryDTO> getRevenueSummaryBranchWise(List<String> months,
+                                List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return revenueRepository.getRevenueSummaryBranchWise(months, cities, qtrWise, halfYear, financialYears );
     }
 
     @Override

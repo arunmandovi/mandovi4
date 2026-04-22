@@ -19,6 +19,9 @@ public class MGAProfit {
     @Column (name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column (name = "net_retail_dd")
     private Double netRetailDD;
 
@@ -46,11 +49,12 @@ public class MGAProfit {
     public MGAProfit() {
     }
 
-    public MGAProfit(Integer magProfitSINo, String serviceDescription, String month, String year, Double netRetailDD, Double netRetailSell, Double netRetailDDL, Double netRetailSelling, String city, String branch, String qtrWise, String halfYear) {
+    public MGAProfit(Integer magProfitSINo, String serviceDescription, String month, String year, String financialYear, Double netRetailDD, Double netRetailSell, Double netRetailDDL, Double netRetailSelling, String city, String branch, String qtrWise, String halfYear) {
         this.magProfitSINo = magProfitSINo;
         this.serviceDescription = serviceDescription;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.netRetailDD = netRetailDD;
         this.netRetailSell = netRetailSell;
         this.netRetailDDL = netRetailDDL;
@@ -91,6 +95,14 @@ public class MGAProfit {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
     }
 
     public Double getNetRetailDD() {
@@ -164,6 +176,7 @@ public class MGAProfit {
                 ", serviceDescription='" + serviceDescription + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", netRetailDD=" + netRetailDD +
                 ", netRetailSell=" + netRetailSell +
                 ", netRetailDDL=" + netRetailDDL +

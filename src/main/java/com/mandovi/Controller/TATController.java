@@ -39,9 +39,10 @@ public class TATController {
     @GetMapping("/gettat")
     public ResponseEntity<?> getTATByMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<TAT> tatRecords = tatService.getTATByMonthYear(months, years);
+            List<TAT> tatRecords = tatService.getTATByMonthYear(months, years, financialYears);
             if (tatRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -55,9 +56,10 @@ public class TATController {
     public ResponseEntity<?> getTATSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<TATSummaryDTO> listTATSummary = tatService.getTATSummary(months, qtrWise, halfYear);
+            List<TATSummaryDTO> listTATSummary = tatService.getTATSummary(months, qtrWise, halfYear, financialYears);
             if (listTATSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -72,9 +74,10 @@ public class TATController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<TATSummaryDTO> listTATSummaryBranchWise = tatService.getTATSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<TATSummaryDTO> listTATSummaryBranchWise = tatService.getTATSummaryBranchWise(months, cities, qtrWise, halfYear, financialYears);
             if (listTATSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

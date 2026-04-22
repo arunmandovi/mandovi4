@@ -38,8 +38,9 @@ public class MSGPProfitController {
     @GetMapping("/getmsgp_profit")
     public ResponseEntity<List<MSGPProfit>> getMSGPProfitByMonthYear(
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years){
-        List<MSGPProfit> msgpProfitRecords = msgpProfitService.getMSGPProfitByMonthYear(months, years);
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
+        List<MSGPProfit> msgpProfitRecords = msgpProfitService.getMSGPProfitByMonthYear(months, years, financialYears);
         if (msgpProfitRecords.isEmpty()){
             return ResponseEntity.noContent().build();
         }
@@ -50,9 +51,10 @@ public class MSGPProfitController {
     public ResponseEntity<?> getMSGPProfitSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<MSGPProfitSummaryDTO> listMSGPProfitSummary = msgpProfitService.getMSGPProfitSummary(months, qtrWise, halfYear);
+            List<MSGPProfitSummaryDTO> listMSGPProfitSummary = msgpProfitService.getMSGPProfitSummary(months, qtrWise, halfYear, financialYears);
             if (listMSGPProfitSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -67,9 +69,11 @@ public class MSGPProfitController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<MSGPProfitSummaryDTO> listMSGPProfitSummaryBranchWise = msgpProfitService.getMSGPProfitSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<MSGPProfitSummaryDTO> listMSGPProfitSummaryBranchWise = msgpProfitService.getMSGPProfitSummaryBranchWise(
+                    months, cities, qtrWise, halfYear, financialYears);
             if (listMSGPProfitSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

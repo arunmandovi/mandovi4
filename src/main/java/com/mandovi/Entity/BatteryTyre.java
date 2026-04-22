@@ -23,6 +23,9 @@ public class BatteryTyre {
     @Column(name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column(name = "oil_type")
     private String oilType;
 
@@ -44,12 +47,13 @@ public class BatteryTyre {
     public BatteryTyre() {
     }
 
-    public BatteryTyre(Integer batteryTyreSINo, String city, String branch, String month, String year, String oilType, int sumOfNetRetailQTY, Double sumOfNetRetailDDL, Double sumOfNetRetailSelling, String qtrWise, String halfYear) {
+    public BatteryTyre(Integer batteryTyreSINo, String city, String branch, String month, String year, String financialYear, String oilType, int sumOfNetRetailQTY, Double sumOfNetRetailDDL, Double sumOfNetRetailSelling, String qtrWise, String halfYear) {
         this.batteryTyreSINo = batteryTyreSINo;
         this.city = city;
         this.branch = branch;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.oilType = oilType;
         this.sumOfNetRetailQTY = sumOfNetRetailQTY;
         this.sumOfNetRetailDDL = sumOfNetRetailDDL;
@@ -96,6 +100,14 @@ public class BatteryTyre {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
     }
 
     public String getOilType() {
@@ -154,6 +166,7 @@ public class BatteryTyre {
                 ", branch='" + branch + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", oilType='" + oilType + '\'' +
                 ", sumOfNetRetailQTY=" + sumOfNetRetailQTY +
                 ", sumOfNetRetailDDL=" + sumOfNetRetailDDL +

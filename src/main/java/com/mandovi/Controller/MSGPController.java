@@ -39,9 +39,10 @@ public class MSGPController {
     @GetMapping("/getmsgp")
     public ResponseEntity<?> getMSGPByMonthYear(
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<MSGP> msgpRecords = msgpService.getMSGPByMonthYear(months, years);
+            List<MSGP> msgpRecords = msgpService.getMSGPByMonthYear(months, years, financialYears);
             if (msgpRecords.isEmpty()){
                 return ResponseEntity.noContent().build();
             }
@@ -55,9 +56,11 @@ public class MSGPController {
     public ResponseEntity<?> getMSGPServiceBodyShopSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam String selectedFinancialYear ){
         try {
-            List<MSGPSummaryDTO> listMSGPServiceBodyShopSummary = msgpService.getMSGPSummary(months, qtrWise, halfYear);
+            List<MSGPSummaryDTO> listMSGPServiceBodyShopSummary = msgpService.getMSGPSummary(months,
+                    qtrWise,halfYear, selectedFinancialYear );
             if (listMSGPServiceBodyShopSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -72,9 +75,11 @@ public class MSGPController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam String selectedFinancialYear){
         try {
-            List<MSGPSummaryDTO> listMSGPSummaryBranchWise = msgpService.getMSGPSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<MSGPSummaryDTO> listMSGPSummaryBranchWise = msgpService.getMSGPSummaryBranchWise(months,
+                    cities, qtrWise, halfYear, selectedFinancialYear);
             if (listMSGPSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

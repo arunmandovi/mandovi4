@@ -18,11 +18,11 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
           SELECT b
           FROM BatteryTyre b
           WHERE (:months IS NULL OR b.month IN :months)
-          AND (:years IS NULL OR b.year IN :years)
+          AND (:years IS NULL OR b.year IN :years) AND (:financialYears IS NULL OR b.financialYear IN :financialYears)
     """)
     List<BatteryTyre> getBatteryTyreByMonthYear(
-            @Param("months") List<String> months,
-            @Param("years") List<String> years );
+            @Param("months") List<String> months,@Param("years") List<String> years,
+            @Param("financialYears") List<String> financialYears );
 
     @Transactional
     @Modifying
@@ -37,23 +37,19 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailQTY ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END),
-            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
-            CAST((SELECT (NULLIF(SUM(s.batteryCurrentYear), 0) - SUM(s.batteryLastYear)) * 100 / NULLIF(SUM(s.batteryLastYear), 0)
-              FROM Spares s
-              WHERE s.city = b.city
-              AND (:months IS NULL OR s.month IN (:months))
-             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
-             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))) AS double),
+            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END)) * 100 /
+            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailQTY ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END),
-            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
-            CAST((SELECT (NULLIF(SUM(s.tyreCurrentYear), 0) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
-              FROM Spares s
-              WHERE s.city = b.city
-              AND (:months IS NULL OR s.month IN (:months))
-             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
-             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))) AS double),
+            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END)) * 100 /
+            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL),
             ((SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL)) * 100.00 )  / SUM(b.sumOfNetRetailDDL)
             )
@@ -61,12 +57,14 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             WHERE (:months IS NULL OR b.month IN (:months))
              AND (:qtrWise IS NULL OR b.qtrWise IN (:qtrWise))
              AND (:halfYear IS NULL OR b.halfYear IN (:halfYear))
+             AND (:financialYears IS NULL OR b.financialYear IN (:financialYears))
             GROUP BY b.city
             """)
     List<BatteryTyreSummaryDTO> getBatteryTyreSummaryByCity(
             @Param("months") List<String> months,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears );
 
     //Group by branch
     @Query("""
@@ -76,25 +74,19 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailQTY ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END),
-            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
-            CAST((SELECT (NULLIF(SUM(s.batteryCurrentYear), 0) - SUM(s.batteryLastYear)) * 100 / NULLIF(SUM(s.batteryLastYear), 0)
-              FROM Spares s
-              WHERE s.city = b.city AND s.branch = b.branch
-              AND (:months IS NULL OR s.month IN (:months))
-             AND (:cities IS NULL OR s.city IN (:cities))
-             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
-             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))) AS double),
+            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END)) * 100 /
+            SUM(CASE WHEN b.oilType = 'BATTERY' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailQTY ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END),
-            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) - SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
-            CAST((SELECT (NULLIF(SUM(s.tyreCurrentYear), 0) - SUM(s.tyreLastYear)) * 100 / NULLIF(SUM(s.tyreLastYear), 0)
-              FROM Spares s
-              WHERE s.city = b.city AND s.branch = b.branch
-              AND (:months IS NULL OR s.month IN (:months))
-             AND (:cities IS NULL OR s.city IN (:cities))
-             AND (:qtrWise IS NULL OR s.qtrWise IN (:qtrWise))
-             AND (:halfYear IS NULL OR s.halfYear IN (:halfYear))) AS double),
+            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
+            (SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailSelling ELSE 0 END) -
+            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END)) * 100 /
+            SUM(CASE WHEN b.oilType = 'TYRE' THEN b.sumOfNetRetailDDL ELSE 0 END),
             SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL),
             ((SUM(b.sumOfNetRetailSelling) - SUM(b.sumOfNetRetailDDL)) * 100.00 )  / SUM(b.sumOfNetRetailDDL)
             )
@@ -103,13 +95,15 @@ public interface BatteryTyreRepository extends JpaRepository<BatteryTyre, Intege
              AND (:cities IS NULL OR b.city IN (:cities))
              AND (:qtrWise IS NULL OR b.qtrWise IN (:qtrWise))
              AND (:halfYear IS NULL OR b.halfYear IN (:halfYear))
+             AND (:financialYears IS NULL OR b.financialYear IN (:financialYears))
             GROUP BY b.city, b.branch
             """)
     List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise(
             @Param("months") List<String> months,
             @Param("cities") List<String> cities,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears);
 
     @Modifying
     @Transactional

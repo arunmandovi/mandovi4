@@ -9,10 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class MCPServiceImpl implements MCPService {
@@ -35,6 +34,7 @@ public class MCPServiceImpl implements MCPService {
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             if (firstRow == null)
@@ -59,6 +59,15 @@ public class MCPServiceImpl implements MCPService {
                 int num_year = (cell.getCellType() == CellType.NUMERIC)
                         ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
                 mcp.setYear(String.valueOf(num_year));
+
+                String charMonth = mcp.getMonth();
+                Month m = Month.from(formatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4){
+                    mcp.setFinancialYear(num_year + "-" + (num_year+1));
+                } else {
+                    mcp.setFinancialYear((num_year-1) + "-" + num_year);
+                }
 
                 mcp.setMcpQuantity((int) row.getCell(5).getNumericCellValue());
                 mcp.setAmountCollected(row.getCell(6).getNumericCellValue());
@@ -133,18 +142,21 @@ public class MCPServiceImpl implements MCPService {
     }
 
     @Override
-    public List<MCP> getMCPByMonthYear(List<String> months, List<String> years) {
-        return mcpRepository.getMCPByMonthYear(months, years);
+    public List<MCP> getMCPByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return mcpRepository.getMCPByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<MCPSummaryDTO> getMCPSummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return mcpRepository.getMCPSummaryByCity(months, channels, qtrWise, halfYear);
+    public List<MCPSummaryDTO> getMCPSummary(
+            List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return mcpRepository.getMCPSummaryByCity(months, channels, qtrWise, halfYear,financialYears);
     }
 
     @Override
-    public List<MCPSummaryDTO> getMCPSummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return mcpRepository.getMCPSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+    public List<MCPSummaryDTO> getMCPSummaryBranchWise(
+            List<String> months, List<String> cities, List<String> channels,
+            List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return mcpRepository.getMCPSummaryBranchWise(months, cities, channels, qtrWise, halfYear,financialYears);
     }
 
     @Override

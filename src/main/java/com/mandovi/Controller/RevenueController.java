@@ -38,9 +38,10 @@ public class RevenueController {
     @GetMapping("/getrevenue")
     public ResponseEntity<?> getRevenueByMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<Revenue> revenueRecords = revenueService.getRevenueByMonthYear(months, years);
+            List<Revenue> revenueRecords = revenueService.getRevenueByMonthYear(months, years, financialYears);
             if (revenueRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -54,9 +55,10 @@ public class RevenueController {
     public ResponseEntity<?> getRevenueSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<RevenueSummaryDTO> listRevenueSummary = revenueService.getRevenueSummary(months, qtrWise, halfYear);
+            List<RevenueSummaryDTO> listRevenueSummary = revenueService.getRevenueSummary(months, qtrWise, halfYear, financialYears);
             if (listRevenueSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -71,9 +73,11 @@ public class RevenueController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<RevenueSummaryDTO> listRevenueSummaryBranchWise = revenueService.getRevenueSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<RevenueSummaryDTO> listRevenueSummaryBranchWise = revenueService.getRevenueSummaryBranchWise(
+                    months, cities, qtrWise, halfYear, financialYears );
             if (listRevenueSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

@@ -10,7 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class SparesServiceImpl implements SparesService{
@@ -41,6 +44,7 @@ public class SparesServiceImpl implements SparesService{
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             if (firstRow == null)
@@ -67,7 +71,24 @@ public class SparesServiceImpl implements SparesService{
                 spares.setYear(String.valueOf(num_year));
 
                 spares.setCity(row.getCell(1).getStringCellValue());
-                spares.setMonth(row.getCell(2).getStringCellValue());
+
+                String month = row.getCell(2).getStringCellValue();
+                if (month != null && !month.isEmpty()){
+                    month=month.toLowerCase();
+                    month = month.substring(0,1).toUpperCase()+month.substring(1);
+                }
+                spares.setMonth(month);
+
+                String charMonth = spares.getMonth();
+                Month m = Month.from(dateTimeFormatter.parse(charMonth));
+                int monthNum = m.getValue();
+                int numberYear = Integer.parseInt(spares.getYear());
+                if (monthNum >= 4){
+                    spares.setFinancialYear(numberYear + "-" + (numberYear+1));
+                } else {
+                    spares.setFinancialYear((numberYear-1) + "-" + numberYear);
+                }
+
                 spares.setBranch(row.getCell(4).getStringCellValue());
                 spares.setSrSparesLastYear(getNumericCellValue(row,5));
                 spares.setSrSparesCurrentYear(getNumericCellValue(row, 6));
@@ -91,8 +112,8 @@ public class SparesServiceImpl implements SparesService{
 
 
                 //Updating the column Qtr_Wise & Half-Year by comparing the values from colum Month
-                String month = spares.getMonth();
-                switch (month){
+                String monthh = spares.getMonth();
+                switch (monthh){
                     case "Apr", "May", "Jun", "APR", "MAY", "JUN" -> { spares.setQtrWise("Qtr1"); spares.setHalfYear("H1"); }
                     case "Jul", "Aug", "Sep", "JUL", "AUG", "SEP" -> { spares.setQtrWise("Qtr2"); spares.setHalfYear("H1"); }
                     case "Oct", "Nov", "Dec", "OCT", "NOV", "DEC" -> { spares.setQtrWise("Qtr3"); spares.setHalfYear("H2"); }
@@ -112,18 +133,20 @@ public class SparesServiceImpl implements SparesService{
     }
 
     @Override
-    public List<Spares> getSparesByMonthYear(List<String> months, List<String> years) {
-        return sparesRepository.getSparedByMonthYear(months, years);
+    public List<Spares> getSparesByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return sparesRepository.getSparedByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<SparesSummaryDTO> getSparesSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
-        return sparesRepository.getSparesSummaryDTOByCity(months, qtrWise, halfYear);
+    public List<SparesSummaryDTO> getSparesSummary(List<String> months, List<String> qtrWise, List<String> halfYear,
+                                                   List<String> financialYears) {
+        return sparesRepository.getSparesSummaryDTOByCity(months, qtrWise, halfYear, financialYears);
     }
 
     @Override
-    public List<SparesSummaryDTO> getSparesSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
-        return sparesRepository.getSparesSummaryBranchWise(months, cities, qtrWise, halfYear);
+    public List<SparesSummaryDTO> getSparesSummaryBranchWise(List<String> months,
+                                                             List<String> cities,List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return sparesRepository.getSparesSummaryBranchWise(months, cities, qtrWise, halfYear, financialYears);
     }
 
     @Override

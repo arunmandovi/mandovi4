@@ -30,6 +30,8 @@ public class MGA {
     private String month;
     @Column (name = "year")
     private String year;
+    @Column (name = "financial_year")
+    private String financialYear;
     @Column(name = "channel")
     private String channel;
     @Column(name = "qtr_wise")
@@ -40,7 +42,7 @@ public class MGA {
     public MGA() {
     }
 
-    public MGA(Integer mgaSINo, LocalDate mgaDate, String city, String serviceAdvisor, Double consumption, Integer loadd, Double mgaLoad, String branch, String month, String year, String channel, String qtrWise, String halfYear) {
+    public MGA(Integer mgaSINo, LocalDate mgaDate, String city, String serviceAdvisor, Double consumption, Integer loadd, Double mgaLoad, String branch, String month, String year, String financialYear, String channel, String qtrWise, String halfYear) {
         this.mgaSINo = mgaSINo;
         this.mgaDate = mgaDate;
         this.city = city;
@@ -51,6 +53,7 @@ public class MGA {
         this.branch = branch;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.channel = channel;
         this.qtrWise = qtrWise;
         this.halfYear = halfYear;
@@ -136,6 +139,14 @@ public class MGA {
         this.year = year;
     }
 
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
+    }
+
     public String getChannel() {
         return channel;
     }
@@ -173,6 +184,7 @@ public class MGA {
                 ", branch='" + branch + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", channel='" + channel + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +
                 ", halfYear='" + halfYear + '\'' +

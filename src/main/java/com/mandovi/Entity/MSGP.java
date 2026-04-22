@@ -16,6 +16,9 @@ public class MSGP {
     @Column(name = "year")
     private String year;
 
+    @Column (name = "delete_year")
+    private String deleteYear;
+
     @Column(name = "month")
     private String month;
 
@@ -46,10 +49,11 @@ public class MSGP {
     public MSGP() {
     }
 
-    public MSGP(Integer msgpSINo, String city, String year, String month, String serviceDescription, Double netRetailDDL, Double sumOfNetRetailDDL, String branch, String loadType, String qtrWise, String halfYear, String financialYear) {
+    public MSGP(Integer msgpSINo, String city, String year, String deleteYear, String month, String serviceDescription, Double netRetailDDL, Double sumOfNetRetailDDL, String branch, String loadType, String qtrWise, String halfYear, String financialYear) {
         this.msgpSINo = msgpSINo;
         this.city = city;
         this.year = year;
+        this.deleteYear = deleteYear;
         this.month = month;
         this.serviceDescription = serviceDescription;
         this.netRetailDDL = netRetailDDL;
@@ -83,6 +87,14 @@ public class MSGP {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getDeleteYear() {
+        return deleteYear;
+    }
+
+    public void setDeleteYear(String deleteYear) {
+        this.deleteYear = deleteYear;
     }
 
     public String getMonth() {
@@ -163,6 +175,7 @@ public class MSGP {
                 "msgpSINo=" + msgpSINo +
                 ", city='" + city + '\'' +
                 ", year='" + year + '\'' +
+                ", deleteYear='" + deleteYear + '\'' +
                 ", month='" + month + '\'' +
                 ", serviceDescription='" + serviceDescription + '\'' +
                 ", netRetailDDL=" + netRetailDDL +

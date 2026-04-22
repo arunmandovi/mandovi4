@@ -39,9 +39,10 @@ public class SparesController {
     @GetMapping("/getspares")
     public ResponseEntity<?> getSparesByMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<Spares> sparesRecords = sparesService.getSparesByMonthYear(months, years);
+            List<Spares> sparesRecords = sparesService.getSparesByMonthYear(months, years, financialYears);
             if (sparesRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -55,9 +56,10 @@ public class SparesController {
     public ResponseEntity<?> getSparesSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<SparesSummaryDTO> listSparesSummary = sparesService.getSparesSummary(months, qtrWise, halfYear);
+            List<SparesSummaryDTO> listSparesSummary = sparesService.getSparesSummary(months, qtrWise, halfYear, financialYears);
             if (listSparesSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -72,9 +74,11 @@ public class SparesController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<SparesSummaryDTO> listSparesSummaryBranchWise = sparesService.getSparesSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<SparesSummaryDTO> listSparesSummaryBranchWise = sparesService.getSparesSummaryBranchWise(months,
+                    cities, qtrWise, halfYear, financialYears);
             if (listSparesSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

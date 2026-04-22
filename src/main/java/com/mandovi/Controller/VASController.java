@@ -40,9 +40,10 @@ public class VASController {
     @GetMapping("/getvas")
     public ResponseEntity<?> getVASByMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<VAS> vasRecords = vasService.getVASByMonthYear(months, years);
+            List<VAS> vasRecords = vasService.getVASByMonthYear(months, years, financialYears );
             if (vasRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -56,9 +57,10 @@ public class VASController {
     public ResponseEntity<?> getVASSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam String financialYears){
         try {
-            List<VASSummaryDTO> listVAS = vasService.getVASSummary(months, qtrWise , halfYear );
+            List<VASSummaryDTO> listVAS = vasService.getVASSummary(months, qtrWise , halfYear, financialYears);
             if (listVAS.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -73,9 +75,11 @@ public class VASController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<VASSummaryDTO> listVASSummaryBranchWise = vasService.getVASSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<VASSummaryDTO> listVASSummaryBranchWise = vasService.getVASSummaryBranchWise(months, cities,
+                    qtrWise, halfYear, financialYears);
             if (listVASSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

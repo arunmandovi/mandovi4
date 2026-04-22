@@ -9,7 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class BatteryTyreServiceImpl implements BatteryTyreService{
@@ -24,8 +27,8 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
         try {
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
-            DataFormatter  formatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             if (firstRow == null)
@@ -53,6 +56,15 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
                 int num_year = (cell.getCellType() == CellType.NUMERIC)
                         ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
                 batteryTyre.setYear(String.valueOf(num_year));
+
+                String charMonth = batteryTyre.getMonth();
+                Month m = Month.from(dateTimeFormatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4){
+                    batteryTyre.setFinancialYear(num_year + "-" + (num_year+1));
+                } else {
+                    batteryTyre.setFinancialYear((num_year-1) + "-" + num_year);
+                }
 
                 batteryTyre.setOilType(row.getCell(4).getStringCellValue());
                 batteryTyre.setSumOfNetRetailQTY((int)   row.getCell(5).getNumericCellValue());
@@ -82,19 +94,22 @@ public class BatteryTyreServiceImpl implements BatteryTyreService{
     }
 
     @Override
-    public List<BatteryTyre> getBattery_TyreByMonthYear(List<String> months, List<String> years) {
-        return batteryTyreRepository.getBatteryTyreByMonthYear(months, years);
+    public List<BatteryTyre> getBattery_TyreByMonthYear(
+            List<String> months, List<String> years, List<String> financialYears) {
+        return batteryTyreRepository.getBatteryTyreByMonthYear(months, years, financialYears);
     }
 
 
     @Override
-    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
-        return batteryTyreRepository.getBatteryTyreSummaryByCity(months, qtrWise, halfYear);
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummary(
+            List<String> months, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return batteryTyreRepository.getBatteryTyreSummaryByCity(months, qtrWise, halfYear, financialYears);
     }
 
     @Override
-    public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
-        return batteryTyreRepository.getBatteryTyreSummaryBranchWise(months, cities, qtrWise, halfYear);
+    public List<BatteryTyreSummaryDTO> getBatteryTyreSummaryBranchWise(
+            List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return batteryTyreRepository.getBatteryTyreSummaryBranchWise(months, cities, qtrWise, halfYear, financialYears);
     }
 
     @Override

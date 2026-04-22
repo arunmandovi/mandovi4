@@ -11,11 +11,13 @@ public interface OilService {
 
     public List<Oil> getAllOil();
 
-    public List<Oil> getOilByMonthYear(List<String> months, List<String> years);
+    public List<Oil> getOilByMonthYear(List<String> months, List<String> years, List<String> financialYears );
 
-    public List<OilSummaryDTO> getOilSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
+    public List<OilSummaryDTO> getOilSummary (List<String> months, List<String> qtrWise,
+                                              List<String> halfYear, List<String> financialYears);
 
-    public List<OilSummaryDTO> getOilSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+    public List<OilSummaryDTO> getOilSummaryBranchWise (
+            List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
     void deleteOilALL ();
 }

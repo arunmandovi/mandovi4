@@ -16,9 +16,10 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
     @Query("""
     SELECT m FROM MCP m
     WHERE (:months IS NULL OR m.month IN (:months))
-     AND (:years IS NULL OR m.year IN (:years))
+     AND (:years IS NULL OR m.year IN (:years)) AND (:financialYears IS NULL OR m.financialYear IN (:financialYears))
     """)
-    List<MCP> getMCPByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
+    List<MCP> getMCPByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years,
+                                @Param("financialYears") List<String> financialYears );
 
     @Transactional
     @Modifying
@@ -37,13 +38,15 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
               AND (:channels IS  NULL OR m.channel IN (:channels))
               AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
               AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
+              AND (:financialYears IS NULL OR m.financialYear IN (:financialYears))
             GROUP BY m.city
             """)
     List<MCPSummaryDTO> getMCPSummaryByCity(
             @Param("months") List<String> months,
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear);
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears );
 
     //Group by branch
     @Query("""
@@ -58,6 +61,7 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
             AND (:channels IS NULL OR m.channel IN (:channels))
             AND (:qtrWise IS NULL OR m.qtrWise IN (:qtrWise))
             AND (:halfYear IS NULL OR m.halfYear IN (:halfYear))
+            AND (:financialYears IS NULL OR m.financialYear IN (:financialYears))
             GROUP BY m.city, m.branch
             """)
     List<MCPSummaryDTO> getMCPSummaryBranchWise(
@@ -65,7 +69,8 @@ public interface MCPRepository extends JpaRepository<MCP,Long> {
             @Param("cities") List<String> cities,
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear);
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears );
 
     @Modifying
     @Transactional

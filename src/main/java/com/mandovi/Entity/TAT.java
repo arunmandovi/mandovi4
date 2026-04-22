@@ -25,6 +25,9 @@ public class TAT {
     @Column(name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column(name = "link_service_type")
     private String linkServiceType;
 
@@ -40,12 +43,13 @@ public class TAT {
     public TAT() {
     }
 
-    public TAT(Integer tatSINo, String city, String branch, String month, String year, String linkServiceType, String averageOfOpenToClose, String qtrWise, String halfYear) {
+    public TAT(Integer tatSINo, String city, String branch, String month, String year, String financialYear, String linkServiceType, String averageOfOpenToClose, String qtrWise, String halfYear) {
         this.tatSINo = tatSINo;
         this.city = city;
         this.branch = branch;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.linkServiceType = linkServiceType;
         this.averageOfOpenToClose = averageOfOpenToClose;
         this.qtrWise = qtrWise;
@@ -92,6 +96,14 @@ public class TAT {
         this.year = year;
     }
 
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
+    }
+
     public String getLinkServiceType() {
         return linkServiceType;
     }
@@ -132,6 +144,7 @@ public class TAT {
                 ", branch='" + branch + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", linkServiceType='" + linkServiceType + '\'' +
                 ", averageOfOpenToClose='" + averageOfOpenToClose + '\'' +
                 ", qtrWise='" + qtrWise + '\'' +

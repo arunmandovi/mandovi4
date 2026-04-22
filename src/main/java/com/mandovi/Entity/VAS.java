@@ -32,6 +32,9 @@ public class VAS {
     @Column(name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column (name = "excel_job_card_no")
     private Integer excelJobCardNo;
 
@@ -50,7 +53,7 @@ public class VAS {
     public VAS() {
     }
 
-    public VAS(Integer vasSINo, String city, String branch, String labourType, Integer wheels, String vas, String month, String year, Integer excelJobCardNo, Integer jobCardNo, Double basicAmt, String qtrWise, String halfYear) {
+    public VAS(Integer vasSINo, String city, String branch, String labourType, Integer wheels, String vas, String month, String year, String financialYear, Integer excelJobCardNo, Integer jobCardNo, Double basicAmt, String qtrWise, String halfYear) {
         this.vasSINo = vasSINo;
         this.city = city;
         this.branch = branch;
@@ -59,6 +62,7 @@ public class VAS {
         this.vas = vas;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.excelJobCardNo = excelJobCardNo;
         this.jobCardNo = jobCardNo;
         this.basicAmt = basicAmt;
@@ -130,6 +134,14 @@ public class VAS {
         this.year = year;
     }
 
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
+    }
+
     public Integer getExcelJobCardNo() {
         return excelJobCardNo;
     }
@@ -181,6 +193,7 @@ public class VAS {
                 ", vas='" + vas + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", excelJobCardNo=" + excelJobCardNo +
                 ", jobCardNo=" + jobCardNo +
                 ", basicAmt=" + basicAmt +

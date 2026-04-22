@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -40,9 +39,10 @@ public class PMSPartsController {
     @GetMapping("/getpms_parts")
     public ResponseEntity<?> getPMSPartByMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<PMSParts> pmsPartsRecords = pmsPartsService.getPMSPartsByMonthYear(months, years);
+            List<PMSParts> pmsPartsRecords = pmsPartsService.getPMSPartsByMonthYear(months, years, financialYears);
             if (pmsPartsRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -56,9 +56,10 @@ public class PMSPartsController {
     public ResponseEntity<?> getPMSPartsSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<PMSPartsSummaryDTO> listPMSPartsSummary = pmsPartsService.getPMSPartsSummary(months, qtrWise, halfYear);
+            List<PMSPartsSummaryDTO> listPMSPartsSummary = pmsPartsService.getPMSPartsSummary(months, qtrWise, halfYear, financialYears);
             if (listPMSPartsSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -73,9 +74,11 @@ public class PMSPartsController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<PMSPartsSummaryDTO> listPMSPartsSummaryBranchWise = pmsPartsService.getPMSPartsSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<PMSPartsSummaryDTO> listPMSPartsSummaryBranchWise = pmsPartsService.getPMSPartsSummaryBranchWise(
+                    months, cities, qtrWise, halfYear, financialYears);
             if (listPMSPartsSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

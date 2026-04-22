@@ -11,11 +11,13 @@ public interface MSGPProfitService {
 
     public List<MSGPProfit> getAllMSGP_Profit();
 
-    public List<MSGPProfit> getMSGPProfitByMonthYear(List<String> months, List<String> years);
+    public List<MSGPProfit> getMSGPProfitByMonthYear(List<String> months, List<String> years, List<String> financialYears );
 
-    public List<MSGPProfitSummaryDTO> getMSGPProfitSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
+    public List<MSGPProfitSummaryDTO> getMSGPProfitSummary (List<String> months, List<String> qtrWise,
+                                                            List<String> halfYear, List<String> financialYears);
 
-    public List<MSGPProfitSummaryDTO> getMSGPProfitSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+    public List<MSGPProfitSummaryDTO> getMSGPProfitSummaryBranchWise (List<String> months,
+                                   List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears );
 
     void deleteMSGPProfitAll ();
 }

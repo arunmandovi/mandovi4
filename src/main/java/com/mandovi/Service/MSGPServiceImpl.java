@@ -35,9 +35,11 @@ public class MSGPServiceImpl implements MSGPService {
                     : Integer.parseInt(yearCell.getStringCellValue());
             String uploadYear = String.valueOf(numYear);
             String anotherUploadYear = String.valueOf(numYear + 1);
+            String deleteAnotherYear = String.valueOf(numYear + 2);
+            String deleteYear = anotherUploadYear + "-" + deleteAnotherYear;
 
-            msgpRepository.deleteByMonthYear(uploadMonth, uploadYear);
-            msgpRepository.deleteByMonthYear(uploadMonth, anotherUploadYear);
+            msgpRepository.deleteByMonthYear(uploadMonth, uploadYear, deleteYear);
+            msgpRepository.deleteByMonthYear(uploadMonth, anotherUploadYear, deleteYear);
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
@@ -45,8 +47,14 @@ public class MSGPServiceImpl implements MSGPService {
 
                 MSGP msgp = new MSGP();
 
-                msgp.setCity(row.getCell(0).getStringCellValue());
+                String city = row.getCell(0).getStringCellValue();
+                if (city != null && !city.isEmpty()) {
+                    city = city.toLowerCase();
+                    city = city.substring(0,1).toUpperCase() + city.substring(1).toLowerCase();
+                }
+                msgp.setCity(city);
                 msgp.setYear(row.getCell(2).getStringCellValue());
+                msgp.setDeleteYear(deleteYear);
                 msgp.setMonth(row.getCell(3).getStringCellValue());
                 msgp.setServiceDescription(row.getCell(4).getStringCellValue());
                 msgp.setNetRetailDDL(row.getCell(5).getNumericCellValue());
@@ -106,10 +114,12 @@ public class MSGPServiceImpl implements MSGPService {
                 }
 
                 switch (msgp.getServiceDescription().trim().toUpperCase()){
-                    case "1ST FREE SERVICE", "2ND FREE SERVICE", "3RD FREE SERVICE" -> msgp.setLoadType("FREE SERVICE");
+                    case "1ST FREE SERVICE", "2ND FREE SERVICE",
+                         "3RD FREE SERVICE", "4TH FREE SERVICE", "FREE SERVICE"-> msgp.setLoadType("FREE SERVICE");
                     case "PAID SERVICE" -> msgp.setLoadType("PMS");
+                    case "-" -> msgp.setLoadType("-");
                     case "RUNNING REPAIR" -> msgp.setLoadType("RR");
-                    case "BODY  REPAIR" -> msgp.setLoadType("BODYSHOP");
+                    case "BODY  REPAIR", "BODY QUICK REPAIR" -> msgp.setLoadType("BODYSHOP");
                     default -> msgp.setLoadType("OTHERS");
                 }
 
@@ -140,18 +150,35 @@ public class MSGPServiceImpl implements MSGPService {
     }
 
     @Override
-    public List<MSGP> getMSGPByMonthYear(List<String> months, List<String> years) {
-        return msgpRepository.getMSGPByMonthYear(months, years);
+    public List<MSGP> getMSGPByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return msgpRepository.getMSGPByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<MSGPSummaryDTO> getMSGPSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
-        return msgpRepository.getMSGPSummaryByCity(months, qtrWise, halfYear);
+    public List<MSGPSummaryDTO> getMSGPSummary(List<String> months, List<String> qtrWise,
+                                               List<String> halfYear, String selectedFinancialYear) {
+        String prevYear = getPreviousFinancialYear(selectedFinancialYear);
+        return msgpRepository.getMSGPSummaryByCity(months, qtrWise, halfYear, prevYear, selectedFinancialYear);
+    }
+
+    private String getPreviousFinancialYear(String year) {
+
+        if (year == null || !year.contains("-")) {
+            throw new IllegalArgumentException("Invalid financial year format: " + year);
+        }
+
+        String[] parts = year.split("-");
+        int start = Integer.parseInt(parts[0]);
+        int end = Integer.parseInt(parts[1]);
+
+        return (start - 1) + "-" + (end - 1);
     }
 
     @Override
-    public List<MSGPSummaryDTO> getMSGPSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
-        return msgpRepository.getMSGPSummaryBranchWise(months, cities, qtrWise, halfYear);
+    public List<MSGPSummaryDTO> getMSGPSummaryBranchWise(List<String> months,List<String> cities,
+                                List<String> qtrWise, List<String> halfYear, String selectedFinancialYear) {
+        String prevYear = getPreviousFinancialYear(selectedFinancialYear);
+        return msgpRepository.getMSGPSummaryBranchWise(months, cities, qtrWise, halfYear, prevYear, selectedFinancialYear);
     }
 
     @Override

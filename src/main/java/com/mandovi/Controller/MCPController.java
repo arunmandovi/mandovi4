@@ -39,9 +39,10 @@ public class MCPController {
     @GetMapping("/getmcp")
     public ResponseEntity<?> getMCPByMonthYear(
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears) {
         try {
-            List<MCP> mcpRecords = mcpService.getMCPByMonthYear(months, years);
+            List<MCP> mcpRecords = mcpService.getMCPByMonthYear(months, years, financialYears);
             if (mcpRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -56,9 +57,10 @@ public class MCPController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<MCPSummaryDTO> listMCPSummary = mcpService.getMCPSummary(months, channels, qtrWise, halfYear);
+            List<MCPSummaryDTO> listMCPSummary = mcpService.getMCPSummary(months, channels, qtrWise, halfYear,financialYears );
             if (listMCPSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -74,9 +76,11 @@ public class MCPController {
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<MCPSummaryDTO> listMCPSummaryBranchWise = mcpService.getMCPSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+            List<MCPSummaryDTO> listMCPSummaryBranchWise = mcpService.getMCPSummaryBranchWise(
+                    months, cities, channels, qtrWise, halfYear, financialYears);
             if (listMCPSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

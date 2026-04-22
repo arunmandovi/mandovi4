@@ -12,13 +12,16 @@ public interface ReferenceeService {
 
     public List<Referencee> getAllReference();
 
-    public List<Referencee> getReferenceeByMonthYear(List<String> months, List<String> years);
+    public List<Referencee> getReferenceeByMonthYear(List<String> months, List<String> years, List<String> financialYears);
 
-    public List<ReferenceeSummaryDTO> getReferenceeSummary (List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
+    public List<ReferenceeSummaryDTO> getReferenceeSummary (
+            List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
-    public List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
+    public List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise(
+            List<String> months, List<String> cities, List<String> channels,
+            List<String> qtrWise, List<String> halfYear, List<String> financialYears );
 
     void deleteReferenceeAll ();
 
-    public List<ReferenceeTableDTO> getReferenceeTable (List<String> months, List<String> cities);
+    public List<ReferenceeTableDTO> getReferenceeTable (List<String> months, List<String> cities, List<String> financialYears );
 }

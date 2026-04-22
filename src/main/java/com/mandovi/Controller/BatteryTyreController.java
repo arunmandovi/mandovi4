@@ -39,9 +39,10 @@ public class BatteryTyreController {
     @GetMapping("/getbattery_tyre")
     public ResponseEntity<?> getBatteryTyreByMonthYear(
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<BatteryTyre> batteryTyreRecords = batteryTyreService.getBattery_TyreByMonthYear(months, years);
+            List<BatteryTyre> batteryTyreRecords = batteryTyreService.getBattery_TyreByMonthYear(months, years, financialYears);
             if (batteryTyreRecords.isEmpty()){
                 return ResponseEntity.noContent().build();
             }
@@ -56,9 +57,11 @@ public class BatteryTyreController {
     public ResponseEntity<?> getBatterySummary(
             @RequestParam (required = false) List<String> months,
             @RequestParam(required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<BatteryTyreSummaryDTO> listBattery = batteryTyreService.getBatteryTyreSummary(months, qtrWise, halfYear);
+            List<BatteryTyreSummaryDTO> listBattery = batteryTyreService.getBatteryTyreSummary(
+                    months, qtrWise, halfYear,financialYears );
             if (listBattery.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -74,9 +77,11 @@ public class BatteryTyreController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<BatteryTyreSummaryDTO> listBatteryTyreSummaryBranchWise = batteryTyreService.getBatteryTyreSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<BatteryTyreSummaryDTO> listBatteryTyreSummaryBranchWise = batteryTyreService.getBatteryTyreSummaryBranchWise(
+                    months, cities, qtrWise, halfYear, financialYears);
             if (listBatteryTyreSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

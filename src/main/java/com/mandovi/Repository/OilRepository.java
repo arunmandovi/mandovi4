@@ -16,9 +16,10 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
     @Query("""
     SELECT o FROM Oil o
     WHERE (:months IS NULL OR o.month IN (:months))
-    AND (:years IS NULL OR o.year IN (:years))
+    AND (:years IS NULL OR o.year IN (:years)) AND (:financialYears IS NULL OR o.financialYear IN (:financialYears))
     """)
-    public List<Oil> getOilByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
+    public List<Oil> getOilByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years,
+                                       @Param("financialYears") List<String> financialYears );
 
     @Transactional
     @Modifying
@@ -51,12 +52,14 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
         WHERE (:months IS NULL OR o.month IN (:months))
           AND (:qtrWise IS NULL OR o.qtrWise IN (:qtrWise))
           AND (:halfYear IS NULL OR o.halfYear IN (:halfYear))
+          AND (:financialYears IS NULL OR o.financialYear IN (:financialYears))
         GROUP BY o.city
     """)
     List<OilSummaryDTO> getOilSummaryByCity(
             @Param("months") List<String> months,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear);
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears );
 
     //Group by branch
     @Query("""
@@ -85,13 +88,15 @@ public interface OilRepository extends JpaRepository<Oil, Integer> {
          AND (:cities IS NULL OR o.city IN (:cities))
          AND (:qtrWise IS NULL OR o.qtrWise IN (:qtrWise))
          AND (:halfYear IS NULL OR o.halfYear IN (:halfYear))
+         AND (:financialYears IS NULL OR o.financialYear IN (:financialYears))
         GROUP BY o.city,o.branch
     """)
     List<OilSummaryDTO> getOilSummaryBranchWise(
             @Param("months") List<String> months,
             @Param("cities") List<String> cities,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears );
 
     @Modifying
     @Transactional

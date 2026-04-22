@@ -9,10 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class MGAProfitServiceImpl implements MGAProfitService{
@@ -28,6 +27,7 @@ public class MGAProfitServiceImpl implements MGAProfitService{
             InputStream inputStream =file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Set<String> bangaloreLocations = new HashSet<>(Arrays.asList(
                     "BKH","BNG","BSN","CDE","CMJ","GRB","HNR","JPN",
@@ -63,6 +63,15 @@ public class MGAProfitServiceImpl implements MGAProfitService{
                 int numYear = (cell.getCellType() == CellType.NUMERIC)
                         ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
                 mgaProfit.setYear(String.valueOf(numYear));
+
+                String charMonth = mgaProfit.getMonth();
+                Month m = Month.from(formatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4) {
+                    mgaProfit.setFinancialYear(numYear + "-" + (numYear+1));
+                } else {
+                    mgaProfit.setFinancialYear((numYear - 1) + "-" + numYear);
+                }
 
                 mgaProfit.setNetRetailDD(row.getCell(4).getNumericCellValue());
                 mgaProfit.setNetRetailSell(row.getCell(5).getNumericCellValue());
@@ -153,18 +162,20 @@ public class MGAProfitServiceImpl implements MGAProfitService{
     }
 
     @Override
-    public List<MGAProfit> getMGAProfitMonthYear(List<String> months, List<String> years) {
-        return mgaProfitRepository.getMGAProfitMonthYear(months, years);
+    public List<MGAProfit> getMGAProfitMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return mgaProfitRepository.getMGAProfitMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<MGAProfitSummaryDTO> getMGAProfitSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
-        return mgaProfitRepository.getMGAProfitSummary(months, qtrWise, halfYear);
+    public List<MGAProfitSummaryDTO> getMGAProfitSummary(
+            List<String> months, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return mgaProfitRepository.getMGAProfitSummary(months, qtrWise, halfYear,financialYears);
     }
 
     @Override
-    public List<MGAProfitSummaryDTO> getMGAProfitSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
-        return mgaProfitRepository.getMGAProfitSummaryBranchWise(months, cities, qtrWise, halfYear);
+    public List<MGAProfitSummaryDTO> getMGAProfitSummaryBranchWise(
+            List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return mgaProfitRepository.getMGAProfitSummaryBranchWise(months, cities, qtrWise, halfYear,financialYears);
     }
 
     @Override

@@ -11,11 +11,14 @@ public interface MGAService {
 
     public List<MGA> getAllMGA();
 
-    public List<MGA> getMGAMonthYear(List<String> months, List<String> years);
+    public List<MGA> getMGAMonthYear(List<String> months, List<String> years, List<String> financialYears);
 
-    public List<MGASummaryDTO> getMGASummary (List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
+    public List<MGASummaryDTO> getMGASummary (
+            List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
-    public List<MGASummaryDTO> getMGASummaryBranchWise (List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
+    public List<MGASummaryDTO> getMGASummaryBranchWise (
+            List<String> months, List<String> cities, List<String> channels,
+            List<String> qtrWise, List<String> halfYear, List<String> financialYears );
 
      void deleteMGAAll ();
 }

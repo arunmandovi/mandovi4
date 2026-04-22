@@ -10,7 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class ReferenceeServiceImpl implements ReferenceeService {
@@ -25,6 +28,7 @@ public class ReferenceeServiceImpl implements ReferenceeService {
                 InputStream inputStream = file.getInputStream();
                 Workbook workbook = WorkbookFactory.create(inputStream);
                 Sheet sheet = workbook.getSheetAt(0);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
                 referenceeRepository.deleteReferenceeAll();
 
@@ -45,18 +49,16 @@ public class ReferenceeServiceImpl implements ReferenceeService {
                     reference.setBooking(row.getCell(8) == null ? 0 : (int) row.getCell(8).getNumericCellValue());
                     reference.setInvoice(row.getCell(9) == null ? 0 : (int) row.getCell(9).getNumericCellValue());
 
-                    String month = reference.getMonth();
-                    int year = Integer.parseInt(reference.getYear().trim());
-                    switch (month){
-                        case "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-                             "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" ->{ reference.setFinancialYear(year+"-"+(year+1)); }
-                        case "Jan", "Feb", "Mar", "JAN", "FEB", "MAR"->{
-                            reference.setFinancialYear((year-1)+"-"+year);
-                        }
-
-
+                    String charMonth = reference.getMonth();
+                    int year = Integer.parseInt(reference.getYear());
+                    Month m = Month.from(formatter.parse(charMonth));
+                    int monthNum = m.getValue();
+                    if (monthNum >= 4) {
+                        reference.setFinancialYear(year + "-" + (year+1));
+                    } else {
+                        reference.setFinancialYear((year-1) + "-" + year);
                     }
-                    //Updating the column Qtr_Wise & Half-year column by checking Column month
+
                     String monthh = reference.getMonth();
                     switch (monthh){
                         case "Apr", "May", "Jun", "APR", "MAY", "JUN" -> { reference.setQtrWise("Qtr1"); reference.setHalfYear("H1"); }
@@ -80,19 +82,22 @@ public class ReferenceeServiceImpl implements ReferenceeService {
     }
 
     @Override
-    public List<Referencee> getReferenceeByMonthYear(List<String> months, List<String> years) {
-        return referenceeRepository.getReferenceeByMonthYear(months, years);
+    public List<Referencee> getReferenceeByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return referenceeRepository.getReferenceeByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<ReferenceeSummaryDTO> getReferenceeSummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return referenceeRepository.getReferenceeSummaryByCity(months, channels, qtrWise, halfYear);
+    public List<ReferenceeSummaryDTO> getReferenceeSummary(
+            List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return referenceeRepository.getReferenceeSummaryByCity(months, channels, qtrWise, halfYear,financialYears);
     }
 
 
     @Override
-    public List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return referenceeRepository.getReferenceeSummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+    public List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise(
+            List<String> months, List<String> cities, List<String> channels,
+            List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return referenceeRepository.getReferenceeSummaryBranchWise(months, cities, channels, qtrWise, halfYear,financialYears);
     }
 
     @Override
@@ -101,7 +106,7 @@ public class ReferenceeServiceImpl implements ReferenceeService {
     }
 
     @Override
-    public List<ReferenceeTableDTO> getReferenceeTable(List<String> months, List<String> cities) {
-        return referenceeRepository.getReferenceeTableCityWise(months, cities);
+    public List<ReferenceeTableDTO> getReferenceeTable(List<String> months, List<String> cities, List<String> financialYears) {
+        return referenceeRepository.getReferenceeTableCityWise(months, cities, financialYears);
     }
 }

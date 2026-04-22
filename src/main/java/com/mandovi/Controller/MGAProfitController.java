@@ -42,9 +42,10 @@ public class MGAProfitController {
     @GetMapping ("/getmga_profit")
     public ResponseEntity<?> getMGAMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<MGAProfit> mgaProfitRecords = mgaProfitService.getMGAProfitMonthYear(months, years);
+            List<MGAProfit> mgaProfitRecords = mgaProfitService.getMGAProfitMonthYear(months, years, financialYears);
             if (mgaProfitRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -58,9 +59,10 @@ public class MGAProfitController {
     public ResponseEntity<?> getMGAProfitSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<MGAProfitSummaryDTO> listMGAProfitSummary = mgaProfitService.getMGAProfitSummary(months, qtrWise, halfYear);
+            List<MGAProfitSummaryDTO> listMGAProfitSummary = mgaProfitService.getMGAProfitSummary(months, qtrWise, halfYear, financialYears);
             if (listMGAProfitSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -75,9 +77,11 @@ public class MGAProfitController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<MGAProfitSummaryDTO> listMGAProfitSummaryBranchWise = mgaProfitService.getMGAProfitSummaryBranchWise(months, cities, qtrWise, halfYear);
+            List<MGAProfitSummaryDTO> listMGAProfitSummaryBranchWise = mgaProfitService.getMGAProfitSummaryBranchWise(
+                    months, cities, qtrWise, halfYear, financialYears);
             if (listMGAProfitSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

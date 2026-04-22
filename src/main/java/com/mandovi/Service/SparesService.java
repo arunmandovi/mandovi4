@@ -12,11 +12,13 @@ public interface SparesService{
 
     public List<Spares> getAllSpares();
 
-    public List<Spares> getSparesByMonthYear(List<String> months, List<String> years);
+    public List<Spares> getSparesByMonthYear(List<String> months, List<String> years, List<String> financialYears);
 
-    public List<SparesSummaryDTO> getSparesSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
+    public List<SparesSummaryDTO> getSparesSummary (List<String> months, List<String> qtrWise, List<String> halfYear,
+                                                    List<String> financialYears);
 
-    public List<SparesSummaryDTO> getSparesSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+    public List<SparesSummaryDTO> getSparesSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise,
+                                                              List<String> halfYear, List<String> financialYears );
 
     void deleteSparesAll ();
 }

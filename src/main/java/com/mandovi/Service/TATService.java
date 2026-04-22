@@ -12,11 +12,13 @@ public interface TATService {
 
     public List<TAT> getAllTat();
 
-    public List<TAT> getTATByMonthYear(List<String> months, List<String> years);
+    public List<TAT> getTATByMonthYear(List<String> months, List<String> years, List<String> financialYears);
 
-    public List<TATSummaryDTO> getTATSummary (List<String> months, List<String> qtrWise, List<String> halfYear);
+    public List<TATSummaryDTO> getTATSummary (
+            List<String> months, List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
-    public List<TATSummaryDTO> getTATSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+    public List<TATSummaryDTO> getTATSummaryBranchWise (
+            List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
     void deleteTATAll ();
 }

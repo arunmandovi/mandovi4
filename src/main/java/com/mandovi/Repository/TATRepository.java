@@ -15,9 +15,10 @@ public interface TATRepository extends JpaRepository<TAT,Integer> {
     @Query("""
     SELECT t FROM TAT t
     WHERE (:months IS NULL OR t.month IN (:months))
-    AND (:years IS NULL OR t.year IN (:years))
+    AND (:years IS NULL OR t.year IN (:years)) AND (:financialYears IS NULL OR t.financialYear IN (:financialYears))
     """)
-    public List<TAT> getTATByMonthYear (@Param("months") List<String> months, @Param("years") List<String> years);
+    public List<TAT> getTATByMonthYear (@Param("months") List<String> months, @Param("years") List<String> years,
+                                        @Param("financialYears") List<String> financialYears);
 
     @Transactional
     @Modifying

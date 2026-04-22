@@ -10,7 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class OilServiceImpl implements OilService {
@@ -31,6 +34,7 @@ public class OilServiceImpl implements OilService {
             InputStream inputStream = file.getInputStream();
             Workbook  workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             if (firstRow == null)
@@ -59,6 +63,15 @@ public class OilServiceImpl implements OilService {
                         ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
                 oil.setYear(String.valueOf(num_year));
 
+                String charMonth  = oil.getMonth();
+                Month m = Month.from(dateTimeFormatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4){
+                    oil.setFinancialYear(num_year + "-" + (num_year+1));
+                } else {
+                    oil.setFinancialYear((num_year - 1) + "-" + num_year );
+                }
+
                 oil.setOilType(row.getCell(4).getStringCellValue());
                 oil.setNetRetailQty(round2Decimals(row.getCell(5).getNumericCellValue()));
                 oil.setNetRetailDDL(round2Decimals(row.getCell(6).getNumericCellValue()));
@@ -85,18 +98,20 @@ public class OilServiceImpl implements OilService {
     }
 
     @Override
-    public List<Oil> getOilByMonthYear(List<String> months, List<String> years) {
-        return oilRepository.getOilByMonthYear(months, years);
+    public List<Oil> getOilByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return oilRepository.getOilByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<OilSummaryDTO> getOilSummary(List<String> months, List<String> qtrWise, List<String> halfYear) {
-        return oilRepository.getOilSummaryByCity(months, qtrWise, halfYear);
+    public List<OilSummaryDTO> getOilSummary(
+            List<String> months, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return oilRepository.getOilSummaryByCity(months, qtrWise, halfYear, financialYears);
     }
 
     @Override
-    public List<OilSummaryDTO> getOilSummaryBranchWise(List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear) {
-        return oilRepository.getOilSummaryBranchWise(months, cities, qtrWise, halfYear);
+    public List<OilSummaryDTO> getOilSummaryBranchWise(
+            List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return oilRepository.getOilSummaryBranchWise(months, cities, qtrWise, halfYear, financialYears);
     }
 
     @Override

@@ -11,11 +11,13 @@ public interface RevenueService {
 
     public List<Revenue> getAllRevenue();
 
-    public List<Revenue> getRevenueByMonthYear (List<String> months, List<String> years);
+    public List<Revenue> getRevenueByMonthYear (List<String> months, List<String> years, List<String> financialYears );
 
-    public List<RevenueSummaryDTO> getRevenueSummary (List<String> months, List<String> qtrWise, List<String> halfYear );
+    public List<RevenueSummaryDTO> getRevenueSummary (List<String> months,
+                                             List<String> qtrWise, List<String> halfYear, List<String> financialYears );
 
-    public List<RevenueSummaryDTO> getRevenueSummaryBranchWise (List<String> months, List<String> cities, List<String> qtrWise, List<String> halfYear);
+    public List<RevenueSummaryDTO> getRevenueSummaryBranchWise (List<String> months,
+                                          List<String> cities, List<String> qtrWise, List<String> halfYear, List<String> financialYears );
 
     void deleteRevenueAll ();
 }

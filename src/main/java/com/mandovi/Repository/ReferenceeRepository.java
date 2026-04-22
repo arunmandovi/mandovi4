@@ -17,9 +17,10 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
     @Query("""
     SELECT r FROM Referencee r
     WHERE (:months IS NULL OR r.month IN (:months))
-    AND (:years IS NULL OR r.year IN (:years))
+    AND (:years IS NULL OR r.year IN (:years)) AND (:financialYears IS NULL OR r.financialYear IN (:financialYears))
     """)
-    public List<Referencee> getReferenceeByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years);
+    public List<Referencee> getReferenceeByMonthYear(@Param("months") List<String> months,@Param("years") List<String> years,
+                                                     @Param("financialYears") List<String> financialYears );
 
     //Group By city
     @Query("""
@@ -39,13 +40,15 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
             AND (:channels IS NULL OR r.channel IN (:channels))
             AND (:qtrWise IS NULL OR r.qtrWise IN (:qtrWise))
             AND (:halfYear IS NULL OR r.halfYear IN (:halfYear))
+            AND (:financialYears IS NULL OR r.financialYear IN (:financialYears))
             GROUP BY r.city
             """)
     List<ReferenceeSummaryDTO> getReferenceeSummaryByCity (
             @Param("months") List<String> months,
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears);
 
     //Group By branch
     @Query("""
@@ -66,6 +69,7 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
              AND (:channels IS NULL OR r.channel IN (:channels))
              AND (:qtrWise IS NULL OR r.qtrWise IN (:qtrWise))
              AND (:halfYear IS NULL OR r.halfYear IN (:halfYear))
+             AND (:financialYears IS NULL OR r.financialYear IN (:financialYears))
             GROUP BY r.city, r.branch
             """)
     List<ReferenceeSummaryDTO> getReferenceeSummaryBranchWise (
@@ -73,7 +77,8 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
             @Param("cities") List<String> cities,
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears);
 
     @Modifying
     @Transactional
@@ -92,10 +97,11 @@ public interface ReferenceeRepository extends JpaRepository<Referencee, Integer>
         FROM Referencee r
         WHERE (:months IS NULL OR r.month IN (:months))
           AND (:cities IS NULL OR r.city IN (:cities))
+          AND (:financialYears IS NULL OR r.financialYear IN (:financialYears))
         GROUP BY r.groupDesignation
         """)
     List<ReferenceeTableDTO> getReferenceeTableCityWise(
             @Param("months") List<String> months,
-            @Param("cities") List<String> cities
-    );
+            @Param("cities") List<String> cities,
+            @Param("financialYears") List<String> financialYears );
 }

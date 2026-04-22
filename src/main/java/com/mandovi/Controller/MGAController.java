@@ -38,9 +38,10 @@ public class MGAController {
     @GetMapping("/getmga")
     public ResponseEntity<?> getMGA (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<MGA> mgaRecords = mgaService.getMGAMonthYear(months, years );
+            List<MGA> mgaRecords = mgaService.getMGAMonthYear(months, years, financialYears);
             if (mgaRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -55,9 +56,10 @@ public class MGAController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<MGASummaryDTO> listMGASummary = mgaService.getMGASummary(months, channels, qtrWise, halfYear);
+            List<MGASummaryDTO> listMGASummary = mgaService.getMGASummary(months, channels, qtrWise, halfYear, financialYears);
             if (listMGASummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -73,9 +75,11 @@ public class MGAController {
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<MGASummaryDTO> listMGASummaryBranchWise = mgaService.getMGASummaryBranchWise(months, cities, channels, qtrWise, halfYear);
+            List<MGASummaryDTO> listMGASummaryBranchWise = mgaService.getMGASummaryBranchWise(
+                    months, cities, channels, qtrWise, halfYear, financialYears);
             if (listMGASummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

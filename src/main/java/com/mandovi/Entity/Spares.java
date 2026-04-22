@@ -20,6 +20,9 @@ public class Spares {
     @Column(name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column(name = "branch")
     private String branch;
 
@@ -77,11 +80,12 @@ public class Spares {
     public Spares() {
     }
 
-    public Spares(int sparesSINo, String city, String month, String year, String branch, Double srSparesLastYear, Double srSparesCurrentYear, Double brSparesLastYear, Double brSparesCurrentYear, Double srBrSparesLastYear, Double srBrSparesCurrentYear, Double batteryLastYear, Double batteryCurrentYear, Double tyreLastYear, Double tyreCurrentYear, Double srSparesGrowth, Double brSparesGrowth, Double srBrSparesGrowth, Double batteryGrowth, Double tyreGrowth, String qtrWise, String halfYear) {
+    public Spares(int sparesSINo, String city, String month, String year, String financialYear, String branch, Double srSparesLastYear, Double srSparesCurrentYear, Double brSparesLastYear, Double brSparesCurrentYear, Double srBrSparesLastYear, Double srBrSparesCurrentYear, Double batteryLastYear, Double batteryCurrentYear, Double tyreLastYear, Double tyreCurrentYear, Double srSparesGrowth, Double brSparesGrowth, Double srBrSparesGrowth, Double batteryGrowth, Double tyreGrowth, String qtrWise, String halfYear) {
         this.sparesSINo = sparesSINo;
         this.city = city;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.branch = branch;
         this.srSparesLastYear = srSparesLastYear;
         this.srSparesCurrentYear = srSparesCurrentYear;
@@ -132,6 +136,14 @@ public class Spares {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
     }
 
     public String getBranch() {
@@ -285,6 +297,7 @@ public class Spares {
                 ", city='" + city + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", branch='" + branch + '\'' +
                 ", srSparesLastYear=" + srSparesLastYear +
                 ", srSparesCurrentYear=" + srSparesCurrentYear +

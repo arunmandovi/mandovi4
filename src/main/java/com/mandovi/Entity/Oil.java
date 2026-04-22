@@ -22,6 +22,9 @@ public class Oil {
     @Column(name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column(name = "oil_type")
     private String oilType;
 
@@ -43,12 +46,13 @@ public class Oil {
     public Oil() {
     }
 
-    public Oil(Integer oilSINo, String city, String branch, String month, String year, String oilType, Double netRetailQty, Double netRetailDDL, Double netRetailSelling, String qtrWise, String halfYear) {
+    public Oil(Integer oilSINo, String city, String branch, String month, String year, String financialYear, String oilType, Double netRetailQty, Double netRetailDDL, Double netRetailSelling, String qtrWise, String halfYear) {
         this.oilSINo = oilSINo;
         this.city = city;
         this.branch = branch;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.oilType = oilType;
         this.netRetailQty = netRetailQty;
         this.netRetailDDL = netRetailDDL;
@@ -95,6 +99,14 @@ public class Oil {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
     }
 
     public String getOilType() {
@@ -153,6 +165,7 @@ public class Oil {
                 ", branch='" + branch + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", oilType='" + oilType + '\'' +
                 ", netRetailQty=" + netRetailQty +
                 ", netRetailDDL=" + netRetailDDL +
