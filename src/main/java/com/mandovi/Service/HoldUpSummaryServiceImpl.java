@@ -26,13 +26,13 @@ public class HoldUpSummaryServiceImpl implements HoldUpSummaryService {
     }
 
     @Override
-    public List<HoldUpSummaryDTO> getHoldUpSummaryCityWise(String month, String day) {
-        return holdUpSummaryRepository.getHoldUpSummaryCityWise(month, day);
+    public List<HoldUpSummaryDTO> getHoldUpSummaryCityWise(String month, String day, List<String> years) {
+        return holdUpSummaryRepository.getHoldUpSummaryCityWise(month, day, years);
     }
 
     @Override
-    public List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise(String month, String day, List<String> cities) {
-        return holdUpSummaryRepository.getHoldUpSummaryBranchWise(month, day, cities);
+    public List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise(String month, String day, List<String> cities, List<String> years) {
+        return holdUpSummaryRepository.getHoldUpSummaryBranchWise(month, day, cities, years);
     }
 
     @Override

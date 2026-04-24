@@ -24,7 +24,6 @@ public class MSGPServiceImpl implements MSGPService {
         try {
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
-            DataFormatter dataFormatter = new DataFormatter();
             Sheet sheet = workbook.getSheetAt(0);
 
             Row firstRow = sheet.getRow(1);
@@ -36,7 +35,15 @@ public class MSGPServiceImpl implements MSGPService {
             String uploadYear = String.valueOf(numYear);
             String anotherUploadYear = String.valueOf(numYear + 1);
             String deleteAnotherYear = String.valueOf(numYear + 2);
-            String deleteYear = anotherUploadYear + "-" + deleteAnotherYear;
+
+            String yearDelete = anotherUploadYear + "-" + deleteAnotherYear;
+            String deleteJanYear = numYear + "-" + (numYear+1);
+            String deleteYear = "";
+            if (uploadMonth.contains("Jan") || uploadMonth.contains("Feb") || uploadMonth.contains("Mar")) {
+                deleteYear = deleteJanYear;
+            } else {
+                deleteYear = yearDelete;
+            }
 
             msgpRepository.deleteByMonthYear(uploadMonth, uploadYear, deleteYear);
             msgpRepository.deleteByMonthYear(uploadMonth, anotherUploadYear, deleteYear);

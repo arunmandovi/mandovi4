@@ -35,11 +35,12 @@ public interface HoldUpSummaryRepository extends JpaRepository<HoldUpSummary, In
             )
             FROM HoldUpSummary h
             WHERE h.month = :month AND h.day = :day
+            AND (:years IS NULL OR h.year IN (:years))
             GROUP BY h.city
             """)
     List<HoldUpSummaryDTO> getHoldUpSummaryCityWise (
             @Param("month") String month,
-            @Param("day") String day );
+            @Param("day") String day, @Param("years") List<String> years);
 
     //Group By branch
     @Query("""
@@ -54,12 +55,14 @@ public interface HoldUpSummaryRepository extends JpaRepository<HoldUpSummary, In
             FROM HoldUpSummary h
             WHERE h.month = :month AND h.day = :day
             AND (:cities IS NULL OR h.city IN (:cities))
+            AND (:years IS NULL OR h.year IN (:years))
             GROUP BY h.city,h.branch
             """)
     List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise (
             @Param("month") String month,
             @Param( "day") String day,
-            @Param("cities") List<String> cities );
+            @Param("cities") List<String> cities,
+            @Param("years") List<String> years );
 
     @Modifying
     @Transactional

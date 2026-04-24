@@ -47,9 +47,10 @@ public class DueDoneController {
     @GetMapping("/getdue_done")
     public ResponseEntity<?> getDueDoneByMonthYear (
             @RequestParam (required = false) List<String> months,
-            @RequestParam (required = false) List<String> years ){
+            @RequestParam (required = false) List<String> years,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<DueDone> dueDoneRecords = dueDoneService.getDueDoneByMonthYear(months, years);
+            List<DueDone> dueDoneRecords = dueDoneService.getDueDoneByMonthYear(months, years, financialYears);
             if (dueDoneRecords.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -69,9 +70,11 @@ public class DueDoneController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<DueDoneSummaryDTO> listDueDoneSummary = dueDoneService.getDueDoneSummary(months, channels, qtrWise, halfYear);
+            List<DueDoneSummaryDTO> listDueDoneSummary = dueDoneService.getDueDoneSummary(
+                    months, channels, qtrWise, halfYear, financialYears);
             if (listDueDoneSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -87,9 +90,11 @@ public class DueDoneController {
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> channels,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<DueDoneSummaryDTO> listDueDoneSummaryBranchWise = dueDoneService.getDueDoneSummaryByBranchWise(months, cities, channels, qtrWise, halfYear);
+            List<DueDoneSummaryDTO> listDueDoneSummaryBranchWise = dueDoneService.getDueDoneSummaryByBranchWise(
+                    months, cities, channels, qtrWise, halfYear,financialYears );
             if (listDueDoneSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

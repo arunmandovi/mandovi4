@@ -11,9 +11,10 @@ public interface SAConversionService {
 
     public List<SAConversion> getSAConversionALl ();
 
-    public List<SAConversion> getSAConversionByMonth (List<String> months);
+    public List<SAConversion> getSAConversionByMonth (List<String> months,List<String> financialYears);
 
-    public List<SAConversionDTO> getSAConversionSummary (List<String> months, List<String> branches, List<String> saNames);
+    public List<SAConversionDTO> getSAConversionSummary (
+            List<String> months, List<String> branches, List<String> saNames, List<String> financialYears );
 
     void deleteSAConversionALL ();
 }

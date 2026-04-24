@@ -11,9 +11,10 @@ public interface CCConversionService {
 
     public List<CCConversion> getAllCCConversion ();
 
-    public List<CCConversion> getCCConversionByMonth (List<String> months);
+    public List<CCConversion> getCCConversionByMonth (List<String> months, List<String> financialYears);
 
-    public List<CCConversionDTO> getCCConversionSummary (List<String> months, List<String> branches, List<String> cceNames);
+    public List<CCConversionDTO> getCCConversionSummary (
+            List<String> months, List<String> branches, List<String> cceNames, List<String> financialYears);
 
     void deleteCCConversionAll ();
 }

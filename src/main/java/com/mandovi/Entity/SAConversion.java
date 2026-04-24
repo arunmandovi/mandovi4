@@ -24,6 +24,9 @@ public class SAConversion {
     @Column (name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column (name = "pms_appt")
     private Integer pmsAppt;
 
@@ -45,12 +48,13 @@ public class SAConversion {
     public SAConversion() {
     }
 
-    public SAConversion(Integer saConversionSINo, String branch, String saName, String month, String year, Integer pmsAppt, Integer pmsConversion, Double percentagePMSConversion, Integer frsAppt, Integer frsConversion, Double percentageFRSConversion) {
+    public SAConversion(Integer saConversionSINo, String branch, String saName, String month, String year, String financialYear, Integer pmsAppt, Integer pmsConversion, Double percentagePMSConversion, Integer frsAppt, Integer frsConversion, Double percentageFRSConversion) {
         this.saConversionSINo = saConversionSINo;
         this.branch = branch;
         this.saName = saName;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.pmsAppt = pmsAppt;
         this.pmsConversion = pmsConversion;
         this.percentagePMSConversion = percentagePMSConversion;
@@ -97,6 +101,14 @@ public class SAConversion {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
     }
 
     public Integer getPmsAppt() {
@@ -155,6 +167,7 @@ public class SAConversion {
                 ", saName='" + saName + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", pmsAppt=" + pmsAppt +
                 ", pmsConversion=" + pmsConversion +
                 ", percentagePMSConversion=" + percentagePMSConversion +

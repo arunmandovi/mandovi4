@@ -13,11 +13,14 @@ public interface DueDoneService {
 
     public List<DueDone> getALlDueDoneData ();
 
-    public List<DueDone> getDueDoneByMonthYear (List<String> months, List<String> years);
+    public List<DueDone> getDueDoneByMonthYear (List<String> months, List<String> years, List<String> financialYears );
 
-    public List<DueDoneSummaryDTO> getDueDoneSummary (List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear);
+    public List<DueDoneSummaryDTO> getDueDoneSummary (
+            List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear, List<String> financialYears );
 
-    public List<DueDoneSummaryDTO> getDueDoneSummaryByBranchWise (List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear);
+    public List<DueDoneSummaryDTO> getDueDoneSummaryByBranchWise (
+            List<String> months, List<String> cities, List<String> channels,
+            List<String> qtrWise, List<String> halfYear, List<String> financialYears);
 
     public void deleteDueDoneAll ();
 

@@ -19,9 +19,10 @@ public interface SAConversionRepository extends JpaRepository<SAConversion, Inte
 
     @Query("""
             SELECT s FROM SAConversion s
-            WHERE (:months IS NULL OR s.month IN (:months))
+            WHERE (:months IS NULL OR s.month IN (:months)) AND (:financialYears IS NULL OR s.financialYear IN (:financialYears))
             """)
-    public List<SAConversion> getSAConversionByMonth (@Param("months") List<String> months );
+    public List<SAConversion> getSAConversionByMonth (@Param("months") List<String> months,
+                                                      @Param("financialYears") List<String> financialYears );
 
     @Query("""
             SELECT new com.mandovi.DTO.SAConversionDTO(
@@ -38,12 +39,14 @@ public interface SAConversionRepository extends JpaRepository<SAConversion, Inte
             WHERE (:months IS NULL OR s.month IN (:months))
              AND (:branches IS NULL OR s.branch IN (:branches))
              AND (:saNames IS NULL OR s.saName IN (:saNames))
+             AND (:financialYears IS NULL OR s.financialYear IN (:financialYears))
             GROUP BY s.branch, s.saName
             """)
     public List<SAConversionDTO> getSAConversionSummary (
             @Param("months") List<String> months,
             @Param("branches") List<String> branches,
-            @Param("saNames") List<String> saNames );
+            @Param("saNames") List<String> saNames,
+            @Param("financialYears") List<String> financialYears );
 
     @Modifying
     @Transactional

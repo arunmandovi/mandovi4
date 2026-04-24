@@ -9,9 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -119,6 +122,7 @@ public class CCConversionServiceImpl implements CCConversionService {
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             String uploadMonth = firstRow.getCell(2).getStringCellValue();
@@ -145,11 +149,19 @@ public class CCConversionServiceImpl implements CCConversionService {
                 }
 
                 ccConversion.setMonth(row.getCell(2).getStringCellValue());
-
                 Cell year_cell = row.getCell(3);
                 int num_year = (year_cell.getCellType() == CellType.NUMERIC)
                         ? (int) yearCell.getNumericCellValue() : Integer.parseInt(year_cell.getStringCellValue());
                 ccConversion.setYear(String.valueOf(num_year));
+
+                String charMonth = ccConversion.getMonth();
+                Month m = Month.from(formatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4) {
+                    ccConversion.setFinancialYear(num_year + "-" + (num_year+1));
+                } else {
+                    ccConversion.setFinancialYear((num_year-1) + "-" + num_year);
+                }
 
                 ccConversion.setPmsAppt(row.getCell(4) != null ? (int) row.getCell(4).getNumericCellValue() : 0);
                 ccConversion.setPmsConversion(row.getCell(5) != null ? (int) row.getCell(5).getNumericCellValue() : 0);
@@ -178,15 +190,16 @@ public class CCConversionServiceImpl implements CCConversionService {
     }
 
     @Override
-    public List<CCConversion> getCCConversionByMonth(List<String> months) {
-        return ccConversionRepository.getCCConversionByMonth(months);
+    public List<CCConversion> getCCConversionByMonth(List<String> months, List<String> financialYears) {
+        return ccConversionRepository.getCCConversionByMonth(months, financialYears);
     }
 
     @Override
-    public List<CCConversionDTO> getCCConversionSummary(List<String> months, List<String> branches, List<String> cceNames) {
+    public List<CCConversionDTO> getCCConversionSummary(
+            List<String> months, List<String> branches, List<String> cceNames, List<String> financialYears) {
 
         List<CCConversionDTO> resultFromDB =
-                ccConversionRepository.getCCConversionSummary(months, branches, cceNames);
+                ccConversionRepository.getCCConversionSummary(months, branches, cceNames, financialYears);
 
         List<CCConversionDTO> response = new ArrayList<>();
 

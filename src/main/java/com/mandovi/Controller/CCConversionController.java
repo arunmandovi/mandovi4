@@ -45,9 +45,10 @@ public class CCConversionController {
     }
 
     @GetMapping("/getcc_conversion")
-    ResponseEntity<?> getCCConversionByMonth (@RequestParam(required = false) List<String> months){
+    ResponseEntity<?> getCCConversionByMonth (@RequestParam(required = false) List<String> months,
+                                              @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<CCConversion> listCCConversionByMonth = ccConversionService.getCCConversionByMonth(months);
+            List<CCConversion> listCCConversionByMonth = ccConversionService.getCCConversionByMonth(months, financialYears);
             if (listCCConversionByMonth.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -61,9 +62,11 @@ public class CCConversionController {
     ResponseEntity<?> getCCConversionSummary (
             @RequestParam (required = false)List<String> months,
             @RequestParam (required = false) List<String> branches,
-            @RequestParam (required = false) List<String> cceNames){
+            @RequestParam (required = false) List<String> cceNames,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<CCConversionDTO> listCCConversion = ccConversionService.getCCConversionSummary(months, branches, cceNames);
+            List<CCConversionDTO> listCCConversion = ccConversionService.getCCConversionSummary(
+                    months, branches, cceNames, financialYears);
             if (listCCConversion.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

@@ -18,6 +18,9 @@ public class CCConversion {
     @Column (name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column (name = "date_of_join")
     private LocalDate dateOfJoin;
 
@@ -48,10 +51,11 @@ public class CCConversion {
     public CCConversion() {
     }
 
-    public CCConversion(Integer ccConversionSINo, String month, String year, LocalDate dateOfJoin, String branch, String cceName, Integer pmsAppt, Integer pmsConversion, Double percentagePMSConversion, Integer frsAppt, Integer frsConversion, Double percentageFRSConversion) {
+    public CCConversion(Integer ccConversionSINo, String month, String year, String financialYear, LocalDate dateOfJoin, String branch, String cceName, Integer pmsAppt, Integer pmsConversion, Double percentagePMSConversion, Integer frsAppt, Integer frsConversion, Double percentageFRSConversion) {
         this.ccConversionSINo = ccConversionSINo;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.dateOfJoin = dateOfJoin;
         this.branch = branch;
         this.cceName = cceName;
@@ -85,6 +89,14 @@ public class CCConversion {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
     }
 
     public LocalDate getDateOfJoin() {
@@ -165,6 +177,7 @@ public class CCConversion {
                 "ccConversionSINo=" + ccConversionSINo +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", dateOfJoin=" + dateOfJoin +
                 ", branch='" + branch + '\'' +
                 ", cceName='" + cceName + '\'' +

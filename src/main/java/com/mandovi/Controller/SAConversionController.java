@@ -45,9 +45,10 @@ public class SAConversionController {
     }
 
     @GetMapping("/getsa_conversion")
-    ResponseEntity<?> getSAConversionBYMonth ( @RequestParam (required = false) List<String> months ){
+    ResponseEntity<?> getSAConversionBYMonth ( @RequestParam (required = false) List<String> months,
+                                               @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<SAConversion> listSAConversionByMonth = saConversionService.getSAConversionByMonth(months);
+            List<SAConversion> listSAConversionByMonth = saConversionService.getSAConversionByMonth(months, financialYears);
             if (listSAConversionByMonth.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -61,9 +62,11 @@ public class SAConversionController {
     ResponseEntity<?> getSAConversionSummary (
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> branches,
-            @RequestParam (required = false) List<String> saNames ){
+            @RequestParam (required = false) List<String> saNames,
+            @RequestParam (required = false) List<String> financialYears){
         try {
-            List<SAConversionDTO> listSAConversionSummary = saConversionService.getSAConversionSummary(months, branches, saNames);
+            List<SAConversionDTO> listSAConversionSummary = saConversionService.getSAConversionSummary(
+                    months, branches, saNames, financialYears);
             if (listSAConversionSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

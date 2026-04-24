@@ -8,11 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 @Service
@@ -29,6 +28,7 @@ public class SAConversionServiceImpl implements SAConversionService {
             InputStream inputStream = file.getInputStream();
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             String uploadMonth = firstRow.getCell(2).getStringCellValue();
@@ -52,6 +52,15 @@ public class SAConversionServiceImpl implements SAConversionService {
                 int num_year = (year_cell.getCellType() == CellType.NUMERIC)
                         ? (int) year_cell.getNumericCellValue() : Integer.parseInt(year_cell.getStringCellValue());
                 saConversion.setYear(String.valueOf(num_year));
+
+                String charMonth = saConversion.getMonth();
+                Month m = Month.from(formatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4){
+                    saConversion.setFinancialYear(num_year + "-" + (num_year+1));
+                } else {
+                    saConversion.setFinancialYear((num_year-1) + "-" + num_year);
+                }
 
                 saConversion.setPmsAppt(row.getCell(4).getCellType() != null ? (int) row.getCell(4).getNumericCellValue() : 0 );
                 saConversion.setPmsConversion(row.getCell(5).getCellType() != null ? (int) row.getCell(5).getNumericCellValue() : 0);
@@ -82,13 +91,14 @@ public class SAConversionServiceImpl implements SAConversionService {
     }
 
     @Override
-    public List<SAConversion> getSAConversionByMonth(List<String> months) {
-        return saConversionRepository.getSAConversionByMonth(months);
+    public List<SAConversion> getSAConversionByMonth(List<String> months, List<String> financialYears) {
+        return saConversionRepository.getSAConversionByMonth(months, financialYears);
     }
 
     @Override
-    public List<SAConversionDTO> getSAConversionSummary(List<String> months, List<String> branches, List<String> saNames) {
-        return saConversionRepository.getSAConversionSummary(months, branches, saNames);
+    public List<SAConversionDTO> getSAConversionSummary(
+            List<String> months, List<String> branches, List<String> saNames, List<String> financialYears) {
+        return saConversionRepository.getSAConversionSummary(months, branches, saNames, financialYears);
     }
 
     @Override

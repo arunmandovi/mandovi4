@@ -62,11 +62,18 @@ public class LabourServiceImpl implements LabourService {
             String uploadYear = String.valueOf(numYear);
             String anotherUploadYear = String.valueOf(numYear + 1);
             String deleteAnotherYear = String.valueOf(numYear + 2);
-            String deleteYear = anotherUploadYear + "-" + deleteAnotherYear;
+
+            String yearDelete = anotherUploadYear + "-" + deleteAnotherYear;
+            String deleteJanYear = numYear + "-" + (numYear+1);
+            String deleteYear = "";
+            if (uploadMonth.contains("Jan") || uploadMonth.contains("Feb") || uploadMonth.contains("Mar")){
+                deleteYear = deleteJanYear;
+            } else {
+                deleteYear = yearDelete;
+            }
 
             labourRepository.deleteByMonthYear(uploadMonth, uploadYear, deleteYear);
             labourRepository.deleteByMonthYear(uploadMonth, anotherUploadYear, deleteYear);
-
 
             for(int i=1;i<=sheet.getLastRowNum();i++){
                 Row row = sheet.getRow(i);
@@ -109,7 +116,7 @@ public class LabourServiceImpl implements LabourService {
                     labour.setLoadType("OTHERS");
                 }
                 switch (serviceTypeCode) {
-                    case "BANDP" -> labour.setLoadType("BODYSHOP");
+                    case "BANDP", "BDPQR" -> labour.setLoadType("BODYSHOP");
                     case "FR1", "FR2", "FR3" -> labour.setLoadType("FREE SERVICE");
                     case "SC", "CCP" -> labour.setLoadType("NO");
                     case "PMS" -> labour.setLoadType("PMS");

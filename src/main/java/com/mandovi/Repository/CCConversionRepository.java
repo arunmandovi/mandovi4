@@ -34,19 +34,22 @@ public interface CCConversionRepository extends JpaRepository<CCConversion, Inte
             WHERE (:months IS NULL OR c.month IN (:months))
              AND (:branches IS NULL OR c.branch IN (:branches))
              AND (:cceNames IS NULL OR c.cceName IN (:cceNames))
+             AND (:financialYears IS NULL OR c.financialYear IN (:financialYears))
             GROUP BY c.branch,c.cceName
             """)
     public List<CCConversionDTO> getCCConversionSummary (
             @Param("months") List<String> months,
             @Param("branches") List<String> branches,
-            @Param("cceNames") List<String> cceNames);
+            @Param("cceNames") List<String> cceNames,
+            @Param("financialYears") List<String> financialYears);
 
     @Transactional
     @Query("""
             SELECT c FROM CCConversion c
-            WHERE (:months IS NULL OR c.month IN (:months))
+            WHERE (:months IS NULL OR c.month IN (:months)) AND (:financialYears IS NULL OR c.financialYear IN (:financialYears))
             """)
-    public List<CCConversion> getCCConversionByMonth (List<String> months);
+    public List<CCConversion> getCCConversionByMonth (@Param("months") List<String> months,
+                                                      @Param("financialYears") List<String> financialYears );
 
     @Modifying
     @Transactional

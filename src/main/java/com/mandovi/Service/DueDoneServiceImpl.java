@@ -9,7 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class DueDoneServiceImpl implements  DueDoneService{
@@ -23,8 +26,8 @@ public class DueDoneServiceImpl implements  DueDoneService{
     public void saveDataFromExcel(MultipartFile file) {
         try (InputStream inputStream = file.getInputStream();
              Workbook  workbook = WorkbookFactory.create(inputStream)){
-
-            Sheet sheet = workbook.getSheetAt(0);
+             Sheet sheet = workbook.getSheetAt(0);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
             Row firstRow = sheet.getRow(1);
             if (firstRow == null)
@@ -52,8 +55,17 @@ public class DueDoneServiceImpl implements  DueDoneService{
                         ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
                 String year = String.valueOf(numberYear);
                 dueDone.setYear(year);
-
                 dueDone.setMonth(row.getCell(4).getStringCellValue());
+
+                String charMonth = dueDone.getMonth();
+                Month m = Month.from(formatter.parse(charMonth));
+                int monthNum = m.getValue();
+                if (monthNum >= 4){
+                    dueDone.setFinancialYear(numberYear + "-" + (numberYear+1));
+                } else {
+                    dueDone.setFinancialYear((numberYear-1) + "-" + numberYear);
+                }
+
                 dueDone.setTotalDue((int)row.getCell(5).getNumericCellValue());
                 dueDone.setTotalDone((int) row.getCell(6).getNumericCellValue());
 
@@ -78,18 +90,21 @@ public class DueDoneServiceImpl implements  DueDoneService{
     }
 
     @Override
-    public List<DueDone> getDueDoneByMonthYear(List<String> months, List<String> years) {
-        return dueDoneRepository.getDueDoneByMonthYear(months, years);
+    public List<DueDone> getDueDoneByMonthYear(List<String> months, List<String> years, List<String> financialYears) {
+        return dueDoneRepository.getDueDoneByMonthYear(months, years, financialYears);
     }
 
     @Override
-    public List<DueDoneSummaryDTO> getDueDoneSummary(List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return dueDoneRepository.getDueDoneSummaryByCity(months, channels, qtrWise, halfYear);
+    public List<DueDoneSummaryDTO> getDueDoneSummary(
+            List<String> months, List<String> channels, List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return dueDoneRepository.getDueDoneSummaryByCity(months, channels, qtrWise, halfYear,financialYears);
     }
 
     @Override
-    public List<DueDoneSummaryDTO> getDueDoneSummaryByBranchWise(List<String> months, List<String> cities, List<String> channels, List<String> qtrWise, List<String> halfYear) {
-        return dueDoneRepository.getDueDoneSummaryByBranch(months, cities, channels, qtrWise, halfYear);
+    public List<DueDoneSummaryDTO> getDueDoneSummaryByBranchWise(
+            List<String> months, List<String> cities, List<String> channels,
+            List<String> qtrWise, List<String> halfYear, List<String> financialYears) {
+        return dueDoneRepository.getDueDoneSummaryByBranch(months, cities, channels, qtrWise, halfYear,financialYears);
     }
 
     @Override

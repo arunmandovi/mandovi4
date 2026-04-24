@@ -48,9 +48,9 @@ public class HoldUpSummaryController {
     @GetMapping("/hold_up_summary")
     ResponseEntity<?> getHoldUpSummaryCityWise (
             @RequestParam String month,
-            @RequestParam String day ){
+            @RequestParam String day, @RequestParam (required = false) List<String> years ){
         try {
-            List<HoldUpSummaryDTO> listHoldUpSummaryCityWise = holdUpSummaryService.getHoldUpSummaryCityWise(month, day);
+            List<HoldUpSummaryDTO> listHoldUpSummaryCityWise = holdUpSummaryService.getHoldUpSummaryCityWise(month, day, years);
             if (listHoldUpSummaryCityWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -64,9 +64,11 @@ public class HoldUpSummaryController {
     ResponseEntity<?> getHoldUpSummaryBranchWise (
             @RequestParam String month,
             @RequestParam String day,
-            @RequestParam (required = false) List<String> cities){
+            @RequestParam (required = false) List<String> cities,
+            @RequestParam (required = false) List<String> years ){
         try {
-            List<HoldUpSummaryDTO> listHoldUpSummaryBranchWise = holdUpSummaryService.getHoldUpSummaryBranchWise( month, day, cities );
+            List<HoldUpSummaryDTO> listHoldUpSummaryBranchWise = holdUpSummaryService.getHoldUpSummaryBranchWise(
+                    month, day, cities, years);
             if (listHoldUpSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

@@ -25,6 +25,9 @@ public class DueDone {
     @Column (name = "year")
     private String year;
 
+    @Column (name = "financial_year")
+    private String financialYear;
+
     @Column (name = "total_due")
     private int totalDue;
 
@@ -40,13 +43,14 @@ public class DueDone {
     public DueDone() {
     }
 
-    public DueDone(Integer dueDoneSINo, String city, String branch, String channel, String month, String year, int totalDue, int totalDone, String qtrWise, String halfYear) {
+    public DueDone(Integer dueDoneSINo, String city, String branch, String channel, String month, String year, String financialYear, int totalDue, int totalDone, String qtrWise, String halfYear) {
         this.dueDoneSINo = dueDoneSINo;
         this.city = city;
         this.branch = branch;
         this.channel = channel;
         this.month = month;
         this.year = year;
+        this.financialYear = financialYear;
         this.totalDue = totalDue;
         this.totalDone = totalDone;
         this.qtrWise = qtrWise;
@@ -101,6 +105,14 @@ public class DueDone {
         this.year = year;
     }
 
+    public String getFinancialYear() {
+        return financialYear;
+    }
+
+    public void setFinancialYear(String financialYear) {
+        this.financialYear = financialYear;
+    }
+
     public int getTotalDue() {
         return totalDue;
     }
@@ -142,6 +154,7 @@ public class DueDone {
                 ", channel='" + channel + '\'' +
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
+                ", financialYear='" + financialYear + '\'' +
                 ", totalDue=" + totalDue +
                 ", totalDone=" + totalDone +
                 ", qtrWise='" + qtrWise + '\'' +

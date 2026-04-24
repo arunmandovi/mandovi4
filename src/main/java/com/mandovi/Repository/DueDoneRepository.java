@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,10 +23,11 @@ public interface DueDoneRepository extends JpaRepository<DueDone, Integer> {
     @Query("""
             SELECT d from DueDone d
             WHERE (:months IS NULL OR d.month IN (:months))
-            AND (:years IS NULL OR d.year IN (:years))
+            AND (:years IS NULL OR d.year IN (:years)) AND (:financialYears IS NULL OR d.financialYear IN (:financialYears))
             """)
     List<DueDone> getDueDoneByMonthYear (
-            @Param("months") List<String> months, @Param("years") List<String> years );
+            @Param("months") List<String> months, @Param("years") List<String> years,
+            @Param("financialYears") List<String> financialYears );
 
     @Modifying
     @Transactional
@@ -49,13 +51,15 @@ public interface DueDoneRepository extends JpaRepository<DueDone, Integer> {
             AND (:channels IS NULL OR d.channel IN (:channels))
             AND (:qtrWise IS NULL OR d.qtrWise IN (:qtrWise))
             AND (:halfYear IS NULL OR d.halfYear IN (:halfYear))
+            AND (:financialYears IS NULL OR d.financialYear IN (:financialYears))
             GROUP BY d.city
             """)
     List<DueDoneSummaryDTO> getDueDoneSummaryByCity (
             @Param("months") List<String> months,
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @RequestParam ("financialYears") List<String> financialYears );
 
     //Group By branch
     @Query("""
@@ -75,6 +79,7 @@ public interface DueDoneRepository extends JpaRepository<DueDone, Integer> {
             AND (:channels IS NULL OR d.channel IN (:channels))
             AND (:qtrWise IS NULL OR d.qtrWise IN (:qtrWise))
             AND (:halfYear IS NULL OR d.halfYear IN (:halfYear))
+            AND (:financialYears IS NULL OR d.financialYear IN (:financialYears))
             GROUP BY d.city, d.branch
             """)
     List<DueDoneSummaryDTO> getDueDoneSummaryByBranch (
@@ -82,6 +87,7 @@ public interface DueDoneRepository extends JpaRepository<DueDone, Integer> {
             @Param("cities") List<String> cities,
             @Param("channels") List<String> channels,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear );
+            @Param("halfYear") List<String> halfYear,
+            @RequestParam("financialYears") List<String> financialYears);
 
 }

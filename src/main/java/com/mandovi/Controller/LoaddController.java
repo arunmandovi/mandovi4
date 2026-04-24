@@ -70,7 +70,8 @@ public class LoaddController {
             @RequestParam (required = false) List<String> halfYear,
             @RequestParam String selectedFinancialYear){
         try {
-            List<LoaddSummaryDTO> listLoaddServiceSummary = loaddService.getLoaddSummary(months, channels, qtrWise, halfYear, selectedFinancialYear);
+            List<LoaddSummaryDTO> listLoaddServiceSummary = loaddService.getLoaddSummary(
+                    months, channels, qtrWise, halfYear, selectedFinancialYear);
             if (listLoaddServiceSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -92,8 +93,8 @@ public class LoaddController {
             @RequestParam (required = false) List<String> halfYear,
             @RequestParam String selectedFinancialYear){
         try {
-            List<LoaddSummaryDTO> listLoaddSummaryBranchWise = loaddService.getLoaddSummaryBranchWise(months, cities, branches,
-                    channels, qtrWise, halfYear,selectedFinancialYear );
+            List<LoaddSummaryDTO> listLoaddSummaryBranchWise = loaddService.getLoaddSummaryBranchWise(
+                    months, cities, branches, channels, qtrWise, halfYear,selectedFinancialYear );
             if (listLoaddSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

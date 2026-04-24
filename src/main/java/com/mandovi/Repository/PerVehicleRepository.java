@@ -66,6 +66,15 @@ LEFT JOIN (
            SUM(CASE WHEN la.loadType='BODYSHOP'
                 THEN la.labour ELSE 0 END) AS bodyShopLabour
     FROM Labour la
+    WHERE (:months IS NULL OR la.month IN :months)
+     AND (:years IS NULL OR la.year IN :years)
+     AND (:qtrWise IS NULL OR la.qtrWise IN :qtrWise)
+     AND (:halfYear IS NULL OR la.halfYear IN :halfYear)
+     AND (
+             :financialYears IS NULL OR
+             la.financialYear IN (:financialYears) AND
+             la.deleteYear IN (:financialYears)
+         )
     GROUP BY la.city
 ) lb ON lb.city = l.city
 
@@ -74,6 +83,11 @@ LEFT JOIN (
            SUM(s.srSparesCurrentYear) AS srSpares,
            SUM(s.brSparesCurrentYear) AS brSpares
     FROM Spares s
+    WHERE (:months IS NULL OR s.month IN :months)
+     AND (:years IS NULL OR s.year IN :years)
+     AND (:qtrWise IS NULL OR s.qtrWise IN :qtrWise)
+     AND (:halfYear IS NULL OR s.halfYear IN :halfYear)
+     AND (:financialYears IS NULL OR s.financialYear IN (:financialYears))
     GROUP BY s.city
 ) sp ON sp.city = l.city
 
@@ -81,14 +95,19 @@ WHERE (:months IS NULL OR l.month IN :months)
 AND (:years IS NULL OR l.year IN :years)
 AND (:qtrWise IS NULL OR l.qtrWise IN :qtrWise)
 AND (:halfYear IS NULL OR l.halfYear IN :halfYear)
-
+AND (
+             :financialYears IS NULL OR
+             l.financialYear IN (:financialYears) AND
+             l.deleteYear IN (:financialYears)
+         )
 GROUP BY l.city, lb.labourGeneral, lb.bodyShopLabour, sp.srSpares, sp.brSpares
 """)
     List<PerVehicleReportSummaryDTO> getPerVehicleSummary(
             @Param("months") List<String> months,
             @Param("years") List<String> years,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear);
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears );
 
     //Group BY Branch
     @Query("""
@@ -145,6 +164,16 @@ LEFT JOIN (
            SUM(CASE WHEN la.loadType='BODYSHOP'
                 THEN la.labour ELSE 0 END) AS bodyShopLabour
     FROM Labour la
+    WHERE (:months IS NULL OR la.month IN :months)
+     AND (:years IS NULL OR la.year IN :years)
+     AND (:cities IS NULL OR la.city IN :cities)
+     AND (:qtrWise IS NULL OR la.qtrWise IN :qtrWise)
+     AND (:halfYear IS NULL OR la.halfYear IN :halfYear)
+     AND (
+             :financialYears IS NULL OR
+             la.financialYear IN (:financialYears) AND
+             la.deleteYear IN (:financialYears)
+         )
     GROUP BY la.city, la.branch
 ) lb ON lb.city = l.city AND lb.branch = l.branch
 
@@ -154,6 +183,12 @@ LEFT JOIN (
            SUM(s.srSparesCurrentYear) AS srSpares,
            SUM(s.brSparesCurrentYear) AS brSpares
     FROM Spares s
+    WHERE (:months IS NULL OR s.month IN :months)
+     AND (:years IS NULL OR s.year IN :years)
+     AND (:cities IS NULL OR s.city IN :cities)
+     AND (:qtrWise IS NULL OR s.qtrWise IN :qtrWise)
+     AND (:halfYear IS NULL OR s.halfYear IN :halfYear)
+     AND (:financialYears IS NULL OR s.financialYear IN (:financialYears))
     GROUP BY s.city, s.branch
 ) sp ON sp.city = l.city AND sp.branch = l.branch
 
@@ -162,7 +197,11 @@ AND (:years IS NULL OR l.year IN :years)
 AND (:cities IS NULL OR l.city IN :cities)
 AND (:qtrWise IS NULL OR l.qtrWise IN :qtrWise)
 AND (:halfYear IS NULL OR l.halfYear IN :halfYear)
-
+AND (
+             :financialYears IS NULL OR
+             l.financialYear IN (:financialYears) AND
+             l.deleteYear IN (:financialYears)
+         )
 GROUP BY
     l.city,
     l.branch,
@@ -176,7 +215,7 @@ GROUP BY
             @Param("years") List<String> years,
             @Param("cities") List<String> cities,
             @Param("qtrWise") List<String> qtrWise,
-            @Param("halfYear") List<String> halfYear
-    );
+            @Param("halfYear") List<String> halfYear,
+            @Param("financialYears") List<String> financialYears );
 
 }

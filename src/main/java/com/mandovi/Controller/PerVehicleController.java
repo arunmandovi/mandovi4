@@ -24,9 +24,11 @@ public class PerVehicleController {
             @RequestParam (required = false) List<String> months,
             @RequestParam (required = false) List<String> years,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<PerVehicleReportSummaryDTO> listPerVehicleSummary = perVehicleService.getPerVehicleSummary(months, years, qtrWise, halfYear);
+            List<PerVehicleReportSummaryDTO> listPerVehicleSummary = perVehicleService.getPerVehicleSummary(
+                    months, years, qtrWise, halfYear, financialYears);
             if (listPerVehicleSummary.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
@@ -42,9 +44,11 @@ public class PerVehicleController {
             @RequestParam (required = false) List<String> years,
             @RequestParam (required = false) List<String> cities,
             @RequestParam (required = false) List<String> qtrWise,
-            @RequestParam (required = false) List<String> halfYear ){
+            @RequestParam (required = false) List<String> halfYear,
+            @RequestParam (required = false) List<String> financialYears ){
         try {
-            List<PerVehicleReportSummaryDTO> listPerVehicleSummaryBranchWise = perVehicleService.getPerVehicleSummaryBranchWise(months, years, cities, qtrWise, halfYear);
+            List<PerVehicleReportSummaryDTO> listPerVehicleSummaryBranchWise = perVehicleService.getPerVehicleSummaryBranchWise(
+                    months, years, cities, qtrWise, halfYear, financialYears);
             if (listPerVehicleSummaryBranchWise.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

@@ -60,7 +60,15 @@ public class LoaddServiceImpl implements LoaddService {
             String uploadYear = String.valueOf(numYear);
             String uploadAnotherYear = String.valueOf(numYear + 1);
             String deleteAnotherYear = String.valueOf(numYear + 2);
-            String deleteYear = uploadAnotherYear+"-"+deleteAnotherYear;
+
+            String yearDelete = uploadAnotherYear+"-"+deleteAnotherYear;
+            String deleteJanYear = numYear + "-" + (numYear + 1);
+            String deleteYear = "";
+            if (uploadMonth.contains("Jan") || uploadMonth.contains("Feb") || uploadMonth.contains("Mar")){
+                deleteYear = deleteJanYear;
+            } else {
+                deleteYear = yearDelete;
+            }
 
             loaddRepository.deleteByMonthYear(uploadMonth, uploadYear, deleteYear);
             loaddRepository.deleteByMonthYear(uploadMonth, uploadAnotherYear, deleteYear);
