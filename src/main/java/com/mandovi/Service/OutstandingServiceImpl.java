@@ -78,8 +78,11 @@ public class OutstandingServiceImpl implements OutstandingService {
                     Map.entry("sbi general insurance co ltd - 25-74 - ka12mc1350", Set.of(-327.47)),
                     Map.entry("the new india assurance co ltd - 04-115 - ka21p2495", Set.of(924.0)),
                     Map.entry("universal sompo gic ltd - 22-35 - ka19mp2249", Set.of(-1426.0)),
+                    Map.entry("bajaj general insurance limited - 02-02 - ka19mp6608", Set.of(-21012.0)),
                     Map.entry("sourabh y jain - 1934183546 - ka19mk3678", Set.of(-715.0)),
                     Map.entry("universal sompo gic ltd - 22-35 - ka21ma5982", Set.of(-377.0)),
+                    Map.entry("united india insurance company limited - 10-41 - ka19mg6752", Set.of(-209.76)),
+                    Map.entry("divakara  k - 2142877106 - ka21z5134", Set.of(100.0)),
                     Map.entry("k k krishna - 2249921867 - ka21z6178", Set.of(2000.0)),
                     Map.entry("the new india assurance co ltd - 04-115 - ka19mg0672", Set.of(-1256.82)),
                     Map.entry("bajaj general insurance limited - 02-02 - ka21ma6193", Set.of(-934.0)),
@@ -266,7 +269,34 @@ public class OutstandingServiceImpl implements OutstandingService {
         String billNo = normalize(o.getBillNo());
         String segment = normalize(o.getSegment());
 
-        if (INVALID_LEDGER_GROUPS.contains(ledger)) return false;
+        if (INVALID_LEDGER_GROUPS.contains(ledger)) {
+
+            if (ledger.equals("debtors control account")) {
+
+                Double balance = o.getBalanceAmt();
+
+                if (billNo.contains("-ads") && balance != null && balance > 0) {
+
+                    try {
+                        if (o.getOutstandingDate() != null) {
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                            LocalDate billDate = LocalDate.parse(o.getOutstandingDate(), formatter);
+
+                            LocalDate oneYearAgo = LocalDate.now().minusYears(1);
+
+                            if (!billDate.isBefore(oneYearAgo)) {
+                                return true;
+                            }
+                        }
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            }
+
+            return false; // ❌ default behavior (delete)
+        }
 
         Double balance = o.getBalanceAmt();
 
@@ -542,52 +572,6 @@ public class OutstandingServiceImpl implements OutstandingService {
                 }
             }
         }
-
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//        for (List<Outstanding> partyRows : groupedByParty.values()) {
-//
-//            // 🔹 Step 1: Calculate net balance (including negatives)
-//            double netBalance = partyRows.stream()
-//                    .mapToDouble(o -> o.getBalanceAmt() == null ? 0.0 : o.getBalanceAmt())
-//                    .sum();
-//
-//            // 🔹 Step 2: Delete all rows if net = 0
-//            List<Integer> ids = partyRows.stream()
-//                    .map(Outstanding::getOutstandingSINo)
-//                    .filter(Objects::nonNull)
-//                    .toList();
-//
-//            if (netBalance == 0.0) {
-//                outstandingRepository.deleteAllById(ids);
-//                continue;
-//            }
-//
-//            Outstanding latest = partyRows.get(0);
-//
-//            // 🔹 Step 4: Create consolidated row
-//            Outstanding consolidated = new Outstanding();
-//
-//            consolidated.setPartyName(latest.getPartyName());
-//            consolidated.setSegment(latest.getSegment());
-//            consolidated.setLedgerGroupName(latest.getLedgerGroupName());
-//            consolidated.setOutstandingDate(latest.getOutstandingDate());
-//            consolidated.setBillNo(latest.getBillNo()); // latest bill
-//            consolidated.setBalanceAmt(netBalance);
-//
-//            // Optional: reset ageing buckets
-//            consolidated.setUpToSeven(0.0);
-//            consolidated.setEightToThirty(0.0);
-//            consolidated.setThirtyOneToNinty(0.0);
-//            consolidated.setMoreThanNinty(0.0);
-//
-//            consolidated.setSalesMan(latest.getSalesMan());
-//
-//            // 🔹 Step 5: Delete old rows
-//            outstandingRepository.deleteAllById(ids);
-//
-//            // 🔹 Step 6: Insert single row
-//            outstandingRepository.save(consolidated);
-//        }
     }
 
     private void consolidateAndReplace(List<Outstanding> rows) {

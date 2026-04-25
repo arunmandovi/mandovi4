@@ -97,17 +97,17 @@ public interface BRConversionRepository extends JpaRepository<BRConversion, Inte
             
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.labourAmt ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'ARENA' THEN b.partAmount ELSE 0 END),
-                SUM(CASE WHEN b.channel = 'ARENA' THEN b.labourAmt ELSE 0 END) +
-                SUM(CASE WHEN b.channel = 'ARENA' THEN b.partAmount ELSE 0 END),
+                (SUM(CASE WHEN b.channel = 'ARENA' THEN b.labourAmt ELSE 0 END) +
+                SUM(CASE WHEN b.channel = 'ARENA' THEN b.partAmount ELSE 0 END)) / 100000,
             
                 SUM(CASE WHEN b.channel = 'NEXA' THEN b.labourAmt ELSE 0 END),
                 SUM(CASE WHEN b.channel = 'NEXA' THEN b.partAmount ELSE 0 END),
-                SUM(CASE WHEN b.channel = 'NEXA' THEN b.labourAmt ELSE 0 END) +
-                SUM(CASE WHEN b.channel = 'NEXA' THEN b.partAmount ELSE 0 END),
+                (SUM(CASE WHEN b.channel = 'NEXA' THEN b.labourAmt ELSE 0 END) +
+                SUM(CASE WHEN b.channel = 'NEXA' THEN b.partAmount ELSE 0 END)) / 100000,
             
                 SUM(b.labourAmt),
                 SUM(b.partAmount),
-                SUM(b.labourAmt) + SUM(b.partAmount)
+                (SUM(b.labourAmt) + SUM(b.partAmount)) /100000
             )
             FROM BRConversion b
             WHERE (:months IS NULL OR b.month IN (:months))
