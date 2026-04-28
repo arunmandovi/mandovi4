@@ -23,33 +23,33 @@ public interface HoldUpRepository extends JpaRepository<HoldUp, Integer> {
     @Modifying
     @Transactional
     @Query(value =
-            "INSERT INTO hold_up_summary (city, branch, service, hold_up_summary_date, month, day, year, count) " +
-                    "SELECT city, branch, 'Bodyshop', hold_up_date, month, day, year, SUM(count) " +
+            "INSERT INTO hold_up_summary (city, branch, service, channel, hold_up_summary_date, month, day, year, count) " +
+                    "SELECT city, branch, 'Bodyshop',channel, hold_up_date, month, day, year, SUM(count) " +
                     "FROM hold_up " +
                     "WHERE service = 'Bodyshop' " +
-                    "GROUP BY city, branch, hold_up_date, month, day, year",
+                    "GROUP BY city, branch, channel, hold_up_date, month, day, year",
             nativeQuery = true)
     void insertBodyShopSummary();
 
     @Modifying
     @Transactional
     @Query(value =
-            "INSERT INTO hold_up_summary (city, branch, service, hold_up_summary_date, month, day, year, count) " +
-                    "SELECT city, branch, 'Service', hold_up_date, month, day, year, SUM(count) " +
+            "INSERT INTO hold_up_summary (city, branch, service, channel, hold_up_summary_date, month, day, year, count) " +
+                    "SELECT city, branch, 'Service', channel, hold_up_date, month, day, year, SUM(count) " +
                     "FROM hold_up " +
                     "WHERE service = 'Service' " +
-                    "GROUP BY city, branch, hold_up_date, month, day, year",
+                    "GROUP BY city, branch, channel, hold_up_date, month, day, year",
             nativeQuery = true)
     void insertServiceSummary();
 
     @Modifying
     @Transactional
     @Query(value =
-            "INSERT INTO hold_up_summary (city, branch, service, hold_up_summary_date, month, day, year, count) " +
-                    "SELECT city, branch, 'PMS', hold_up_date, month, day, year, SUM(count) " +
+            "INSERT INTO hold_up_summary (city, branch, service, channel, hold_up_summary_date, month, day, year, count) " +
+                    "SELECT city, branch, 'PMS', channel, hold_up_date, month, day, year, SUM(count) " +
                     "FROM hold_up " +
                     "WHERE service_type = 'PMS' " +
-                    "GROUP BY city, branch, hold_up_date, month, day, year",
+                    "GROUP BY city, branch, channel, hold_up_date, month, day, year",
             nativeQuery = true)
     void insertPMSSummary();
 

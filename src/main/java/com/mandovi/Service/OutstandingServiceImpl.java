@@ -283,9 +283,9 @@ public class OutstandingServiceImpl implements OutstandingService {
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                             LocalDate billDate = LocalDate.parse(o.getOutstandingDate(), formatter);
 
-                            LocalDate oneYearAgo = LocalDate.now().minusYears(1);
+                            LocalDate oneMonthAgo = LocalDate.now().minusMonths(1);
 
-                            if (!billDate.isBefore(oneYearAgo)) {
+                            if (!billDate.isBefore(oneMonthAgo)) {
                                 return true;
                             }
                         }

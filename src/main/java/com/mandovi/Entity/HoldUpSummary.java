@@ -21,6 +21,9 @@ public class HoldUpSummary {
     @Column (name = "service")
     private String service;
 
+    @Column (name = "channel")
+    private String channel;
+
     @Column (name = "hold_up_summary_date")
     private LocalDate holdUpSummaryDate;
 
@@ -39,11 +42,12 @@ public class HoldUpSummary {
     public HoldUpSummary() {
     }
 
-    public HoldUpSummary(Integer holdUpSummarySINo, String city, String branch, String service, LocalDate holdUpSummaryDate, String month, String day, String year, int count) {
+    public HoldUpSummary(Integer holdUpSummarySINo, String city, String branch, String service, String channel, LocalDate holdUpSummaryDate, String month, String day, String year, int count) {
         this.holdUpSummarySINo = holdUpSummarySINo;
         this.city = city;
         this.branch = branch;
         this.service = service;
+        this.channel = channel;
         this.holdUpSummaryDate = holdUpSummaryDate;
         this.month = month;
         this.day = day;
@@ -81,6 +85,14 @@ public class HoldUpSummary {
 
     public void setService(String service) {
         this.service = service;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 
     public LocalDate getHoldUpSummaryDate() {
@@ -130,6 +142,7 @@ public class HoldUpSummary {
                 ", city='" + city + '\'' +
                 ", branch='" + branch + '\'' +
                 ", service='" + service + '\'' +
+                ", channel='" + channel + '\'' +
                 ", holdUpSummaryDate=" + holdUpSummaryDate +
                 ", month='" + month + '\'' +
                 ", day='" + day + '\'' +

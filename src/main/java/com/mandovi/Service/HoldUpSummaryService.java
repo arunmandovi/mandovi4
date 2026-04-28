@@ -11,10 +11,11 @@ public interface HoldUpSummaryService {
 
     List<HoldUpSummary> getHoldUpByMonthYear (List<String> months, List<String> year);
 
-    List<HoldUpSummaryDTO> getHoldUpSummaryCityWise (String month, String day, List<String> years);
+    List<HoldUpSummaryDTO> getHoldUpSummaryCityWise (
+            String month, String day, List<String> years, List<String> channels );
 
     List<HoldUpSummaryDTO> getHoldUpSummaryBranchWise (
-            String month, String day, List<String> cities, List<String> years);
+            String month, String day, List<String> cities, List<String> years, List<String> channels );
 
     void deleteHodUpAll ();
 }

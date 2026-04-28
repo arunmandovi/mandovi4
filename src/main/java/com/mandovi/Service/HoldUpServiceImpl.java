@@ -40,7 +40,7 @@ public class HoldUpServiceImpl implements  HoldUpService{
             if (firstRow == null)
                 throw new RuntimeException("No Data found in Excel");
 
-            LocalDate checkLocalDate = firstRow.getCell(5).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate checkLocalDate = firstRow.getCell(6).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
             boolean exists = holdUpRepository.existsByHoldUpDate(checkLocalDate);
 
@@ -93,9 +93,10 @@ public class HoldUpServiceImpl implements  HoldUpService{
 
                     holdUp.setServiceType(row.getCell(3).getStringCellValue());
                     holdUp.setService(row.getCell(4).getStringCellValue());
-                    holdUp.setHoldUpDate(row.getCell(5).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                    holdUp.setDays(row.getCell(6).getStringCellValue());
-                    holdUp.setCount((int) row.getCell(7).getNumericCellValue());
+                    holdUp.setChannel(row.getCell(5).getStringCellValue());
+                    holdUp.setHoldUpDate(row.getCell(6).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                    holdUp.setDays(row.getCell(7).getStringCellValue());
+                    holdUp.setCount((int) row.getCell(8).getNumericCellValue());
 
                     DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMM");
                     holdUp.setMonth(monthFormatter.format(holdUp.getHoldUpDate()));
