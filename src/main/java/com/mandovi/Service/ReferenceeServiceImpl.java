@@ -40,8 +40,16 @@ public class ReferenceeServiceImpl implements ReferenceeService {
 
                     reference.setCity(row.getCell(0).getStringCellValue());
                     reference.setBranch(row.getCell(1).getStringCellValue());
-                    reference.setGroupDesignation(row.getCell(2).getStringCellValue());
-                    reference.setYear(row.getCell(3).getStringCellValue());
+                    Cell cell = row.getCell(2);
+
+                    DataFormatter dataFormatter = new DataFormatter();
+                    String value = dataFormatter.formatCellValue(cell);
+
+                    reference.setGroupDesignation(value);
+                    Cell yearCell = row.getCell(3);
+                    int numYear = yearCell.getCellType() == CellType.NUMERIC ?
+                            (int) row.getCell(3).getNumericCellValue() : Integer.parseInt(row.getCell(3).getStringCellValue());
+                    reference.setYear(String.valueOf(numYear));
                     reference.setMonth(row.getCell(4).getStringCellValue());
                     reference.setChannel(row.getCell(5).getStringCellValue());
                     reference.setReferencee(row.getCell(6) == null ? 0 : (int) row.getCell(6).getNumericCellValue());

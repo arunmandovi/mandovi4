@@ -83,7 +83,10 @@ public class LabourServiceImpl implements LabourService {
 
                 labour.setBranch(row.getCell(0).getStringCellValue());
                 labour.setChannel(row.getCell(1).getStringCellValue());
-                labour.setYear(row.getCell(2).getStringCellValue());
+                Cell year_cell = row.getCell(2);
+                int num_year = year_cell.getCellType() == CellType.NUMERIC ?
+                        (int) row.getCell(2).getNumericCellValue() : Integer.parseInt(row.getCell(2).getStringCellValue());
+                labour.setYear(String.valueOf(num_year));
                 labour.setDeleteYear(deleteYear);
                 labour.setMonth(row.getCell(3).getStringCellValue());
                 labour.setServiceTypeCode(row.getCell(4).getStringCellValue());
