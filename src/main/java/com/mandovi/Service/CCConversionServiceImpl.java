@@ -44,6 +44,7 @@ public class CCConversionServiceImpl implements CCConversionService {
                     Map.entry("VISHAKA", LocalDate.of(2025, 4, 16)),
                     Map.entry("SOUJANYA", LocalDate.of(2025, 6, 16)),
                     Map.entry("VATHSALYA", LocalDate.of(2026, 3, 9)),
+                    Map.entry("PRAJNA", LocalDate.of(2026, 3, 23)),
                     Map.entry("VIDHYASHREE", LocalDate.of(2026, 1, 21))
             )),
 

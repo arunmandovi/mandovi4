@@ -22,6 +22,9 @@ public class MCP {
     @Column (name = "financial_year")
     private String financialYear;
 
+    @Column (name = "sourcee")
+    private String sourcee;
+
     @Column(name = "mcp_quantity")
     private Integer mcpQuantity;
 
@@ -43,12 +46,13 @@ public class MCP {
     public MCP() {
     }
 
-    public MCP(Integer mcpSINo, String city, String month, String year, String financialYear, Integer mcpQuantity, Double amountCollected, String branch, String channel, String qtrWise, String halfYear) {
+    public MCP(Integer mcpSINo, String city, String month, String year, String financialYear, String sourcee, Integer mcpQuantity, Double amountCollected, String branch, String channel, String qtrWise, String halfYear) {
         this.mcpSINo = mcpSINo;
         this.city = city;
         this.month = month;
         this.year = year;
         this.financialYear = financialYear;
+        this.sourcee = sourcee;
         this.mcpQuantity = mcpQuantity;
         this.amountCollected = amountCollected;
         this.branch = branch;
@@ -95,6 +99,14 @@ public class MCP {
 
     public void setFinancialYear(String financialYear) {
         this.financialYear = financialYear;
+    }
+
+    public String getSourcee() {
+        return sourcee;
+    }
+
+    public void setSourcee(String sourcee) {
+        this.sourcee = sourcee;
     }
 
     public Integer getMcpQuantity() {
@@ -153,6 +165,7 @@ public class MCP {
                 ", month='" + month + '\'' +
                 ", year='" + year + '\'' +
                 ", financialYear='" + financialYear + '\'' +
+                ", sourcee='" + sourcee + '\'' +
                 ", mcpQuantity=" + mcpQuantity +
                 ", amountCollected=" + amountCollected +
                 ", branch='" + branch + '\'' +

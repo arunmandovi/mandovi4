@@ -40,8 +40,8 @@ public class MCPServiceImpl implements MCPService {
             if (firstRow == null)
                 throw new RuntimeException("No Data found in Excel ");
 
-            String uploadMonth = firstRow.getCell(3).getStringCellValue().trim();
-            Cell yearCell = firstRow.getCell(4);
+            String uploadMonth = firstRow.getCell(4).getStringCellValue().trim();
+            Cell yearCell = firstRow.getCell(5);
             int numYear = (yearCell.getCellType() == CellType.NUMERIC)
                     ? (int) yearCell.getNumericCellValue() : Integer.parseInt(yearCell.getStringCellValue());
             String uploadYear = String.valueOf(numYear);
@@ -53,9 +53,10 @@ public class MCPServiceImpl implements MCPService {
                 MCP mcp = new MCP();
 
                 mcp.setCity(row.getCell(0).getStringCellValue());
-                mcp.setMonth(row.getCell(3).getStringCellValue());
+                mcp.setSourcee(row.getCell(3).getStringCellValue());
+                mcp.setMonth(row.getCell(4).getStringCellValue());
 
-                Cell cell = row.getCell(4);
+                Cell cell = row.getCell(5);
                 int num_year = (cell.getCellType() == CellType.NUMERIC)
                         ? (int) cell.getNumericCellValue() : Integer.parseInt(cell.getStringCellValue());
                 mcp.setYear(String.valueOf(num_year));
@@ -69,8 +70,8 @@ public class MCPServiceImpl implements MCPService {
                     mcp.setFinancialYear((num_year-1) + "-" + num_year);
                 }
 
-                mcp.setMcpQuantity((int) row.getCell(5).getNumericCellValue());
-                mcp.setAmountCollected(row.getCell(6).getNumericCellValue());
+                mcp.setMcpQuantity((int) row.getCell(6).getNumericCellValue());
+                mcp.setAmountCollected(row.getCell(7).getNumericCellValue());
 
                 switch (row.getCell(1).getStringCellValue().toUpperCase()) {
                     case "BALMATTA WORKSHOP" -> mcp.setBranch("Balmatta");

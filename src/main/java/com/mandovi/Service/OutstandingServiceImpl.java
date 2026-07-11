@@ -83,6 +83,53 @@ public class OutstandingServiceImpl implements OutstandingService {
                     Map.entry("universal sompo gic ltd - 22-35 - ka21ma5982", Set.of(-377.0)),
                     Map.entry("divakara  k - 2142877106 - ka21z5134", Set.of(100.0)),
                     Map.entry("k k krishna - 2249921867 - ka21z6178", Set.of(2000.0)),
+                    Map.entry("abdul arif - 2354798229 - ka21ma1339", Set.of(500.0)),
+                    Map.entry("abdul jaleel k - 2456880500 - ka21ma2870", Set.of(6000.0)),
+                    Map.entry("amitha dhananjaya - 2249862266 - ka19mn2566", Set.of(283.0)),
+                    Map.entry("chethan  kumar - 2245907457 - ka19mm6794", Set.of(520.0)),
+                    Map.entry("devipramod rao t - i129827124 - ka19md0460", Set.of(280.0)),
+                    Map.entry("dheeraj kumar - 2355328641 - ka19mp2257", Set.of(105.0)),
+                    Map.entry("hemanth shetty - 1725662453 - ka19mh7410", Set.of(74.0)),
+                    Map.entry("hyder ali - 1622174635 - ka19mg5839", Set.of(11356.0,1144.0)),
+                    Map.entry("icici lombard general insurance co ltd. - 06-22 - ka09mb0683", Set.of(190.0)),
+                    Map.entry("iffco tokio general insurance co. ltd. - 05-19 - ka21z9974", Set.of(1282.78)),
+                    Map.entry("jagannatha das - 1620439170 - ka21p2028", Set.of(2750.0)),
+                    Map.entry("kamalaksha j - 1415091974 - ka19mf0319", Set.of(28.0)),
+                    Map.entry("karvelu ilyas moosan - 1311139151 - ka21a9547", Set.of(480.0)),
+                    Map.entry("m balakrishna rai - 2039677026 - ka21c1968", Set.of(4000.0)),
+                    Map.entry("mahabala shetty - 1517447792 - ka19mg4698", Set.of(2.0)),
+                    Map.entry("mohammed thanveer - i117810967 - ka19mf6410", Set.of(1280.0,2270.0)),
+                    Map.entry("n r ganesh - 2352240621 - ka19mb9766", Set.of(610.0)),
+                    Map.entry("national insurance company limited - 01-295 - ka19mf4438", Set.of(740.45)),
+                    Map.entry("national insurance company limited - 01-295 - ka20ma1592", Set.of(1551.0)),
+                    Map.entry("neo pack - 2144340526 - ka70m3477", Set.of(24620.0)),
+                    Map.entry("nithin  kumar - 1623825039 - ka19mh0891", Set.of(874.0)),
+                    Map.entry("rejeesh a k - 2457840152 - kl59n3031", Set.of(10000.0)),
+                    Map.entry("rohith a - 1832252687 - ka19mk0571", Set.of(1838.0)),
+                    Map.entry("sathish samanth k - 2459697063 - ka21c8408", Set.of(843.0)),
+                    Map.entry("shresta shetty - 1210030175 - ka19md221", Set.of(177.0)),
+                    Map.entry("shrinivas rao pailooru - 1516106212 - ka21n9728", Set.of(1620.0)),
+                    Map.entry("sirajuddeen - 2461009197 - ka21n3577", Set.of(934.0)),
+                    Map.entry("supreme auto dealers pvt ltd - 2038740711 - ka01mr1574", Set.of(10220.0)),
+                    Map.entry("sushma divakar shetty - 2353735987 - ka19mn9882", Set.of(115.0)),
+                    Map.entry("swasthik k s - 2144353586 - ka21z6052", Set.of(1467.0)),
+                    Map.entry("the new india assurance co ltd - 04-115 - ka19mg3040", Set.of(1892.0)),
+                    Map.entry("the new india assurance co ltd - 04-115 - ka20z5219", Set.of(548.0)),
+                    Map.entry("the new india assurance co ltd - 04-115 - ka21n6489", Set.of(421.25)),
+                    Map.entry("the new india assurance co ltd - 04-115 - ka21z3845", Set.of(1025.58)),
+                    Map.entry("the oriental insurance company limited - 12-920 - mh02ee7891", Set.of(444.91)),
+                    Map.entry("united india insurance company limited - 10-41 - ka21p9501", Set.of(25000.0)),
+                    Map.entry("united india insurance company limited - 10-95 - kl14q9299", Set.of(5000.0)),
+                    Map.entry("universal sompo gic ltd - 22-35 - ka19mk0197", Set.of(327.0)),
+                    Map.entry("universal sompo gic ltd - 22-35 - ka21p5315", Set.of(134.0)),
+                    Map.entry("bharath auto cars pvt ltd sales", Set.of(65301.99,35777.0,2888.0, 101078.99)),
+                    Map.entry("bharath auto cars pvt. ltd. - 10785kjn", Set.of(1.0)),
+                    Map.entry("essarr automotive sale", Set.of(1391.0,560.0)),
+                    Map.entry("mahammad safwan - 2459513080 - ka19ml5014", Set.of(6500.0)),
+                    Map.entry("m nagesh rao - i129117360 - ka21n2388", Set.of(2800.0)),
+                    Map.entry("sbi general insurance co ltd - 25-74 - ka19mn0432", Set.of(167.54)),
+                    Map.entry("the new india assurance co ltd - 04-115 - ka19ma5924", Set.of(907.0)),
+                    Map.entry("the new india assurance co ltd - 04-115 - ka19md1496", Set.of(1520.81,4364.0)),
                     Map.entry("the new india assurance co ltd - 04-115 - ka19mg0672", Set.of(-1256.82)),
                     Map.entry("bajaj general insurance limited - 02-02 - ka21ma6193", Set.of(-934.0)),
                     Map.entry("the new india assurance co ltd - 04-115 - ka19ac3995", Set.of(1373.0)),
@@ -310,6 +357,8 @@ public class OutstandingServiceImpl implements OutstandingService {
         }
 
         if (party.contains("msil - (extended warranty claim recoverable)")) return false;
+
+        if (party.contains("msil - (ew claim recoverable)")) return  false;
 
         if ( billNo.contains("op") || billNo.contains("tv")) return false;
 
@@ -644,7 +693,7 @@ public class OutstandingServiceImpl implements OutstandingService {
         consolidated.setBillAmt(latest.getBillAmt());
         consolidated.setPaidAmt(latest.getPaidAmt());
         consolidated.setBalanceAmt(finalBalance);
-        consolidated.setDueSince(consolidated.getDueSince());
+        consolidated.setDueSince(latest.getDueSince());
         consolidated.setUpToSeven(finalUpToSeven);
         consolidated.setEightToThirty(finalEightToThirty);
         consolidated.setThirtyOneToNinty(finalThirtyOneToNinty);
